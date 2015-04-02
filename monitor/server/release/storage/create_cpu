@@ -1,0 +1,33 @@
+#!/bin/sh 
+# 针对某个指标组，最高采集频度为 5分钟，则其
+#  
+#  * 日数据(当天/昨天)，间隔 5分钟  共需 60/5 * 24 * 2  = 576条
+#  * 周数据(当周/上周)，间隔 60分钟 共需 1 * 24 * 7 * 2 = 336条
+#  * 月数据(当月/上月)，间隔 6小时  共需 4 * (30 + 31)  = 244条
+#  * 年数据(当年/上年)，间隔 1天    共需 1 * 365  * 2   = 730条
+# 
+
+path="$1"
+if [ "$path" == "" ]; then
+  echo "Please specify the rrd file path"
+  exit 1
+fi
+if [ "$2" != "" ]; then
+  startAt="$2"
+else
+  startAt="$(date "+%s")"
+fi
+
+cmd="rrdtool create $path          \
+    --start $startAt          \
+    DS:usage:GAUGE:576:U:U    \
+    DS:usrUsage:GAUGE:576:U:U \
+    DS:sysUsage:GAUGE:576:U:U \
+    DS:idle:GAUGE:576:U:U     \
+    DS:ioWait:GAUGE:576:U:U   \
+    RRA:AVERAGE:0.5:1:576    \
+    RRA:AVERAGE:0.5:12:336    \
+    RRA:AVERAGE:0.5:120:244   \
+    RRA:AVERAGE:0.5:480:730"
+echo $cmd
+$cmd

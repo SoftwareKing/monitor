@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <typeAliases>
+        <typeAlias type="dnt.monitor.model.Host" alias="Host"/>
+        <typeAlias type="dnt.monitor.model.Application" alias="Application"/>
+        <typeAlias type="dnt.monitor.model.CPU" alias="CPU"/>
+        <typeAlias type="dnt.monitor.model.Memory" alias="Memory"/>
+        <typeAlias type="dnt.monitor.model.Disk" alias="Disk"/>
+        <typeAlias type="dnt.monitor.model.Partition" alias="Partition"/>
+        <typeAlias type="dnt.monitor.model.Process" alias="Process"/>
+    </typeAliases>
+</configuration>

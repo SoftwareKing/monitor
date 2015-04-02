@@ -1,0 +1,14 @@
+// The detail view of Windows Host
+// The detail information of Host
+include /lib/mixins/list
+include /index/panels/tab
+
+.modal-header#graphModalHeader
+  button.close(type="button", data-dismiss="modal", aria-label="Close", ng-click="close()")
+    span(aria-hidden="true") &times;
+  h4.modal-title {{host.hostname}}
+.modal-body
+  .row(style='overflow: auto; height: 400px')
+    include /index/panels/host/tab_view
+.modal-footer
+

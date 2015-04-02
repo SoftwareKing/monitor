@@ -1,0 +1,10 @@
+// The new view of Host
+include /lib/mixins/form
+
+.row
+  .col-xs-6
+    +group("node", "address", "主机地址", "fa-home", "")
+      +text("node", "address")(required, ng-minlength="2", ng-maxlength="20", placeholder="主机地址")
+  .col-xs-6
+    +group("node", "label", "显示名称", "fa-pencil-square-o", "")
+      +text("node", "label")(required, ng-minlength="2", ng-maxlength="20", placeholder="显示名称")

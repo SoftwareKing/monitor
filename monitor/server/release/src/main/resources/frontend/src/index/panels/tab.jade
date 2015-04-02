@@ -1,0 +1,32 @@
+// Created by brokenq on 14-12-30.
+mixin tab_nav(state, tab, url, action, label)
+  li(ng-tab-head="#{state}")&attributes(attributes)
+    a(data-toggle="#{tab}", href="javascript:void(0)", ng-click="#{action}()")
+      | #{label}
+
+mixin tab_pane()
+  .tab-pane(ng-tab-body='')&attributes(attributes)
+    block
+
+mixin section(title, data)
+  .widget-box&attributes(attributes)
+    .widget-header.text-center
+      h4 #{title}#{data}
+    .widget-body
+      .widget-main
+        block
+
+mixin progress(percent)
+  .progress.pos-rel(data-percent="#{percent}")&attributes(attributes)
+    .progress-bar(style="width: #{percent}")
+mixin treeChart(chartDomId,treeDomId)
+  .col-md-9
+    .chartmain(id="#{chartDomId}")
+  .col-md-3.chartwell
+    .left
+      .ztree(style="overflow:auto;",id="#{treeDomId}")
+mixin tab_row(label, percent)
+  .row
+    .col-md-4: p #{label}
+    .col-md-8: +progress(percent)
+

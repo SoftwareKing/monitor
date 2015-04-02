@@ -1,0 +1,40 @@
+//   Main container parts: menu component
+
+// 这个mixin是angular在运行时进行模板替换，并不是jade在编译期进行jade -> html变换
+
+mixin menu_item_content
+  i.menu-icon.fa.fa-caret-right(class="{{menuItem.css}}", ng-if="menuItem.parentId")
+  i.menu-icon(class="{{menuItem.css}}", ng-if="!menuItem.parentId")
+  span.menu-text {{menuItem.name}}
+
+mixin menu_item_iteration(variableName)
+  li.hover(ng-repeat="menuItem in #{variableName}", ng-include="'menu-item-template'")
+
+mixin menu_item_template
+  a(ui-sref="{{menuItem.state}}", ng-if="!menuItem.children")
+    +menu_item_content
+  a.dropdown-toggle(href="#", ng-if="menuItem.children")
+    +menu_item_content
+    b.arrow.fa.fa-angle-down
+  b.arrow
+  ul.submenu(ng-if="menuItem.children")
+    +menu_item_iteration('menuItem.children')
+
+ul.nav.nav-list(ng-controller="MenuCtrl")
+  a.navbar-brand(href="javascript:void(0)")
+    i.fa.fa-leaf.icon-2x
+    | {{system.app}}
+  +menu_item_iteration('topMenuItems')
+div.navbar-header.pull-right(role="navigation",style="position:absolute;top:0px;right:0px;")
+  ul.nav.ace-nav
+    .pull-left
+      span#Brand.navbar-brand
+        small#LogoId(style="filter:alpha(opacity=0);-moz-opacity:0;-khtml-opacity:0;opacity:0;") V{{system.version}} @{{system.builtAt}}
+    include tasks
+    include notifications
+    include messages
+    include shortcuts
+    include profile
+
+script(type="text/ng-template")#menu-item-template
+  +menu_item_template

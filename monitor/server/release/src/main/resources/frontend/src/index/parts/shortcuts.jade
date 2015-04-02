@@ -1,0 +1,19 @@
+//   Main container parts: shortcuts
+mixin shortcut(id, btn, icon)
+  button.btn(id=id, class="btn-#{btn}")
+    i(class="icon-#{icon}")
+  block
+.sidebar-shortcuts#sidebar-shortcuts(style="padding-top: 0px;")
+  .sidebar-shortcuts-large#sidebar-shortcuts-large
+    +shortcut("", "success", "signal")
+    +shortcut("", "info", "pencil")
+    +shortcut("", "warning", "group")
+    +shortcut("ace-settings-btn", "danger", "cog")
+      include page_settings
+  .sidebar-shortcuts-mini#sidebar-shortcuts-mini
+    span.btn.btn-success
+    span.btn.btn-info
+    span.btn.btn-warning
+    span.btn.btn-danger
+
+

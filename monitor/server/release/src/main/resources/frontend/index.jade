@@ -1,0 +1,40 @@
+-var sysName = '<%=sysName%>'
+-var sysApp = '<%=sysApp%>'
+-var styles = [<% styles.forEach( function(file){ print('"' + file + '",') }); %>]
+-var scripts = [<% scripts.forEach( function(file){ print('"' + file + '",') }); %>]
+doctype html
+include /lib/mixins/global
+html(ng-app="#{sysApp}.#{sysName}Index")
+  head(lang="zh-CN")
+    title(ng-bind="pageTitle")
+    meta(charset="utf-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    link(rel="icon", type="image/icon", href="/assets/favicon.ico")
+    each style in styles
+      link(rel="stylesheet", type="text/css", href=style)
+    each js in scripts
+      script(type="text/javascript", src=js)
+  body(ng-controller="IndexCtrl", ng-class="system.skin")
+    // 主体内容
+    .main-container#main-container
+      +check_option('main-container', 'fixed')
+      .sidebar.h-sidebar.navbar-collapse.collapse#sidebar(data-sidebar="true", data-sidebar-scroll="true", data-sidebar-hover="true")
+        //.navbar-header.pull-left
+        //  a.navbar-brand(href='#')
+        //    i.icon-leaf.green
+        //    span.white {{system.app}}
+        //    p.red  {{system.label}}系统
+        +check_option('sidebar', 'fixed')
+        include /index/parts/menus
+        +check_option('sidebar', 'collapsed')
+
+      .main-content
+        .main-content-inner
+          .page-content.main-content: .row: .col-xs-12: div(ui-view)
+
+      a.btn-scroll-up.btn.btn-sm.btn-inverse(href="java")#btn-scroll-up
+        i.icon-double-angle-up.icon-only.bigger-110
+    .feedback.alert.alert-block#feedback(style="display:none")
+      button.close(type="button")
+        i.icon-remove
+      span#feedback_content {{feedback.message}}

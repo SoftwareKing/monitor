@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dnt.monitor.server.repository.NodeRepository">
+
+    <!--对外映射-->
+
+    <select id="findAll" resultMap="nodeResult">
+        <include refid="selectNodes"/>
+    </select>
+
+    <select id="findByPath" resultMap="nodeResult">
+        <include refid="selectNode"/>
+        <where>n.path = #{path}</where>
+    </select>
+
+    <select id="findByResourceId" resultMap="nodeResult">
+        <include refid="selectNode"/>
+        <where>n.type = 'Resource' AND n.resource_id = #{resourceId}</where>
+    </select>
+
+    <select id="findAllByPath" resultMap="nodeResult">
+        <include refid="selectNodes"/>
+        <where>
+            (LOCATE(#{path}, n.path) = 1)
+            AND
+            (depth &gt; #{parentDepth})
+            AND
+            (depth &lt;= #{depth})
+            <if test="leaf != true">
+                AND ( n.type != 'Resource')
+            </if>
+        </where>
+    </select>
+
+    <select id="findByRange" resultMap="nodeResult">
+        <include refid="selectNode"/>
+        <where>n.type = 'Range' and n.range = #{range}</where>
+    </select>
+
+    <insert id="create" useGeneratedKeys="true" keyColumn="id" keyProperty="id" >
+        INSERT INTO managed_nodes
+        ( type,
+          path,    depth,   label,     icon,
+          <if test="_parameter instanceof dnt.monitor.model.ResourceNode">resource_id,</if>
+          <if test="_parameter instanceof dnt.monitor.model.RangeNode">`range`,</if>
+          `comment`,    state,    priority,    organization,
+          properties,
+          location,
+          maintain_window,
+          `schedule`,
+          credentials,
+          created_at,   updated_at)
+        VALUES
+        ( <include refid="detectNodeType"/>,
+          #{path}, #{depth}, #{label}, #{icon},
+          <if test="_parameter instanceof dnt.monitor.model.ResourceNode">#{resourceId},</if>
+          <if test="_parameter instanceof dnt.monitor.model.RangeNode">
+              #{range,typeHandler=net.happyonroad.util.IpRangeHandler},
+          </if>
+          #{comment}, #{state}, #{priority}, #{organization},
+          #{properties, typeHandler=net.happyonroad.util.PropertiesHandler},
+          #{location, typeHandler=net.happyonroad.util.LocationHandler},
+          #{maintainWindow, typeHandler=net.happyonroad.util.TimeSpanHandler},
+          #{schedule, typeHandler=net.happyonroad.util.ScheduleHandler},
+          #{credentials, typeHandler=net.happyonroad.util.CredentialsHandler},
+          #{createdAt}, #{updatedAt});
+    </insert>
+
+    <update id="update">
+        UPDATE managed_nodes
+        <set>
+            <if test="_parameter instanceof dnt.monitor.model.ResourceNode">
+                resource_id = #{resourceId},
+            </if>
+            <if test="_parameter instanceof dnt.monitor.model.RangeNode">
+                `range` = #{range,typeHandler=net.happyonroad.util.IpRangeHandler},
+            </if>
+            depth          = #{depth},
+            label          = #{label},
+            icon           = #{icon},
+            `comment`      = #{comment},
+            state          = #{state},
+            priority       = #{priority},
+            organization   = #{organization},
+            properties     = #{properties, typeHandler=net.happyonroad.util.PropertiesHandler},
+            location       = #{location, typeHandler=net.happyonroad.util.LocationHandler},
+            maintain_window = #{maintainWindow, typeHandler=net.happyonroad.util.TimeSpanHandler},
+            `schedule`     = #{schedule, typeHandler=net.happyonroad.util.ScheduleHandler},
+            credentials    = #{credentials, typeHandler=net.happyonroad.util.CredentialsHandler},
+            updated_at     = CURRENT_TIMESTAMP()
+        </set>
+        <where> id = #{id}</where>
+    </update>
+
+    <delete id="delete">
+        DELETE FROM managed_nodes WHERE path = #{path};
+    </delete>
+
+    <update id="updateNodesPath">
+        UPDATE managed_nodes
+        <set>
+            path = CONCAT(#{newPath}, RIGHT(path, LENGTH(path) - LENGTH(#{legacyPath}))),
+            depth = depth + #{diff}
+        </set>
+        <where>(LOCATE(#{legacyPath}, path) = 1)</where>
+    </update>
+
+    <update id="increaseNodeGroupSize">
+        UPDATE managed_nodes
+        <set>
+            group_size = group_size + #{diff}
+        </set>
+        <where>path = #{path}</where>
+    </update>
+
+    <update id="increaseNodeResourceSize">
+        UPDATE managed_nodes
+        <set>
+            resource_size = resource_size + #{diff}
+        </set>
+        <where>path = #{path}</where>
+    </update>
+
+    <select id="countGroupSize" resultType="int">
+        SELECT count(0) FROM managed_nodes
+        <where>type != 'Resource' AND
+            LOCATE(#{path}, path) = 1 AND
+            ( IF(#{path} = '/', 0, (LENGTH(#{path}) - LENGTH(Replace(#{path}, '/', ''))))
+            - IF(path = '/', 0, (LENGTH(path) - LENGTH(Replace(path, '/', '')))) = 1)
+        </where>
+    </select>
+
+    <select id="countResourceSize" resultType="int">
+        SELECT count(0) FROM managed_nodes
+        <where>type = 'Resource' AND
+            LOCATE(#{path}, path) = 1 AND
+            ( IF(#{path} = '/', 0, (LENGTH(#{path}) - LENGTH(Replace(#{path}, '/', ''))))
+            - IF(path = '/', 0, (LENGTH(path) - LENGTH(Replace(path, '/', '')))) = 1)
+        </where>
+    </select>
+
+    <update id="updateNodeChildrenSize">
+        UPDATE managed_nodes
+        <set>
+            group_size    = #{groupSize},
+            resource_size = #{resourceSize}
+        </set>
+        <where>path = #{path}</where>;
+    </update>
+
+    <!--SQL片段-->
+
+    <!-- TODO selectNode join 出来的 Resource 如何变为 Concrete Class: 当前设计为NodeManager的职责-->
+    <sql id="selectNode">
+        SELECT n.*,
+            r.type          AS resource_type,
+            r.label         AS resource_label,
+            r.performance   AS resource_performance,
+            r.config_status AS resource_config_status,
+            r.availability  AS resource_availability,
+            r.properties    AS resource_properties,
+            r.address       AS resource_address,
+            r.created_at    AS resource_created_at,
+            r.updated_at    AS resource_updated_at
+        FROM managed_nodes n
+        LEFT JOIN resources r
+        ON n.resource_id = r.id
+    </sql>
+
+    <sql id="selectNodes">
+        <include refid="selectNode"/>
+    </sql>
+
+    <sql id="detectNodeType">
+        <choose>
+            <when test="_parameter instanceof dnt.monitor.model.RangeNode">
+                'Range'
+            </when>
+            <when test="_parameter instanceof dnt.monitor.model.GroupNode">
+                'Group'
+            </when>
+            <otherwise>
+                'Resource'
+            </otherwise>
+        </choose>
+    </sql>
+
+    <!--结果映射-->
+
+    <resultMap id="nodeResult" type="ManagedNode" autoMapping="true">
+        <discriminator column="type" javaType="String">
+            <case value="Resource" resultMap="resourceNodeResult"/>
+            <case value="Group" resultMap="groupNodeResult"/>
+            <case value="Range" resultMap="rangeNodeResult"/>
+        </discriminator>
+    </resultMap>
+
+    <resultMap id="resourceNodeResult" type="ResourceNode" autoMapping="true" extends="managedNodeResult">
+        <result property="resourceId" column="resource_id"/>
+        <association property="resource" columnPrefix="resource_" autoMapping="true"
+                     resultMap="dnt.monitor.server.repository.ResourceRepository.resourceResult" />
+    </resultMap>
+    <resultMap id="groupNodeResult" type="GroupNode" autoMapping="true" extends="managedNodeResult">
+        <result property="groupSize" column="group_size"/>
+        <result property="resourceSize" column="resource_size"/>
+    </resultMap>
+    <resultMap id="rangeNodeResult" type="RangeNode" autoMapping="true" extends="groupNodeResult">
+        <result property="range" column="range" typeHandler="net.happyonroad.util.IpRangeHandler"/>
+    </resultMap>
+
+    <resultMap id="managedNodeResult" type="ManagedNode" autoMapping="true">
+        <id property="id" column="id"/>
+        <result property="properties" column="properties" typeHandler="net.happyonroad.util.PropertiesHandler"/>
+        <result property="location" column="location" typeHandler="net.happyonroad.util.LocationHandler"/>
+        <result property="maintainWindow" column="maintain_window" typeHandler="net.happyonroad.util.TimeSpanHandler"/>
+        <result property="schedule" column="schedule" typeHandler="net.happyonroad.util.ScheduleHandler"/>
+        <result property="credentials" column="credentials" typeHandler="net.happyonroad.util.CredentialsHandler"/>
+    </resultMap>
+</mapper>

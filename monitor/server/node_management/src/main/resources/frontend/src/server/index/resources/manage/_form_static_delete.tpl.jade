@@ -1,0 +1,8 @@
+
+div.deleteShow
+  i.icon-remove-sign.icon-3x(style="color:#d9534f")
+  h4.deleteContent 您是否要删除 ：{{node.label}} ？
+
+div#delWarning
+  div.alert.alert-danger.deleteWarning(role="alert")
+    该目录下包含{{nodes.length}}个节点！

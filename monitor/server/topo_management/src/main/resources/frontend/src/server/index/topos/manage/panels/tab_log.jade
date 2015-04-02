@@ -1,0 +1,16 @@
+// Created by brokenq on 14-12-30.
+include /lib/mixins/list
+include /index/panels/tab
+
++tab_pane()
+  .datalist
+    +toolbar
+      +button_group
+        +tool_button("monitorlogTable.reload()", "refresh", "", "*", "", "")
+    +page_table("monitorlogTable","selectionService")
+      +row("monitorlog", "id", "selectionService")
+        td(data-title="'级别'") {{monitorlog.severity}}
+        td(data-title="'来源(群组/资源/组件)'") {{monitorlog.path}}
+        td(data-title="'消息'") {{monitorlog.content}}
+        td(data-title="'产生时间'") {{monitorlog.createdAt | date:'yyyy-MM-dd HH:MM:ss'}}
+

@@ -1,0 +1,39 @@
+#!/bin/sh
+#
+# Generate two month CPU data, per-entry / 5 minutes
+#
+#  There are some constrants:
+#
+#    usage = usrUsage + sysUsage
+#    usage + idle = N
+#    ioWait < usage
+#    usage <= n
+#    n为系统有几个CPU，当下取值为1
+
+path="$1"
+if [ "$path" == "" ]; then
+  echo "Please specify the rrd file path"
+  exit 1
+fi
+if [ "$2" != "" ]; then
+  startAt="$2"
+else
+  startAt="$(date "+%s")"
+fi
+
+for((i=1;i<17521;i++))
+do
+  stamp=$((startAt + i * 300))
+  usage=$((RANDOM % 99 + 1))
+  idle=$((100-usage))
+  usrUsage=$((RANDOM % usage))
+  sysUsage=$((usage - usrUsage))
+  ioWait=$((RANDOM % usage))
+
+  cmd="rrdtool update $path $stamp:$usage:$usrUsage:$sysUsage:$idle:$ioWait"
+  $cmd
+  if [ $((i % 175)) -eq 0 ]; then
+     printf "."
+  fi
+done
+echo "done!"

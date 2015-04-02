@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <packaging>pom</packaging>
+
+    <parent>
+        <groupId>dnt</groupId>
+        <artifactId>monitor</artifactId>
+        <version>1.3.0-SNAPSHOT</version>
+    </parent>
+
+    <groupId>dnt.monitor</groupId>
+    <artifactId>engine</artifactId>
+    <name>Monitor Engine</name>
+    <description>
+        The monitor engine which should be deployed to the enterprise inner-net.
+    </description>
+    <properties>
+        <release.dir>${release.root}/monitor-engine-${project.version}</release.dir>
+    </properties>
+
+    <modules>
+        <!--基础监控架构，主要是与服务器的连接，转发等-->
+        <module>infrastructure</module>
+        <!--管理需要监控的资源，暂时把discovery也放在这个模块-->
+        <module>resourcing</module>
+        <!--执行主动监控任务，就是原先的采集模块-->
+        <module>monitoring</module>
+        <!--执行被动接收的监控任务(trap/syslog/agent)-->
+        <module>receiving</module>
+        <!--检测阈值事件-->
+        <module>thresholding</module>
+        <!--记录采集指标-->
+        <module>recording</module>
+        <!--监控引擎聚合-->
+        <module>release</module>
+    </modules>
+
+    <dependencies>
+        <dependency>
+            <groupId>dnt.monitor.resource</groupId>
+            <artifactId>definition_model</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.easymock</groupId>
+            <artifactId>easymock</artifactId>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifestEntries>
+                            <App-Config>dnt.monitor.engine.DefaultEngineAppConfig</App-Config>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>dnt.monitor.engine</groupId>
+                <artifactId>infrastructure</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>dnt.monitor.engine</groupId>
+                <artifactId>monitoring</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>dnt.monitor.engine</groupId>
+                <artifactId>receiving</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>dnt.monitor.engine</groupId>
+                <artifactId>recording</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>dnt.monitor.engine</groupId>
+                <artifactId>resourcing</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>dnt.monitor.engine</groupId>
+                <artifactId>thresholding</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>dnt.monitor.resource</groupId>
+                <artifactId>definition_model</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>dnt.monitor.resource</groupId>
+                <artifactId>engine_definition</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>dnt.monitor.resource</groupId>
+                <artifactId>engine_device</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>dnt.monitor.resource</groupId>
+                <artifactId>engine_monitor</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>dnt.monitor.resource</groupId>
+                <artifactId>engine_linux</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>dnt.monitor.resource</groupId>
+                <artifactId>engine_windows</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>dnt.monitor.resource</groupId>
+                <artifactId>engine_switch</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+</project>

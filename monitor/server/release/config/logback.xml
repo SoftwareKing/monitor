@@ -1,0 +1,39 @@
+<!--这个目录不需要放到classpath下，应用程序应该主动配置logback，让其使用该对象-->
+<configuration scan="true" scanPeriod="30 seconds" debug="false">
+
+    <property resource="config/server.properties" />
+
+    <include resource="logback-basic.xml"/>
+
+    <appender name="Rolling" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/server.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <fileNamePattern>logs/server.%i.log</fileNamePattern>
+            <minIndex>1</minIndex>
+            <maxIndex>10</maxIndex>
+        </rollingPolicy>
+
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>10MB</maxFileSize>
+        </triggeringPolicy>
+
+        <encoder>
+            <pattern>%d{dd HH:mm:ss.SSS} [%thread] %-5level %-25c{0} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="Rolling" />
+    </root>
+
+    <logger name="dnt.monitor" level="INFO" />
+    <logger name="dnt.monitor.resolver" level="WARN" />
+    <logger name="net.happyonroad.platform.resolver" level="ERROR" />
+    <!--Set below level to warn to suppress component loading message-->
+    <logger name="net.happyonroad.component.container.support.DefaultComponentLoader" level="WARN" />
+    <logger name="dnt.monitor.server.support.ObjectEventPrinter" level="WARN" />
+    <!--Set below level to warn to hide url mapping-->
+    <logger name="net.happyonroad.platform.web.SpringMvcConfig" level="WARN" />
+    <logger name="dnt.monitor.server.support.EventManager" level="WARN" />
+</configuration>

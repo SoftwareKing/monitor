@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hello Qunee for HTML5</title>
+    <meta charset="utf-8">
+    <script src="js/jquery/jquery.min.js"></script>
+    <script src="lib/qunee-min.js"></script>
+    <script>
+        var graph;
+        $(function(){
+            graph = new Q.Graph('canvas');
+
+            var hello = graph.createNode("Hello", -100, -50);
+            hello.image = Q.Graphs.server;
+            var qunee = graph.createNode("Qunee", 100, 50);
+            var edge = graph.createEdge("Hello\nQunee", hello, qunee);
+            edge.setStyle(Q.Styles.EDGE_LINE_DASH, [3,4]);
+        })
+    </script>
+</head>
+<body>
+<div style="width: 800px; height: 500px; margin: auto; " id="canvas"/>
+</body>
+</html>

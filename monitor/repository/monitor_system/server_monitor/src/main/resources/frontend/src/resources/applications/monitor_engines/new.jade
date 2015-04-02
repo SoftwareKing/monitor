@@ -1,0 +1,28 @@
+// The new view of MonitorEngine
+include /lib/mixins/form
+hr
+.row
+  .col-xs-6
+    +group("node", "resource.name", "引擎名称", "fa-pencil-square-o", "必填")
+      +text("node","resource.name")(request, ng-pattern="/^[a-z]*$/")
+  .col-xs-6
+    +group("node", "label", "引擎别名", "fa-pencil-square-o", "")
+      +text("node","label")(request)
+.row
+  .col-xs-6
+    +group("node", "properties.engine.address", "主机地址", "fa-pencil-square-o", "必填")
+      +text("node","properties.engine.address")(request)
+  .col-xs-6
+    +group("node", "properties.engine.os", "操作系统", "fa-tag", "必填")
+      +text("node","properties.engine.os")(request)
+.row
+  .col-xs-6
+    +group("node", "properties.engine.username", "用户名", "fa-pencil-square-o", "必填")
+      +text("node","properties.engine.username")(request)
+  .col-xs-6
+    +group("node", "properties.engine.password", "密码", "fa-tag", "必填")
+      +text("node","properties.engine.password")(request)
+.row
+  .col-xs-6
+    +group("node", "properties.engine.installAddress", "安装地址", "fa-pencil-square-o", "必填")
+      +text("node","properties.engine.installAddress")(request)

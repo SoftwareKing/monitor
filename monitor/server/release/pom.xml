@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>dnt.monitor</groupId>
+        <artifactId>server</artifactId>
+        <version>1.3.0-SNAPSHOT</version>
+    </parent>
+
+    <groupId>dnt.monitor.server</groupId>
+    <artifactId>release</artifactId>
+    <name>Monitor Server Release</name>
+    <description>
+        The monitor server release project
+    </description>
+    <properties>
+        <debug.port>1095</debug.port>
+        <jmx.port>1097</jmx.port>
+        <rmi.port>1099</rmi.port>
+        <http.port>8070</http.port>
+        <app.version>${project.version}</app.version>
+        <app.name>MonitorServer</app.name>
+        <db.name>monitor</db.name>
+        <grunt.exec>grunt</grunt.exec>
+    </properties>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>dnt.monitor.server</groupId>
+            <artifactId>topo_management</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>dnt.monitor</groupId>
+            <artifactId>repository</artifactId>
+            <version>${project.version}</version>
+            <type>pom</type>
+            <scope>runtime</scope>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>${version.maven.jar}</version>
+                <configuration>
+                    <archive>
+                        <manifestEntries>
+                            <Main-Class>dnt.monitor.server.Configure</Main-Class>
+                            <Class-Path>commons-io.commons-io-${version.commons.io}.jar</Class-Path>
+
+                            <App-Config>dnt.monitor.server.ServerReleaseAppConfig</App-Config>
+                            <Web-Repository>dnt.monitor.server.web.controller</Web-Repository>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+          <id>windows</id>
+          <activation>
+            <os><family>Windows</family></os>
+          </activation>
+          <properties>
+            <grunt.exec>grunt.cmd</grunt.exec>
+          </properties>
+        </profile>
+        <profile>
+            <id>release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>net.happyonroad</groupId>
+                        <artifactId>spring-component-builder</artifactId>
+                        <version>${version.component-framework}</version>
+                        <executions>
+                            <execution>
+                                <id>package-app</id>
+                                <goals><goal>package</goal></goals>
+                                <configuration>
+                                    <target>${release.dir}</target>
+                                    <appName>${app.name}</appName>
+                                    <appPort>${rmi.port}</appPort>
+                                    <jmx>${jmx.port}</jmx>
+                                    <debug>${debug.port}</debug>
+                                    <jvmOptions>-Dcomponent.feature.resolvers=net.happyonroad.platform.resolver.MybatisFeatureResolver,net.happyonroad.platform.resolver.SpringMvcFeatureResolver,dnt.monitor.resolver.ModelFeatureResolver,dnt.monitor.server.resolver.ServerFeatureResolver -Xms128m -Xmx256m -XX:MaxPermSize=256m -Djava.awt.headless=true</jvmOptions>
+                                    <folders>${project.basedir}/webapp,${project.basedir}/db,${project.basedir}/script</folders>
+                                    <propertyFiles>${project.basedir}/config/server.properties,${project.basedir}/db/migrate/environments/development.properties</propertyFiles>
+                                    <logbackFile>${project.basedir}/config/logback.xml</logbackFile>
+                                    <frontendNodeModules>${release.root}/../node_modules</frontendNodeModules>
+                                </configuration>
+                            </execution>
+
+                            <execution>
+                                <id>clean-app</id>
+                                <goals><goal>clean</goal></goals>
+                                <configuration>
+                                    <target>${release.dir}</target>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>${version.maven.antrun}</version>
+                        <inherited>false</inherited>
+                        <executions>
+                            <execution>
+                                <id>clean-frontend</id>
+                                <phase>clean</phase>
+                                <goals><goal>run</goal></goals>
+                                <configuration>
+                                    <target>
+                                        <echo message="Clean frontend build|deploy" />
+                                        <delete dir="${release.dir}/webapp/build/"/>
+                                        <delete dir="${release.dir}/webapp/deploy/"/>
+                                    </target>
+                                </configuration>
+                            </execution>
+
+                            <execution>
+                                <id>build-frontend</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <target>
+                                        <exec dir="${release.dir}/webapp/frontend" executable="${grunt.exec}" failonerror="true">
+                                            <arg line="build --verbose"/>
+                                        </exec>
+                                        <echo message="Frontend is built" />
+                                    </target>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>compile-frontend</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <target>
+                                        <exec dir="${release.dir}/webapp/frontend" executable="${grunt.exec}" failonerror="true">
+                                            <arg line="compile"/>
+                                        </exec>
+                                        <delete dir="${release.dir}/webapp/build/"/>
+                                        <echo message="Frontend is compiled" />
+                                    </target>
+                                </configuration>
+                            </execution>
+
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+
+        </profile>
+
+    </profiles>
+
+    
+</project>

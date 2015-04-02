@@ -1,0 +1,20 @@
+//   Index.jade parts: Profile
+mixin profile_link(text, icon, action)
+  li
+    a(ui-sref="#{action}", ng-click!=attributes.ngClick)
+      i(class="icon-#{icon}")
+      | #{text}
+
+li.light-blue
+  a.dropdown-toggle(data-toggle="dropdown", href="javascript:void(0)")
+    img.nav-user-photo(src="assets/user.jpg", alt="{{user.username}}'s Photo")
+    span.user-info
+      small 欢迎,
+      | {{user.username}}
+    i.icon-caret-down
+  ul.user-menu.dropdown-menu-right.dropdown-menu.dropdown-yellow.dropdown-caret.dropdown-close
+    +profile_link("设置", "cog")
+    +profile_link("个人资料", "user")
+    +profile_link("修改密码", "cog","users.editPwd")
+    li.divider
+    +profile_link("注销", "off")(ngClick="logout()")

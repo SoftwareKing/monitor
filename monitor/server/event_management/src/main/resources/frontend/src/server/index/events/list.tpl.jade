@@ -1,0 +1,14 @@
+include /lib/mixins/list
+
+.datalist
+  +toolbar
+    +button_group
+      +tool_button("eventTable.reload()", "refresh", "", "*", "", "")
+  +page_table("eventTable","selectionService")
+    +row("event", "id", "selectionService")
+      td(data-title="'级别'") {{event.severity}}
+      td(data-title="'来源(群组/资源/组件)'") {{event.path}}
+      td(data-title="'消息'") {{event.content}}
+      td(data-title="'优先级'") {{event.priority}}
+      td(data-title="'确认状态'") {{event.ack}}
+      td(data-title="'创建时间'") {{event.createdAt}}

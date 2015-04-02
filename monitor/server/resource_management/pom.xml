@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>dnt.monitor</groupId>
+        <artifactId>server</artifactId>
+        <version>1.3.0-SNAPSHOT</version>
+    </parent>
+
+    <groupId>dnt.monitor.server</groupId>
+    <artifactId>resource_management</artifactId>
+    <name>Resource Management</name>
+    <description>
+        Management all kinds of resources
+    </description>
+
+    <dependencies>
+        <dependency>
+            <groupId>dnt.monitor.resource</groupId>
+            <artifactId>server_switch</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>dnt.monitor.resource</groupId>
+            <artifactId>server_host</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>dnt.monitor.resource</groupId>
+            <artifactId>server_monitor</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifestEntries>
+                            <App-Config>dnt.monitor.server.ResourceAppConfig</App-Config>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
+</project>

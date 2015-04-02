@@ -1,0 +1,20 @@
+//   Index.jade parts: tasks
+
+mixin task_progress(text, progress)
+  li
+    a(href="#")
+      .clearfix
+        span.pull-left= text
+        span.pull-right= progress
+      .progress.progress-mini
+        .progress-bar(style="width:#{progress}")
+li.grey.width70
+  +dropdown_toggle("icon-tasks", "grey", 4)
+  ul.pull-right.dropdown-navbar.dropdown-menu.dropdown-caret.dropdown-close
+    +dropdown_header("ok", "4 Tasks to complete")
+    +task_progress("Software Update", "65%")
+    +task_progress("Hardware Upgrade", "37%")
+    +task_progress("Unit Testing", "15%")
+    +task_progress("Bug Fixes", "90%")
+    +summary("See tasks with details")
+

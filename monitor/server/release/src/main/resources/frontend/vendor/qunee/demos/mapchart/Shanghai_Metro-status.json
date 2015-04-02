@@ -1,0 +1,84 @@
+[{
+    "line": "11",
+    "fragments": [
+        {
+            "color": "#FF0000",
+            "direction": "right",
+            "stations": [230, 231, 232]
+        },
+        {
+            "color": "#FFFF00",
+            "direction": "left",
+            "stations": [229, 230, 231, 232]
+        },
+        {
+            "color": "#00FF00",
+            "direction": "left",
+            "stations": [227, 228, 229]
+        },
+        {
+            "color": "#FF0000",
+            "stations": [223, 224, 225]
+        },
+        {
+            "color": "#00FF00",
+            "stations": [25, 220, 221]
+        }
+    ]
+},{
+    "line": "6",
+    "fragments": [
+        {
+            "color": "#FF0000",
+            "direction": "right",
+            "stations": [135, 134, 133]
+        },
+        {
+            "color": "#FFFF00",
+            "direction": "left",
+            "stations": [132, 131, 130]
+        },
+        {
+            "color": "#00FF00",
+            "direction": "left",
+            "stations": [128, 13]
+        },
+        {
+            "color": "#FF0000",
+            "stations": [112, 116, 113, 117, 118]
+        },
+        {
+            "color": "#00FF00",
+            "stations": [119, 122, 120, 123, 121, 124, 125,
+                126, 127]
+        }
+    ]
+},{
+    "line": "3",
+    "fragments": [
+        {
+            "color": "#FF0000",
+            "direction": "right",
+            "stations": [6, 95, 96, 97]
+        },
+        {
+            "color": "#FFFF00",
+            "direction": "left",
+            "stations": [{"id":12,"yOffset":0.5}, {"id":11,"yOffset":0.5}, {"id":8,"yOffset":0.5}, {"id":9,"yOffset":0.5},
+                {"id":10,"yOffset":0.5}, {"id":25,"yOffset":0.5}]
+        },
+        {
+            "color": "#00FF00",
+            "direction": "left",
+            "stations": [{"id":238,"yOffset":0.5}, {"id":22,"yOffset":0.5}, {"id":27,"yOffset":0.5}]
+        },
+        {
+            "color": "#FF0000",
+            "stations": [98, 99, 100, 101, 104]
+        },
+        {
+            "color": "#00FF00",
+            "stations": [108, 109, 106, 110, 111]
+        }
+    ]
+}]

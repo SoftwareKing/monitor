@@ -1,0 +1,15 @@
+include /lib/mixins/form
+
+.row
+  .col-xs-6
+    div(ng-if="parentNodeShow")
+      +group("node", "pNode", "上级节点", "fa-caret-down", "必选")
+        div(ng-ztree-async, node-name="label", top-level-url="/api/node", url="/api/nodes?leaf=false",
+        tree-id="monitorTree", ng-model="monitorModel", type="radio", check-disabled="true")
+.row
+  .col-xs-6
+    +group("node", "type", "资源类型", "fa-caret-down", "必选")
+      div(ng-ztree, tree-model="resourceTree", tree-id="typeTree", ng-model="resourceType", type="radio",
+      disabled-nodes="disabledNodes", removed-nodes="removedNodes", editable="editable")
+div(ui-view="resourceItem")
+div(ui-view="credentials")

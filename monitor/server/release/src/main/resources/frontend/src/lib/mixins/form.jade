@@ -1,0 +1,91 @@
+//- A form with mousedown blur
+mixin form(name)
+  +base_form(name)(ng-model-options="{ updateOn: 'mousedown blur' }")&attributes(attributes)
+//- A standard form
+mixin base_form(name)
+  form.form-horizontal(name=name, novalidate="novalidate", role="form")&attributes(attributes)
+    block
+//- A section contains several form groups
+mixin section(title)
+  .widget-box
+    .widget-header
+      h4 #{title}
+    .widget-body
+      .widget-main
+        block
+//- A group contains a input label and field
+mixin group(object, field, label, icon, tip)
+  .form-group.has-info&attributes(attributes)
+    label.col-xs-12.col-sm-2.control-label.no-padding-right(for="#{object}_#{field.replace('.','_')}") #{label}
+    .col-xs-12.col-sm-7
+      span.block.input-icon.input-icon-right
+        block
+        if icon 
+          i(class="ace-icon fa #{icon}")
+    .help-block.col-xs-12.col-sm-reset.inline #{tip}
+//- a input contains represents a input field
+mixin input(object, field)
+  input.form-control(id="#{object}_#{field.replace('.','_')}", name="#{object}.#{field}", ng-model="#{object}.#{field}")&attributes(attributes)
+//- a text input contains represents a input field
+mixin text(object, field)
+  +input(object,field)(type="text")&attributes(attributes)
+//- a radio input contains represents a input field
+mixin radio(object, field)
+  +input(object,field)(type="radio")&attributes(attributes)
+//- a radio group
+mixin radio_group(object, field, datas)
+  label.radio-inline(ng-repeat="data in #{datas}")
+    +radio(object, field)(ng-model="$parent.#{object}.#{field}", ng-value="data.value", class="radio-group")&attributes(attributes)
+    | {{data.label}}
+//- a checkbox input contains represents a input field
+mixin checkbox(object, field)
+  +input(object,field)(type="checkbox")&attributes(attributes)
+//- a checkbox group
+mixin check_group_for_multi_models(object, field, datas)
+  label.checkbox-inline(ng-repeat="data in #{datas}")
+    +checkbox(object, field)(ng-model="$parent.#{object}[data.model]", ng-true-value="'{{data.value}}'", ng-false-value="''", class="check-group")&attributes(attributes)
+    | {{data.label}}
+
+mixin check_group(object, field, datas)
+  input.hidden(id="#{object}_#{field.replace('.','_')}_check", ng-model="#{object}.#{field}", type="text")
+  label.checkbox-inline(ng-repeat="data in #{datas}")
+    input(name="#{object}.#{field}", type="checkbox", value="{{data.value}}")
+    | {{data.label}}
+//- a file input contains represents a input field
+mixin file(object, field)
+  +input(object,field)(type="file")&attributes(attributes)
+//- a area contains represents a input text area
+mixin area(object, field)
+  textarea.form-control(id="#{object}_#{field.replace('.','_')}", name="#{object}.#{field}", ng-model="#{object}.#{field}")&attributes(attributes)
+//- a select contains represents a select field
+mixin select(object, field)
+  select.form-control(id="#{object}_#{field}", name="#{object}.#{field}", ng-model="#{object}.#{field}")&attributes(attributes)
+//- a select contains represents a select field
+mixin select2(object, field)
+  +input(object, field)(class="remove-form-control", ng-model-options="{ updateOn: 'change' }")&attributes(attributes)
+//- the action bar in form bottom(or top)
+mixin action_bar
+  .clearfix.form-actions
+    .col-md-offset-4.col-md-12
+      block
+//- the action button in action bar
+mixin action_button(title,type,icon,level)
+  button.btn.no-border(class="btn-#{level}",type=type)&attributes(attributes)
+    i.bigger-110(class="icon-#{icon}")
+    | #{title}
+//- the default submit action
+mixin action_submit(label)
+  +action_button(label,"submit","ok","primary")(ng-disabled="submited")&attributes(attributes)
+//- the default cancel/reset action
+mixin action_cancel(label)
+  +action_button(label,"reset","undo","default")&attributes(attributes)
+//dict
+mixin dictName(title)
+  label.col-xs-12.col-sm-3.control-label.no-padding-right #{title}
+  .col-xs-12.col-sm-2
+    input(type="text",name="keyInput",required)&attributes(attributes)
+mixin dictValue(val,tip)
+  label.col-xs-12.col-sm-1.control-label.no-padding-right #{val}
+  .col-xs-12.col-sm-2
+    input(type="text",name="valueInput",required)&attributes(attributes)
+  .help-block.col-xs-12.col-sm-reset.inline #{tip}

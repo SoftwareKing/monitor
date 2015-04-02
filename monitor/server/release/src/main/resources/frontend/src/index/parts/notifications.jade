@@ -1,0 +1,22 @@
+//   Index.jade parts: notifcations
+mixin notification(text, btn, icon, badge, number)
+  li
+    a(href="#")
+      .clearfix
+        span.pull-left
+          i.btn.btn-xs.no-hover(class="btn-#{btn} icon-#{icon}")
+          | #{text}
+        span.pull-right.badge(class="badge-#{badge}")= number
+li.purple.width70
+  +dropdown_toggle("icon-bell-alt icon-animated-bell" ,"important", 8)
+  ul.pull-right.dropdown-navbar.navbar-pink.dropdown-menu.dropdown-caret.dropdown-close
+    +dropdown_header("warning-sign", "8 Notifications")
+    +notification("New Comments", "pink", "comment", "+12")
+    li
+      a(href="#")
+        i.btn.btn-xs.btn-primary.icon-user
+        | Bob just signed up as an editor ...
+    +notification("New Orders", "success", "success", "+8")
+    +notification("Followers", "info", "info", "+11")
+    +summary("See all notifications")
+

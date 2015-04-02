@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dnt.monitor.server.repository.SwitchRepository">
+
+    <!--对外接口映射: override DeviceRepository-->
+
+    <select id="findAllByKeyword" resultMap="switchResult">
+        <include refid="selectSwitches"/>
+        <include refid="dnt.monitor.server.repository.DeviceRepository.judgeByKeyword"/>
+        <include refid="dnt.monitor.server.repository.ResourceRepository.paginate"/>
+    </select>
+
+    <select id="findById" resultMap="fullSwitchResult">
+        <include refid="selectSwitch"/>
+        <where>s.id = #{id}</where>
+    </select>
+
+    <select id="findByAddress" resultMap="fullSwitchResult">
+        <include refid="selectSwitch"/>
+        <where>s.address = #{address}</where>
+    </select>
+
+    <insert id="create">
+        BEGIN;
+        <include refid="dnt.monitor.server.repository.ResourceRepository.insertResource"/>
+        <selectKey keyProperty="id" keyColumn="id" order="AFTER" resultType="long" statementType="PREPARED">
+            <include refid="dnt.monitor.server.repository.ResourceRepository.selectKey"/>
+        </selectKey>
+        <include refid="dnt.monitor.server.repository.DeviceRepository.insertDevice"/>
+        <include refid="insertSwitch"/>
+        COMMIT;
+    </insert>
+
+    <insert id="createPartialSwitch">
+        <include refid="insertPartialSwitch"/>
+    </insert>
+
+    <update id="update" keyProperty="id">
+        BEGIN;
+        <include refid="dnt.monitor.server.repository.ResourceRepository.updatingResourceById"/>;
+        <include refid="dnt.monitor.server.repository.DeviceRepository.updatingDevice"/>
+        <include refid="dnt.monitor.server.repository.DeviceRepository.judgeByTid"/>;
+        <include refid="updatingSwitch"/>
+        <include refid="dnt.monitor.server.repository.DeviceRepository.judgeByTid"/>;
+        COMMIT;
+    </update>
+
+
+    <!--内部实现映射-->
+
+
+    <!--内部实现SQL片段-->
+
+    <sql id="selectSwitch">
+        SELECT s.*
+        FROM switches s
+    </sql>
+
+    <sql id="selectSwitches">
+        <include refid="selectSwitch"/>
+    </sql>
+
+    <sql id="insertSwitch">
+        INSERT INTO t_switches (tid, cdp_entries)
+        VALUES (LAST_INSERT_ID(),
+                #{cdpEntries, typeHandler=dnt.monitor.server.util.CdpEntriesHandler});
+    </sql>
+
+    <sql id="insertPartialSwitch">
+        INSERT INTO t_switches (tid, cdp_entries)
+        VALUES (#{id}, #{cdpEntries, typeHandler=dnt.monitor.server.util.CdpEntriesHandler});
+    </sql>
+
+    <sql id="updatingSwitch">
+        UPDATE t_switches
+        <set>
+            cdp_entries = #{cdpEntries,typeHandler=dnt.monitor.server.util.CdpEntriesHandler}
+        </set>
+    </sql>
+
+
+    <!--结果映射-->
+
+    <resultMap id="switchResult" type="Switch" autoMapping="true"
+               extends="dnt.monitor.server.repository.DeviceRepository.deviceResult">
+        <result property="cdpEntries" column="cdp_entries" typeHandler="dnt.monitor.server.util.CdpEntriesHandler"/>
+   </resultMap>
+
+    <resultMap id="fullSwitchResult" type="Switch" autoMapping="true"
+               extends="dnt.monitor.server.repository.DeviceRepository.fullDeviceResult">
+        <result property="cdpEntries" column="cdp_entries" typeHandler="dnt.monitor.server.util.CdpEntriesHandler"/>
+    </resultMap>
+
+
+</mapper>

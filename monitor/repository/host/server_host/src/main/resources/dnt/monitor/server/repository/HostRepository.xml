@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dnt.monitor.server.repository.HostRepository">
+
+    <!--对外接口映射: override DeviceRepository-->
+
+    <select id="countByKeyword" resultType="Long">
+        <include refid="countHosts"/>
+        <include refid="judgeByKeyword"/>
+    </select>
+
+    <select id="findAllByKeyword" resultMap="hostResult">
+        <include refid="selectHosts"/>
+        <include refid="judgeByKeyword"/>
+        <include refid="dnt.monitor.server.repository.ResourceRepository.paginate"/>
+    </select>
+
+    <select id="findById" resultMap="fullHostResult">
+        <include refid="selectHost"/>
+        <where>h.id = #{id}</where>
+    </select>
+
+    <select id="findByAddress" resultMap="fullHostResult">
+        <include refid="selectHost"/>
+        <where>h.address = #{address}</where>
+    </select>
+
+    <insert id="create">
+        BEGIN;
+        <include refid="dnt.monitor.server.repository.ResourceRepository.insertResource"/>
+        <selectKey keyProperty="id" keyColumn="id" order="AFTER" resultType="long" statementType="PREPARED">
+            <include refid="dnt.monitor.server.repository.ResourceRepository.selectKey"/>
+        </selectKey>
+        <include refid="dnt.monitor.server.repository.DeviceRepository.insertDevice"/>
+        <include refid="insertHost"/>
+        COMMIT;
+    </insert>
+
+    <insert id="createPartialHost">
+        <include refid="insertPartialHost"/>
+    </insert>
+
+    <insert id="createCPU" useGeneratedKeys="true" keyProperty="id">
+        BEGIN;
+        <include refid="dnt.monitor.server.repository.ResourceRepository.insertComponent"/>
+        <selectKey keyProperty="id" keyColumn="id" order="AFTER" resultType="long" statementType="PREPARED">
+            <include refid="dnt.monitor.server.repository.ResourceRepository.selectKey"/>
+        </selectKey>
+        <include refid="insertCPU"/>
+        COMMIT;
+    </insert>
+
+    <insert id="createMemory" useGeneratedKeys="true" keyProperty="id">
+        BEGIN;
+        <include refid="dnt.monitor.server.repository.ResourceRepository.insertComponent"/>
+        <selectKey keyProperty="id" keyColumn="id" order="AFTER" resultType="long" statementType="PREPARED">
+            <include refid="dnt.monitor.server.repository.ResourceRepository.selectKey"/>
+        </selectKey>
+        <include refid="insertMemory"/>
+        COMMIT;
+    </insert>
+
+    <insert id="createDisk" useGeneratedKeys="true" keyProperty="id">
+        BEGIN;
+        <include refid="dnt.monitor.server.repository.ResourceRepository.insertComponent"/>
+        <selectKey keyProperty="id" keyColumn="id" order="AFTER" resultType="long" statementType="PREPARED">
+            <include refid="dnt.monitor.server.repository.ResourceRepository.selectKey"/>
+        </selectKey>
+        <include refid="insertDisk"/>
+        COMMIT;
+    </insert>
+
+    <insert id="createPartition" useGeneratedKeys="true" keyProperty="id">
+        BEGIN;
+        <include refid="dnt.monitor.server.repository.ResourceRepository.insertComponent"/>
+        <selectKey keyProperty="id" keyColumn="id" order="AFTER" resultType="long" statementType="PREPARED">
+            <include refid="dnt.monitor.server.repository.ResourceRepository.selectKey"/>
+        </selectKey>
+        <include refid="insertPartition"/>
+        COMMIT;
+    </insert>
+
+    <!--内部实现映射-->
+
+    <select id="findCPU" resultMap="cpuResult">
+        <include refid="selectCPU"/>
+        <where>cpu.resource_id = #{id} and cpu.idx = 0</where>
+    </select>
+
+    <select id="findCPUs" resultMap="cpuResult">
+        <include refid="selectCPUs"/>
+        <where>cpu.resource_id = #{id} and cpu.idx > 0</where>
+    </select>
+
+    <select id="findMemory" resultMap="memoryResult">
+        <include refid="selectMemories"/>
+        <include refid="dnt.monitor.server.repository.ResourceRepository.judgeByResourceId"/>
+    </select>
+
+    <select id="findDisks" resultMap="diskResult">
+        <include refid="selectDisks"/>
+        <include refid="dnt.monitor.server.repository.ResourceRepository.judgeByResourceId"/>
+    </select>
+
+    <select id="findPartitions" resultMap="partitionResult">
+        <include refid="selectPartitions"/>
+        <include refid="dnt.monitor.server.repository.ResourceRepository.judgeByResourceId"/>
+    </select>
+
+
+    <!--内部实现SQL片段-->
+
+    <sql id="selectHost">
+        SELECT h.*
+        FROM hosts h
+    </sql>
+
+    <sql id="selectHosts">
+        <include refid="selectHost"/>
+    </sql>
+
+    <sql id="countHosts">
+        SELECT COUNT(0) FROM hosts h
+    </sql>
+
+    <sql id="selectCPUs">
+        SELECT cpu.* FROM cpus cpu
+    </sql>
+    <sql id="selectCPU">
+        <include refid="selectCPUs"/>
+    </sql>
+    <sql id="selectMemories">
+        SELECT * FROM memories
+    </sql>
+    <sql id="selectDisks">
+        SELECT * FROM disks
+    </sql>
+    <sql id="selectPartitions">
+        SELECT * FROM partitions
+    </sql>
+
+    <!--TODO 这种情况考虑 1.限制哪些字段可以匹配， 2. 增加索引, 3.改用全文检索-->
+    <sql id="judgeByKeyword">
+        <where>
+            <if test="keyword != null and keyword != ''">
+                <bind name="pattern" value="'%' + keyword + '%' "/>
+                h.label LIKE #{pattern} OR
+                h.address LIKE #{pattern} OR
+                h.description LIKE #{pattern} OR
+                h.contact LIKE #{pattern} OR
+                h.location LIKE #{pattern} OR
+                h.hostname LIKE #{pattern} OR
+                h.manufacturer LIKE #{pattern} OR
+                h.model_name LIKE #{pattern} OR
+                h.os LIKE #{pattern}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="insertHost">
+        INSERT INTO t_hosts (tid, hostname, domain, manufacturer, model_name,
+                             os, version, serial_number, cpu_count, process_count,
+                             start_at, local_time)
+        VALUES (LAST_INSERT_ID(), #{hostname}, #{domain}, #{manufacturer}, #{modelName},
+                #{os}, #{version}, #{serialNumber}, #{cpuCount}, #{processCount},
+                #{startAt}, #{localTime} );
+    </sql>
+
+    <sql id="insertPartialHost">
+        INSERT INTO t_hosts (tid, hostname, domain, manufacturer, model_name,
+                             os, version, serial_number, cpu_count, process_count,
+                             start_at, local_time)
+        VALUES (#{id}, #{hostname}, #{domain}, #{manufacturer}, #{modelName},
+                #{os}, #{version}, #{serialNumber}, #{cpuCount}, #{processCount},
+                #{startAt}, #{localTime} );
+    </sql>
+
+    <sql id="insertCPU">
+        INSERT INTO t_cpus (tid, idx, model_name, frequency, `usage`, usr_usage, sys_usage, idle, io_wait)
+          VALUES(LAST_INSERT_ID(),#{idx}, #{modelName}, #{frequency}, #{usage}, #{usrUsage}, #{sysUsage}, #{idle}, #{ioWait});
+    </sql>
+
+    <sql id="insertMemory">
+        INSERT INTO t_memories (tid, total, used, free, `usage`, virtual_total, virtual_used, virtual_free, virtual_usage)
+          VALUES(LAST_INSERT_ID(),#{total}, #{used}, #{free}, #{usage}, #{virtualTotal}, #{virtualUsed}, #{virtualFree}, #{virtualUsage});
+    </sql>
+
+    <sql id="insertDisk">
+        INSERT INTO t_disks (tid, rps, wps, tps, rbps, wbps, tbps)
+          VALUES(LAST_INSERT_ID(),#{rps}, #{wps}, #{tps}, #{rbps}, #{wbps}, #{tbps});
+    </sql>
+
+    <sql id="insertPartition">
+        INSERT INTO t_partitions (tid, fs_type, mount_point, total, used, free, `usage`)
+          VALUES(LAST_INSERT_ID(),#{fsType}, #{mountPoint}, #{total}, #{used}, #{free}, #{usage});
+    </sql>
+
+    <!--结果映射-->
+
+    <resultMap id="hostResult" type="Host" autoMapping="true"
+               extends="dnt.monitor.server.repository.DeviceRepository.deviceResult"/>
+
+    <resultMap id="fullHostResult" type="Host" autoMapping="true"
+               extends="dnt.monitor.server.repository.DeviceRepository.fullDeviceResult">
+        <association property="CPU" column="id" select="findCPU"/>
+        <association property="memory" column="id" select="findMemory"/>
+        <collection property="CPUs" column="id" select="findCPUs"/>
+        <collection property="disks" column="id" select="findDisks"/>
+        <collection property="partitions" column="id" select="findPartitions"/>
+    </resultMap>
+
+    <resultMap id="cpuResult" type="CPU" autoMapping="true"
+               extends="dnt.monitor.server.repository.ResourceRepository.componentResult"/>
+    <resultMap id="memoryResult" type="Memory" autoMapping="true"
+               extends="dnt.monitor.server.repository.ResourceRepository.componentResult"/>
+    <resultMap id="diskResult" type="Disk" autoMapping="true"
+               extends="dnt.monitor.server.repository.ResourceRepository.componentResult"/>
+    <resultMap id="partitionResult" type="Partition" autoMapping="true"
+               extends="dnt.monitor.server.repository.ResourceRepository.componentResult"/>
+
+</mapper>

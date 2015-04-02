@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>dnt.monitor.resource</groupId>
+        <artifactId>parent</artifactId>
+        <version>1.3.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <packaging>pom</packaging>
+    <artifactId>server_parent</artifactId>
+    <name>Server Parent</name>
+    <description>The parent pom of all resource models runs in Server</description>
+
+    <properties>
+         <release.dir>${release.root}/monitor-server-${project.version}</release.dir>
+     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>dnt.monitor</groupId>
+            <artifactId>data_suite</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>dnt.monitor.resource</groupId>
+                <artifactId>server_definition</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>dnt.monitor.resource</groupId>
+                <artifactId>server_device</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>dnt.monitor.resource</groupId>
+                <artifactId>server_host</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>dnt.monitor.resource</groupId>
+                <artifactId>server_linux</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>dnt.monitor.resource</groupId>
+                <artifactId>server_windows</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>dnt.monitor.resource</groupId>
+                <artifactId>server_monitor</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>dnt.monitor.resource</groupId>
+                <artifactId>server_switch</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifestEntries>
+                            <App-Config>dnt.monitor.server.ServerDefinitionUserConfig</App-Config>
+                            <DB-Repository>dnt.monitor.server.repository</DB-Repository>
+                            <Web-Repository>dnt.monitor.server.web.controller</Web-Repository>
+                            <Server-Repository>true</Server-Repository>
+                            <!--标记瘦身时，不将其中的frontend资源删除-->
+                            <Reduce-Frontend>false</Reduce-Frontend>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>net.happyonroad</groupId>
+                        <artifactId>spring-component-builder</artifactId>
+                        <version>${version.component-framework}</version>
+                        <executions>
+                            <execution>
+                                <id>extend-app</id>
+                                <goals><goal>extend</goal></goals>
+                                <configuration>
+                                    <target>${release.dir}</target>
+                                    <copyDependencies>true</copyDependencies>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>un_extend-app</id>
+                                <goals><goal>un_extend</goal></goals>
+                                <configuration>
+                                    <target>${release.dir}</target>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+    </profiles>
+
+</project>

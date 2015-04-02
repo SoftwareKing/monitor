@@ -1,0 +1,6 @@
+
+<component namespace="dnt.monitor.model.NIC">
+    <label type="config"
+           ssh:value="name"
+           snmp:oid="1.3.6.2.2.1.0"/>
+</component>

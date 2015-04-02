@@ -1,0 +1,137 @@
+
+mixin tab_pane_current()
+  .table(id="hostDisplay")&attributes(attributes)
+    block
++tab_pane_current()
+  +section("主机IP: ", "{{host.address}}")
+    .row
+      .col-md-3
+        +section("常规信息")
+          p 主机名：{{host.hostname}}
+          p 所属域：{{host.domain}}
+          p 厂商：{{host.manufacturer}}
+          p 型号：{{host.modelName}}
+          p 操作系统：{{host.os}}
+          p 操作系统版本：{{host.version}}
+          p 序列号：{{host.serialNumber}}
+          p 启动时间：{{host.startAt}}
+          p 运行时间：{{host.upTime}} 毫秒
+          p 本机时间：{{host.localTime}}
+          p 逻辑CPU总数：{{host.cpuCount}} 个
+          p 进程数量：{{host.processCount}} 个
+        +section("等待处理队列")
+          p: +progress("6")
+          hr
+          p 进程数
+          image(src="assets/sys_icons/linux/32x32.png")
+          p 线程数
+          image(src="assets/sys_icons/linux/32x32.png")
+          p 句柄数
+          image(src="assets/sys_icons/linux/32x32.png")
+      .col-md-6
+        +section("CPU")
+          .tabbable
+            ul.nav.nav-tabs
+              li
+                a.active(data-toggle="tab", href="{{path}}#cpu_tab{{host.cpu.idx}}")
+                  i.green.ace-icon.fa.fa-home.bigger-120
+                  | 总CPU{{host.cpu.idx}}
+              li(ng-repeat="cpu in host.cpus")
+                a(data-toggle="tab", href="{{path}}#cpu_tab{{cpu.idx}}")
+                  i.green.ace-icon.fa.fa-home.bigger-120
+                  | 逻辑CPU{{cpu.idx}}
+            .tab-content
+              .tab-pane.fade.in.active(id="cpu_tab{{host.cpu.idx}}")
+                .row
+                  div(id="cpuBar{{host.cpu.idx}}",style="width:300px;height:200px")
+                .row
+                  div(id="cpu{{host.cpu.idx}}", style="width:300px;height:200px")
+              .tab-pane.fade(ng-repeat="cpu in host.cpus", id="cpu_tab{{cpu.idx}}",on-finish-render)
+                .row
+                  div(id="zcpuBar{{cpu.idx}}",style="width:300px;height:200px")
+                .row
+                  div(id="zcpu{{cpu.idx}}",style="width:300px;height:200px")
+        +section("内存")
+          table.table.table-bordered
+            .row
+              .col-md-6
+                p 物理内存总大小：{{host.memory.total}} MB
+                #ramPie(style="width:130px;height:130px")
+                //p 物理内存总大小： {{host.memory.total}} MB
+              .col-md-6
+                p 虚拟内存总大小：{{host.memory.virtualTotal}} MB
+                #vmPie(style="width:130px;height:130px")
+                //p 虚拟内存总大小： {{host.memory.virtualTotal}} MB
+            //tbody
+            //  tr
+            //    td
+            //      p 物理内存总大小： {{host.memory.total}} MB
+            //      p 已使用： {{host.memory.used}} MB
+            //      p 可用： {{host.memory.free}} MB
+            //      +progress("{{host.memory.usage * 100}}%")
+            //    td
+            //      p 虚拟内存总大小： {{host.memory.virtualTotal}} MB
+            //      p 已使用： {{host.memory.virtualUsed}} MB
+            //      p 可用： {{host.memory.virtualFree}} MB
+            //      +progress("{{host.memory.virtualUsage* 100}}%")
+            //  tr
+            //    td(colspan="2")
+            //      .col-md-4
+            //        p 认可用量
+            //        image(src="assets/sys_icons/linux/32x32.png")
+            //      .col-md-8
+            //        p 认可用量使用记录
+            //        image(src="assets/sys_icons/linux/32x32.png")
+      .col-md-3
+        +section("网络接口")
+          ul
+            li(ng-repeat="nic in host.interfaces",on-finish-render)
+              p 名称：{{nic.label}}
+              p IP地址：{{nic.address}}
+              image(src="assets/sys_icons/linux/32x32.png")
+              p 当前带宽：{{nic.bandWidth}} BIT/S
+              +progress("{{nic.usage* 100}} %")
+              //p 带宽使用率：{{nic.usage* 100}} %
+              p 发送队列大小：{{nic.queueLength}}
+              p 总流量：{{nic.rtx}} KB/S
+              p 入流量：{{nic.rx}} KB/S
+              p 出流量：{{nic.tx}} KB/S
+              p 接收的字节总数：{{nic.trx}} MB
+              p 发送的字节总数：{{nic.ttx}} MB
+              p 总的收发字节数：{{nic.trtx}} MB
+              p 每秒接收的包数：{{nic.inPkts}} Pkg/S
+              p 每秒接收的错误包数：{{nic.inErrs}} Pkg/S
+              p 每秒发出的包数：{{nic.outPkts}} Pkg/S
+              p 每秒发出的错误包数：{{nic.outErrs}} Pkg/S
+              p 每秒冲突包数：{{nic.collisions}} Pkg/S
+    .row
+      .col-md-9
+        +section("硬盘")
+          table.table.table-bordered
+            tbody
+              .row
+                .col-md-6(ng-repeat="partition in host.partitions", on-finish-render)
+                  p {{partition.label}}
+                  p 文件系统类型：{{partition.fsType}}
+                  p 挂载点：{{partition.mountPoint}}
+                  p 总大小：{{partition.total}} MB
+                  div(id="{{partition.id}}",style="width:130px;height:130px")
+              //tr
+              //  td(ng-repeat="partition in host.partitions",onFinishRender)
+              //    p {{partition.label}}
+              //    p 文件系统类型：{{partition.fsType}}
+              //    p 挂载点：{{partition.mountPoint}}
+              //    p 总大小：{{partition.total}} MB
+              //    p 可用大小：{{partition.free}} MB
+              //    p 已使用大小：{{partition.used}} MB
+              //    p 使用率：{{partition.usage* 100}} %
+              //    image(src="assets/sys_icons/linux/32x32.png")
+              //    br
+              //    input(type="checkbox", value="1", disabled="disabled")
+              //    | 可用
+              //    br
+              //    input(type="checkbox", value="1", disabled="disabled")
+              //    | 已用
+
+
+

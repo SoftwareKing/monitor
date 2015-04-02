@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <packaging>pom</packaging>
+
+    <parent>
+        <groupId>dnt</groupId>
+        <artifactId>monitor</artifactId>
+        <version>1.3.0-SNAPSHOT</version>
+    </parent>
+
+    <groupId>dnt.monitor</groupId>
+    <artifactId>server</artifactId>
+    <name>Monitor Server</name>
+    <description>
+        The monitor server which will be deployed in the itsnow cloud
+        this server can be used to serve for multiple enterprise users;
+    </description>
+
+    <properties>
+        <release.dir>${release.root}/monitor-server-${project.version}</release.dir>
+    </properties>
+    <modules>
+        <!--系统管理模块，包括资源模型包，用户，通知方式等-->
+        <module>system_management</module>
+        <!--资源管理模块，管理系统依赖的通用资源，包括discovery功能-->
+        <module>resource_management</module>
+        <!--管理归属于引擎的各种资源：暂时将discovery模块也并在本模块-->
+        <module>node_management</module>
+        <!--管理资源的事件-->
+        <module>event_management</module>
+        <!--管理资源的指标数据, 包括实时指标和历史指标-->
+        <module>indicator_management</module>
+        <!--管理各种报表-->
+        <module>report_management</module>
+        <!--Topo图模块-->
+        <module>topo_management</module>
+        <!--监控服务器聚合-->
+        <module>release</module>
+    </modules>
+
+    <build>
+        <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifestEntries>
+                            <App-Config>dnt.monitor.server.SystemUserConfig</App-Config>
+                            <DB-Repository>dnt.monitor.server.repository</DB-Repository>
+                            <Web-Repository>dnt.monitor.server.web.controller</Web-Repository>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>dnt.monitor.resource</groupId>
+            <artifactId>server_definition</artifactId>
+        </dependency>
+        <!--Test Purpose-->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.easymock</groupId>
+            <artifactId>easymock</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jmock</groupId>
+            <artifactId>jmock</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.hamcrest</groupId>
+                    <artifactId>hamcrest-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.hamcrest</groupId>
+                    <artifactId>hamcrest-library</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-all</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>dnt.monitor</groupId>
+            <artifactId>data_suite</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>net.happyonroad</groupId>
+                <artifactId>menu</artifactId>
+                <version>${version.components}</version>
+            </dependency>
+            <dependency>
+                <groupId>dnt.monitor.server</groupId>
+                <artifactId>system_management</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>dnt.monitor.server</groupId>
+                <artifactId>event_management</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>dnt.monitor.server</groupId>
+                <artifactId>indicator_management</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>dnt.monitor.server</groupId>
+                <artifactId>report_management</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>dnt.monitor.server</groupId>
+                <artifactId>resource_management</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>dnt.monitor.server</groupId>
+                <artifactId>node_management</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>dnt.monitor.server</groupId>
+                <artifactId>topo_management</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>dnt.monitor.resource</groupId>
+                <artifactId>server_definition</artifactId>
+                <version>1.3.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>dnt.monitor.resource</groupId>
+                <artifactId>server_monitor</artifactId>
+                <version>1.3.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>dnt.monitor.resource</groupId>
+                <artifactId>server_switch</artifactId>
+                <version>1.3.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>dnt.monitor.resource</groupId>
+                <artifactId>server_host</artifactId>
+                <version>1.3.0-SNAPSHOT</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+</project>

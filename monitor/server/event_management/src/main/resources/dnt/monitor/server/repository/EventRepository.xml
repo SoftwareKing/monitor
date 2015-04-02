@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dnt.monitor.server.repository.EventRepository">
+
+    <sql id="paginate">
+        <if test="pageable.sort != null">
+            ORDER BY #{pageable.sort}
+        </if>
+        <if test="pageable.sort == null">
+            ORDER BY updated_at DESC
+        </if>
+        <trim prefix="LIMIT" prefixOverrides=",">
+            <if test="pageable.offset > 0">#{pageable.offset}</if>
+            <if test="pageable.pageSize > 0">, #{pageable.pageSize}</if>
+        </trim>
+    </sql>
+
+    <sql id="judgeByPath">
+        <if test="path != null">
+            <where>LOCATE(#{path}, path) = 1</where>
+        </if>
+    </sql>
+
+    <select id="summary" resultMap="SummaryResult">
+        SELECT severity, count(*) count FROM events
+        <include refid="judgeByPath" />
+        GROUP BY severity
+    </select>
+
+    <select id="countByPath" resultType="Long">
+        SELECT COUNT(0) FROM events
+        <include refid="judgeByPath" />
+    </select>
+    <select id="findPaginationByPath" resultMap="EventResult">
+        SELECT * FROM events
+        <include refid="judgeByPath" />
+        <include refid="paginate" />
+    </select>
+    <select id="findDistinctPath" resultType="String">
+        SELECT DISTINCT path FROM events;
+    </select>
+
+    <insert id="create" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        INSERT INTO events(path, content, severity, priority, ack, created_at, updated_at)
+        VALUES (#{path}, #{content},
+                #{severity, typeHandler=net.happyonroad.util.SeverityHandler},
+                #{priority, typeHandler=net.happyonroad.util.PriorityHandler},
+                #{ack,      typeHandler=net.happyonroad.util.AckStatusHandler},
+                #{createdAt}, #{updatedAt})
+    </insert>
+
+    <resultMap id="EventResult" type="Event" autoMapping="true">
+        <result property="severity" column="severity" typeHandler="net.happyonroad.util.SeverityHandler" />
+        <result property="priority" column="priority" typeHandler="net.happyonroad.util.PriorityHandler" />
+        <result property="ack" column="ack" typeHandler="net.happyonroad.util.AckStatusHandler" />
+    </resultMap>
+    <resultMap id="SummaryResult" type="java.util.HashMap" autoMapping="true">
+        <result property="severity" column="severity" javaType="net.happyonroad.type.Severity" typeHandler="net.happyonroad.util.SeverityHandler" />
+        <result property="count" column="count" javaType="java.lang.Integer" />
+    </resultMap>
+</mapper>

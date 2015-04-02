@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dnt.monitor.server.repository.ResourceRepository">
+
+    <!--对外接口映射-->
+
+    <select id="countByType" resultType="Long">
+        <include refid="countResources"/>
+        <include refid="judgeByType"/>
+    </select>
+
+    <select id="findAllByType" resultMap="resourceResult">
+        <include refid="selectResources"/>
+        <include refid="judgeByType"/>
+        <include refid="paginate"/>
+    </select>
+
+    <select id="findById" resultMap="fullResourceResult">
+        <include refid="selectResource"/>
+        <include refid="judgeById"/>
+    </select>
+
+    <select id="findByAddress" resultMap="fullResourceResult">
+        <include refid="selectResource"/>
+        <include refid="judgeByAddress"/>
+    </select>
+
+    <select id="findByLabel" resultMap="fullResourceResult">
+        <include refid="selectResource"/>
+        <include refid="judgeByLabel"/>
+    </select>
+
+    <insert id="create" useGeneratedKeys="true" keyProperty="id">
+        <include refid="insertResource"/>
+    </insert>
+
+    <update id="update" keyProperty="id">
+        <include refid="updatingResource"/>
+        <include refid="judgeById"/>
+    </update>
+
+    <delete id="deleteById">
+        <include refid="deletingResource"/>
+        <include refid="judgeById"/>
+    </delete>
+
+    <!--内部实现映射-->
+
+    <select id="findInLinks" resultMap="linkResult">
+        <include refid="selectLinks"/>
+        <where>to_id = #{id}</where>
+    </select>
+
+    <select id="findOutLinks" resultMap="linkResult">
+        <include refid="selectLinks"/>
+        <where>from_id = #{id}</where>
+    </select>
+
+
+    <!--内部实现SQL片段: 许多片段将会被其他类直接复用-->
+
+    <sql id="selectKey">
+        SELECT LAST_INSERT_ID() AS id;
+    </sql>
+
+    <sql id="countResources">
+        SELECT COUNT(0) FROM resources
+    </sql>
+
+    <sql id="selectResource">
+        SELECT * FROM resources
+    </sql>
+
+    <sql id="selectResources">
+        <include refid="selectResource"/>
+    </sql>
+
+    <sql id="deletingResource">
+        DELETE FROM resources
+    </sql>
+
+    <sql id="selectLinks">
+        SELECT * FROM links
+    </sql>
+
+    <sql id="judgeByType">
+        <where>LOCATE(#{type}, type) = 1</where>
+    </sql>
+    <sql id="judgeById">
+        <where>id = #{id}</where>
+    </sql>
+
+    <sql id="judgeByResourceId">
+        <where>resource_id = #{id}</where>
+    </sql>
+
+    <sql id="judgeByAddress">
+        <where>address = #{address}</where>
+    </sql>
+
+    <sql id="judgeByLabel">
+        <where>label = #{label}</where>
+    </sql>
+
+    <!--这个SQL片段应该被其他类直接复用-->
+    <sql id="paginate">
+        <if test="request.sort != null">
+            ORDER BY #{request.sort}
+        </if>
+        <trim prefix="LIMIT" prefixOverrides=",">
+            <if test="request.offset > 0">#{request.offset}</if>
+            <if test="request.pageSize > 0">, #{request.pageSize}</if>
+        </trim>
+    </sql>
+
+    <sql id="insertResource">
+        INSERT INTO resources (type, label, address, performance, config_status, availability,
+                               properties, created_at, updated_at)
+        VALUES (#{type}, #{label}, #{address}, #{performance}, #{configStatus}, #{availability},
+                #{properties, typeHandler=net.happyonroad.util.PropertiesHandler}, #{createdAt}, #{updatedAt});
+    </sql>
+
+    <sql id="updatingResource">
+        UPDATE resources
+        <set>
+            type = #{type},
+            label = #{label},
+            <if test="address != null">
+                address = #{address},
+            </if>
+            <if test="performance != null">
+                performance = #{performance},
+            </if>
+            <if test="configStatus != null">
+                config_status = #{configStatus},
+            </if>
+            <if test="availability != null">
+                availability = #{availability},
+            </if>
+            properties = #{properties, typeHandler=net.happyonroad.util.PropertiesHandler},
+            updated_at = #{updatedAt}
+        </set>
+    </sql>
+
+    <!--这个是给子Repository复用的SQL片段，其内部再次include时，
+        必须以全限定名称方式，把当前namespace加上-->
+    <sql id="updatingResourceById">
+        <include refid="dnt.monitor.server.repository.ResourceRepository.updatingResource"/>
+        <include refid="dnt.monitor.server.repository.ResourceRepository.judgeById"/>
+    </sql>
+
+    <sql id="insertComponent">
+        INSERT INTO components (resource_id,
+                                type,
+                                label,
+                                performance,
+                                config_status,
+                                availability,
+                                properties,
+                                created_at,
+                                updated_at)
+        VALUES (#{resourceId},
+                #{type},
+                #{label},
+                #{performance},
+                #{configStatus},
+                #{availability},
+                #{properties, typeHandler=net.happyonroad.util.PropertiesHandler},
+                #{createdAt},
+                #{updatedAt});
+    </sql>
+
+    <sql id="updatingComponent">
+        UPDATE components
+        <set>
+            type          = #{type},
+            label         = #{label},
+            performance   = #{performance},
+            config_status = #{configStatus},
+            availability  = #{availability},
+            properties    = #{properties, typeHandler=net.happyonroad.util.PropertiesHandler},
+            updated_at    = #{updatedAt}
+        </set>
+    </sql>
+
+    <sql id="updatingComponentById">
+        <include refid="dnt.monitor.server.repository.ResourceRepository.updatingComponent"/>
+        <include refid="dnt.monitor.server.repository.ResourceRepository.judgeById"/>
+    </sql>
+
+    <sql id="deletingComponent">
+        DELETE FROM components
+    </sql>
+
+    <sql id="deletingComponentById">
+        <include refid="dnt.monitor.server.repository.ResourceRepository.deletingComponent"/>
+        <include refid="dnt.monitor.server.repository.ResourceRepository.judgeById"/>
+    </sql>
+    <!--映射结果-->
+
+    <resultMap id="resourceResult" type="Resource" autoMapping="true">
+        <id property="id" column="id"/>
+        <result property="properties" column="properties"
+                typeHandler="net.happyonroad.util.PropertiesHandler"/>
+    </resultMap>
+
+    <resultMap id="fullResourceResult" type="Resource" autoMapping="true">
+        <id property="id" column="id"/>
+        <result property="properties" column="properties"
+                typeHandler="net.happyonroad.util.PropertiesHandler"/>
+        <collection property="inLinks" column="id" select="findInLinks"/>
+        <collection property="outLinks" column="id" select="findOutLinks"/>
+    </resultMap>
+
+    <resultMap id="componentResult" type="Component" autoMapping="true">
+        <id property="id" column="id"/>
+        <result property="properties" column="properties"
+                typeHandler="net.happyonroad.util.PropertiesHandler"/>
+    </resultMap>
+    <resultMap id="linkResult" type="Link" autoMapping="true">
+        <id property="id" column="id"/>
+        <result column="from_id" property="fromId"/>
+        <result column="to_id" property="toId"/>
+        <result property="properties" column="properties"
+                typeHandler="net.happyonroad.util.PropertiesHandler"/>
+    </resultMap>
+
+</mapper>

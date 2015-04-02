@@ -1,0 +1,12 @@
+include /lib/mixins/list
+
+.datalist
+  +toolbar
+    +button_group
+      +tool_button("logTable.reload()", "refresh", "", "*", "", "")
+  +page_table("logTable","selectionService")
+    +row("log", "id", "selectionService")
+      td(data-title="'级别'") {{log.severity}}
+      td(data-title="'来源(群组/资源/组件)'") {{log.path}}
+      td(data-title="'消息'") {{log.content}}
+      td(data-title="'产生时间'") {{log.createdAt}}

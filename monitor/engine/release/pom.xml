@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>dnt.monitor</groupId>
+        <artifactId>engine</artifactId>
+        <version>1.3.0-SNAPSHOT</version>
+    </parent>
+
+    <groupId>dnt.monitor.engine</groupId>
+    <artifactId>release</artifactId>
+    <name>Monitor Engine Release</name>
+    <description>
+        The monitor engine release project.
+    </description>
+    <properties>
+        <debug.port>1094</debug.port>
+        <jmx.port>1096</jmx.port>
+        <rmi.port>1098</rmi.port>
+        <app.version>${project.version}</app.version>
+        <app.name>MonitorEngine</app.name>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>net.happyonroad</groupId>
+            <artifactId>spring-component-framework</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.happyonroad</groupId>
+            <artifactId>redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>dnt.monitor.engine</groupId>
+            <artifactId>resourcing</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>dnt.monitor.engine</groupId>
+            <artifactId>monitoring</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>dnt.monitor.engine</groupId>
+            <artifactId>thresholding</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>dnt.monitor.engine</groupId>
+            <artifactId>recording</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>dnt.monitor</groupId>
+            <artifactId>repository</artifactId>
+            <version>${project.version}</version>
+            <type>pom</type>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <scope>runtime</scope>
+            <!--for model compatible-->
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>${version.maven.jar}</version>
+                <configuration>
+                    <archive>
+                        <manifestEntries>
+                            <Main-Class>dnt.monitor.engine.Configure</Main-Class>
+                            <Class-Path>commons-io.commons-io-${version.commons.io}.jar</Class-Path>
+
+                            <App-Config>dnt.monitor.engine.EngineReleaseAppConfig</App-Config>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>net.happyonroad</groupId>
+                        <artifactId>spring-component-builder</artifactId>
+                        <version>${version.component-framework}</version>
+                        <executions>
+                            <execution>
+                                <id>package-app</id>
+                                <goals><goal>package</goal></goals>
+                                <configuration>
+                                    <target>${release.dir}</target>
+                                    <appName>${app.name}</appName>
+                                    <appPort>${rmi.port}</appPort>
+                                    <jmx>${jmx.port}</jmx>
+                                    <debug>${debug.port}</debug>
+                                    <jvmOptions>-Dcomponent.feature.resolvers=dnt.monitor.resolver.ModelFeatureResolver -Xms128m -Xmx256m -XX:MaxPermSize=256m -Djava.awt.headless=true</jvmOptions>
+                                    <propertyFiles>${project.basedir}/config/engine.properties,${project.basedir}/config/identity.properties</propertyFiles>
+                                    <logbackFile>${project.basedir}/config/logback.xml</logbackFile>
+                                </configuration>
+                            </execution>
+
+                            <execution>
+                                <id>clean-app</id>
+                                <goals><goal>clean</goal></goals>
+                                <configuration>
+                                    <target>${release.dir}</target>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+
+        </profile>
+
+    </profiles>
+
+</project>

@@ -1,0 +1,15 @@
+.jetbrains
+.idea
+.modules
+build
+deploy
+ace-1.2
+target
+pom.xml.*
+.DS_Store
+*.iml
+backend/release/tmp
+*.swp
+/server/release/webapp/frontend/*
+SnmpSampleManagerTest.java
+SnmpMetaManagerConfig.java

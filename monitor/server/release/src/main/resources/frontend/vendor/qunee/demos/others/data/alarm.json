@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "elementId": 1,
+        "alarmSeverity": "error",
+        "description": "this is a alarm",
+        "acked": false,
+        "cleard": false
+    },
+    {
+        "id": 2,
+        "elementId": 1,
+        "alarmSeverity": "error",
+        "description": "this is a alarm2",
+        "acked": false,
+        "cleard": false
+    },
+    {
+        "id": 3,
+        "elementId": 1,
+        "alarmSeverity": "warning",
+        "description": "this is a alarm3",
+        "acked": false,
+        "cleard": false
+    }
+]

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>dnt</groupId>
+        <artifactId>monitor</artifactId>
+        <version>1.3.0-SNAPSHOT</version>
+    </parent>
+
+    <groupId>dnt.monitor</groupId>
+    <artifactId>integration</artifactId>
+    <version>1.3.0-SNAPSHOT</version>
+
+    <name>Monitor Integration Test</name>
+    <description>
+        The Monitor Integration Test Project
+    </description>
+
+    <properties>
+        <version.jbehave>3.9-beta-3</version.jbehave>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.jbehave</groupId>
+            <artifactId>jbehave-spring</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>de.bechte.junit</groupId>
+            <artifactId>junit-hierarchicalcontextrunner</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-joda</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>net.happyonroad</groupId>
+            <artifactId>basic</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>dnt.monitor.resource</groupId>
+            <artifactId>windows_model</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>dnt.monitor.resource</groupId>
+            <artifactId>linux_model</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>dnt.monitor.resource</groupId>
+            <artifactId>monitor_model</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>dnt.monitor.server</groupId>
+            <artifactId>release</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+        </dependency>
+    </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.jbehave</groupId>
+                <artifactId>jbehave-spring</artifactId>
+                <version>${version.jbehave}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>dnt.monitor.resource</groupId>
+                <artifactId>definition_model</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>dnt.monitor.resource</groupId>
+                <artifactId>windows_model</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>dnt.monitor.resource</groupId>
+                <artifactId>linux_model</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>dnt.monitor.resource</groupId>
+                <artifactId>monitor_model</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>dnt.monitor.server</groupId>
+                <artifactId>release</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>joda-time</groupId>
+                <artifactId>joda-time</artifactId>
+                <version>${version.joda}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+
+</project>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>dnt.monitor.resource</groupId>
+        <artifactId>model_parent</artifactId>
+        <version>1.3.0-SNAPSHOT</version>
+        <relativePath>../../parent/model_parent</relativePath>
+    </parent>
+
+    <artifactId>linux_model</artifactId>
+    <name>Linux Pure Model</name>
+    <description>
+        The linux pure model which will be deployed in engine/server both
+    </description>
+
+    <dependencies>
+        <dependency>
+            <groupId>dnt.monitor.resource</groupId>
+            <artifactId>host_model</artifactId>
+        </dependency>
+    </dependencies>
+    
+</project>

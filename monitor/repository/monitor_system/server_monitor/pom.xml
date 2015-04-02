@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>dnt.monitor.resource</groupId>
+        <artifactId>server_parent</artifactId>
+        <version>1.3.0-SNAPSHOT</version>
+        <relativePath>../../parent/server_parent</relativePath>
+    </parent>
+
+    <artifactId>server_monitor</artifactId>
+    <name>Monitor Model in Server</name>
+    <description>
+        The monitor model runs in Server
+    </description>
+
+    <dependencies>
+        <dependency>
+            <groupId>dnt.monitor.resource</groupId>
+            <artifactId>monitor_model</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>dnt.monitor.resource</groupId>
+            <artifactId>server_host</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.happyonroad</groupId>
+            <artifactId>remoting</artifactId>
+            <version>${version.components}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifestEntries>
+                            <App-Config>dnt.monitor.server.MonitorSystemAppConfig</App-Config>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
+
+</project>

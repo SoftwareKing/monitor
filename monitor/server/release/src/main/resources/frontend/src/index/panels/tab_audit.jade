@@ -1,0 +1,16 @@
+// Created by brokenq on 14-12-30.
+include /lib/mixins/list
+include /index/panels/tab
+//显示操作日志界面
++tab_pane()
+    .datalist
+        +toolbar
+            +button_group
+                +tool_button("operationlogTable.reload()", "refresh", "", "*", "", "")
+        +page_table("operationlogTable","selectionService")
+            +row("operationlog", "id", "selectionService")
+                td(data-title="'级别'") {{operationlog.severity}}
+                td(data-title="'来源(群组/资源/组件)'") {{operationlog.path}}
+                td(data-title="'消息'") {{operationlog.content}}
+                td(data-title="'操作人'") {{operationlog.userName}}
+                td(data-title="'操作时间'") {{operationlog.createdAt | date:'yyyy-MM-dd HH:MM:ss'}}

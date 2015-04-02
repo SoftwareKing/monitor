@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dnt.monitor.server.repository.MonitorLogRepository">
+
+    <sql id="paginate">
+        <if test="pageable.sort != null">
+            ORDER BY #{pageable.sort}
+        </if>
+        <trim prefix="LIMIT" prefixOverrides=",">
+            <if test="pageable.offset > 0">#{pageable.offset}</if>
+            <if test="pageable.pageSize > 0">, #{pageable.pageSize}</if>
+        </trim>
+    </sql>
+
+    <sql id="judgeByPath">
+        <where>LOCATE(#{path}, path) = 1</where>
+    </sql>
+    <select id="countByPath" resultType="Long">
+        SELECT COUNT(0) FROM monitor_logs
+        <include refid="judgeByPath"/>
+    </select>
+    <select id="findAllByPath" resultMap="monitorLogResult">
+        SELECT * FROM monitor_logs
+        <include refid="judgeByPath"/>
+        <include refid="paginate"/>
+    </select>
+
+    <resultMap id="monitorLogResult" type="MonitorLog" autoMapping="true">
+        <result property="severity" column="severity" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
+    </resultMap>
+</mapper>

@@ -1,0 +1,35 @@
+include /lib/mixins/form
+
+.row
+  .col-xs-6
+    div(ng-if="parentNodeShow")
+      +group("node", "pNode", "上级节点", "fa-caret-down", "必选")
+        div(ng-ztree-async, node-name="label", top-level-url="/api/node", url="/api/nodes?leaf=false",
+        tree-id="monitorTree", ng-model="monitorModel", type="radio", check-disabled="true")
+.row
+  .col-xs-6
+    +group("node", "label", "群组名称", "fa-pencil-square-o", "必选")
+      +text("node","label")(request)
+  .col-xs-6
+    +group("node", "comment", "群组标签", "fa-tag", "必选")
+      +text("node","comment")(request)
+.row
+  .col-xs-6
+    +group("node", "location", "地理位置", "fa-globe", "")
+      +text("node","location")(request)
+  .col-xs-6
+    +group("node", "organization", "组织机构", "fa-users", "")
+      +text("node","organization")(request)
+.row
+  .col-xs-6
+    +group("node", "frequency", "监控频度", "fa-calendar", "")
+      +text("node","frequency")(request)
+  .col-xs-6
+    +group("node", "schedule", "调试计划", "fa-calendar", "")
+      +text("node","schedule")(request)
+.row
+  .col-xs-6
+    +group("node", "priority", "优先级", "", "")
+      .rating.inline.col-xs-12.col-sm-5
+
+include /server/index/resources/manage/credentials.tpl.jade

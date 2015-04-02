@@ -1,0 +1,26 @@
+#!/bin/sh
+#  Generate CPU Graph
+#
+path="$1"
+if [ "$path" == "" ]; then
+  echo "Please specify the image file path"
+  exit 1
+fi
+rrd="$2"
+if [ "$rrd" == "" ]; then
+  echo "Please specify the rrd file path"
+  exit 2
+fi
+
+endAt=$(rrdtool last $rrd)
+startAt=$((endAt - 864000))
+echo "Start at = $startAt, endAt = $endAt"
+
+#rrdtool fetch $rrd AVERAGE -s $startAt -e $endAt
+
+rrdtool graph $path -s $startAt -e $endAt -h 400            \
+  DEF:line_usage=$rrd:usage:AVERAGE LINE3:line_usage#FF0000:"Usage" \
+  DEF:line_usrUsage=$rrd:usrUsage:AVERAGE LINE3:line_usrUsage#CCFF00:"User Usage" \
+  DEF:line_sysUsage=$rrd:sysUsage:AVERAGE LINE3:line_sysUsage#00FF00:"System Usage" \
+  DEF:line_idle=$rrd:idle:AVERAGE         LINE3:line_idle#0000FF:"Idle" \
+  DEF:line_ioWait=$rrd:ioWait:AVERAGE     LINE3:line_ioWait#000000:"IO Wait"

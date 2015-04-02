@@ -1,0 +1,25 @@
+//   Index.jade parts: messages
+mixin message(user, text, time, avatar)
+  li
+    a(href="#")
+      img.msg-photo(src="assets/#{avatar}.png",alt="#{user}'s Avatar")
+      span.msg-body
+        span.msg-title
+          span.blue= user
+          | #{text}
+        span.msg-time
+          i.icon-time
+          span= time
+
+li.green.width70
+  +dropdown_toggle("icon-envelope icon-animated-vertical", "success", 5)
+  ul.pull-right.dropdown-navbar.dropdown-menu.dropdown-caret.dropdown-close
+    +dropdown_header("envelope-alt", "5 Messages")
+    +message("Alex", "Ciao sociis natoque penatibus et auctor ...", "a moment ago", "avatar")
+    +message("Susan", "Vestibulum id ligula porta felis euismod ...", "20 minutes ago", "avatar3")
+    +message("Bob", "Nullam quis risus eget urna mollis ornare ...", "3:15 pm", "avatar4")
+    li
+      a(href="inbox.html")
+        | See all messages
+        i.icon-arrow-right
+

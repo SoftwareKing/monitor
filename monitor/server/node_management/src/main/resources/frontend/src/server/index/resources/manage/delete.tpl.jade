@@ -1,0 +1,11 @@
+include /lib/mixins/form
+
++base_form("deleteNodeForm")(ng-submit="delete()", ng-submitted="submitted")
+  .modal-header
+    button.bootbox-close-button.close(type='button', ng-click="cancel()") ×
+    h3.modal-title(style="color:#428BCA") 删除{{title}}
+  .modal-body
+    div(ui-view='changeContent')
+  .modal-footer
+    +action_submit("删除")(ng-disabled="submitted")
+    +action_cancel("取消")(ng-click="cancel()")

@@ -1,0 +1,12 @@
+doctype html
+include /lib/mixins/global
+
+#resourceLayout
+  .ui-layout-west
+    .layout-header 拓扑节点
+    .content.overflow-auto
+      #resourceTree
+  #resourceTopo.overflow-hidden.no-padding
+    .ui-layout-center
+      .ui-layout-content.no-padding
+        div.slideLeft(ui-view)

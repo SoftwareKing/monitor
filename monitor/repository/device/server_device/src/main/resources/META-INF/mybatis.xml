@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <typeAliases>
+        <typeAlias type="dnt.monitor.model.Device" alias="Device"/>
+        <typeAlias type="dnt.monitor.model.NIC" alias="NIC"/>
+        <typeAlias type="dnt.monitor.model.Service" alias="Service"/>
+    </typeAliases>
+    <typeHandlers>
+        <typeHandler javaType="dnt.monitor.model.AddressEntry"
+                     handler="dnt.monitor.server.util.AddressEntryHandler"/>
+        <typeHandler javaType="dnt.monitor.model.ARPEntry"
+                     handler="dnt.monitor.server.util.ARPEntryHandler"/>
+        <typeHandler javaType="dnt.monitor.model.RouteEntry"
+                     handler="dnt.monitor.server.util.RouteEntryHandler"/>
+        <typeHandler javaType="dnt.monitor.model.TcpEntry"
+                     handler="dnt.monitor.server.util.TcpEntryHandler"/>
+        <typeHandler javaType="dnt.monitor.model.UdpEntry"
+                     handler="dnt.monitor.server.util.UdpEntryHandler"/>
+    </typeHandlers>
+</configuration>

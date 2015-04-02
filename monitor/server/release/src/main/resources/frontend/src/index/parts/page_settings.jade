@@ -1,0 +1,22 @@
+//   Main container parts： page settings
+mixin ace_checkbox(id, text)
+  .pull-left(class!=attributes.class)
+    input.ace.ace-checkbox-2(type="checkbox", id="ace-settings-#{id}")
+    label.lbl(for="ace-settings-#{id}")= text
+
+mixin theme(title)
+  span(class!=attributes.class) #{title}
+
+.ace-settings-container#ace-settings-container
+  .ace-settings-box#ace-settings-box
+    div
+      .pull-left
+        select.hide#skin-colorpicker
+          option(data-skin="default", value="#438EB9") #438EB9
+          option(data-skin="skin-1", value="#222A2D") #222A2D
+          option(data-skin="skin-2", value="#C6487E") #C6487E
+          option(data-skin="skin-3", value="#D0D0D0") #D0D0D0
+      +theme("选择主题")(class="showSpan")
+    +ace_checkbox("navbar", "固定导航")(class="barFix")
+    +ace_checkbox("sidebar", "固定侧栏")
+    +ace_checkbox("breadcrumbs", "固定上下文")(class="contextFix")

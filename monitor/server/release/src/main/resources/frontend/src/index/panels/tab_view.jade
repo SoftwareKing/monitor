@@ -1,0 +1,24 @@
+// Created by brokenq on 14-12-30.
+include /index/panels/tab
+
++tab_pane()
+  #topoLayout
+    #topoLayoutCenter
+      #topoToolbar
+      hr
+      .ui-layout-center
+        //.layout-header Main
+        .ui-layout-content
+          #topoGraph(style="height: 560px")
+    .ui-layout-east
+      .layout-header 属性
+      .content.overflow-auto
+        #topoSheet
+    .ui-layout-south
+      .layout-header
+        span.pull-left.padding-left-30 当前告警
+      .content.overflow-x-hidden
+        div#eventlogs(style='overflow: auto')
+        .datalist
+        table.table(jq-table="listPage.settings")
+

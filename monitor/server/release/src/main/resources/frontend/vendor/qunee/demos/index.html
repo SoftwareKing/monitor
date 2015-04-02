@@ -1,0 +1,189 @@
+<!--
+This file is part of Qunee for HTML5.
+Copyright (c) 2014 by qunee.com
+-->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0">
+    <title>Qunee HTML5图形组件示例演示</title>
+
+    <link rel="stylesheet" href="js/bootstrap/bootstrap.min.css"/>
+    <link rel="stylesheet" href="demo.css"/>
+
+    <script type="text/javascript" src="js/check-IE678.js?v=1.7.2"></script>
+
+    <script type="text/javascript" src="js/jquery/jquery.min.js?v=1.7.2"></script>
+    <script type="text/javascript" src="js/bootstrap/bootstrap.min.js?v=1.7.2"></script>
+</head>
+<body>
+
+<header class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <div>
+                <a class="navbar-brand" href="http://qunee.com">
+                    <div class="logo" title="qunee.com"></div>
+                </a><span class="sub-title" >开发清新、高效的拓扑图组件</span>
+            </div>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right main_nav">
+                <li><a href="http://qunee.com">首页</a></li>
+                <li><a href="http://blog.qunee.com">博客</a></li>
+                <li><a href="http://doc.qunee.com">文档</a></li>
+                <li class="active"><a href="http://demo.qunee.com">示例</a></li>
+                <li><a href="http://qunee.com#try">试用</a></li>
+            </ul>
+        </div>
+    </div>
+</header>
+<div class="container" id="page">
+    <div class="row">
+        <div class="col-sm-3" id="left_panel">
+            <!--<div class="btn btn-default btn-sm" onclick="forEachDemo(event)">运行所有示例</div>-->
+            <div class="q-sidebar" role="navigation" id="demo_list"></div>
+            <div id="other_list">
+                <label>在线示例</label>
+                <ul class="nav"></ul>
+                <script async src="http://demo.qunee.com/online-demos.js?v=1.7.2"></script>
+            </div>
+        </div>
+        <div class="col-sm-9" id="right_panel">
+            <ol id="demo_title" class="breadcrumb">
+                <li class="active">Demos</li>
+            </ol>
+            <div id="graph_panel" class="q-panel">
+                <div role="toolbar" class="q-toolbar">
+                    <div class="row">
+                        <div id="toolbar" class="col-md-9 col-xs-7"></div>
+                        <div id="demo_menu" class="col-md-3 col-xs-5 q-right">
+                            <div id="btnJSONShow" title="JSON Export" class="btn btn-default btn-sm" ><div class="icon toolbar-json"></div></div>
+                            <div title="About" id="about" class="btn btn-primary btn-sm" >About
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="q-content">
+                    <div id="canvas"></div>
+                    <style>
+                        .Q-Export-JSON {
+                            position: absolute;
+                            top: 0px;
+                            bottom: 0px;
+                            right: 0px;
+                            left: 0px;
+                            background: #DDD;
+                            opacity: 0.9;
+                            box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+                        }
+                    </style>
+                    <div class="Q-Export-JSON" id="Q-JSON-Panel" style="height: 0px; overflow: hidden;">
+                        <div style="background: #EEE; position: absolute; top: 50px; bottom: 0px; width: 100%; overflow: auto;">
+                            <textarea id="json_code_panel" style="height: 100%; width: 100%; border: none;"></textarea>
+                        </div>
+                        <div style="padding: 10px; height: 50px; float: right; position: relative;">
+                            <div id="btnJSONSubmit" class="btn btn-primary btn-sm" title="提交" >提交</div>
+                            <div id="btnJSONClose" class="btn btn-primary btn-sm" title="关闭" >关闭</div>
+                        </div>
+                    </div>
+                    <div class="mask" id="mask_panel">
+                        <div class="loading">Loading...</div>
+                    </div>
+                </div>
+            </div>
+            <div id="code_container">
+                <div class="q-toolbar">
+                    <div class="row">
+                        <div class="col-md-8 col-xs-6"><span id="code_title">示例代码</span></div>
+                        <div class="col-md-4 col-xs-6 q-right">
+                            <div id="btnRunCode" class="btn btn-primary btn-sm" title="运行代码" >运行代码</div>
+                        </div>
+                    </div>
+                </div>
+                <textarea id="code_panel"></textarea>
+            </div>
+        </div>
+    </div>
+    <div style="position: absolute; top: 16px; right: 15px;">
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle"
+    style="display:inline-block;width:320px;height:50px"
+    data-ad-client="ca-pub-3132876633721837"
+    data-ad-slot="6179545304"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    </div>
+</div>
+
+<footer id="footer" role="contentinfo">
+    <div>
+        Copyright © 2014 酷利软件. All right reserved. Email: <span
+            style="color: #2898E0;">support#qunee.com</span>
+    </div>
+</footer>
+<div class="modal fade" id="q-message">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Title</h4>
+            </div>
+            <div class="modal-body"></div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="./lib/qunee-min.js?v=1.7.2"></script>
+<!--<script type="text/javascript" src="../qunee.js?v=1.7.2"></script>-->
+<script type="text/javascript" src="js/common.js?v=1.7.2"></script>
+<script type="text/javascript" src="js/graphs.js?v=1.7.2"></script>
+<script type="text/javascript" src="js/demo.js?v=1.7.21"></script>
+
+<link rel="stylesheet" href="js/codemirror/codemirror.css">
+<script src="js/codemirror/codemirror.js?v=1.7.2"></script>
+<script src="js/codemirror/javascript.js?v=1.7.2"></script>
+<script>
+    var code_panel = document.getElementById("code_panel");
+    var editor = CodeMirror.fromTextArea(code_panel, {
+        lineNumbers: true,
+        matchBrackets: true,
+        mode: "text/javascript"
+    });
+    code_panel.getValue = function () {
+        return editor.getValue();
+    }
+    code_panel.setValue = function (v) {
+        editor.setValue(v);
+    }
+    code_panel.setValue(code_panel.value);
+    code_panel.editor = editor;
+</script>
+</body>
+<script>
+    window.LIMITED_SIZE = 1000000;
+    if(window.location.hostname != 'localhost'){
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                    m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-48136854-1', 'qunee.com');
+        ga('send', 'pageview');
+    }
+</script>
+</html> 

@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dnt.monitor.server.repository.TopoRepository">
+    <sql id="selectMap">
+        SELECT m.*,
+            n.id              AS node_id,
+            n.type            AS node_type,
+            n.path            AS node_path,
+            n.depth           AS node_depth,
+            n.group_size      AS node_group_size,
+            n.resource_size   AS node_resource_size,
+            n.label           AS node_label,
+            n.icon            AS node_icon,
+            n.resource_id     AS node_resource_id,
+            n.range           AS node_range,
+            n.properties      AS node_properties,
+            n.comment         AS node_comment,
+            n.state           AS node_state,
+            n.priority        AS node_priority,
+            n.location        AS node_location,
+            n.organization    AS node_organization,
+            n.schedule        AS node_schedule,
+            n.maintain_window AS node_maintain_window,
+            n.credentials     AS node_credentials,
+            n.created_at      AS node_created_at,
+            n.updated_at      AS node_updated_at
+        FROM topo_maps m
+        LEFT JOIN managed_nodes n ON m.path = n.path
+    </sql>
+
+    <sql id="selectNode">
+        SELECT
+            n.*,
+            map.path       AS map_path,
+            map.label      AS map_label,
+--             map.background AS map_backgroud,
+            map.scale      AS map_scale,
+            map.properties AS map_properties,
+            map.created_at AS map_created_at,
+            map.updated_at AS map_updated_at,
+            mn.id              AS node_id,
+            mn.type            AS node_type,
+            mn.path            AS node_path,
+            mn.depth           AS node_depth,
+            mn.group_size      AS node_group_size,
+            mn.resource_size   AS node_resource_size,
+            mn.label           AS node_label,
+            mn.icon            AS node_icon,
+            mn.resource_id     AS node_resource_id,
+            mn.range           AS node_range,
+            mn.properties      AS node_properties,
+            mn.comment         AS node_comment,
+            mn.state           AS node_state,
+            mn.priority        AS node_priority,
+            mn.location        AS node_location,
+            mn.organization    AS node_organization,
+            mn.schedule        AS node_schedule,
+            mn.maintain_window AS node_maintain_window,
+            mn.credentials     AS node_credentials,
+            mn.created_at      AS node_created_at,
+            mn.updated_at      AS node_updated_at
+        FROM topo_nodes n
+        JOIN topo_maps map ON n.map_id = map.id
+        LEFT JOIN managed_nodes mn ON n.path = mn.path
+    </sql>
+
+    <sql id="selectLink">
+        SELECT
+            tl.*,
+            m.path             AS map_path,
+            m.label            AS map_label,
+            m.background       AS map_backgroud,
+            m.scale            AS map_scale,
+            m.properties       AS map_properties,
+            m.created_at       AS map_created_at,
+            m.updated_at       AS map_updated_at,
+            src.id             AS src_id,
+            src.map_id         AS src_map_id,
+            src.path           AS src_path,
+            src.label          AS src_label,
+            src.icon           AS src_icon,
+            src.coordinate     AS src_coordinate,
+            src.layer          AS src_layer,
+            src.rotate         AS src_rotate,
+            src.size           AS src_size,
+            src.properties     AS src_properties,
+            src.created_at     AS src_created_at,
+            src.updated_at     AS src_updated_at,
+            dest.id            AS dest_id,
+            dest.map_id        AS dest_map_id,
+            dest.path          AS dest_path,
+            dest.label         AS dest_label,
+            dest.icon          AS dest_icon,
+            dest.coordinate    AS dest_coordinate,
+            dest.layer         AS dest_layer,
+            dest.rotate        AS dest_rotate,
+            dest.size          AS dest_size,
+            dest.properties    AS dest_properties,
+            dest.created_at    AS dest_created_at,
+            dest.updated_at    AS dest_updated_at,
+            link.id            AS link_id,
+            link.from_id       AS link_from_id,
+            link.to_id         AS link_to_id,
+            link.type          AS link_type,
+            link.label         AS link_label,
+            link.performance   AS link_performance,
+            link.config_status AS link_config_status,
+            link.availability  AS link_availability,
+            link.properties    AS link_properties,
+            link.created_at    AS link_created_at,
+            link.updated_at    AS link_updated_at
+        FROM topo_links tl
+            JOIN topo_maps m ON tl.map_id = m.id
+            JOIN topo_nodes src ON tl.from_id = src.id
+            JOIN topo_nodes dest ON tl.to_id = dest.id
+            JOIN links link ON tl.link_id = link.id
+    </sql>
+
+    <select id="findMapByPath" resultMap="topoMapResult">
+        <include refid="selectMap"/>
+        <where>m.path = #{path}</where>
+    </select>
+
+    <select id="findMapById" resultMap="topoMapResult">
+        <include refid="selectMap"/>
+        <where>m.id = #{id}</where>
+    </select>
+
+    <select id="findNodeByPath" resultMap="fullTopoNodeResult">
+        <include refid="selectNode"/>
+        <where>
+            n.path = #{path}
+        </where>
+    </select>
+
+    <select id="findNodeById" resultMap="fullTopoNodeResult">
+        <include refid="selectNode"/>
+        <where>
+            n.id = #{id}
+        </where>
+    </select>
+
+    <select id="findNodeByResourceId" resultMap="fullTopoNodeResult">
+        <include refid="selectNode"/>
+        <where>
+            mn.type = 'Resource' AND mn.resource_id = #{resourceId}
+        </where>
+    </select>
+
+    <select id="findLinkById" resultMap="fullTopoLinkResult">
+        <include refid="selectLink"/>
+        <where>
+            tl.id = #{id}
+        </where>
+    </select>
+
+    <select id="findLinkByUnderlyingId" resultMap="fullTopoLinkResult">
+        <include refid="selectLink"/>
+        <where>
+            tl.link_id = #{underlyingLinkId}
+        </where>
+    </select>
+
+    <select id="selectTopoNodes" resultMap="topoNodeResult">
+        SELECT * FROM topo_nodes WHERE map_id = #{id}
+    </select>
+
+    <select id="selectTopoLinks" resultMap="topoLinkResult">
+        SELECT * FROM topo_links WHERE map_id = #{id}
+    </select>
+
+    <select id="selectManagedNode" resultMap="dnt.monitor.server.repository.NodeRepository.nodeResult">
+        SELECT * FROM managed_nodes WHERE path = #{path}
+    </select>
+
+    <insert id="createMap" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        INSERT INTO topo_maps (path, label, background, scale, properties, created_at, updated_at)
+        VALUES (#{path}, #{label}, #{background}, #{scale},
+                #{properties, typeHandler=net.happyonroad.util.PropertiesHandler},
+                #{createdAt}, #{updatedAt})
+    </insert>
+
+    <insert id="createNode" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        INSERT INTO topo_nodes(map_id, path, leaf, label, icon, coordinate , properties, created_at, updated_at)
+                VALUES (#{map.id}, #{path}, #{leaf}, #{label}, #{icon},
+                        #{coordinate, typeHandler=net.happyonroad.util.PointHandler},
+                        #{properties, typeHandler=net.happyonroad.util.PropertiesHandler},
+                        #{createdAt}, #{updatedAt})
+    </insert>
+
+    <insert id="createLink" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        INSERT INTO topo_links(map_id, from_id, to_id, link_id, label, type, properties, created_at, updated_at)
+                VALUES (#{mapId},  #{fromId}, #{toId}, #{linkId}, #{type}, #{label},
+                        #{properties, typeHandler=net.happyonroad.util.PropertiesHandler},
+                        #{createdAt}, #{updatedAt})
+    </insert>
+
+    <update id="updateMapsPath">
+        UPDATE topo_maps
+        <set>
+            path = CONCAT(#{newPath}, RIGHT(path, LENGTH(path) - LENGTH(#{legacyPath})))
+        </set>
+        <where>(LOCATE(#{legacyPath}, path) = 1)</where>
+    </update>
+
+    <update id="updateNodesPath">
+        UPDATE topo_nodes
+        <set>
+            path = CONCAT(#{newPath}, RIGHT(path, LENGTH(path) - LENGTH(#{legacyPath})))
+        </set>
+        <where>(LOCATE(#{legacyPath}, path) = 1)</where>;
+    </update>
+
+    <update id="updateNodesParent">
+        UPDATE topo_nodes
+        <set>
+            map_id = (SELECT id FROM topo_maps WHERE path = #{newParentPath})
+        </set>
+        <where>(LOCATE(#{newParentPath}, path) = 1)
+            AND (path != #{newParentPath})
+            AND (LOCATE('/', path, LENGTH(#{newParentPath}) + 2) = 0)
+        </where>;
+    </update>
+
+    <update id="updateMapsChildrenSize">
+        UPDATE topo_maps map
+          SET map_size = (SELECT count(0) FROM topo_nodes WHERE map_id = map.id AND leaf IS FALSE ),
+              node_size = (SELECT count(0) FROM topo_nodes WHERE map_id = map.id AND leaf IS TRUE )
+        WHERE path = #{path};
+    </update>
+
+    <update id="updateMap">
+        UPDATE topo_maps
+        <set>
+            label      = #{label},
+            background = #{background},
+            scale      = #{scale},
+            properties = #{properties, typeHandler=net.happyonroad.util.PropertiesHandler},
+            updated_at = #{updatedAt}
+        </set>
+        <where>id = #{id}</where>
+    </update>
+
+    <update id="updateNode">
+        UPDATE topo_nodes
+        <set>
+            label      = #{label},
+            icon       = #{icon},
+            coordinate = #{coordinate, typeHandler=net.happyonroad.util.PointHandler},
+            layer      = #{layer},
+            rotate     = #{rotate},
+            size       = #{size, typeHandler=net.happyonroad.util.SizeHandler},
+            properties = #{properties, typeHandler=net.happyonroad.util.PropertiesHandler},
+            updated_at = #{updatedAt}
+        </set>
+        <where>id = #{id}</where>
+    </update>
+
+    <update id="updateLink">
+        UPDATE topo_links
+        <set>
+            label      = #{label},
+            type       = #{type},
+            properties = #{properties, typeHandler=net.happyonroad.util.PropertiesHandler},
+            updated_at = #{updatedAt}
+        </set>
+        <where>id = #{id}</where>
+    </update>
+
+    <update id="increaseMapSize">
+        UPDATE topo_maps
+        <set> map_size = map_size + #{diff} </set>
+        <where>id = #{mapId}</where>
+    </update>
+
+    <update id="increaseNodeSize">
+        UPDATE topo_maps
+        <set> node_size = node_size + #{diff} </set>
+        <where>id = #{mapId}</where>
+    </update>
+
+    <delete id="deleteMap">
+        DELETE FROM topo_maps WHERE path = #{path}
+    </delete>
+
+    <delete id="deleteNode">
+        DELETE FROM topo_nodes WHERE path = #{path}
+    </delete>
+
+    <delete id="deleteLink">
+        DELETE FROM topo_links WHERE link_id = #{underlyingLinkId}
+    </delete>
+
+    <resultMap id="simpleTopoMapResult" type="TopoMap" autoMapping="true">
+        <id property="id" column="id"/>
+        <result property="properties" column="properties"
+                typeHandler="net.happyonroad.util.PropertiesHandler"/>
+    </resultMap>
+
+    <resultMap id="topoMapResult" type="TopoMap" autoMapping="true">
+        <id property="id" column="id"/>
+        <result property="properties" column="properties"
+                typeHandler="net.happyonroad.util.PropertiesHandler"/>
+        <association property="node" columnPrefix="node_" autoMapping="true"
+                     resultMap="dnt.monitor.server.repository.NodeRepository.nodeResult"/>
+        <collection property="nodes" column="id" select="selectTopoNodes"/>
+        <collection property="links" column="id" select="selectTopoLinks"/>
+    </resultMap>
+
+    <resultMap id="topoNodeResult" type="TopoNode" autoMapping="true">
+        <id property="id" column="id"/>
+        <result property="mapId" column="map_id"/>
+        <result property="path" column="path"/>
+        <result property="leaf" column="leaf"/>
+        <result property="coordinate" column="coordinate"
+                typeHandler="net.happyonroad.util.PointHandler"/>
+        <result property="size" column="size"
+                typeHandler="net.happyonroad.util.SizeHandler"/>
+        <result property="properties" column="properties"
+                typeHandler="net.happyonroad.util.PropertiesHandler"/>
+        <!--<association property="map" resultMap="topoMapResult"/>-->
+        <!--采用程序组装这个关系-->
+    </resultMap>
+
+    <resultMap id="fullTopoNodeResult" type="TopoNode" extends="topoNodeResult" autoMapping="true">
+        <association property="map" columnPrefix="map_" resultMap="simpleTopoMapResult"/>
+        <association property="node" columnPrefix="node_" resultMap="dnt.monitor.server.repository.NodeRepository.nodeResult"/>
+    </resultMap>
+
+    <!--执行2级关联策略，也就是查A对象可以带出B对象，但不能再带出B对象关联的C对象；所以需要把B对象中C对象的ID映射出来-->
+    <resultMap id="topoLinkResult" type="TopoLink" autoMapping="true">
+        <id property="id" column="id"/>
+        <!--map_id不需要额外mapping，我们会在服务层组装时将Link与其map属性关联起来-->
+        <result property="mapId" column="map_id"/>
+        <result property="fromId" column="from_id"/>
+        <result property="toId" column="to_id"/>
+        <result property="linkId" column="link_id"/>
+        <result property="properties" column="properties"
+                typeHandler="net.happyonroad.util.PropertiesHandler"/>
+        <!--<association property="map" resultMap="topoMapResult"/>-->
+    </resultMap>
+
+    <resultMap id="fullTopoLinkResult" type="TopoLink" extends="topoLinkResult" autoMapping="true">
+        <association property="map" columnPrefix="map_" resultMap="simpleTopoMapResult"/>
+        <association property="fromNode" columnPrefix="src_" resultMap="topoNodeResult"/>
+        <association property="toNode" columnPrefix="dest_" resultMap="topoNodeResult"/>
+        <association property="link" columnPrefix="link_" resultMap="dnt.monitor.server.repository.LinkRepository.linkResult"/>
+    </resultMap>
+
+
+</mapper>

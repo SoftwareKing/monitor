@@ -1,0 +1,29 @@
+// Created by brokenq on 14-12-30.
+include /lib/mixins/list
+include /index/panels/tab
+
+.tabbable(ng-tabs='')
+  ul#myTab.nav.nav-tabs
+    +tab_nav("active", "tab", "#", "$event.preventDefault()", "视图")
+    +tab_nav("active", "tab", "#", "showTopoTable", "列表")
+    +tab_nav("active", "tab", "#", "$event.preventDefault()", "实时")
+    +tab_nav("active", "tab", "#", "$event.preventDefault()", "2天")
+    +tab_nav("active", "tab", "#", "$event.preventDefault()", "1周")
+    +tab_nav("active", "tab", "#", "$event.preventDefault()", "1月")
+    +tab_nav("active", "tab", "#", "$event.preventDefault()", "2年")
+    +tab_nav("active", "tab", "#", "$event.preventDefault()", "日志")
+    +tab_nav("active", "tab", "#", "$event.preventDefault()", "设置")
+    +tab_nav("active", "tab", "#", "$event.preventDefault()", "备注")
+    +tab_nav("active", "tab", "#", "$event.preventDefault()", "审计")
+  .tab-content.overflow-auto
+    include /index/panels/tab_view
+    include /index/panels/tab_table
+    include /index/panels/tab_realtime
+    include /index/panels/tab_two_days
+    include /index/panels/tab_one_week
+    include /index/panels/tab_one_month
+    include /index/panels/tab_two_years
+    include /index/panels/tab_log
+    include /index/panels/tab_settings
+    include /index/panels/tab_comment
+    include /index/panels/tab_audit
