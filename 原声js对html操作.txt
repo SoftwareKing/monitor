@@ -1,0 +1,119 @@
+<script language="javascript">
+    var count =0;
+    var deviceCount=0;
+    //添加操作
+    function addNewPanel(){
+        //得到文本框对象
+        count++;
+        //先创建table
+        var table = document.createElement("table");
+        //设置行对象的ID属性为用户输入的用户名称
+        table.setAttribute("id","xjtable"+count);
+        table.setAttribute("class","table");
+        table.setAttribute("border","1");
+        table.setAttribute("width","100%");
+        //创建tr对象
+        var tr=document.createElement("tr");
+        //创建td对象
+        var column = document.createElement("td");
+        column.setAttribute("style","border: 2px solid #000000;");
+        column.setAttribute("width","25%")
+        //td对象下添加子节点 - 内容 TextNode 对象
+        column.appendChild(document.createTextNode("巡检类型"));
+        //tr对象将td对象添加为子节点对象
+        tr.appendChild(column);
+        //创建输入框
+        var  input=document.createElement("input");
+        input.setAttribute("type","text");
+        column = document.createElement("td");
+        column.setAttribute("style","border: 2px solid #000000;");
+        column.setAttribute("width","25%")
+        column.appendChild(input);
+        tr.appendChild(column);
+        //创建增加设备按钮
+        var addDeviceBtn = document.createElement("input");
+        //类型
+        addDeviceBtn.setAttribute("type","button");
+        //文本
+        addDeviceBtn.setAttribute("value","增加设备");
+
+        //再创建删除按钮
+        var delBtn = document.createElement("input");
+        //类型
+        delBtn.setAttribute("type","button");
+        //文本
+        delBtn.setAttribute("value","删除");
+
+        //设置对象的事件处理 - 所调用的函数
+        var id = "xjtable"+count;
+        addDeviceBtn.onclick=function(){addDevice(id);};
+        delBtn.onclick= function(){delTable(id);};
+
+        column = document.createElement("td");
+        column.setAttribute("style","border: 2px solid #000000;");
+        column.setAttribute("width","50%")
+        column.appendChild(addDeviceBtn);
+        column.appendChild(delBtn);
+
+        //行对象添加
+        tr.appendChild(column);
+        table.appendChild(tr);
+        //添加这一行到tbody中
+        document.getElementById('printTemplete').appendChild(table);
+
+    }
+    //增加device
+    function addDevice(id){
+        count++;
+        var objtable = document.getElementById(id);
+        var tr=document.createElement("tr");
+        tr.setAttribute("id","sbtr"+count);
+        var column = document.createElement("td");
+        column.setAttribute("style","border: 2px solid #000000;");
+        column.setAttribute("width","25%")
+        //td对象下添加子节点 - 内容 TextNode 对象
+        column.appendChild(document.createTextNode("设备名称"));
+        tr.appendChild(column);
+        //创建输入框
+        var  input=document.createElement("input");
+        input.setAttribute("type","text");
+        column = document.createElement("td");
+        column.setAttribute("style","border: 2px solid #000000;");
+        column.setAttribute("width","25%")
+        column.appendChild(input);
+        tr.appendChild(column);
+        //再创建删除按钮
+        var delBtn = document.createElement("input");
+        //类型
+        delBtn.setAttribute("type","button");
+        //文本
+        delBtn.setAttribute("value","删除");
+        var idDevice = "sbtr"+count;
+        delBtn.onclick= function(){delDevice(idDevice,id);};
+        column = document.createElement("td");
+        column.setAttribute("style","border: 2px solid #000000;");
+        column.setAttribute("width","50%")
+        column.appendChild(delBtn);
+        tr.appendChild(column);
+        objtable.appendChild(tr);
+
+    }
+    //删除设备
+    function delDevice(idDevice,id){
+        if(id!=null&&idDevice!=null){
+            var objtr = document.getElementById(idDevice);
+            var objtable = document.getElementById(id);
+            //删除tr
+            objtable.removeChild(objtr);
+        }
+    }
+    //删除table
+    function delTable(id){
+        if(id!=null){
+            var objtable = document.getElementById(id);
+            var objTBODY = document.getElementById("printTemplete");
+            //删除
+            objTBODY.removeChild(objtable);
+        }
+    }
+</script>
