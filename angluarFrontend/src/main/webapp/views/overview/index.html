@@ -1,0 +1,45 @@
+<link rel="stylesheet" type="text/css" href="css/overview/overview.css"/>
+<div class="content">
+    <bread-crumb>
+        <a title="Go to Home" class="current"><i class="fa fa-home"></i>首页</a>
+
+        <span class="settingBtn-div">
+            <a id="setting" title="设置" class="setting-off" ng-click="toggleSetting()"><i class="fa fa-cog"></i></a>
+            <a id="saveSettingBtn" title="保存" class="" ng-click="savePanels()"><i class="fa fa-save"></i></a>
+            <a id="showDialogBtn" title="添加" class="" ng-click="showAddDialog()"><i class="fa fa-plus-square"></i></a>
+        </span>
+    </bread-crumb>
+    <div class="page-content">
+        <div class="row">
+            <div class="col-xs-6 left-col sortable-container">
+                <widget-box id="widget-{{p.panelId}}" data-panelId="{{p.panelId}}" ng-repeat="p in panelData.userPanels.leftCol">
+                    <div ng-include src="p.url"></div>
+                </widget-box>
+            </div>
+            <div class="col-xs-6 right-col sortable-container">
+                <widget-box id="widget-{{p.panelId}}" data-panelId="{{p.panelId}}" ng-repeat="p in panelData.userPanels.rightCol">
+                    <div ng-include src="p.url"></div>
+                </widget-box>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div modal-dialog settings="modalSetting" class="dialog">
+    <form name="addForm" novalidate>
+        <div class="dialog-con">
+            <div ng-switch="panelData.sysPanels.length>0">
+                <ul ng-switch-when="true">
+                    <li ng-repeat="p in panelData.sysPanels">
+                    <span class='checkbox'>
+                        <label>
+                            <input type='checkbox' checklist-model="panelData.toAddPanels"  checklist-value="p.id"/><i></i>
+                        </label>{{p.displayName}}
+                    </span>
+                    </li>
+                </ul>
+                <ul ng-switch-default><li> 没有可添加的面板. </li></ul>
+            </div>
+        </div>
+    </form>
+</div>

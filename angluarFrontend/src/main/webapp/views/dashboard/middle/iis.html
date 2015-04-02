@@ -1,0 +1,116 @@
+<div>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div ng-include src="'../dashboard/commonTemplates/summary.html'"></div>
+                </div>
+            </div>
+            <div class="row" ng-if="currentMoc.cpuBars || currentMoc.trend">
+                <div class="col-xs-12">
+                    <widget-box>
+                        <widget-header>
+                            <h5>性能信息</h5>
+                        </widget-header>
+                        <widget-body>
+                            <table  class="simple-table">
+                                <tr>
+                                    <td width="50%" ng-repeat="l in currentMoc.cpuBars">
+                                        <div style="padding:15px;" ng-controller="cpuBarCtrl" process-bar></div>
+                                    </td>
+                                    <td width="50%"></td>
+                                </tr>
+                            </table>
+                            <div class="row" ng-if="currentMoc.trend">
+                                <div class="col-xs-12">
+                                    <div class="trend-wrapper">
+                                        <trend-chart  ng-controller="hisTrendCtrl"></trend-chart>
+                                    </div>
+                                </div>
+                            </div>
+                        </widget-body>
+                    </widget-box>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div ng-include src="'../dashboard/commonTemplates/availablity.html'"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div ng-include src="'../dashboard/commonTemplates/baseInfo.html'"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div ng-include src="'../dashboard/commonTemplates/resourceInfo.html'"></div>
+                </div>
+            </div>
+            <div class="row" ng-if="currentMoc.extendPanel">
+                <div class="col-xs-12">
+                    <widget-box>
+                        <widget-header>
+                            <h5>虚拟机信息</h5>
+                        </widget-header>
+                        <widget-body>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="panel-wrapper">
+                                        <ul>
+                                            <li ng-repeat="m in panelBase[5]" ng-show="m.key">
+                                                <div class="td-label" title="{{m.name}}">{{( m.name!=null
+                                                    && m.name.length)>0?m.name+' :':''}}
+                                                </div>
+                                                <div class="td-value"
+                                                     title="{{(m.value && (m.value+'').indexOf('<i'))>-1?'':m.value}}"
+                                                     compile="m.value?m.value:''"></div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </widget-body>
+                    </widget-box>
+                </div>
+            </div>
+            <div class="row" ng-if="currentMoc.extendPanel">
+                <div class="col-xs-12">
+                    <widget-box>
+                        <widget-header>
+                            <h5>线程池</h5>
+                        </widget-header>
+                        <widget-body>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="panel-wrapper">
+                                        <ul>
+                                            <li ng-repeat="m in panelBase[6]" ng-show="m.key" ng-switch="$index%2">
+                                                <div class="td-label" title="{{m.name}}">{{( m.name!=null
+                                                    && m.name.length)>0?m.name+' :':''}}
+                                                </div>
+                                                <div class="td-value"
+                                                     title="{{(m.value && (m.value+'').indexOf('<i'))>-1?'':m.value}}"
+                                                     compile="m.value?m.value:''"></div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </widget-body>
+                    </widget-box>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" ng-if="currentMoc.tables">
+        <div class="col-sm-12">
+            <div ng-include src="'../dashboard/commonTemplates/tables.html'"></div>
+        </div>
+    </div>
+</div>
+
+
+

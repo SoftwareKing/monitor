@@ -1,0 +1,149 @@
+.settingBtn-div{
+    display:inline-block;
+    float: right;
+    margin-right:18px;
+    width:34px;
+    height:35px;
+    overflow: hidden;
+}
+.settingBtn-div a{
+    padding: 8px 0px 8px 13px;
+    background:none;
+    color:#333;
+}
+
+.dataTables_wrapper{
+    border: none;
+}
+
+.ui-sortable-disabled .toolbar-delete{
+    display:none;
+}
+.toolbar-delete{
+    display:block;
+    float: right;
+    padding-right: 10px;
+}
+.toolbar-delete .fa-times{
+    font-size: 16px;
+    color: #aaa;
+    line-height: 37px;
+}
+
+.modal-dialog{
+    margin-left: -200px;
+}
+.modal-content{
+    width: 400px;
+}
+.modal-content .modal-body .dialog-con{
+    overflow:auto;
+}
+
+/* 百分比色条*/
+.bar-label{width:38px;text-align: left;float:right;}
+.bar-wrap{ position: relative; top:12px}
+.Bar{ position: relative;border:1px solid #D3CDCD;border-radius: 10px;height:8px;margin-right: 40px;}
+.Bar div { display: block; position: relative; color: #333333;height: 100%;border-radius: 10px}
+.Bar div.green{background:#0fa460;}
+.Bar div.yellow{background:#f8c63d;}
+.Bar div.red{background:#de4e43;}
+.Bar div.gray{background:#BEBEBE;}
+.Bar div span { position: absolute; width: 99%;text-align: right;color:#fff;}
+
+.status-icon{
+    font-size: 14px;
+    text-align: center;
+    display: block;
+}
+.statusOn{
+    color: #3276b1;
+}
+.statusOn:hover{
+    color: #3276b1!important;
+}
+.statusOff{
+    color: #a90329;
+}
+.statusOff:hover{
+    color:  #a90329!important;
+}
+.statuNull{
+    color:#b2b2b2;
+}
+.statuNull:hover{
+    color:  #b2b2b2!important;
+}
+
+/*待办任务*/
+.workorder-content .row{
+  margin-left: 0;
+  margin-right:0;
+}
+.workorder-content .col-xs-4{
+  padding-left: 0;
+  padding-right: 0;
+}
+
+#workOrderChart {
+   margin-bottom: 20px;
+}
+.order-wrap{
+  padding: 20px;
+}
+.order-block{
+    display: block;
+    height: 70px;
+    line-height: 70px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+}
+.back-1{background: #7cb5ec;}
+.back-2{background: #434348;}
+.back-3{background: #90ed7d;}
+.back-4{background: #ffa500;}
+.back-5{background: #8085e9;}
+.back-6{background: #f15c80;}
+
+/*告警*/
+.chart-wrap{
+    padding: 10px 10px 0;
+}
+.jqplot-table-legend .jqplot-table-legend-swatch-outline{
+      height: 18px;
+      width: 35px;
+}
+.jqplot-table-legend tr:nth-child(1) .jqplot-table-legend-swatch-outline{
+    background: url(../../img/alarm/2.png);
+}
+.jqplot-table-legend tr:nth-child(2) .jqplot-table-legend-swatch-outline{
+    background: url(../../img/alarm/3.png);
+}
+.jqplot-table-legend tr:nth-child(3) .jqplot-table-legend-swatch-outline{
+    background: url(../../img/alarm/4.png);
+}
+.jqplot-table-legend tr:nth-child(4) .jqplot-table-legend-swatch-outline{
+    background: url(../../img/alarm/5.png);
+}
+.jqplot-table-legend tr:nth-child(5) .jqplot-table-legend-swatch-outline{
+    background: url(../../img/alarm/6.png);
+}
+.jqplot-table-legend-label{
+    display: none;
+}
+
+/*自定义拖动样式*/
+.sortable-container{
+    min-height:30px;
+}
+.ui-sortable-placeholder{
+    border:2px dashed #ddd;
+    visibility: visible!important;
+}
+
+.highcharts-button path {
+    display: none;
+}

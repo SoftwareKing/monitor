@@ -1,0 +1,84 @@
+<link rel="stylesheet" type="text/css" href="css/report/jf.css">
+
+<div dialog info="jfTempleteAddDialog" class="ldialog">
+    <form name="form" novalidate>
+        <div class="dialog-con" style="height:400px;overflow: auto;">
+            <table width="100%">
+                <tr>
+                    <td >
+                        <label>机房<span class="required">*</span>
+                            <input type="hidden" ng-model="addPage.data.jfId" required="">
+                            <select ng-model="addPage.data.jfId">
+                                <option value=""> 不限</option>
+                                <option ng-repeat="type in addPage.datas.jf" value={{type['id']}}>
+                                    {{type['name']}}
+                                </option>
+                            </select>
+                        </label>
+                        <div id="printTemplete">
+                            <center><h3>{{addPage.data.jfName}}巡检工作记录表</h3></center>
+                            <table class="table" style="border: 2px solid #000000;" border="1" width="100%">
+                                <tr>
+                                    <td style="border: 2px solid #000000;" width="25%"><h5>运维服务商</h5></td>
+                                    <td style="border: 2px solid #000000;" width="25%">昆明南方天健网络科技有限公司</td>
+                                    <td style="border: 2px solid #000000;" width="25%"><h5>日期<span class="required">*</span></h5></td>
+                                    <td style="border: 2px solid #000000;padding-left: 0px;" width="25%"><input required="" readonly ng-model="addPage.data.patrolTime" type="text" jq-date format="yyyy-mm-dd" style="width: 100%;height: 36px"></td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 2px solid #000000;"><h5>巡检时间</h5></td>
+                                    <td style="border: 2px solid #000000;">8:00</td>
+                                    <td style="border: 2px solid #000000;">10:00</td>
+                                    <td style="border: 2px solid #000000;">12:00</td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 2px solid #000000;"><h5>巡检工程师<span class="required">*</span></h5></td>
+                                    <td style="border: 2px solid #000000;padding-left: 0px;"><input required="" ng-model="addPage.data.patrolUser" type="text" style="width: 100%;height: 36px" maxlength="20"></td>
+                                    <td style="border: 2px solid #000000;"></td>
+                                    <td style="border: 2px solid #000000;"></td>
+
+                                </tr>
+
+                            </table>
+                            <table  width="100%"> <button type="button" class="btn btn-primary" ng-click="jfTempleteAddDialog.createTypeXj()">增加巡检类型</button></table>
+                            <table class="table" style="border: 2px solid #000000;" border="1" width="100%"  ng-repeat="typeXj in typesXj">
+                                <tr>
+                                    <td style="border: 2px solid #000000;" width="25%"><h5>巡检类型</h5></td>
+                                    <td style="border: 2px solid #000000;" width="50%"><input required="" ng-model="typeXj.name" type="text" style="width: 100%;height: 36px" maxlength="20"></td>
+                                    <td style="border: 2px solid #000000;"  width="25%"><button type="button" class="btn btn-primary" ng-click="jfTempleteAddDialog.createDevice(typeXj.devicesXj)">增加设备</button><button type="button" class="btn btn-primary" ng-click="jfTempleteAddDialog.deleteTypeXj(typesXj,$index)">删除类型</button></td>
+                                </tr>
+                                <tr ng-repeat="deviceXj in typeXj.devicesXj">
+                                    <td style="border: 2px solid #000000;" width="25%"><h5> 设备名称</h5></td>
+                                    <td style="border: 2px solid #000000;" width="50%"><input required="" ng-model="deviceXj.name" type="text" style="width: 100%;height: 36px" maxlength="20"></td>
+                                    <td style="border: 2px solid #000000;" width="25%"><button type="button" class="btn btn-primary" ng-click="jfTempleteAddDialog.deleteDevice(typeXj.devicesXj,$index)">删除设备</button></td>
+                                </tr>
+
+                            </table>
+                            <table class="table" style="border: 2px solid #000000;" border="1" width="100%">
+                                <tr>
+                                    <td style="border: 2px solid #000000;" colspan="4" style="text-align: left"><h5>设备异常情况处理方法：</h5></td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 2px solid #000000;padding-left: 0px;" colspan="4" style="text-align: left">
+                                        <textarea ng-model="addPage.data.remark" style="width: 100%;height: 100px" maxlength="200"></textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 2px solid #000000;"><h5>用户签字</h5></td>
+                                    <td style="border: 2px solid #000000;padding-left: 0px;"><input ng-model="addPage.data.signatureUser" type="text" style="width: 100%;height: 36px" maxlength="20"></td>
+                                    <td style="border: 2px solid #000000;"><h5>日期</h5></td>
+                                    <td style="border: 2px solid #000000;padding-left: 0px;"><input  readonly ng-model="addPage.data.signatureTime" type="text" jq-date format="yyyy-mm-dd" style="width: 100%;height: 36px"></td>
+                                </tr>
+                             </table>
+                            <br/>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" ng-disabled="addPage.data.jfId == null" onclick="javascript:document.body.innerHTML=$('#printTemplete').html();window.print();location.reload();">打印</button>
+            <button type="button" class="btn btn-primary" ng-disabled="form.$invalid" ng-click="jfTempleteAddDialog.save()">确定</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        </div>
+    </form>
+</div>

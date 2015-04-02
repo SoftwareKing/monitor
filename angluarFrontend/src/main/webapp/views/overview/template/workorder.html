@@ -1,0 +1,10 @@
+<widget-header>
+    <h5>我的任务</h5>
+    <a class="toolbar-delete" ng-click="deletePanel(p.panelId)"><i class="fa fa-times"></i></a>
+    <widget-toolbar></widget-toolbar>
+</widget-header>
+<widget-body>
+    <div class="chart-wrap">
+        <highchart id="workOrderChart" config="workOrderChart.config"></highchart>
+    </div>
+</widget-body>

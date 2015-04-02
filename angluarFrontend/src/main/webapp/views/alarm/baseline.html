@@ -1,0 +1,44 @@
+<link rel="stylesheet" type="text/css" href="css/alarm/baseline.css">
+<div class="content">
+    <bread-crumb>
+        <a>监控</a>
+        <a>告警</a>
+        <a class="current">基线管理</a>
+        <a class="search-link ">高级搜索</a>
+    </bread-crumb>
+    <layout-lr>
+        <panel-left>
+            <div id="sidebar" class="left-sidebar">
+                <div class="menu-title">
+                    <span>资源类型组</span>
+                </div>
+                <ul class="ztree ztreen" z-tree="{
+                    inData:'mocTree.data',
+                    outData:'searchPage.data.mocpId',
+                    outParentData:'',
+                    type:'none',
+                    description:'displayName',
+                    children:'children',
+                    value:'id',
+                    depth:1}" id="mocTree">
+                </ul>
+            </div>
+            <collapse-left></collapse-left>
+        </panel-left>
+        <panel-right>
+            <div class="page-content">
+                <div id="baseline_manage_div">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12">
+                            <div ng-include src="'views/alarm/baselineSearch.html'"></div>
+                            <div ng-include src="'views/alarm/baselineList.html'"></div>
+
+                            <!-- edit page -->
+                            <div ng-include src="'views/alarm/baselineEdit.html'"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </panel-right>
+    </layout-lr>
+</div>

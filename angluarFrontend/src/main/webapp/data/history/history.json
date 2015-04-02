@@ -1,0 +1,8 @@
+{
+    "count": 1,
+    "data":[
+    {"id":20324,"displayName":"规则1","active":"可用","mocId":"1","moId":"18221376741","metricsId":"18221376741","sampleInterval":"2013-15-15"},
+    {"id":2366,"displayName":"规则2","active":"可用","mocId":"2","moId":"18221376741","metricsId":"18221376741","sampleInterval":"2013-15-15"},
+    {"id":10,"displayName":"规则3","active":"可用","mocId":"5","moId":"18221376741","metricsId":"18221376741","sampleInterval":"2013-15-15"}
+]
+}

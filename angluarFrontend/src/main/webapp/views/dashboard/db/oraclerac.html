@@ -1,0 +1,59 @@
+<div>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div ng-include src="'../dashboard/commonTemplates/summary.html'"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <widget-box>
+                        <widget-header>
+                            <h5>系统性能</h5>
+                        </widget-header>
+                        <widget-body>
+                            <table class="simple-table" ng-repeat="l in currentMoc.cpuBars">
+                                <tr  ng-controller="cpuBarCtrl">
+                                    <td width="50%" >
+                                        <div  style="padding:15px;" process-bar></div>
+                                    </td>
+                                    <td width="50%">
+                                        <div ng-repeat="b in l.bottom">
+                                            <div style="float:left;width:50%;text-align: right;">
+                                                {{resource.metricMap[l.indicator+'.'+b]}}:
+                                            </div>
+                                            <div style="float:left;width:50%;" compile="bottom[$index]?bottom[$index]:''"></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                            <div class="row" ng-if="currentMoc.trend">
+                                <div class="col-xs-12">
+                                    <div class="trend-wrapper">
+                                        <trend-chart ng-controller="hisTrendCtrl"></trend-chart>
+                                    </div>
+                                </div>
+                            </div>
+                        </widget-body>
+                    </widget-box>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div ng-include src="'../dashboard/commonTemplates/baseInfo.html'"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div ng-include src="'../dashboard/commonTemplates/availablity.html'"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

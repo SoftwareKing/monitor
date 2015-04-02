@@ -1,0 +1,238 @@
+<link rel="stylesheet" type="text/css" href="css/alarm/alarm.css">
+<div dialog info="alarmAddDialog" data="addPage.data" class="ldialog">
+    <form name="form" novalidate>
+        <div class="dialog-con" style="height:425px;overflow: auto;">
+            <table class="modal-table">
+                <tr>
+                    <td class="row-lable"> 规则名称 </td>
+                    <td><input type="text" value="[资源实例][指标组-指标][索引值]" ng-maxlength="100" readonly /></td>
+                </tr>
+                <tr>
+                    <td class="row-lable"> 规则状态 </td>
+                    <td>
+                        <input type="checkbox" class="ace ace-switch ace-switch-4" ng-model="addPage.data.active" />
+                        <span class="lbl"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="row-lable"> 告警等级 </td>
+                    <td>
+                        <span class="radio" ng-repeat="l in $root.alarm.const.levels">
+                            <label>
+                                <input class="ace" type="radio" ng-model="addPage.data.level" value={{l.value}}>
+                                <span class="lbl"></span>
+                            </label>
+                            <span compile="l.label"></span>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="row-lable"> 轮询间隔 </td>
+                    <td>
+                        <select ng-model="addPage.data.sampleInterval" class="yinput">
+                          <option ng-repeat="i in addPage.datas.intervals" value={{i}}> {{i}} </option>
+                        </select>
+                        <select ng-model="addPage.data.unit" class="yinput">
+                            <option value="分钟">分钟</option>
+                            <option value="小时">小时</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="row-lable"> 告警/恢复延迟 </td>
+                    <td>
+                        <input  ng-model="addPage.data.occursDelay" required type="number" min="1" max="1000">
+                        <span>次</span>
+                        <span class="required">*</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="vt row-lable"> 资源选择 </td>
+                    <td class="pt10">
+                        <div class="sour_choose_box di" style="width:705px">
+                            <div class="sour_choose_boxt pr">
+                                <span>资源类型</span>
+                                <select id="jmocid2" ng-model="addPage.data.mocId" class="yinput" style="color: #858585;">
+                                    <option ng-repeat="type in searchPage.datas.mocs" value='{{type["id"]}}' style="color: #858585;">
+                                        {{type["displayName"]}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="sour_choose_boxm clearfix">
+                                <div class="sour_choose_boxm_l left" style="width:444px;">
+                                    <div class="sour_choose_boxm_head"> 指标类型 <div class="gap150"></div>阈值条件</div>
+                                    <div class="sour_choose_boxm_lcon">
+                                        <ul class="ztree" style="height: 300px;margin-left: 0px;" z-tree="{
+                                            inData:'addPage.datas.metricTree',
+                                            outData:'addPage.data.metricsId',
+                                            outParentData:'',
+                                            type:'all_checkbox',
+                                            description:'displayName',
+                                            children:'children',
+                                            value:'id',
+                                            depth:2,
+                                            nodeDom:'listPreparePage.action.metricNodeDom',
+                                            disableClick:'true'
+                                            }" id="metricTree">
+                                          </ul>
+                                    </div>
+                                </div>
+                                <div class="sour_choose_boxm_r right">
+                                    <div class="sour_choose_boxm_head">资源实例</div>
+                                    <div class="sour_choose_boxm_rcon">
+                                         <ul id="moTree" class="ztree" style="height: 300px  !important;margin: 0px;" z-tree="{
+                                            inData:'addPage.datas.moTree',
+                                            outData:'addPage.data.mosId',
+                                            outParentData:'',
+                                            type:'all_checkbox',
+                                            description:'displayName',
+                                            children:'children',
+                                            value:'id',
+                                            depth:2}">
+                                         </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="sour_choose_boxb">
+                                <form name="formcreate" novalidate>
+                                    <input type="hidden" ng-model="addPage.hidden.metric" required/>
+                                    <input type="hidden" ng-model="addPage.hidden.mo" required/>
+                                    <button class="btn btn-primary" ng-disabled="formcreate.$invalid || listPreparePage.settings.btnHit" ng-click="listPreparePage.action.getData()" >命中规则</button>
+                                </form>
+                            </div>
+                        </div>
+                        <!--<span class="required di vt">*</span>-->
+                    </td>
+                </tr>
+            </table>
+
+            <div id="aaa" style="display: none">
+                <table class="modal-table">
+                    <tr>
+                        <td class="vt row-lable"> 命中的规则 </td>
+                        <td>
+                            <div class="sour_choose_box mt10" style="width:705px">
+                                <div class="sour_choose_boxt pr">
+                                    <span>资源实例</span>
+                                    <select ng-model="addPage.data.molistId" class="yinput">
+                                        <option value=""> 不限</option>
+                                        <option ng-repeat="type in addPage.datas.molist" value={{type['id']}}>
+                                            {{type['displayName']}}
+                                        </option>
+                                    </select>
+                                    <span>指标组</span>
+                                    <select ng-model="addPage.data.indicatorlistId" class="yinput">
+                                        <option value=""> 不限</option>
+                                        <option ng-repeat="type in addPage.datas.indicatorlist" value={{type['id']}}>
+                                            {{type['displayName']}}
+                                        </option>
+                                    </select>
+                                    <span>指标</span>
+                                    <select ng-model="addPage.data.metriclistId" class="yinput">
+                                        <option value=""> 不限</option>
+                                        <option ng-repeat="type in addPage.datas.metriclist" value={{type['id']}}>
+                                            {{type['displayName']}}
+                                        </option>
+                                    </select>
+                                    <button class="btn btn-primary" ng-click="listPreparePage.settings.reload(true)">查询</button>
+                                </div>
+                                <table jq-table="listPreparePage.settings" class="table"></table>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="row" style="padding-left: 0px;">
+                <i id="downadd" class="fa fa-plus" ng-click="listPreparePage.action.addsd()">&nbsp;高级设置</i>
+                <i id="upadd" class="fa fa-minus" style="display: none" ng-click="listPreparePage.action.addsd()">&nbsp;高级设置</i>
+            </div>
+
+            <div id="bbb" style="display: none">
+                <table class="modal-table">
+                    <tr>
+                        <td class="row-lable"> 检测时间 </td>
+                        <td>
+                            <div class="checkbox" ng-repeat="d in $root.alarm.const.weekdays">
+                                <label>
+                                    <input name="week" type="checkbox" checklist-model="addPage.data.workingDay" checklist-value="d.value"><i></i>
+                                </label>
+                                {{d.label}}
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="row-lable"> 检测时段 </td>
+                        <td>
+                            <select ng-model="addPage.data.startTime" class="yinput">
+                                <option ng-repeat="i in [] | loop:0:23:1" value={{i}}> {{i}} </option>
+                            </select>
+                            时---
+                            <select id="endT" ng-model="addPage.data.endTime" class="yinput">
+                                <option ng-repeat="i in addPage.datas.endTimes" value={{i}}> {{i}} </option>
+                            </select>
+                            时
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="row-lable"> 告警内容 </td>
+                        <td><input type="text" style="width: 380px" value="【对象名】【指标】告警，当前值【当前值】，告警条件【条件】" readonly /></td>
+                    </tr>
+                    <tr>
+                        <td class="row-lable"> 恢复内容 </td>
+                        <td><input type="text" style="width: 380px" value="【对象名】【指标】恢复，当前值【当前值】，告警条件【条件】" readonly /></td>
+                    </tr>
+                    <tr>
+                        <td class="row-lable"> 通知方式 </td>
+                        <td>
+                            <div class="checkbox" ng-repeat="d in  $root.alarm.const.noticeWay">
+                                <label>
+                                    <input type="checkbox" checklist-model="addPage.data.notifyWay" checklist-value="d.value"/><i></i>
+                                </label>
+                                {{d.label}}
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="vt row-lable"> 通知人 </td>
+                        <td>
+                            <ul id="usersText" class="ztree"
+                                z-tree="{
+                            inData:'addPage.datas.notifyUsers',
+                            outData:'addPage.data.notifier',
+                            outParentData:'',
+                            type:'checkbox',
+                            description:'name',
+                            children:'children',
+                            value:'id',
+                            isLeaf:'addPage.isLeaf',
+                            depth:100}"></ul>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <input type="hidden" ng-model="addPage.hidden.checkedList" required/>
+            <button type="button" class="btn btn-primary" ng-disabled="form.$invalid || listPreparePage.data.length==0" ng-click="alarmAddDialog.save()">确定</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript">
+    function a(oInput){
+        if('' != oInput.value.replace(/\d{1,}\.{0,1}\d{0,}/,''))
+        {
+            oInput.value = oInput.value.match(/\d{1,}\.{0,1}\d{0,}/) == null ? '' :oInput.value.match(/\d{1,}\.{0,1}\d{0,}/);
+        }
+    }
+
+    function b(oInput){
+        if(oInput.value.length==1){oInput.value=oInput.value.replace(/[^1-9]/g,"")}else{oInput.value=oInput.value.replace(/\D/g,"")}
+    }
+
+    function c(oInput){
+        if(oInput.value.length==1){oInput.value=oInput.value.replace(/[^1-9]/g,"")}else{oInput.value=oInput.value.replace(/\D/g,"")}
+    }
+</script>

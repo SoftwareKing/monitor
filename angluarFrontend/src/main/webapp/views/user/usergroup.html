@@ -1,0 +1,86 @@
+<div class="content" ng-controller="userGroupController">
+    <bread-crumb>
+        <a>设置</a>
+        <a class="current">用户组管理</a>
+        <a class="search-link ">高级搜索</a>
+    </bread-crumb>
+    <div class="page-content">
+        <div class="search-head">
+            <form name="sform" novalidate>
+                <div class="row">
+                    <label>用户组名称：</label>
+                    <input type="text" ng-model="searchPage.data.name"  ng-maxlength="255" />
+                    <label>用户显示名：</label>
+                    <input type="text" ng-model="searchPage.data.userName"  ng-maxlength="255"  />
+                    <label>所属区域：</label>
+                    <input type="text" z-tree="{
+                            inData:'departDialog.locTree.data',
+                            outData:'searchPage.data.location',
+                            outParentData:'',
+                            type:'all_radio',
+                            description:'name',
+                            children:'children',
+                            isLeaf:'false',
+                            value:'id',
+                            inputWidth:280,
+                            depth:3,
+                            radioCancel:true
+                            }"/>
+                    <button class="btn" ng-click="listPage.settings.reload()" >查询</button>
+                </div>
+            </form>
+        </div>
+        <div class="list_button">
+            <button class="btn" ng-disabled="loginUserMenuMap[currentView]" ng-click="listPage.action.add();form.$setPristine();">新增</button>
+            <button class="btn" ng-disabled="loginUserMenuMap[currentView]" ng-click="listPage.action.remove()">删除</button>
+        </div>
+        <table jq-table="listPage.settings" class="table"></table>
+    </div>
+    <div dialog info="departDialog" data="departDialog.model">
+        <form name="form" novalidate>
+            <div class="dialog-con" style="overflow: auto">
+                <table class="modal-table">
+                    <tr>
+                        <td class="row-lable"> 用户组名称 </td>
+                        <td>
+                            <input type="text" ng-model="departDialog.model.name" name="name" required
+                                   ng-maxlength="20" ng-pattern="/^[^<>]*$/"/>
+                            <span class="required">*</span>
+                            <div class="required" ng-show="form.name.$dirty && form.name.$invalid">
+                                <span ng-show="form.name.$error.required">此项不能为空.</span>
+                                <span ng-show="!form.name.$error.required && form.name.$error.maxlength">超出长度限制.</span>
+                                <span ng-show="!form.name.$error.required && !form.name.$error.maxlength && form.name.$error.pattern">不能输入‘<’或‘>’.</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="row-lable"> 备注 </td>
+                        <td>
+                            <textarea ng-model="departDialog.model.remark" name="remark" ng-maxlength="255"  rows="3" cols="50"> </textarea>
+                            <div class="required">
+                                <span ng-show="form.remark.$error.maxlength">超出长度限制.</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="vt row-lable"> 包含用户 </td>
+                        <td class="pt5">
+                            <ul user-ztree="departTree" id="departTree" class="ztree" style="width:500px;height:280px;"></ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="vt row-lable"> 区域组织 </td>
+                        <td class="pt5">
+                            <input type="hidden" ng-model="departDialog.model.locId" name="locId" required />
+                            <ul user-ztree="departDialog.locTree" id="locTree" class="ztree" style="background: none;height: 150px;overflow-y: visible;margin-left: 0px;"></ul>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" ng-disabled="form.$invalid" ng-click="departDialog.save()">确定</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            </div>
+        </form>
+    </div>
+</div>

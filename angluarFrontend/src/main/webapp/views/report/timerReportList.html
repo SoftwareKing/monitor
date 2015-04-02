@@ -1,0 +1,113 @@
+<style>
+
+    .level0 {
+        overflow: visible !important;
+    }
+    .level0 ul{
+        overflow: visible !important;
+    }
+
+    .topo-menu-title{
+        padding-left:20px;
+        position:relative;
+        background: #dedede;
+        height:36px;
+    }
+    .topo-menu-title i{
+        padding-left: 5px;
+        width:20px;
+        top:0px;
+        height: 34px;
+        line-height: 34px;
+        font-size: 14px;
+        border-left:1px solid #d0d0d0;
+        cursor:pointer;
+    }
+
+    #fileDialog .modal-content{
+        width: 450px;
+        height: 250px;
+    }
+
+    #fileDialog .modal-dialog{
+        width: 450px;
+        height: 250px;
+        margin-left: -220px;
+        margin-top: -120px;
+    }
+
+    #fileDialog .modal-content .modal-body .dialog-con{
+        height: 175px;
+    }
+</style>
+<div class="content">
+    <bread-crumb>
+        <a>监控</a>
+        <a>数据分析</a>
+        <a class="current">报表浏览</a>
+    </bread-crumb>
+    <layout-lr>
+        <panel-left>
+            <div id="sidebar" class="left-sidebar">
+                <div class="topo-menu-title"></div>
+                <ul user-ztree="reportListTree" id="reportListTree" class="ztree"></ul>
+            </div>
+            <collapse-left></collapse-left>
+        </panel-left>
+        <!--  关闭left，可选 -->
+        <panel-right>
+            <div class="page-content">
+                <div class="pr">
+                    <table class="table" style="border: 1px solid #ccc;">
+                        <thead>
+                        <tr>
+                            <th width="65%">报表名称</th>
+                            <th width="10%">执行时间</th>
+                            <th width="20%">统计时段</th>
+                            <th width="5%">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="type in reportList.data">
+                            <td ng-show="type.url!=null"><a href='views/report/data/{{type.url}}' target='_blank' >{{type.name}}</a></td>
+                            <td ng-show="type.url==null">{{type.name}}</td>
+                            <td>{{type.exeTime}}</td>
+                            <td>{{type.timeScope}}</td>
+                            <td ng-show="type.url!=null && !loginUserMenuMap[$root.currentView]">
+                                <i class="fa fa-archive" title="归档" ng-click="archive.confirm(type.id);"></i>
+                            </td>
+                            <td ng-show="type.url==null || loginUserMenuMap[$root.currentView]">
+                            </td>
+                        </tr>
+                        <tbody>
+                    </table>
+                </div>
+            </div>
+        </panel-right>
+    </layout-lr>
+</div>
+
+<div dialog info="fileDialog">
+    <form name="form" novalidate>
+        <div class="dialog-con" style="overflow: auto;padding-bottom: 5px;">
+            <input type="hidden" required ng-model="archiveDir.data.dirId">
+            归档目录&nbsp;&nbsp;&nbsp;<input type="text"  readonly style="width: 280px"  z-tree="{
+                                        inData:'archive.roledir',
+                                        outData:'archiveDir.data.dirId',
+                                        outParentData:'',
+                                        type:'all_radio',
+                                        description:'name',
+                                        children:'children',
+                                        value:'id',
+                                        depth:100,
+                                        radioCancel:true,
+                                        inputWidth:280
+                                        }" id="dir"/>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" ng-disabled="form.$invalid" ng-click="fileDialog.save()">确定</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        </div>
+    </form>
+</div>
+

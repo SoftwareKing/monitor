@@ -1,0 +1,55 @@
+<!--<link rel="stylesheet" type="text/css" href="css/itsm/itsm.css"/>-->
+<div class="content">
+<bread-crumb>
+    <a>设置</a>
+    <a class="current">运维通知</a>
+</bread-crumb>
+<div class="page-content">
+<form class="form-horizontal">
+<div class="row">
+    <div class="col-xs-6">
+        <widget-box>
+            <widget-header>
+                <h5>流程短信通知</h5>
+            </widget-header>
+            <widget-body>
+                <div ng-repeat="d in notifyConfigPage.data.smsNotifyConfig" style="padding:10px;">
+                    <div class="checkbox">
+                        <label>
+                            <input name="smsNotify" type="checkbox"
+                                   checklist-model="notifyConfigPage.data.smsNotify"
+                                   checklist-value="d.value"><i></i>
+                        </label>
+                        {{d.label}}
+                    </div>
+                </div>
+            </widget-body>
+        </widget-box>
+    </div>
+    <div class="col-xs-6">
+        <widget-box>
+            <widget-header>
+                <h5>流程邮件通知</h5>
+            </widget-header>
+            <widget-body>
+                <div ng-repeat="d in notifyConfigPage.data.smsNotifyConfig" style="padding:10px;">
+                    <div class="checkbox">
+                        <label>
+                            <input name="emailNotify" type="checkbox" checklist-model="notifyConfigPage.data.emailNotify" checklist-value="d.value"><i></i>
+                        </label>
+                        {{d.label}}
+                    </div>
+                </div>
+            </widget-body>
+        </widget-box>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+      <button class="btn" ng-click="notifyConfigPage.save()" ng-disabled="loginUserMenuMap[currentView]">保存</button>
+    </div>
+</div>
+
+</form>
+</div>
+</div>

@@ -1,0 +1,70 @@
+<div class="row">
+    <div class="col-xs-6">
+        <div class="form-group">
+            <label class="col-sm-3 control-label">中间件类型</label>
+
+            <div class="col-sm-9">
+                <input type="text" class="s" ng-model="model.assetInfo.access.type" />
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-6">
+        <div class="form-group">
+            <label class="col-sm-3 control-label">当前版本号</label>
+
+            <div class="col-sm-9">
+                <input type="text" class="s" ng-model="model.assetInfo.access.version" />
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-6">
+        <div class="form-group">
+            <label class="col-sm-3 control-label">IP地址</label>
+
+            <div class="col-sm-9">
+                <input type="text" class="s" ng-model="model.assetInfo.access.ip" />
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-6">
+        <div class="form-group">
+            <label class="col-sm-3 control-label">安装使用日期</label>
+
+            <div class="col-sm-9">
+                <input type="text" class="s" ng-model="model.assetInfo.access.setupDate" jq-date3 target-data="model.assetInfo.access.setupDate"
+                        min-date="2014-01-01" max-date="2100-01-01" readonly/>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-6">
+        <div class="form-group">
+            <label class="col-sm-3 control-label">备注</label>
+            <div class="col-sm-9">
+                <textarea id="remark" name="remark" class="s" ng-model="model.assetInfo.access.remark" maxlength="255" style="max-width:505px;"> </textarea>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-6">
+        <div class="form-group">
+            <label class="col-sm-3 control-label">关联项目</label>
+            <div class="col-sm-9">
+                <div class="item-row">
+                    <input type='text' class='item-name s' placeholder='所属项目'/><input type='text' class='item-user s' placeholder='负责人'/>
+                    <i class="fa fa-plus lh32" ng-click="listPage.action.addItem();"></i>
+                    <i class='fa fa-times' ng-click='listPage.action.removeItem();'></i>
+                    <select id="item-content" multiple="multiple" size="5">
+                        <option value="{{p.project}}" ng-repeat="p in projectsUsers">
+                            {{p.project}} , {{p.user}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

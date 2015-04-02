@@ -1,0 +1,7 @@
+<div id="{{alert.id}}" ng-class="alert.level=='error'?'alert alert-danger':alert.level=='warning'?'alert alert-warning':alert.level=='info'?'alert alert-info':'alert alert-success'" style="position:absolute; z-index:9999;top:0px;width: 100%;" ng-show="alert.info && alert.info!=''">
+    <button type="button" class="close" ng-click="alert.info='';">&times;</button>
+    <strong ng-show="alert.level=='error'"> 错 误 </strong>
+    <strong ng-show="alert.level=='warning'"> 警 告 </strong>
+    <strong ng-show="alert.level=='info'|| alert.level=='success'"> 提 示 </strong>
+    <label style="font-size: 12px;">{{alert.info}}</label>
+</div>

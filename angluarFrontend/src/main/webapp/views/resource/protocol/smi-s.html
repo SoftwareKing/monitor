@@ -1,0 +1,49 @@
+<div class="row">
+    <div class="col-xs-6">
+        <label>Provider地址</label>
+        <div class="row">
+            <input type="text" name="ip" ng-pattern="editPage.ipValidate" ng-model="editPage.data.ip"  required/>
+            <span class="required">*</span>
+        </div>
+        <div class="warn" ng-show="editMoForm.ip.$invalid && editMoForm.ip.$dirty">
+            <span>请输入有效的IP地址.</span>
+        </div>
+    </div>
+    <div class="col-xs-6">
+        <label>端口</label>
+        <div class="row">
+            <input type="text" name="port"  ng-pattern="editPage.portValidate" ng-model="editPage.access.port" required/>
+            <span class="required">*</span>
+        </div>
+        <div class="warn" ng-show="editMoForm.port.$invalid && editMoForm.port.$dirty">
+            <span>请输入有效的端口号.</span>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-6">
+        <label>用户名</label>
+        <input type="text" name="user" ng-pattern="editPage.emptyValidate" ng-model="editPage.access.user" required/>
+        <span class="required">*</span>
+        <div class="warn" ng-show="editMoForm.user.$invalid && editMoForm.user.$dirty">
+            <span>请输入用户名.</span>
+        </div>
+    </div>
+    <div class="col-xs-6">
+        <label>密码</label>
+        <div class="row">
+            <input type="password" ng-model="editPage.access.password"/>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <label>sn</label>
+    <div class="row">
+        <input type="text" ng-model="editPage.access.sn" readonly ng-show="!editPage.editSn" />
+        <select ng-model="editPage.access.sn" name="sn" ng-show="editPage.editSn">
+            <option ng-repeat="sn in listPage.snList" value="{{sn.SN}}">{{sn.SN}} — {{sn.IPAddr}}</option>
+        </select>
+        <span class="required">*</span>
+        <button class="btn" ng-click="listPage.action.getSn();"> 获取sn </button>
+    </div>
+</div>

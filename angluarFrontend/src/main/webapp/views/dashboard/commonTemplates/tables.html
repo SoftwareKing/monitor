@@ -1,0 +1,17 @@
+<layout-tab>
+    <tab-titles>
+        <tab-title ng-repeat="l in tables" ng-click="clickTab()">{{resource.metricMap[l]}}</tab-title>
+    </tab-titles>
+    <tab-contents>
+        <tab-content ng-repeat="l in tables">
+            <div id="t_{{l}}" ng-controller="tableCtrl">
+                <table jquery-table="options"
+                       aa-data="result"
+                       ao-column-defs="columnDefs"
+                       fn-row-callback="myCallback"
+                       ao-columns="columns"
+                       class="table"></table>
+            </div>
+        </tab-content>
+    </tab-contents>
+</layout-tab>

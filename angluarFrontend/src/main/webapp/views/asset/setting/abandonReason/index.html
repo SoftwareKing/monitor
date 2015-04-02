@@ -1,0 +1,17 @@
+<link rel="stylesheet" type="text/css" href="css/asset/asset.css">
+<div class="content">
+    <bread-crumb>
+        <a>设置</a>
+        <a class="current">资产报废原因</a>
+    </bread-crumb>
+    <div class="page-content">
+        <div class="list_button">
+            <button class="btn" ng-disabled="$root.loginUserMenuMap[currentView]" ng-click="listPage.action.add()">新增</button>
+            <button class="btn" ng-disabled="$root.loginUserMenuMap[currentView]" ng-click="listPage.action.batchRemove()">删除</button>
+        </div>
+        <table jq-table="listPage.settings" class="table"></table>
+    </div>
+    <div ng-include src="'views/asset/setting/abandonReason/addReasonModal.html'"></div>
+    <div modal-alert settings="common.alertSettings"></div>
+    <div modal-confirm settings="common.confirmSettings"></div>
+</div>

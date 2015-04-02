@@ -1,0 +1,88 @@
+<link rel="stylesheet" type="text/css" href="css/room/room.css">
+<div class="content">
+<!--机房动力环境设备同步-->
+<div class="page-content" ng-controller="roomController">
+    <div class="row mb20">
+        <div class="col-xs-12">机房动力环境设备同步机房数据库配置</div>
+    </div>
+    <div class="row mb20">
+      <div class="col-xs-12">
+        <div class="search-head">
+            <div class="row">
+                <label>IP：</label>
+                <input type="text" ng-model="model.address"/>
+                <label>端口：</label>
+                <input type="text" ng-model="model.port"/>
+                <label>实例名：</label>
+                <input type="text" ng-model="model.databaseName"/>
+                <label>用户名：</label>
+                <input type="text" ng-model="model.userName"/>
+                <label>密码：</label>
+                <input type="password" ng-model="model.password"/>
+                <button type="button"  class="btn btn-primary btn-lg" ng-click="save()" ng-disabled="loginUserMenuMap[currentView]">保存</button>
+            </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mb20">
+        <div class="col-xs-12">机房动力环境设备同步</div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="datagrid-con" >
+                <dl class="reminder">
+                    <dt>提示：</dt>
+                    <dd>1.如果你所监控的机房动力环境经常会加入新的设备，那你可以用此功能来将新增设备同步到监控平台中。</dd>
+                    <!--<dd>2.设定自动同步周期，监控平台会在指定的时间自动启动同步操作，将最新的设备同步到系统中。</dd>-->
+                    <dd>2.你可以立即启动同步操作。</dd>
+                    <dd><button type="button"  class="btn btn-primary" ng-click="synData()" ng-disabled="loginUserMenuMap[currentView]">立即同步</button></dd>
+                </dl>
+                <div class="synset" style="display:none">
+                    <div class="smart-form logic"><div class="left">是否自动同步：</div>
+                        <label class="radio">
+                            <input type="radio" name="synchro"  value=true ng-model="model.isAuto" ><i></i>是
+                        </label>
+                        <label class="radio">
+                            <input type="radio" name="synchro"  value=false ng-model="model.isAuto"  ><i></i>否
+                        </label>
+                    </div>
+                    <div class="mt10 clearfix">
+                        <span class="w6 di">同步周期：</span>
+                        <div style="display:none">
+                            <select class="form-control" ng-model="min"  >
+                                <option value="*" >*</option>
+                                <option value="{{l}}" ng-repeat="l in mins">{{l}}</option>
+                            </select>
+                            <span>分/</span>
+                        </div>
+                        <select class="form-control "  ng-model="hour">
+                            <option value="*">*</option>
+                            <option value="{{l}}" ng-repeat="l in hours">{{l}}</option>
+                        </select>
+                        <span>时/</span>
+                        <select class="form-control"  ng-model="day">
+                            <option value="*" >*</option>
+                            <option value="{{l}}" ng-repeat="l in days">{{l}}</option>
+                        </select>
+                        <span>日期/</span>
+                        <select class="form-control"  ng-model="mon">
+                            <option value="*" >*</option>
+                            <option value="{{l}}" ng-repeat="l in mons">{{l}}</option>
+                        </select>
+                        <span>月份/</span>
+                        <select class="form-control"  ng-model="week">
+                            <option value="?" >*</option>
+                            <option value="{{l.value}}" ng-repeat="l in weeks">{{l.name}}</option>
+                        </select>
+                        <span>星期</span>
+                    </div>
+                </div>
+                <div class="modal-footer" ng-if="false">
+                    <button type="button"  class="btn btn-primary" ng-click="synSet()">确定</button>
+                    <button type="button"  class="btn btn-primary" ng-click="synData()">立即同步</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

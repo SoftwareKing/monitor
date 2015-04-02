@@ -1,0 +1,99 @@
+<link rel="stylesheet" type="text/css" href="css/overview/overview.css"/>
+<style>
+    .level0 .line {
+        overflow: visible !important;
+    }
+
+    .level0 {
+        overflow: visible !important;
+    }
+</style>
+<div class="content">
+    <bread-crumb>
+        <a>监控</a>
+        <a>资源</a>
+        <a class="current">资源监控</a>
+        <a class="search-link ">高级搜索</a>
+    </bread-crumb>
+        <!--left right layout-->
+        <layout-lr>
+            <panel-left>
+                <div id="sidebar" class="left-sidebar" style="overflow-y: visible">
+                    <div class="menu-title" style="padding: 0px;border:0px;">
+                        <div class="tab-title" style="padding: 0px;height: 36px;border:0px;border-bottom:1px solid #ccc;">
+                            <span ng-class="type==0?'selected':0" style="padding: 8px 11px 10px;" ng-click="clickTitle(0)">
+                                <span class="ng-scope">区域</span>
+                            </span>
+                            <span ng-class="type==1?'selected':0" style="padding: 8px 11px 10px;" ng-click="clickTitle(1)">
+                                <span class="ng-scope">机房</span>
+                            </span>
+                            <span ng-class="type==2?'selected':0" style="padding: 8px 10px 10px;" ng-click="clickTitle(2)">
+                                <span class="ng-scope">资源类型</span>
+                            </span>
+                        </div>
+                    </div>
+                    <ul ng-show="type==0" id="locTree" class="ztree ztreen" z-tree="{
+                    inData:'locTree.data',
+                    outData:'searchPage.data.mocId',
+                    outParentData:'',
+                    type:'none',
+                    description:'name',
+                    children:'children',
+                    value:'id',
+                    depth:3,
+                    radioCancel:false,
+                    selectNode:'locTree.selectNode',
+                    hasSameValue:true
+                    }">
+                    </ul>
+                    <ul ng-show="type==1" id="jfTree" class="ztree ztreen" z-tree="{
+                    inData:'jfTree.data',
+                    outData:'searchPage.data.mocId',
+                    outParentData:'',
+                    type:'none',
+                    description:'name',
+                    children:'children',
+                    value:'id',
+                    depth:3,
+                    radioCancel:false,
+                    selectNode:'jfTree.selectNode',
+                    hasSameValue:true
+                    }">
+                    </ul>
+                    <ul ng-show="type==2" id="mocTree" class="ztree ztreen" z-tree="{
+                    inData:'mocTree.data',
+                    outData:'searchPage.data.mocId',
+                    outParentData:'',
+                    type:'none',
+                    description:'name',
+                    children:'children',
+                    value:'id',
+                    depth:2,
+                    radioCancel:false,
+                    selectNode:'mocTree.selectNode'
+                    }">
+                    </ul>
+                </div>
+                <collapse-left></collapse-left>
+            </panel-left>
+            <!--  关闭left，可选 -->
+            <panel-right>
+                <div class="page-content">
+                    <div class="search-head">
+                        <form name="sform" novalidate>
+                        <div class="row">
+                            <label>资源实例：</label>
+                            <input type="text" ng-model="searchPage.data.displayName" />
+                            <label ng-show="searchPage.hasIp">管理IP：</label>
+                            <input ng-show="searchPage.hasIp" type="text" ng-model="searchPage.data.ip" />
+                            <button class="btn" ng-click="searchPage.action.search()" >查询</button>
+                        </div>
+                        </form>
+                    </div>
+                  <div class="table-responsive" style="border:1px solid #ddd;">
+                     <table id="monitorDataTable" jq-table="listPage.settings" class="table" style="border:0;"></table>
+                  </div>
+                </div>
+            </panel-right>
+        </layout-lr>
+</div>

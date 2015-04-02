@@ -1,0 +1,101 @@
+<div class="content">
+    <bread-crumb>
+        <a>监控</a>
+        <a>告警</a>
+        <a class="current">告警事件</a>
+        <a class="search-link ">高级搜索</a>
+    </bread-crumb>
+    <layout-lr>
+        <panel-left>
+            <div id="sidebar" class="left-sidebar" style="overflow-y: visible">
+                <div class="menu-title">
+                    <span>&nbsp;</span>
+                </div>
+                <ul user-ztree="mocTree" id="{{mocTree.treeId}}" class="ztree"></ul>
+            </div>
+            <collapse-left></collapse-left>
+        </panel-left>
+        <!--  关闭left，可选 -->
+        <panel-right>
+            <div class="page-content" ng-show="alarmType==0">
+                <div class="search-head">
+                    <div class="row">
+                        <label>资源类型：</label>
+                        <select id="jmocid" ng-model="searchPage.data.mocId">
+                            <option value="">不限</option>
+                            <option ng-repeat="type in searchPage.datas.mocs" value={{type["id"]}}>
+                                {{type["displayName"]}}
+                            </option>
+                        </select>
+                        <label>资源实例：</label>
+                        <input type="text" ng-model="searchPage.data.moName" maxlength="30"/>
+                        <label>指标类型：</label>
+                        <select ng-model="searchPage.data.indicatorId" >
+                            <option value=""> 不限</option>
+                            <option ng-repeat="type in searchPage.datas.indicators" value={{type["id"]}}>
+                                {{type["displayName"]}}
+                            </option>
+                        </select>
+                        <label></label>
+                        <select ng-model="searchPage.data.metricId" >
+                            <option value=""> 不限</option>
+                            <option ng-repeat="type in searchPage.datas.metrics" value={{type["id"]}}>
+                                {{type["displayName"]}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <label>所属机房：</label>
+                        <input type="text" readonly z-tree="{
+                                                inData:'locationsForJFSearch',
+                                                outData:'searchPage.data.jfId',
+                                                outParentData:'',
+                                                type:'radio',
+                                                description:'name',
+                                                children:'children',
+                                                value:'id',
+                                                depth:2,
+                                                radioCancel:true,
+                                                isLeaf:'isLeaf'
+                                              }" id="jfsText"/>
+                        <label> 确认状态：</label>
+                        <select ng-model="searchPage.data.confirmStatus">
+                            <option value=""> 不限</option>
+                            <option value=1> 确认</option>
+                            <option value=2> 未确认</option>
+                        </select>
+                        <label>告警时段：</label>
+                        <input type="text" ng-model="searchPage.data.starttime" jq-date format="yyyy-mm-dd hh:ii" readonly/>
+                        <!--<label class="n1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>-->
+                        <input type="text" ng-model="searchPage.data.endtime" jq-date format="yyyy-mm-dd hh:ii" readonly/>
+                    </div>
+                    <div class="row">
+                        <label> 告警级别：</label>
+                        <div class="checkbox" ng-repeat="l in $root.alarm.const.levels"><label><input type="checkbox" checklist-model="searchPage.data.level" checklist-value="l.value"><i></i></label><span compile="l.label"></span></div>
+                        <button type="button" class="btn" ng-click="searchPage.action.advancedSearch()">查询</button>
+                    </div>
+                </div>
+                <!-- 数据列表 -->
+                <div class="pr">
+                    <div class="list_button" ng-show="type==0">
+                        <button type="button" class="btn" ng-click="listPage.action.batchConfirm()" ng-disabled="loginUserMenuMap[currentView]">确认</button>
+                        <button type="button" class="btn" ng-click="listPage.action.batchClear()" ng-disabled="loginUserMenuMap[currentView]">人工恢复</button>
+                        <button type="button" class="btn" ng-click="listPage.action.batchGenerateOrders()" ng-disabled="loginUserMenuMap[currentView]">生成工单</button>
+                        <!--<button type="button" class="btn btn-primary" onclick="javascript:document.body.innerHTML=$('#print1').html();window.print();location.reload();">导出</button>-->
+                    </div>
+                    <div class="list_button" ng-show="type==1">
+                        <button type="button" class="btn" ng-click="listPage.action.historybatchConfirm()"
+                                ng-disabled="loginUserMenuMap[currentView]">确认</button>
+                        <!--<button type="button" class="btn btn-primary" onclick="javascript:document.body.innerHTML=$('#print1').html();window.print();location.reload();">导出</button>-->
+                    </div>
+                    <div id="print1">
+                    <table jq-table="listPage.settings" class="table" id="alarmEventlistDataTable"></table>
+                    </div>
+                </div>
+            </div>
+        </panel-right>
+    </layout-lr>
+</div>
+
+<!-- 详情  页面-->
+<div ng-include src="'views/alarm/eventDetail.html'"></div>

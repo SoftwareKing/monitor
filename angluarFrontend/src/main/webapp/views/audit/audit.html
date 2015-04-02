@@ -1,0 +1,19 @@
+<link rel="stylesheet" type="text/css" href="css/audit/audit.css">
+<div class="content">
+    <bread-crumb>
+        <a>设置</a>
+        <a class="current">操作审计</a>
+        <a class="search-link ">高级搜索</a>
+    </bread-crumb>
+    <div class="page-content">
+        <div id="audit_manage_div">
+            <div class="row">
+              <div class="col-xs-12 col-sm-12">
+                <div ng-include src="'views/audit/auditSearch.html'"></div>
+                <div ng-include src="'views/audit/auditList.html'"></div>
+              </div>
+            </div>
+        </div>
+    </div>
+    <div modal-alert settings="common.alertSettings"></div>
+</div>

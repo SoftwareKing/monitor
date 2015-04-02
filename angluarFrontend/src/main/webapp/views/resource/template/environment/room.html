@@ -1,0 +1,89 @@
+<div ng-show="editPage.isEdit!=true">
+    <div class="row">&nbsp;</div>
+    <div class="row">
+        <div class="col-xs-12"><b>机房动环数据库配置</b></div>
+    </div>
+    <div class="row">
+        <div class="col-xs-6">
+            <label>IP</label>
+
+            <div class="row">
+                <input type="text" ng-model="roomSetting.model.address" required/>
+                <span class="required">*</span>
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <label>端口</label>
+
+            <div class="row">
+                <input type="text" ng-model="roomSetting.model.port" required/>
+                <span class="required">*</span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-6">
+            <label>用户名</label>
+
+            <div class="row">
+                <input type="text" ng-model="roomSetting.model.userName" required/>
+                <span class="required">*</span>
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <label>密码</label>
+
+            <div class="row">
+                <input type="password" ng-model="roomSetting.model.password" required/>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-6">
+            <label>实例名</label>
+
+            <div class="row">
+                <input type="text" ng-model="roomSetting.model.databaseName" required/>
+                <span class="required">*</span>
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <button type="button" ng-disabled="!roomSetting.canSave" class="btn btn-primary room-setting-btn" ng-click="roomSetting.save()">保存</button>
+            <button type="button" ng-disabled="!roomSetting.canDelete" class="btn btn-primary room-setting-btn" ng-click="roomSetting.deleteConfig()">删除配置</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 mt20 mb20">&nbsp;</div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+        <dl class="reminder">
+            <dt>提示：</dt>
+            <dd>1.如果你所监控的机房动力环境经常会加入新的设备，那你可以用此功能来将新增设备同步到监控平台中。</dd>
+            <dd>2.你可以立即启动同步操作。</dd>
+            <button type="button" ng-disabled="!roomSetting.canDelete" class="btn btn-primary" ng-click="roomSetting.synData()">同步</button>
+        </dl>
+        </div>
+    </div>
+</div>
+
+<div ng-show="editPage.isEdit==true">
+    <div ng-include src="'views/resource/template/header-less.html'"></div>
+
+    <div class="row" style="margin-top: 20px">
+        <layout-tab>
+            <tab-titles>
+                <tab-title>从属设备</tab-title>
+            </tab-titles>
+            <tab-contents>
+                <tab-content>
+                    <ul>
+                        <li ng-repeat="m in listPage.roomEquipments">
+                            {{m.rightDisplayName}}
+                        </li>
+                    </ul>
+                </tab-content>
+            </tab-contents>
+        </layout-tab>
+    </div>
+</div>

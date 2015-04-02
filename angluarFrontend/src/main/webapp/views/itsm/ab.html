@@ -1,0 +1,90 @@
+<div class="content" xmlns="http://www.w3.org/1999/html">
+    <bread-crumb>
+        <a>设置</a>
+        <a class="current">代理人设置</a>
+        <a class="search-link ">高级搜索</a>
+    </bread-crumb>
+    <div class="page-content">
+        <div>
+            <div class="search-head">
+                <form name="sform" novalidate>
+                    <div class="row">
+                        <label>用户姓名：</label>
+                        <input type="text" ng-model="searchPage.data.name" name="name"/>
+                        <button class="btn" ng-click="searchPage.action.search()" >查询</button>
+                    </div>
+                </form>
+            </div>
+            <div class="list_button">
+                <button class="btn" ng-disabled="loginUserMenuMap[currentView]" ng-click="listPage.action.add();form.$setPristine();">新建</button>
+                <button class="btn" ng-disabled="loginUserMenuMap[currentView]" ng-click="listPage.action.deleteAll();">删除</button>
+            </div>
+            <div>
+                <table jq-table="listPage.settings" class="table"></table>
+            </div>
+        </div>
+
+        <div dialog info="openDialog" data="openDialog.model">
+            <form name="form" novalidate>
+                <div class="dialog-con" style="overflow: auto">
+                    <table class="modal-table">
+                        <tr>
+                            <td class="row-lable">主用户</td>
+                            <td>
+                                <select type="text" id="userId" name="userId"  ng-model="openDialog.model.userId" required>
+                                    <option value="">请选择</option>
+                                    <option value="{{u.id}}" ng-repeat="u in users">{{u.realName}}</option>
+                                </select>
+                                <span class="required">*</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="row-lable">代理用户</td>
+                            <td>
+                                <select type="text" id="agentId" name="agentId"  ng-model="openDialog.model.agentId" required>
+                                    <option value="">请选择</option>
+                                    <option value="{{u.id}}" ng-repeat="u in users">{{u.realName}}</option>
+                                </select>
+                                <span class="required">*</span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-disabled="form.$invalid" ng-click="openDialog.save()">确定</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </form>
+        </div>
+        <div dialog info="openDialog2" data="openDialog2.model">
+            <form name="form1" novalidate>
+                <div class="dialog-con" style="overflow: auto">
+                    <table class="modal-table">
+                        <tr>
+                            <td class="row-lable">主用户</td>
+                            <td>
+                                <input type="text" id="userId2" name="userId2"  readonly/>
+                                <span class="required">*</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="row-lable">代理用户</td>
+                            <td>
+                                <select type="text" id="agentId2" name="agentId2"  ng-model="openDialog2.model.agentId" required>
+                                    <option value="">请选择</option>
+                                    <option value="{{u.id}}" ng-repeat="u in users">{{u.realName}}</option>
+                                </select>
+                                <span class="required">*</span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-disabled="form1.$invalid" ng-click="openDialog2.save()">确定</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

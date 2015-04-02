@@ -1,0 +1,73 @@
+<link rel="stylesheet" type="text/css" href="css/asset/asset.css">
+<div class="content">
+    <bread-crumb>
+        <a>资产</a>
+        <a class="current">资产管理</a>
+        <a class="search-link ">高级搜索</a>
+    </bread-crumb>
+    <div class="page-content">
+        <div class="search-head">
+            <div class="row">
+                <label>资产编号：</label>
+                <input type="text" ng-model="listPage.search.serial"/>
+                <label>资产类型：</label>
+                <select ng-model="listPage.search.type">
+                    <option value="">--请选择--</option>
+                    <option value="MW">中间件</option>
+                    <option value="DB">数据库</option>
+                    <option value="SYS">业务系统</option>
+                    <option value="UM">小型机</option>
+                    <option value="VC">虚拟池</option>
+                    <option value="PS">PC服务器</option>
+                    <option value="CB">刀片服务器</option>
+                    <option value="VS">虚拟机</option>
+                    <option value="DA">存储</option>
+                    <option value="TL">磁带库</option>
+                    <option value="LB">负载均衡</option>
+                </select>
+                <label>存放地：</label>
+                <input type="text" ng-model="listPage.search.storageLoc"/>
+                <label>入库时段：</label>
+                <input type="text" class="s" ng-model="listPage.search.stockDateMin" jq-date
+                       min-date="2014-01-01" max-date="2100-01-01" readonly/>
+                <input type="text" class="s" ng-model="listPage.search.stockDateMax" jq-date
+                       min-date="2014-01-01" max-date="2100-01-01" readonly/>
+            </div>
+            <div class="row">
+                <label>资产名称：</label>
+                <input type="text" ng-model="listPage.search.name"/>
+                <label>资产状态：</label>
+                <select ng-model="listPage.search.status">
+                    <option value="">--请选择--</option>
+                    <option value="1">未用</option>
+                    <option value="2">在用</option>
+                    <option value="3">停用</option>
+                    <option value="4">在修</option>
+                    <option value="5">维保</option>
+                    <option value="6">报废</option>
+                    <option value="7">出借</option>
+                    <option value="8">领用</option>
+                </select>
+                <label>责任人：</label>
+                <input type="text" ng-model="listPage.search.manager"/>
+                <label>使用部门：</label>
+                <input type="text" ng-model="listPage.search.depart"/>
+                <button class="btn" ng-disabled="$root.loginUserMenuMap[currentView]" ng-click="listPage.action.search()">查询</button>
+            </div>
+        </div>
+        <div class="list_button">
+            <button class="btn" ng-disabled="$root.loginUserMenuMap[currentView]" ng-click="listPage.action.add()">新增</button>
+            <button class="btn" ng-disabled="$root.loginUserMenuMap[currentView]" ng-click="listPage.action.batchRemove()">删除</button>
+            <button class="btn" ng-disabled="$root.loginUserMenuMap[currentView]" ng-click="listPage.action.importData()">导入</button>
+            <a class="btn" ng-disabled="$root.loginUserMenuMap[currentView]" ng-href="../dmonitor-webapi/asset/info/exportData/{{listPage.search}}">导出</a>
+        </div>
+        <table jq-table="listPage.settings" class="table"></table>
+    </div>
+
+    <div ng-include src="'views/asset/asset/management/addInfoModal.html'"></div>
+    <div ng-include src="'views/asset/asset/management/changeStatusModal.html'"></div>
+    <div ng-include src="'views/asset/asset/management/historyModal.html'"></div>
+    <div ng-include src="'views/asset/asset/management/uploadData.html'"></div>
+    <div modal-alert settings="common.alertSettings"></div>
+    <div modal-confirm settings="common.confirmSettings"></div>
+</div>

@@ -1,0 +1,312 @@
+<form class="form-horizontal" id="editForm" name="editForm">
+<div class="list_button">
+    <button type="button" class="btn" ng-click="action.start();" ng-show="findShow('sid-AFCD5180-FD80-4EC3-8F24-B7DA2A01715A') && childId!=41" ng-disabled="editForm.$invalid || loginUserMenuMap[currentView] || (formData.operate=='编辑' && formData.id == '')"><span id="create">新建</span><span id="change" style="display: none">编辑</span> </button>
+    <button ng-disabled="loginUserMenuMap[currentView]" type="button" class="btn" ng-click="action.save();" ng-show="findShowSave() && childId!=41">保存 </button>
+    <button type="button" class="btn" ng-click="action.process();" ng-show="findShow('sid-0195302A-EC5A-4872-8598-33E31D92F900') && childId!=41" ng-disabled="editForm.$invalid || loginUserMenuMap[currentView]">提交</button>
+    <button type="button" class="btn" ng-click="action.process(true);" ng-show="findShow('sid-624B7CDF-2A7C-435B-BFFB-4713786CD6E7') && childId!=41" ng-disabled="editForm.$invalid || loginUserMenuMap[currentView]">发布 </button>
+    <button type="button" class="btn" ng-click="action.process(false);" ng-show="findShow('sid-624B7CDF-2A7C-435B-BFFB-4713786CD6E7') && childId!=41" ng-disabled="editForm.$invalid || loginUserMenuMap[currentView]">重开 </button>
+    <button type="button" class="btn" ng-click="formData.operate='编辑';formData.resolve=false;action.process();" ng-show="findShow('sid-777EE48E-2B08-47C6-B6CD-08500CD95654') && childId==44" ng-disabled="editForm.$invalid || loginUserMenuMap[currentView]">编辑</button>
+    <button ng-disabled="loginUserMenuMap[currentView]" type="button" class="btn" ng-click="action.claimForward(formData.taskId);" ng-show="childId==41">签收</button>
+    <button type="button" class="btn" ng-click="action.back();">返回</button>
+</div>
+<div class="form-wrapper">
+<div class="row">
+    <div class="col-xs-6" ng-show="find('applyUser').show">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">创建人</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" ng-model="formData.params.applyUser" ng-disabled="true"/>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-6" ng-show="find('applyTime').show">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">创建时间</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" ng-model="formData.applyTime" ng-disabled="true"/>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-6" ng-show="find('keyWord').show">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">关键字</label>
+            <div class="col-sm-10" ng-switch="find('keyWord').required && !find('keyWord').disabled">
+                <div ng-switch-when="true">
+                    <input type="text" name="keyWord" class="form-control" ng-model="formData.keyWord" ng-disabled="find('keyWord').disabled" required maxlength="50">
+                    <span ng-switch="find('keyWord').required && !find('keyWord').disabled" >
+                        <span ng-switch-when="true">
+                            <span class="required" >*</span>
+                        </span>
+                </span>
+                    <div class="warn" ng-show="editForm.keyWord.$invalid && editForm.keyWord.$dirty">
+                        <span>请输入关键字.</span>
+                    </div>
+                </div>
+                <div ng-switch-default>
+                    <input type="text" name="keyWord" class="form-control" ng-model="formData.keyWord" ng-disabled="find('keyWord').disabled">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-6" ng-show="find('orderId').show">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">知识单号</label>
+            <div class="col-sm-10">
+                <input type="text" name="orderId" class="form-control" ng-model="formData.orderId" ng-disabled="true">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12" ng-show="find('title').show">
+        <div class="form-group">
+            <label class="col-sm-1 control-label">知识标题</label>
+            <div class="col-sm-11" ng-switch="find('title').required && !find('title').disabled">
+                <div ng-switch-when="true">
+                    <input type="text" name="title" class="form-control" ng-model="formData.title" ng-disabled="find('title').disabled" required maxlength="50">
+                    <span ng-switch="find('title').required && !find('title').disabled" >
+                        <span ng-switch-when="true">
+                            <span class="required" >*</span>
+                        </span>
+                </span>
+                    <div class="warn" ng-show="editForm.title.$invalid && editForm.title.$dirty">
+                        <span>请输入知识标题.</span>
+                    </div>
+                </div>
+                <div ng-switch-default>
+                    <input type="text" name="title" class="form-control" ng-model="formData.title" ng-disabled="find('title').disabled">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12" ng-show="find('content').show">
+        <div class="form-group">
+            <label class="col-sm-1 control-label">知识描述</label>
+            <div class="col-sm-11" ng-switch="find('content').required && !find('content').disabled">
+                <div ng-switch-when="true">
+                    <textarea name="content" style="width: 755px;height: 60px;overflow: auto"  ng-model="formData.content" ng-disabled="find('content').disabled" required maxlength="200"></textarea>
+                    <span ng-switch="find('content').required && !find('content').disabled" >
+                    <span ng-switch-when="true">
+                        <span class="required" >*</span>
+                    </span>
+                </span>
+                    <div class="warn" ng-show="editForm.content.$invalid && editForm.content.$dirty">
+                        <span>请输入知识描述.</span>
+                    </div>
+                </div>
+                <div ng-switch-default>
+                    <textarea name="content" style="width: 755px;height: 60px;overflow: auto"  ng-model="formData.content" ng-disabled="find('content').disabled" maxlength="200"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12" ng-show="find('incidents').show">
+        <div class="form-group" >
+            <label class="col-sm-1 control-label">关联故障
+                <span ng-switch="find('incidents').required && !find('incidents').disabled" >
+                    <span ng-switch-when="true">
+                        <span class="required" >*</span>
+                    </span>
+                </span>
+            </label>
+            <div class="col-sm-11">
+                <button type="button" class="btn mb10" ng-click="action.addIncident();" ng-show="!find('incidents').disabled">添加</button>
+                <label ng-show="incidentData.length==0 && find('incidents').disabled">无</label>
+                <table class="table dataTable" style="width:755px!important;border: 1px solid #ccc;border-bottom:1px solid #ccc !important; " ng-show="incidentData.length>0">
+                    <thead>
+                    <tr><th width="100">故障单号</th><th>故障标题</th><th width="100">处理人</th><th width="100">操作</th></tr>
+                    </thead>
+                    <tbody id="tbody">
+                    <tr ng-repeat="type in incidentData">
+                        <td>
+                            <a target="_blank" href="#/createIncident?taskKey=sid-E21AC1DF-6D03-47E0-A2BE-014ECEC5CC8D&id={{type.id}}&childId=00">{{type['orderId']}}</a>
+                        </td>
+                        <td><span title="{{type['name']}}">{{type['name']}}</span></td>
+                        <td> {{type['resolveUser']}}</td>
+                        <td > <i class="fa fa-trash-o" ng-disabled="find('incidents').disabled" ng-click="action.deleteIncident(type.id)"></i></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col-sm-11" ng-switch="find('incidents').required && !find('incidents').disabled">
+                <div ng-switch-when="true">
+                    <input type="hidden" name="incidents" class="form-control" ng-model="hiddenData.incidents" ng-disabled="find('incidents').disabled" required>
+                    <div class="warn" ng-show="editForm.incidents.$invalid && editForm.incidents.$dirty">
+                        <span>请选择关联故障.</span>
+                    </div>
+                </div>
+                <div ng-switch-default>
+                    <input type="hidden" name="incidents" class="form-control" ng-model="hiddenData.incidents" ng-disabled="find('incidents').disabled">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12" ng-show="find('problems').show">
+        <div class="form-group" >
+            <label class="col-sm-1 control-label">关联问题
+                <span ng-switch="find('problems').required && !find('problems').disabled" >
+                    <span ng-switch-when="true">
+                        <span class="required" >*</span>
+                    </span>
+                </span>
+            </label>
+            <div class="col-sm-11">
+                <button type="button" class="btn mb10" ng-click="action.addProblem();" ng-show="!find('problems').disabled">添加</button>
+                <label ng-show="problemData.length==0  && find('problems').disabled">无</label>
+                <table class="table dataTable" style="width:755px!important;border: 1px solid #ccc;border-bottom:1px solid #ccc !important; " ng-show="problemData.length>0">
+                    <thead>
+                    <tr><th width="100">问题单号</th><th>问题标题</th><th width="100">处理人</th><th width="100">操作</th></tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="type in problemData">
+                        <td>
+                            <a target="_blank" href="#/createProblem?taskKey=sid-A97EF687-33E2-43C3-A36F-76D724D99892&id={{type.id}}&childId=00">{{type['orderId']}}</a>
+                        </td>
+                        <td><span title="{{type['name']}}">{{type['name']}}</span></td>
+                        <td> {{type['resolveUser']}}</td>
+                        <td > <i class="fa fa-trash-o" ng-disabled="find('problems').disabled" ng-click="action.deleteProblem(type.id)"></i></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col-sm-11" ng-switch="find('problems').required && !find('problems').disabled">
+                <div ng-switch-when="true">
+                    <input type="hidden" name="problems" class="form-control" ng-model="hiddenData.problems" ng-disabled="find('problems').disabled" required>
+                    <div class="warn" ng-show="editForm.problems.$invalid && editForm.problems.$dirty">
+                        <span>请选择关联问题.</span>
+                    </div>
+                </div>
+                <div ng-switch-default>
+                    <input type="hidden" name="problems" class="form-control" ng-model="hiddenData.problems" ng-disabled="find('problems').disabled">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12" ng-show="find('changes').show">
+        <div class="form-group" >
+            <label class="col-sm-1 control-label">关联变更
+                <span ng-switch="find('changes').required && !find('changes').disabled" >
+                    <span ng-switch-when="true">
+                        <span class="required" >*</span>
+                    </span>
+                </span>
+            </label>
+            <div class="col-sm-11">
+                <button type="button" class="btn mb10" ng-click="action.addChange();" ng-show="!find('changes').disabled">添加</button>
+                <label ng-show="changeData.length==0  && find('changes').disabled">无</label>
+                <table class="table dataTable" style="width:755px!important;border: 1px solid #ccc;border-bottom:1px solid #ccc !important; " ng-show="changeData.length>0">
+                    <thead>
+                    <tr><th width="100">变更单号</th><th>变更标题</th><th width="100">处理人</th><th width="100">操作</th></tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="type in changeData">
+                        <td>
+                            <a target="_blank" href="#/createChange?taskKey=sid-1100727C-0CC4-45BB-8763-73DD3D56539C&id={{type.id}}&childId=00">{{type['orderId']}}</a>
+                        </td>
+                        <td><span title="{{type['name']}}">{{type['name']}}</span></td>
+                        <td> {{type['resolveUser']}}</td>
+                        <td > <i class="fa fa-trash-o" ng-disabled="find('changes').disabled" ng-click="action.deleteChange(type.id)"></i></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col-sm-11" ng-switch="find('changes').required && !find('changes').disabled">
+                <div ng-switch-when="true">
+                    <input type="hidden" name="changes" class="form-control" ng-model="hiddenData.changes" ng-disabled="find('changes').disabled" required>
+                    <div class="warn" ng-show="editForm.changes.$invalid && editForm.changes.$dirty">
+                        <span>请选择关联变更.</span>
+                    </div>
+                </div>
+                <div ng-switch-default>
+                    <input type="hidden" name="changes" class="form-control" ng-model="hiddenData.changes" ng-disabled="find('changes').disabled">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12" ng-show="find('attachment').show">
+        <div class="form-group">
+            <label class="col-sm-1 control-label">附件
+                <span ng-switch="find('attachment').required && !find('attachment').disabled" >
+                    <span ng-switch-when="true">
+                        <span class="required" >*</span>
+                    </span>
+                </span>
+            </label>
+            <div class="col-sm-11">
+                <button type="button" class="btn mb10" ng-click="action.uploadFile();" ng-show="!find('attachment').disabled">添加</button>
+                <label ng-show="uploadFile.length==0 && find('attachment').disabled">无</label>
+                <table class="table dataTable" style="width:755px!important;;border: 1px solid #ccc;border-bottom:1px solid #ccc !important;" ng-show="uploadFile.length>0">
+                    <thead><tr><th>文件名称</th><th width="100">添加人</th><th width="140">添加时间</th><th width="140">工单流程</th><th  width="100">操作</th></tr></thead>
+                    <tbody >
+                    <tr ng-repeat="type in uploadFile | orderBy:'created'">
+                        <td><a href="/dmonitor-webapi/itsm/form/download?fileName={{type.name}}">
+                            <span title="{{type['name']}}">{{type['name']}}</span>
+                        </a></td>
+                        <td><span title="{{type['createByName']}}">{{type['createByName']}}</span></td>
+                        <td><span title="{{type['created']}}">{{type['created']}}</span></td>
+                        <td><span title="{{type['step']}}">{{type['step']}}</span></td>
+                        <td>
+                            <i ng-if="type['step']=='新建'" class="fa fa-trash-o" ng-disabled="find('attachment').disabled || (type['del']!=true && formData.step!='提交' && formData.step!='新建')" ng-click="action.deleteFile(type.id)"></i>
+                            <i ng-if="type['step']!='新建'" class="fa fa-trash-o" ng-disabled="find('attachment').disabled || (type['step']!=formData.step && type['del']!=true && type['step']!=currentStep)" ng-click="action.deleteFile(type.id)"></i>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-sm-11" ng-switch="find('attachment').required && !find('attachment').disabled">
+                <div ng-switch-when="true">
+                    <input type="hidden" name="attachment" class="form-control" ng-model="hiddenData.attachment" ng-disabled="find('attachment').disabled" required>
+                    <div class="warn" ng-show="editForm.attachment.$invalid && editForm.attachment.$dirty">
+                        <span>请上传文件.</span>
+                    </div>
+                </div>
+                <div ng-switch-default>
+                    <input type="hidden" name="attachment" class="form-control" ng-model="hiddenData.attachment" ng-disabled="find('attachment').disabled">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row mt20" ng-show="!findShow('sid-AFCD5180-FD80-4EC3-8F24-B7DA2A01715A')">
+    <div class="col-xs-12">
+        <widget-box>
+            <widget-header>
+                <h5>历史任务</h5>
+            </widget-header>
+            <widget-body>
+                <table class="table dataTable" style="width: 100% !important;border: 1px solid #ccc;border-bottom:1px solid #ccc !important;">
+                    <thead><tr><th width="140">工单流程</th><th width="100">处理人</th><th width="140">接收时间</th><th width="140">操作时间</th><th>描述</th></tr></thead>
+                    <tbody >
+                    <tr ng-repeat="type in historyProcess" ng-show="type.endTime">
+                        <td><span title="{{type['name']}}">{{type.name}}</span></td>
+                        <td ><span title="{{type.assignee}}">{{type.assignee}}</span></td>
+                        <td ><span title="{{type.startTime}}">{{type.startTime}}</span></td>
+                        <td ><span title="{{type.endTime}}">{{type.endTime}}</span></td>
+                        <td ><span title="{{type.description}}">{{type.description}}</span></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </widget-body>
+        </widget-box>
+    </div>
+</div>
+</div>
+</form>
+
+<div  ng-include src="'views/itsm/uploadFile.html'"></div>
+<div  ng-include src="'views/itsm/knowledgelibQuery.html'"></div>
+<div  ng-include src="'views/itsm/incidentQuery.html'"></div>
+<div  ng-include src="'views/itsm/problemQuery.html'"></div>
+<div  ng-include src="'views/itsm/changeQuery.html'"></div>

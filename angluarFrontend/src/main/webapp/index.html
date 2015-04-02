@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <title>DMonitor</title>
+    <meta content="Draggabble Widget Boxes & Containers" name="description">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0" name="viewport">
+    <!-- base -->
+    <link href="lib/bootstrap/css/bootstrap.min.css"  type="text/css" rel="stylesheet"/>
+    <!-- ace -->
+    <link rel="stylesheet" type="text/css" href="lib/fontawesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="lib/assets/css/ace-fonts.css" />
+    <link rel="stylesheet" href="lib/assets/css/ace.min.css" />
+    <link rel="stylesheet" href="lib/assets/css/ace-rtl.min.css" />
+    <link rel="stylesheet" href="lib/assets/css/ace-skins.min.css" />
+    <script src="lib/assets/js/ace-extra.min.js"></script>
+    <!-- jquery-ui -->
+    <link href='lib/calendar/test/css/jquery-ui-1.10.4.custom.min.css' rel='stylesheet'/>
+    <!-- zTree -->
+    <link rel="stylesheet" type="text/css" href="lib/dnt-angular-ui/ztree/zTreeStyle.css">
+     <!-- ng-grid -->
+    <link rel="stylesheet" type="text/css" href="lib/angular/ng-grid.min.css">
+    <!--  full calendar -->
+    <link href='lib/calendar/test/css/fullcalendar2.css' rel='stylesheet'/>
+    <link rel="stylesheet" type="text/css" href="lib/angular/ui/jquery.bigcolorpicker.css">
+    <!-- new common & widget style  -->
+    <link rel="stylesheet" type="text/css" href="css/base.css">
+    <link rel="stylesheet" type="text/css" href="css/global.css">
+    <link rel="stylesheet" type="text/css" href="lib/dnt-angular-ui/systemheader/style/systemHeader.css"/>
+    <link rel="stylesheet" type="text/css" href="lib/dnt-angular-ui/navbar/style/navbar.css"/>
+    <link rel="stylesheet" type="text/css" href="lib/dnt-angular-ui/breadcrumb/style/breadcrumb.css"/>
+    <link rel="stylesheet" type="text/css" href="lib/dnt-angular-ui/layout/style/layout.css"/>
+    <link rel="stylesheet" type="text/css" href="lib/dnt-angular-ui/widget/style/widget.css"/>
+    <link rel="stylesheet" type="text/css" href="lib/dnt-angular-ui/panel/style/panel.css"/>
+    <link rel="stylesheet" type="text/css" href="lib/dnt-angular-ui/loading/style/loading.css"/>
+    <link rel="stylesheet" type="text/css" href="lib/dnt-angular-ui/ztree/style/ztree.css"/>
+    <link rel="stylesheet" type="text/css" href="lib/dnt-angular-ui/modal/style/modal.css"/>
+    <link rel="stylesheet" type="text/css" href="lib/dnt-angular-ui/datatables/style/datatable.css"/>
+    <link rel="stylesheet" type="text/css" href="lib/dnt-angular-ui/datepicker/style/datepicker.css"/>
+    <link rel="stylesheet" type="text/css" href="lib/dnt-angular-ui/datepicker/style/bootstrap-datetimepicker.min.css"/>
+    <link rel="stylesheet" type="text/css" href="lib/dnt-angular-ui/treegrid/treeGrid.css"/>
+    <!--kindeditor-->
+    <link rel="stylesheet" type="text/css" href="lib/kindeditor/themes/default/default.css"/>
+</head>
+<body ng-app="dmonitor">
+    <system-header></system-header>
+    <nav-bar></nav-bar>
+    <div my-loading class="loading"></div>
+    <div ng-view class="view-content"></div>
+    <div modal-confirm settings="confirm"></div>
+    <div modal-alert settings="alert"></div>
+
+
+<!--lib-->
+<script src="lib/date/date_format.js"></script>
+<script src="lib/angular/jquery.min.js"></script>
+<script src="lib/angular/angular.min.js"></script>
+<script src="lib/angular/angular-route.min.js"></script>
+<script src="lib/angular/angular-resource.min.js"></script>
+<script src="lib/angular/angular-animate.min.js"></script>
+<script src="lib/bootstrap/js/bootstrap.js"></script>
+<!-- ace -->
+<script src="lib/assets/js/ace.min.js"></script>
+<script src="lib/assets/js/ace-elements.min.js"></script>
+<!-- jquery-ui -->
+<script src="lib/jquery-ui/jquery-ui-1.10.3.full.min.js"></script>
+<!-- angular-ui -->
+<script src="lib/angular/ui-bootstrap-tpls-0.11.0.js"></script>
+<!-- modal -->
+<script src="lib/dnt-angular-ui/modal/modal.js"></script>
+<!-- datepicker -->
+<script src="lib/dnt-angular-ui/datepicker/datepicker.directive.js"></script>
+<!-- zTree -->
+<script src="lib/dnt-angular-ui/ztree/jquery.ztree.all-3.5.min.js"></script>
+<script src="lib/dnt-angular-ui/ztree/jquery.ztree.exhide-3.5.min.js"></script>
+<script src="lib/dnt-angular-ui/ztree/ztree.directive.js"></script>
+<!-- checklist -->
+<script src="lib/dnt-angular-ui/checklist/checklist.directive.js"></script>
+<!-- maskLayer -->
+<script src="lib/dnt-angular-ui/masklayer/masklayer.directive.js"></script>
+<!--data-table-->
+<script src="lib/dnt-angular-ui/datatables/jquery.dataTables.min.js"></script>
+<script src="lib/dnt-angular-ui/datatables/datatables.directive.js"></script>
+<script src="lib/assets/js/jquery.dataTables.bootstrap.js"></script>
+<script src="lib/dnt-angular-ui/treegrid/tree-grid-directive.js"></script>
+<!--iChart-->
+<script src="lib/iChart/ichart.1.2.min.js"></script>
+<!--jtopo-->
+<!--<script src="lib/jtopo/jtopo-0.3.6-min.js"></script>-->
+<!--<script src="lib/jtopo/jtopo-0.4.1.js"></script>-->
+<!--twaver-->
+<script src="lib/twaver/twaver_format_.js"></script>
+<script src="lib/twaver/twaver_ext.js"></script>
+<!--base64-->
+<script src="lib/code/base64.js"></script>
+<!-- util -->
+<script src="js/utils/services.js"></script>
+<script src="js/utils/filters.js"></script>
+<!-- resource -->
+<script src="lib/dmonitor-client/resource/client.js"></script>
+<script src="js/resource/app.js"></script>
+<script src="js/resource/directive.js"></script>
+<script src="js/resource/rslib.js"></script>
+<script src="js/resource/rsmonitor.js"></script>
+<script src="js/resource/rstype.js"></script>
+<script src="js/resource/rsdiscovery.js"></script>
+<script src="js/resource/rsRoomSync.js"></script>
+<script src="js/resource/colorbar.js"></script>
+<!-- about -->
+<script src="js/about/app.js"></script>
+<!-- audit -->
+<script src="lib/dmonitor-client/audit/client.js"></script>
+<script src="js/audit/controllers.js"></script>
+<script src="js/audit/app.js"></script>
+<!-- report -->
+<script src="js/report/timerReport.js"></script>
+<script src="js/report/archivedir.js"></script>
+    <script src="js/report/jfPatrol.js"></script>
+<!-- alarm -->
+<script src="js/alarm/app.js"></script>
+<script src="js/alarm/alarm.js"></script>
+<script src="js/alarm/alarm_group.js"></script>
+<script src="lib/dmonitor-client/alarm/client.js"></script>
+<script src="js/alarm/baseline.js"></script>
+<script src="js/alarm/baselineRule.js"></script>
+<!--log-->
+<script src="js/log/services.js"></script>
+<script src="js/log/controllers.js"></script>
+<script src="js/log/app.js"></script>
+<script src="js/log/event.js"></script>
+<script src="js/log/log.js"></script>
+<script src="js/log/logAnalyze.js"></script>
+<!--deploy-->
+<script src="js/deploy/deploy.js"></script>
+<!--topo jtopo-->
+<!--<script src="js/topo/jtopo/topojs/util.js"></script>-->
+<!--<script src="js/topo/jtopo/topojs/node.js"></script>-->
+<!--<script src="js/topo/jtopo/topojs/layer.js"></script>-->
+<!--<script src="js/topo/jtopo/topojs/line.js"></script>-->
+<!--<script src="js/topo/jtopo/topojs/view.js"></script>-->
+<!--<script src="js/topo/jtopo/topo_util.js"></script>-->
+<!--<script src="js/topo/jtopo/topo_services.js"></script>-->
+<!--<script src="js/topo/jtopo/topo_controllers.js"></script>-->
+<!--<script src="js/topo/jtopo/topo_directives.js"></script>-->
+<!--<script src="js/topo/jtopo/app.js"></script>-->
+<!--topo twaver-->
+<script src="js/topo/twaver/topojs/util.js"></script>
+<script src="js/topo/twaver/topojs/interaction.js"></script>
+<script src="js/topo/twaver/topojs/nodeui.js"></script>
+<script src="js/topo/twaver/topojs/linkui.js"></script>
+<script src="js/topo/twaver/topojs/node.js"></script>
+<script src="js/topo/twaver/topojs/link.js"></script>
+<script src="js/topo/twaver/topojs/view.js"></script>
+<script src="js/topo/twaver/topo_util.js"></script>
+<script src="js/topo/twaver/topo_services.js"></script>
+<script src="js/topo/twaver/topo_controllers.js"></script>
+<script src="js/topo/twaver/topo_directives.js"></script>
+<script src="js/topo/twaver/app.js"></script>
+<!--simulation-->
+<script src="js/simulation/simulation_util.js"></script>
+<script src="js/simulation/simulationjs/util.js"></script>
+<script src="js/simulation/simulationjs/view.js"></script>
+<script src="js/simulation/simulationjs/node.js"></script>
+<script src="js/simulation/simulationjs/nodeui.js"></script>
+<script src="js/simulation/simulationjs/link.js"></script>
+<script src="js/simulation/simulationjs/linkui.js"></script>
+<script src="js/simulation/simulationjs/interaction.js"></script>
+<script src="js/simulation/simulation_controllers.js"></script>
+<script src="js/simulation/simulation_directives.js"></script>
+<script src="js/simulation/simulation_services.js"></script>
+<script src="js/simulation/app.js"></script>
+<!--businessChart-->
+<script src="js/businessChart/businessChart_util.js"></script>
+<script src="js/businessChart/businessChartjs/util.js"></script>
+<script src="js/businessChart/businessChartjs/view.js"></script>
+<script src="js/businessChart/businessChartjs/defaultNode.js"></script>
+<script src="js/businessChart/businessChartjs/node.js"></script>
+<script src="js/businessChart/businessChartjs/link.js"></script>
+<script src="js/businessChart/businessChart_controllers.js"></script>
+<script src="js/businessChart/businessChart_directives.js"></script>
+<script src="js/businessChart/businessChart_services.js"></script>
+<script src="js/businessChart/app.js"></script>
+<!-- overview -->
+<script src="js/overview/app.js"></script>
+<!--user-->
+<script src="js/user/user.js"></script>
+<!--room-->
+<script src="lib/dmonitor-client/room/client.js"></script>
+<script src="js/room/app.js"></script>
+<script src="js/room/roomEvent.js"></script>
+<script src="js/room/roomRule.js"></script>
+<!--itsm-->
+<script src="js/itsm/app.js"></script>
+<script src="js/itsm/services.js"></script>
+<script src="js/itsm/controllers.js"></script>
+<script src="js/itsm/model.js"></script>
+<script src="js/itsm/notifyconfig.js"></script>
+<!--history-->
+<script src="lib/dmonitor-client/history/client.js"></script>
+<script src="js/history/history.js"></script>
+<script src="js/history/flowchart.js"></script>
+<script src="js/dashboard/compile.js"></script>
+<!--app-->
+<script src="lib/dnt-angular-ui/systemheader/systemheader.js"></script>
+<script src="lib/dnt-angular-ui/navbar/navbar.js"></script>
+<script src="lib/dnt-angular-ui/breadcrumb/breadcrumb.js"></script>
+<script src="lib/dnt-angular-ui/widget/widget.js"></script>
+<script src="lib/dnt-angular-ui/layout/layout.js"></script>
+<script src="lib/dnt-angular-ui/loading/loading.js"></script>
+<script src="js/app.js"></script>
+<script src="lib/angular/ng-grid.min.js"></script>
+<script src="lib/angular/ui/ajaxfileupload.js"></script>
+<script src="lib/dnt-angular-ui/datepicker/bootstrap-datetimepicker.min.js"></script>
+<script src="lib/dnt-angular-ui/datepicker/bootstrap-datetimepicker.zh-CN.js"></script>
+<script src="lib/angular/ui/bindHtml.js"></script>
+<script src="lib/angular/jquery.cookie.js"></script>
+<!--flow-->
+    <!--<script src="lib/dnt-angular-ui/highcharts/highcharts.js"></script>-->
+    <script src="lib/dnt-angular-ui/highcharts/highstock.js"></script>
+    <script src="lib/dnt-angular-ui/highcharts/highcharts-more.js"></script>
+    <script src="lib/dnt-angular-ui/highcharts/modules/exporting.js"></script>
+    <script src="lib/dnt-angular-ui/highcharts/plugin/beyond-extremes.js"></script>
+    <script src="lib/dnt-angular-ui/highcharts/highcharts-ng.js"></script>
+    <script src="lib/dnt-angular-ui/highcharts/highcharts-3d.js"></script>
+    <script src="js/netflow/app.js"></script>
+    <script src="js/netflow/controllers.js"></script>
+    <script src="js/netflow/services.js"></script>
+
+<!--  chart -->
+<script src="lib/jqplot/js/jquery.jqplot.js"></script>
+<script src="lib/jqplot/plugins/jqplot.pieRenderer.min.js"></script>
+
+<!--  asset -->
+<script src="js/asset/app.js"></script>
+<script src="js/asset/controllers.js"></script>
+<script src="js/asset/services.js"></script>
+
+<!--kindeditor-->
+<script src="lib/kindeditor/kindeditor-min.js"></script>
+<script src="lib/kindeditor/lang/zh_CN.js"></script>
+<script src="lib/kindeditor/kindeditor.directive.js"></script>
+
+    <link href='lib/calendar/test/css/fullcalendar2.css' rel='stylesheet'/>
+    <link href='lib/calendar/test/css/jquery-ui-1.10.4.custom.min.css' rel='stylesheet'/>
+    <script src='lib/calendar/test/js/fullcalendar.js'></script>
+    <script src='lib/calendar/test/js/jquery.form.min.js'></script>
+    <script src='lib/calendar/test/js/jquery-ui-1.10.4.custom.min.js'></script>
+    <script src='lib/angular/ui/jquery.bigcolorpicker.js'></script>
+</body>
+</html>

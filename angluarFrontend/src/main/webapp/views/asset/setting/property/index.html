@@ -1,0 +1,108 @@
+<link rel="stylesheet" type="text/css" href="css/asset/asset.css">
+<div class="content">
+    <bread-crumb>
+        <a>设置</a>
+        <a class="current">资产提醒配置</a>
+    </bread-crumb>
+    <div class="page-content">
+        <div class="row">
+            <div class="col-xs-6">
+                <widget-box>
+                    <widget-header>
+                        <h5>维保提醒配置</h5>
+                    </widget-header>
+                    <widget-body>
+                        <form name="form" novalidate>
+                            <table class="modal-table">
+                                <tr>
+                                    <td class="row-lable"> 提醒方式 </td>
+                                    <td>
+                                        <select ng-model="model.maintain.method">
+                                            <option value="0">不提醒</option>
+                                            <option value="1">短信</option>
+                                            <option value="2">邮件</option>
+                                            <option value="3">短信及邮件</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="row-lable"> 提醒频率 </td>
+                                    <td>
+                                        <select ng-model="model.maintain.interval">
+                                            <option value="1">1天1次</option>
+                                            <option value="2">2天1次</option>
+                                            <option value="3">3天1次</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="row-lable"> 提醒时间 </td>
+                                    <td>
+                                        <select ng-model="model.maintain.days">
+                                            <option value="10">10天</option>
+                                            <option value="30">30天</option>
+                                            <option value="60">60天</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </table>
+                            <div class="modal-footer">
+                                <button class="btn btn-primary"  type="button"  ng-disabled="loginUserMenuMap[currentView]"  ng-click="saveMaintainProperty()">确定</button>
+                            </div>
+                            </form>
+                    </widget-body>
+                </widget-box>
+            </div>
+            <div class="col-xs-6">
+                <widget-box>
+                    <widget-header>
+                        <h5>报废提醒配置</h5>
+                    </widget-header>
+                    <widget-body>
+                        <form name="form" novalidate>
+                            <table class="modal-table">
+                                <tr>
+                                    <td class="row-lable"> 提醒方式 </td>
+                                    <td>
+                                        <select ng-model="model.abandon.method">
+                                            <option value="0">不提醒</option>
+                                            <option value="1">短信</option>
+                                            <option value="2">邮件</option>
+                                            <option value="3">短信及邮件</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="row-lable"> 提醒频率 </td>
+                                    <td>
+                                        <select ng-model="model.abandon.interval">
+                                            <option value="1">1天1次</option>
+                                            <option value="2">2天1次</option>
+                                            <option value="3">3天1次</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="row-lable"> 提醒时间 </td>
+                                    <td>
+                                        <select ng-model="model.abandon.days">
+                                            <option value="10">10天</option>
+                                            <option value="30">30天</option>
+                                            <option value="60">60天</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </table>
+                            <div class="modal-footer">
+                                <button class="btn btn-primary"  type="button"  ng-disabled="loginUserMenuMap[currentView]"  ng-click="saveAbandonProperty()">确定</button>
+                            </div>
+                        </form>
+                    </widget-body>
+                </widget-box>
+            </div>
+        </div>
+    </div>
+
+    <div modal-alert settings="common.alertSettings"></div>
+    <div modal-confirm settings="common.confirmSettings"></div>
+</div>

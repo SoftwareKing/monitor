@@ -1,0 +1,84 @@
+<div class="content" xmlns="http://www.w3.org/1999/html">
+    <bread-crumb>
+        <a>设置</a>
+        <a class="current">SLA设置</a>
+        <a class="search-link ">高级搜索</a>
+    </bread-crumb>
+    <div class="page-content">
+        <div>
+            <div class="search-head">
+                <div class="row">
+                    <label>工单类型：</label>
+                    <select type="text"  ng-model="searchPage.data.processType">
+                        <option value="">全部</option>
+                        <option value="incident">故障工单</option>
+                        <option value="problem">问题工单</option>
+                        <option value="change">变更工单</option>
+                    </select>
+                    <label>优先级：</label>
+                    <select type="text"  ng-model="searchPage.data.priority">
+                        <option value="">全部</option>
+                        <option>低</option>
+                        <option>中</option>
+                        <option>高</option>
+                        <option>紧急</option>
+                    </select>
+                    <button class="btn" ng-click="searchPage.action.search()">查询</button>
+                </div>
+            </div>
+            <div>
+                <table class="table"  jq-table="listPage.settings" ></table>
+            </div>
+        </div>
+
+        <div dialog info="openDialog" data="openDialog.model">
+            <form name="form" novalidate>
+                <div class="dialog-con" style="overflow: auto">
+                    <table class="modal-table">
+                        <tr>
+                            <td class="row-lable">工单类型</td>
+                            <td>
+                                <select type="text"  ng-model="openDialog.model.processType" disabled>
+                                    <option value="incident">故障工单</option>
+                                    <option value="problem">问题工单</option>
+                                    <option value="change">变更工单</option>
+                                </select>
+                                <span class="required">*</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="row-lable">优先级</td>
+                            <td>
+                                <select type="text"  ng-model="openDialog.model.priority" disabled>
+                                    <option value="低">低</option>
+                                    <option value="中">中</option>
+                                    <option value="高">高</option>
+                                    <option value="紧急">紧急</option>
+                                </select>
+                                <span class="required">*</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="row-lable">超时时间(小时)</td>
+                            <td>
+                                <input type="number" ng-model="openDialog.time" name="time" min="1" max="9999"  ng-pattern="/^[^.]*$/" required/>
+                                <span class="required">*</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="row-lable">备注</td>
+                            <td>
+                                <textarea ng-model="openDialog.model.remark"></textarea>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-disabled="form.$invalid" ng-click="openDialog.save()">确定</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,102 @@
+{"result": "success",
+    "desc": "Find TopoView Ok!",
+    "msg": {
+        "id": 5,
+        "name": "map1",
+        "cmdbKey": 232,
+        "classify": 3,
+        "zoom": null,
+        "topoView": null,
+        "topoViewSet": [],
+        "topoNodeSet": [
+            {
+                "id": 1,
+                "name": "linux101",
+                "ip": "192.168.1.101",
+                "cmdbKey": 8,
+                "classify": 9,
+                "img": "\fdad\fad.jpg",
+                "horizontal": 100.0,
+                "vertical": 100.0
+            },
+            {
+                "id": 2,
+                "name": "linux102",
+                "ip": "192.168.1.102",
+                "cmdbKey": 9,
+                "classify": 3,
+                "img": "\fdad\fad.jpg",
+                "horizontal": 200.0,
+                "vertical": 200.0
+            },
+            {
+                "id": 0,
+                "name": "linux100",
+                "ip": "192.168.1.100",
+                "cmdbKey": 10,
+                "classify": 9,
+                "img": "\fdad\fad.jpg",
+                "horizontal": 10.0,
+                "vertical": 10.0
+            }
+        ],
+        "topoLineSet": [
+            {
+                "id": 3,
+                "name": "line1",
+                "cmdbKey": 701,
+                "classify": 0,
+                "inPoint": {
+                    "id": 0,
+                    "name": "linux100",
+                    "ip": "192.168.1.100",
+                    "cmdbKey": 8,
+                    "classify": 9,
+                    "img": "\fdad\fad.jpg",
+                    "horizontal": 10.0,
+                    "vertical": 10.0
+                },
+                "outPoint": {
+                    "id": 1,
+                    "name": "linux101",
+                    "ip": "192.168.1.101",
+                    "cmdbKey": 8,
+                    "classify": 9,
+                    "img": "\fdad\fad.jpg",
+                    "horizontal": 100.0,
+                    "vertical": 100.0
+                },
+                "inPort": 0,
+                "outPort": 0
+            },
+            {
+                "id": 4,
+                "name": "line2",
+                "cmdbKey": 701,
+                "classify": 3,
+                "inPoint": {
+                    "id": 1,
+                    "name": "linux101",
+                    "ip": "192.168.1.101",
+                    "cmdbKey": 8,
+                    "classify": 9,
+                    "img": "\fdad\fad.jpg",
+                    "horizontal": 100.0,
+                    "vertical": 100.0
+                },
+                "outPoint": {
+                    "id": 2,
+                    "name": "linux102",
+                    "ip": "192.168.1.102",
+                    "cmdbKey": 8,
+                    "classify": 9,
+                    "img": "\fdad\fad.jpg",
+                    "horizontal": 200.0,
+                    "vertical": 200.0
+                },
+                "inPort": 0,
+                "outPort": 0
+            }
+        ]
+    }
+}

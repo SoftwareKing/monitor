@@ -1,0 +1,54 @@
+<div class="row">
+    <div class="col-xs-6">
+        <label>管理IP</label>
+        <div class="row">
+            <input type="text" name="ip" ng-pattern="editPage.ipValidate" ng-model="editPage.data.ip"  required/>
+            <span class="required">*</span>
+        </div>
+        <div class="warn" ng-show="editMoForm.ip.$invalid && editMoForm.ip.$dirty">
+            <span>请输入有效的IP地址.</span>
+        </div>
+    </div>
+    <div class="col-xs-6">
+        <label>端口</label>
+        <div class="row">
+            <input type="text" name="port"  ng-pattern="editPage.portValidate" ng-model="editPage.access.port" required/>
+            <span class="required">*</span>
+        </div>
+        <div class="warn" ng-show="editMoForm.port.$invalid && editMoForm.port.$dirty">
+            <span>请输入有效的端口号.</span>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-6">
+        <label>用户名</label>
+        <input type="text" name="user" ng-pattern="editPage.emptyValidate" ng-model="editPage.access.user" required/>
+        <span class="required">*</span>
+        <div class="warn" ng-show="editMoForm.user.$invalid && editMoForm.user.$dirty">
+            <span>请输入用户名.</span>
+        </div>
+    </div>
+    <div class="col-xs-6">
+        <label>密码</label>
+        <div class="row">
+            <input type="password" ng-model="editPage.access.password"/>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-6">
+        <label>数据库名：</label>
+        <div class="row" ng-show="editPage.accessCtr.mocName != 'mssql'">
+            <input type="text" name="databaseName" ng-pattern="editPage.emptyValidate" ng-model="editPage.access.database" required />
+            <span class="required">*</span>
+            <div class="warn" ng-show="editMoForm.databaseName.$invalid && editMoForm.databaseName.$dirty">
+                <span>请输入用户名.</span>
+            </div>
+        </div>
+        <div class="row" ng-show="editPage.accessCtr.mocName == 'mssql'">
+            <input type="text" name="databaseName" ng-model="editPage.access.database"  readonly required />
+            <span class="required">*</span>
+        </div>
+    </div>
+</div>

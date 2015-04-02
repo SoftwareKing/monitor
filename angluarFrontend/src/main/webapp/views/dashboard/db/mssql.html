@@ -1,0 +1,106 @@
+<div>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div ng-include src="'../dashboard/commonTemplates/summary.html'"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <widget-box>
+                        <widget-header>
+                            <h5>会话数</h5>
+                        </widget-header>
+                        <widget-body>
+                            <table  class="simple-table" >
+                                <tr>
+                                    <td width="33.33333%" >
+                                        <div ng-repeat="l in [currentMoc.lockPies[0]]" style="text-align: center;padding-top:10px;">
+                                            <div ng-controller="lockPieCtrl" lock-pie></div>
+                                        </div>
+                                    </td>
+                                    <td width="33.33333%">
+                                        <div ng-repeat="l in [currentMoc.lockPies[1]]" style="text-align: center;padding-top:10px;">
+                                            <div ng-controller="lockPieCtrl" lock-pie></div>
+                                        </div>
+                                    </td>
+                                    <td style="padding: 10px;">
+                                        <div ng-repeat="l in [currentMoc.cpuBars[0],currentMoc.cpuBars[1],currentMoc.cpuBars[2]]">
+                                            <div ng-controller="cpuBarCtrl" process-bar></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="gray-bottom">
+                                    <td>当前会话总数</td>
+                                    <td>每秒死锁数</td>
+                                    <td> 命中率 </td>
+                                </tr>
+                            </table>
+                            <div class="row" ng-if="currentMoc.trend">
+                                <div class="col-xs-12">
+                                    <div class="trend-wrapper">
+                                        <trend-chart ng-controller="hisTrendCtrl"></trend-chart>
+                                    </div>
+                                </div>
+                            </div>
+                        </widget-body>
+                    </widget-box>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div ng-include src="'../dashboard/commonTemplates/baseInfo.html'"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div ng-include src="'../dashboard/commonTemplates/resourceInfo.html'"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <widget-box>
+                        <widget-header>
+                            <h5>日志文件统计</h5>
+                        </widget-header>
+                        <widget-body>
+                            <table class="simple-table"  ng-repeat="l in [currentMoc.cpuBars[3]]">
+                                <tr  ng-controller="cpuBarCtrl">
+                                    <td width="50%" >
+                                        <div style="padding:15px;" process-bar></div>
+                                    </td>
+                                    <td width="50%">
+                                        <div  ng-repeat="b in l.bottom">
+                                            <div style="float:left;width:50%;text-align: right;">
+                                                {{resource.metricMap[l.indicator+'.'+b]}}:
+                                            </div>
+                                            <div style="float:left;width:50%;">
+                                                {{bottom[$index]}}
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </widget-body>
+                    </widget-box>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div ng-include src="'../dashboard/commonTemplates/availablity.html'"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" ng-if="currentMoc.tables">
+        <div class="col-sm-12">
+            <div ng-include src="'../dashboard/commonTemplates/tables.html'"></div>
+        </div>
+    </div>
+</div>
+
+
+

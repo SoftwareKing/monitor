@@ -1,0 +1,36 @@
+<div dialog info="changeDialog" class="ldialog">
+    <div class="dialog-con" style="overflow: auto;">
+        <div class="search-head" style="display: block">
+            <div class="row">
+                <label>变更单号：</label>
+                <input type="text"  ng-model="changeSearchPage.data.id"  >
+                <label>变更标题：</label>
+                <input type="text"  ng-model="changeSearchPage.data.title"  >
+                <label>创建人：</label>
+                <select  ng-model="changeSearchPage.data.applyUser" >
+                    <option value="">不限</option>
+                    <option ng-repeat="type in initData.users" value={{type['name']}}>
+                        {{type['realName']}}
+                    </option>
+                </select>
+            </div>
+            <div class="row">
+                <label>处&nbsp;&nbsp;理&nbsp;&nbsp;人：</label>
+                <select  ng-model="changeSearchPage.data.resolveUser"  >
+                    <option value="">不限</option>
+                    <option ng-repeat="type in initData.users" value={{type['name']}}>
+                        {{type['realName']}}
+                    </option>
+                </select>
+                <label >创建时段：</label>
+                <input type="text" ng-model="changeSearchPage.data.applyTime1" jq-date format="yyyy-mm-dd hh:ii" readonly  />
+                <input type="text" ng-model="changeSearchPage.data.applyTime2" jq-date format="yyyy-mm-dd hh:ii" readonly />
+                <button class="btn" ng-click="changeListPage.settings.reload(true);">查询</button>
+            </div>
+        </div>
+        <!-- 数据列表 -->
+        <div class="pr mt10">
+            <table  jq-table="changeListPage.settings" class="table"></table>
+        </div>
+    </div>
+</div>

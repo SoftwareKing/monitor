@@ -1,0 +1,63 @@
+<div class="content">
+    <bread-crumb>
+        <a>设置</a>
+        <a class="current">告警影响</a>
+        <a class="search-link ">高级搜索</a>
+    </bread-crumb>
+
+    <div class="page-content">
+        <div class="search-head">
+            <form name="sform" novalidate>
+                <div class="row">
+                    <label>资源类型组：</label>
+                    <select ng-model="modalSetting.model2.moc" >
+                        <option value="">不限</option>
+                        <option ng-repeat="obj in modalSetting.model2.mocs" value={{obj.id}}>
+                            {{obj.displayName}}
+                        </option>
+                    </select>
+                    <label>资源类型：</label>
+                    <select ng-model="modalSetting.model2.mocClassify">
+                        <option value="">不限</option>
+                        <option ng-repeat="obj in modalSetting.model2.mocClassifys" value={{obj.id}}>
+                            {{obj.displayName}}
+                        </option>
+                    </select>
+                    <label>指标组：</label>
+                    <select ng-model="modalSetting.model2.indicatorId" >
+                        <option value="">不限</option>
+                        <option ng-repeat="type in modalSetting.model2.indicators" value={{type["id"]}}>
+                            {{type["displayName"]}}
+                        </option>
+                    </select>
+                    <label>指标：</label>
+                    <select ng-model="modalSetting.model2.metricId">
+                        <option value="">不限</option>
+                        <option ng-repeat="type in modalSetting.model2.metrics" value={{type["id"]}}>
+                            {{type["displayName"]}}
+                        </option>
+                    </select>
+                </div>
+                <div class="row">
+                    <label> 影响级别：</label>
+                    <div class="checkbox" ng-repeat="l in $root.alarm.const.levels"><label><input type="checkbox" checklist-model="modalSetting.model2.level" checklist-value="l.value"><i></i></label><span compile="l.label"></span></div>
+                    <button type="button" class="btn" ng-click="listPage.settings.reload()">查询</button>
+                </div>
+                <!--<div class="row">-->
+                    <!--<label> 影响级别：</label>-->
+                    <!--<div class="radio" ng-repeat="l in $root.alarm.const.levels"><label><input class="ace" type="radio" ng-model="modalSetting.model2.color"  value="l.value"><i></i></label><span compile="l.label"></span></div>-->
+                    <!--<button class="btn" ng-click="listPage.settings.reload()" >查询</button>-->
+                <!--</div>-->
+            </form>
+        </div>
+        <div class="list_button">
+            <button class="btn" ng-disabled="$root.loginUserMenuMap[currentView]" ng-click="listPage.action.showAddModal()">新增</button>
+            <button class="btn" ng-disabled="$root.loginUserMenuMap[currentView]" ng-click="listPage.action.batchRemove()">删除</button>
+        </div>
+        <table jq-table="listPage.settings" class="table"></table>
+    </div>
+
+    <div ng-include src="'views/businessChart/alarmAffectColor/addTypeModal.html'"></div>
+    <div modal-alert settings="common.alertSettings"></div>
+    <div modal-confirm settings="common.confirmSettings"></div>
+</div>

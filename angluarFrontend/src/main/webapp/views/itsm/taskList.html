@@ -1,0 +1,70 @@
+<link rel="stylesheet" type="text/css" href="css/itsm/itsm.css">
+<div class="content" ng-controller="taskListController">
+    <bread-crumb>
+        <a>运维</a>
+        <a>自定义流程</a>
+        <a class="current">我的任务</a>
+        <a class="search-link ">高级搜索</a>
+    </bread-crumb>
+    <layout-lr>
+        <panel-left>
+            <div id="sidebar" class="left-sidebar">
+                <div class="menu-title"></div>
+                <ul class="ztree ztreen" z-tree="{
+                    inData:'taskTree',
+                    outData:'searchPage.listId',
+                    type:'none',
+                    radioCancel : true,
+                    description:'displayName',
+                    value:'id',
+                    depth:1}" id="taskTree">
+                </ul>
+            </div>
+            <collapse-left></collapse-left>
+        </panel-left>
+        <panel-right>
+            <div class="page-content">
+                <div class="row">
+                    <div class="search-head">
+                        <div class="row">
+                            <label>流程类型：</label>
+                            <input type="text"  ng-model="searchPage.data.category"/>
+                            <label>流程名称：</label>
+                            <input type="text"  ng-model="searchPage.data.name"/>
+                            <label >流程KEY&nbsp;：</label>
+                            <input type="text"  ng-model="searchPage.data.key"/>
+                            <button class="btn" ng-click="searchPage.action.search()">查询</button>
+                        </div>
+                    </div>
+                    <div class="list_button">
+                        <button class="btn" ng-disabled="loginUserMenuMap[currentView]" ng-click="listPage.action.start();form.$setPristine();">启动流程</button>
+                    </div>
+                    <div>
+                        <table jq-table="listPage.settings" class="table"></table>
+                    </div>
+                </div>
+                <div dialog info="openDialog">
+                    <div class="dialog-con" style="overflow: auto;padding-bottom: 5px;">
+                        <div class="row">
+                            <select type="text" ng-model="openDialog.model.processId" name="name" required>
+                                <option value="{{l.processId}}" ng-repeat="l in openDialog.processList">{{l.name}}</option>
+                            </select>
+                            <span class="required">*</span>
+                            <div class="required" ng-show="form.name.$dirty && form.name.$invalid">
+                                <span ng-show="form.name.$error.required">此项不能为空.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div dialog info="imageDialog" class="ldialog">
+                    <form name="form" novalidate>
+                        <div class="dialog-con" style="overflow: auto;">
+                            <img id="img" src="">
+                            <div id="pid"></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </panel-right>
+    </layout-lr>
+</div>

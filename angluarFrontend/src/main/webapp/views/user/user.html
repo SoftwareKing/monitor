@@ -1,0 +1,186 @@
+<link rel="stylesheet" type="text/css" href="css/user/user.css">
+<div class="content">
+    <bread-crumb>
+        <a>设置</a>
+        <a class="current">用户管理</a>
+        <a class="search-link ">高级搜索</a>
+    </bread-crumb>
+    <div class="page-content">
+        <div class="search-head">
+            <form name="sform" novalidate>
+            <div class="row">
+            <label>用户名：</label>
+            <input type="text" ng-model="searchPage.data.name" />
+            <label>用户显示名：</label>
+            <input type="text" ng-model="searchPage.data.realName" />
+            <label>手机号：</label>
+            <input type="text" ng-model="searchPage.data.mobile" />
+            <label>所属区域：</label>
+            <input type="text" name = "locTree" z-tree="{
+                            inData:'userDialog.locTree.data',
+                            outData:'searchPage.data.location',
+                            outParentData:'',
+                            type:'all_radio',
+                            description:'name',
+                            children:'children',
+                            isLeaf:'false',
+                            value:'id',
+                            inputWidth:280,
+                            depth:5,
+                            radioCancel:true
+                            }"/>
+            <button class="btn" ng-click="listPage.settings.reload()" >查询</button>
+            </div>
+            </form>
+        </div>
+        <div class="list_button">
+            <button class="btn" ng-disabled="loginUserMenuMap[currentView]" ng-click="listPage.action.add();form.$setPristine();">新增</button>
+            <button class="btn" ng-disabled="loginUserMenuMap[currentView]" ng-click="listPage.action.removeAll()">删除</button>
+        </div>
+        <table jq-table="listPage.settings" class="table"></table>
+    </div>
+
+    <div dialog info="userDialog" data="userDialog.model">
+        <form name="form" novalidate>
+            <div class="dialog-con">
+                <table class="modal-table">
+                    <tr>
+                        <td class="row-lable"> 用户名 </td>
+                        <td>
+                            <input type="text" ng-model="userDialog.model.name" name="np" ng-maxlength="20"
+                                   ng-readonly="userDialog.model.id" required ng-pattern="/^[A-Za-z0-9]+$/">
+                            <span class="required">*</span>
+                            <div class="required" ng-show="form.np.$dirty && form.np.$invalid">
+                                <span ng-show="form.np.$error.required">此项不能为空.</span>
+                                <span ng-show="!form.np.$error.required && form.np.$error.maxlength">超出长度限制.</span>
+                                <span ng-show="!form.np.$error.required && !form.np.$error.maxlength && form.np.$error.pattern">只能输入英文字母.</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="row-lable"> 密码 </td>
+                        <td>
+                            <input type="password" ng-model="userDialog.model.password"  name="psd"
+                                   ng-minlength="6" ng-maxlength="20" required />
+                            <span class="required">*</span>
+                            <div class="required" ng-show="form.psd.$dirty && form.psd.$invalid">
+                                <span ng-show="form.psd.$error.required">此项不能为空.</span>
+                                <span ng-show="!form.psd.$error.required && form.psd.$error.minlength">长度最小6位字符.</span>
+                                <span ng-show="!form.psd.$error.required && form.psd.$error.maxlength">超出长度限制.</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="row-lable"> 用户显示名 </td>
+                        <td>
+                            <input type="text" ng-model="userDialog.model.realName" name="realName" ng-maxlength="20"
+                                   required>
+                            <span class="required">*</span>
+                            <div class="required" ng-show="form.realName.$dirty && form.realName.$invalid">
+                                <span ng-show="form.realName.$error.required">此项不能为空.</span>
+                                <span ng-show="!form.realName.$error.required && form.realName.$error.maxlength">超出长度限制.</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="row-lable"> 邮箱 </td>
+                        <td>
+                            <input type="email" ng-model="userDialog.model.email" name="email"  ng-maxlength="100"
+                                   style="width: 280px"/>
+                            <div class="required">
+                                <span ng-show="form.email.$error.email">邮箱地址格式错误.</span>
+                                <span ng-show="!form.email.$error.email && form.email.$error.maxlength">超出长度限制.</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="row-lable"> 手机号 </td>
+                        <td>
+                            <input type="text" ng-model="userDialog.model.mobile" ng-minlength="11"
+                                   ng-maxlength="11" name="mobile" ng-pattern="/^[0-9]*$/"/>
+                            <div class="required">
+                                <span ng-show="form.mobile.$error.minlength || form.mobile.$error.maxlength || form.mobile.$error.pattern">手机号应为11位数字.</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="row-lable"> 电话 </td>
+                        <td>
+                            <input type="text" ng-model="userDialog.model.phone" name="phone"
+                                   ng-pattern="/^[0-9]*$/" ng-maxlength="100">
+                            <div class="required">
+                                <span ng-show="form.phone.$error.pattern">只能输入数字.</span>
+                                <span ng-show="form.phone.$error.maxlength">超出长度限制.</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="vt row-lable"> 描述 </td>
+                        <td>
+                            <textarea ng-model="userDialog.model.remark" name="remark"  ng-maxlength="255"   rows="3" cols="30" > </textarea>
+                            <div class="required">
+                                <span  ng-show="form.remark.$error.maxlength">超出长度限制.</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr style="height: 160px;">
+                        <td class="vt row-lable"> 区域组织 </td>
+                        <td>
+                            <input type="hidden" ng-model="userDialog.model.locId" name="locId" required />
+                            <ul id="locTree" user-ztree="userDialog.locTree" class="ztree"
+                                style="background: none;height: 150px;overflow-y: visible;margin-left: 0px;"></ul>
+                        </td>
+                        <td class="vt row-lable" style="width: 10px;">
+                            <span class="required">*</span>
+                        </td>
+                    </tr>
+                    <tr style="height: 160px;">
+                        <td class="vt row-lable"> 主角色 </td>
+                        <td>
+                            <ul class="ztree" style="height: 150px;margin-left: 0px;">
+                                <li ng-repeat="m in userDialog.roleList" ng-show="m.name!='变更经理' && m.name!='知识库经理' && m.name!='区县审核人' && m.name!='市州审核人' && m.name!='省审核人'">
+                                    <span class='radio'><label><input type='radio' class="ace"  style="position:relative;" ng-change="changeRole()" name="roleId" required ng-model="userDialog.model.mainRoleId" ng-value="m.id"/><span class="lbl" style="width: 20px;"></span></label>{{m.name}}</span>
+                                </li>
+                            </ul>
+                        </td>
+                        <td class="vt row-lable" style="width: 10px;">
+                            <span class="required">*</span>
+                        </td>
+                    </tr>
+                    <tr style="height: 160px;">
+                        <td class="vt row-lable"> 附加角色 </td>
+                        <td>
+                            <ul class="ztree"  style="height: 150px;margin-left: 0px;">
+                                <li ng-repeat="m in userDialog.roleList" ng-show="m.name=='区县审核人' && userDialog.locLevel=='区县' && m.id!=userDialog.model.mainRoleId">
+                                    <span class='checkbox'><label><input type='checkbox' checklist-model="userDialog.model.roles" checklist-value="m.id"/><i></i><span class="lbl" style="width: 1px;"></span></label>{{m.name}}</span>
+                                </li>
+                                <li ng-repeat="m in userDialog.roleList" ng-show="m.name=='市州审核人' && userDialog.locLevel=='市州' && m.id!=userDialog.model.mainRoleId">
+                                    <span class='checkbox'><label><input type='checkbox' checklist-model="userDialog.model.roles" checklist-value="m.id"/><i></i><span class="lbl" style="width: 1px;"></span></label>{{m.name}}</span>
+                                </li>
+                                <li ng-repeat="m in userDialog.roleList" ng-show="m.name=='省审核人' && userDialog.locLevel=='省' && m.id!=userDialog.model.mainRoleId">
+                                    <span class='checkbox'><label><input type='checkbox' checklist-model="userDialog.model.roles" checklist-value="m.id"/><i></i><span class="lbl" style="width: 1px;"></span></label>{{m.name}}</span>
+                                </li>
+                                <li ng-repeat="m in userDialog.roleList" ng-show="(m.name!='区县审核人'  && m.name!='市州审核人' && m.name!='省审核人') && m.id!=userDialog.model.mainRoleId">
+                                    <span class='checkbox'><label><input type='checkbox' checklist-model="userDialog.model.roles" checklist-value="m.id"/><i></i><span class="lbl" style="width: 1px;"></span></label>{{m.name}}</span>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr style="height: 160px;">
+                        <td class="vt row-lable"> 用户组 </td>
+                        <td>
+                            <ul id="groupTree" user-ztree="userDialog.groupTree" class="ztree"
+                                style="background: none;height: 150px;overflow-y: visible;margin-left: 0px;padding-left:0px;"></ul>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" ng-disabled="form.$invalid" ng-click="userDialog.save();form.$setPristine();">确定</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="form.$setPristine();">取消</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+

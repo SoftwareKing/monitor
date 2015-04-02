@@ -1,0 +1,59 @@
+.ldialog .ztree{
+    height:220px!important;
+}
+#historyRuleDialog .dialog-con{
+    overflow: auto;
+}
+#historyRuleDialog select,#historyRuleDialog input[type="text"]{
+  width:100px;
+}
+.table {
+    width: 100%;
+    margin-bottom: 0px;
+}
+.mask {
+    opacity: 0.5;
+}
+.checkbox_span{
+    position: relative;
+    top: -3px;
+    margin:0px!important;
+    text-align:left;
+    line-height:14px;
+}
+.highcharts-range-selector{
+    line-height:20px!important;
+}
+.flowchartDiv{
+    padding:10px 10px 0;
+}
+
+.search-head label{
+    float: left!important;
+    margin-bottom: 15px!important;
+    margin-top: 0px!important;
+}
+
+/* left panel */
+#linkTable thead{
+    display:none
+}
+#linkTable + div.row .col-sm-6{
+    width:100%;
+}
+table#linkTable tr td label{
+    width: 280px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: 12px;
+}
+div#linkTable_wrapper .dataTables_info,div#linkTable_wrapper .dataTables_paginate{
+    text-align: center;
+}
+div#linkTable_wrapper .dataTables_paginate .pagination{
+    margin: 0;
+}
+.layout-lr .panel-left .left-sidebar:before{
+    width: 300px;
+}

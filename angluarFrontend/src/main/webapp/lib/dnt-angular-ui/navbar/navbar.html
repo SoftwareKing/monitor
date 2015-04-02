@@ -1,0 +1,29 @@
+<div id="nav-menu" class="navbar nav-menu" ng-controller="navbarController">
+    <ul ng-repeat="m in navbarItems" ng-switch="m.children.length>0">
+        <li ng-switch-when="true">
+            <a data-toggle="dropdown" class="dropdown-toggle">{{m.name}}<i class="fa fa-caret-down"></i></a>
+            <div class="dropdown-menu">
+                <ul>
+                    <li class="dropdown-menu-content" ng-repeat="n in m.children" ng-switch="n.children.length>0">
+                        <div class="submenu-wrapper" ng-switch-when="true">
+                            <div class="submenu-title">{{n.name}}</div>
+                            <div class="submenu">
+                                <div ng-repeat="o in n.children">
+                                    <a href="{{o.code=='roomPic'?room_activex_url:'#/'+o.code}}" target="{{o.code=='roomPic'?'_blank':'_self'}}" >{{o.name}}</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div ng-switch-default>
+                            <a href="{{n.code=='roomPic'?room_activex_url:'#/'+n.code}}" target="{{n.code=='roomPic'?'_blank':'_self'}}" >{{n.name}}</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <li ng-switch-default>
+           <div>
+               <a href="{{m.code=='roomPic'?room_activex_url:'#/'+m.code}}" target="{{m.code=='roomPic'?'_blank':'_self'}}">{{m.name}}</a>
+           </div>
+        </li>
+    </ul>
+</div>

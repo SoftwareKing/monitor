@@ -1,0 +1,32 @@
+<div modal-dialog settings="editPage.modal.settings" class="ldialog">
+    <form id="editMoForm" name="editMoForm" novalidate>
+        <div class="row">
+            <div class="col-xs-3">
+                <ul ng-show="editPage.isEdit" class="ztree ztreen" disabled z-tree="{
+                    inData:'editPage.editMocTreeData',
+                    outData:'editPage.data.mocId',
+                    outParentData:'',
+                    type:'radio',
+                    description:'displayName',
+                    children:'children',
+                    value:'id',
+                    depth:2}" id="resourceTypeTreeEdit">
+                </ul>
+                <ul ng-show="!editPage.isEdit" class="ztree ztreen" z-tree="{
+                    inData:'$root.resource.currentMoc',
+                    outData:'editPage.data.mocId',
+                    outParentData:'',
+                    type:'radio',
+                    description:'displayName',
+                    children:'children',
+                    value:'id',
+                    depth:2}" id="resourceTypeTree">
+                </ul>
+            </div>
+
+            <div class="col-xs-9">
+                <div  ng-include src="'views/resource/template/'+ editPage.accessCtr.type + '/'+ editPage.accessCtr.mocName + '.html'"></div>
+            </div>
+        </div>
+    </form>
+</div>

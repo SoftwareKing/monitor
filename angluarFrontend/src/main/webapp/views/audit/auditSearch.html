@@ -1,0 +1,42 @@
+    <div id="audit_search_div" class="search-head">
+        <form name="sform" novalidate>
+        <div class="row">
+            <label>所属模块：</label>
+            <select ng-model="searchPage.data.moduleName">
+                <option ng-repeat="key in keys($root.audit.module)" value={{key}}> {{$root.audit.module[key].displayName}} </option>
+            </select>
+            <label>操作：</label>
+            <select ng-model="searchPage.data.operation">
+                <option value=""> 不限</option>
+                <option ng-repeat="key in keys($root.audit.module[searchPage.data.moduleName]['operations'])" value={{key}}> {{$root.audit.module[searchPage.data.moduleName]['operations'][key]}} </option>
+            </select>
+            <label>关键字：</label>
+            <input type="text" ng-model="searchPage.data.keyword"   ng-pattern="/^[^'']*$/"/>
+            <label>操作人：</label>
+            <input type="text" readonly z-tree="{
+                                                inData:'searchPage.users',
+                                                outData:'searchPage.data.userId',
+                                                outParentData:'',
+                                                type:'radio',
+                                                description:'name',
+                                                children:'children',
+                                                value:'id',
+                                                depth:10,
+                                                isLeaf:'isLeaf',
+                                                radioCancel:true
+                                              }" id="userText"/>
+            <label>操作时间：</label>
+            <input type="text" ng-model="searchPage.data.startTime" format="yyyy-mm-dd hh:ii"
+                   max-date="{{searchPage.startMaxDate}}"
+                   jq-date
+                   style="width: 120px;"
+                   readonly/>
+            <input type="text" ng-model="searchPage.data.endTime" format="yyyy-mm-dd hh:ii"
+                   min-date="{{searchPage.endMinDate}}"
+                   jq-date
+                   style="width: 120px;"
+                   readonly/>
+            <button class="btn" ng-click="searchPage.action.search(true)"><i class="fa fa-search"></i>查询</button>
+        </div>
+            </form>
+    </div>

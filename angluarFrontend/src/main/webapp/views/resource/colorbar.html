@@ -1,0 +1,22 @@
+<div class="xntp_aca_conb_box">
+    <span>0%</span>
+    <div class="xntp_aca_conb_linebox">
+        <div class="xntp_aca_conb_linecon pr">
+            <div class="xntp_aca_conb_line" ng-class="{false:'line-red',true:'line-green'}[m.reverse]"></div>
+            <div style="width:{{m.point1}}%;" class="xntp_aca_conb_linea line_on" ng-class="{false:'line-green',true:'line-red'}[m.reverse]"></div>
+            <div style="width:{{m.point2}}%;" class="xntp_aca_conb_lineb line_on line-yellow"></div>
+            <div style="left:{{m.point1}}%;" class="xntp_aca_conb_linea_box">
+                <input type="text" name="point1" class="first-value" value="{{m.point1}}" ng-model="m.point1" readonly>
+                <em></em>
+                <p></p>
+            </div>
+            <div style="left:{{m.point2}}%;" class="xntp_aca_conb_linea_box">
+                <input type="text" name="point2" class="second-value" value="{{m.point2}}" ng-model="m.point2" readonly>
+                <em></em>
+                <p></p>
+            </div>
+        </div>
+    </div>
+    <span>100%</span>
+</div>
+

@@ -1,0 +1,53 @@
+<!--<link href="css/netflow/css/bootstrap-theme.css" type="text/css" rel="stylesheet" />-->
+<!--<link href="css/netflow/css/bootstrap-theme.min.css" type="text/css" rel="stylesheet" />-->
+<!--<link href="css/netflow/lib/Font-Awesome-3.2.1/css/font-awesome.min.css"  type="text/css" rel="stylesheet"/>-->
+<!--<link rel="stylesheet" href="css/netflow/css/flow.css"/>-->
+<div class="content">
+    <bread-crumb>
+        <a>网络监控</a>
+        <a class="current">流量分析</a>
+    </bread-crumb>
+    <div class="page-content">
+      <div class="search-head mb20">
+          <div class="row">
+            <label>数据源: </label>
+            <select ng-model="detailIP" id="form-field-select-1" ng-options="ip for ip in dataSrcIPS" class="form-control" size="1">
+            <!--<select ng-model="detailIP" ng-init="detailIP = detailIP || dataSrcIPS[0]" id="form-field-select-1" ng-options="ip in $scope.dataSrcIPS" class="form-control" size="1">-->
+                <!--<option>127.0.0.1</option>-->
+                <!--<option>192.168.21.1</option>-->
+                <!--<option>192.168.21.4</option>-->
+            </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+            <widget-box>
+                <widget-header>
+                    <h5>实时流量分析</h5>
+                    <widget-toolbar></widget-toolbar>
+                </widget-header>
+                <widget-body>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <highchart id="chart1" config="chartConfigColoum"></highchart>
+                        </div>
+                        <div class="col-sm-3">
+                            <highchart id="chart2" config="chartConfigTcp"></highchart>
+                        </div>
+                        <div class="col-sm-3">
+                            <highchart id="chart3" config="chartConfigUdp"></highchart>
+                        </div>
+                    </div>
+                </widget-body>
+            </widget-box>
+        </div>
+    </div>
+    <table jq-table="listPage.settings" class="table"></table>
+    </div>
+</div>
+
+
+
+
+
+

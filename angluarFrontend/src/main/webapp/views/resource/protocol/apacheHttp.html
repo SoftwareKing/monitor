@@ -1,0 +1,34 @@
+<div class="row">
+    <div class="col-xs-6">
+        <label>管理IP</label>
+        <div class="row">
+            <input type="text" name="ip" ng-pattern="editPage.ipValidate" ng-model="editPage.data.ip"  required/>
+            <span class="required">*</span>
+        </div>
+        <div class="warn" ng-show="editMoForm.ip.$invalid && editMoForm.ip.$dirty">
+            <span>请输入有效的IP地址.</span>
+        </div>
+    </div>
+    <div class="col-xs-6" ng-show="editPage.accessCtr.mocName != 'iis'">
+        <label>端口</label>
+        <div class="row">
+            <input type="text"  name="port" ng-pattern="editPage.portValidate" ng-model="editPage.access.port"  required/>
+            <span class="required">*</span>
+            <div class="warn" ng-show="editMoForm.port.$invalid && editMoForm.port.$dirty">
+                <span>请输入有效的端口号.</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-6" >
+        <label>URL</label>
+        <div class="row">
+            <input type="text" name="url" ng-model="editPage.access.url" ng-pattern="editPage.emptyValidate" required/>
+            <span class="required">*</span>
+            <div class="warn" ng-show="editMoForm.url.$invalid && editMoForm.url.$dirty">
+                <span>请输入URL.</span>
+            </div>
+        </div>
+    </div>
+</div>

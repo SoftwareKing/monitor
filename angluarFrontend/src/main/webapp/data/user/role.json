@@ -1,0 +1,8 @@
+{
+    "count": 3,
+    "data":[
+        {"roleId":1,"roleName":"管理员","updated":"2013-15-15"},
+        {"roleId":2,"roleName":"管理员2","updated":"2013-15-15"},
+        {"roleId":3,"roleName":"管理员3","updated":"2013-15-15"}
+    ]
+}

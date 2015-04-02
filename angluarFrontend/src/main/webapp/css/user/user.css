@@ -1,0 +1,41 @@
+/* public begin */
+.dialog-con{
+    overflow: auto;
+}
+/* public end */
+
+/* role begin*/
+.ldialog .modal-content .modal-body .ztree {
+    height:220px;
+}
+.ldialog .role-wrap{
+    border: 1px solid #D5D5D5;
+}
+.ldialog .titles-wrap{
+    border: 0px;
+    border-bottom: 1px solid #D5D5D5;
+}
+.tab-content{
+    height: 190px;
+    overflow: auto;
+}
+/* role end */
+
+/* communicateSetting begin */
+.widget-box .input-label{
+    margin:0;
+    line-height:32px;
+}
+
+.widget-box .widget-container{
+    height:300px;
+    padding:15px;
+    width: 100%;
+}
+
+.widget-box .widget-container .btn-div{
+    position: absolute;
+    bottom: 30px;
+    right: 20px;
+}
+/* communicateSetting end */

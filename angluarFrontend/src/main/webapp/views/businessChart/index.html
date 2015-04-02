@@ -1,0 +1,293 @@
+<link rel="stylesheet" type="text/css" href="css/businessChart/businessChart.css">
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(document).bind("contextmenu", function (e) {
+            return false;
+        });
+    });
+</script>
+<!-- 拓扑图首页 开始 -->
+<bread-crumb>
+    <a>业务</a>
+    <a>{{navigation.data.navigationparent}}</a>
+    <a class="current" id="twoChildrenNavigation">{{navigation.data.navigationchildren}}</a>
+</bread-crumb>
+
+<div class="lr-content">
+    <div class="left-content">
+        <div class="content-area">
+            <ul d-business-chart-tree="businessChartViewTree" id="businessChartViewTree" class="ztree" style="overflow:visible"></ul>
+        </div>
+    </div>
+    <div class="right-content">
+        <div class="page-content">
+            <div class="mb20">
+                <form style="float: left;" ng-disabled="businessChartViewTree.data.length <= 0 || loginUserMenuMap[currentView]">
+                    <div class="button-icon" title="新增资源">
+                        <a ng-click="businessChartDialogActive.addNode($event)">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                    </div>
+                    <div class="button-icon" title="删除">
+                        <a ng-click="businessChartDialogActive.delElementShow($event)">
+                            <i class="fa fa-trash-o"></i>
+                        </a>
+                    </div>
+                    <div class="button-icon" title="新增线路">
+                        <a ng-click="businessChartDialogActive.addLinkShow($event)">
+                            <i class="fa fa-chain"></i>
+                        </a>
+                    </div>
+                    <div class="button-icon" title="线路样式">
+                        <a ng-click="businessChartDialogActive.linkStyleDialogShow($event)">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                    </div>
+                    <div class="button-icon" title="全选">
+                        <a ng-click="selectAll($event)">
+                            <i class="fa  fa-crosshairs"></i>
+                        </a>
+                    </div>
+                    <div class="button-icon" title="快照">
+                        <a ng-click="snapshot()">
+                            <i class="fa  fa-camera-retro"></i>
+                        </a>
+                    </div>
+                </form>
+                  <span class="search">
+                      <input type="text" value="查询" ng-model="searchText" id="searchText" ng-disabled="businessChartViewTree.data.length <= 0">
+                      <i class="fa fa-search" ng-click="search($event)" ng-disabled="businessChartViewTree.data.length <= 0"></i>
+                  </span>
+            </div>
+            <div id="businessChartView" d-Business-Chart-view></div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- 同步图元对话框 开始 -->
+<div dialog info="businessChartNodeSynAddDialog" data="businessChartNodeSynAddDialog.model">
+    <form name="form" novalidate>
+        <div class="dialog-con">
+            <div class="row">
+                <div class="col-xs-5" style="margin-right: -60px;">
+                    <div>
+                        <select ng-model="businessChartNodeSynAddDialog.model.nodeMoc" style="width: 150px">
+                            <option value="">请选择 资源类型组</option>
+                            <option ng-repeat="obj in businessChartNodeSynAddDialog.model.moc" value={{obj.id}}>{{obj.displayName}}
+                            </option>
+                        </select>
+                        <select ng-model="businessChartNodeSynAddDialog.model.nodeMocClassify"
+                                style="width: 150px; margin-left: 15px">
+                            <option value="">请选择 资源类型</option>
+                            <option ng-repeat="obj in businessChartNodeSynAddDialog.model.mocClassify" value={{obj.id}}>
+                                {{obj.displayName}}
+                            </option>
+                        </select>
+                    </div>
+                    <div style="padding-top: 15px; height:400px">
+                        <div style="border: 1px solid #ccc; height:390px; width: 316px;">
+                            <table class="table" style="margin: 0px;border: 0px;">
+                                <thead>
+                                <tr>
+                                    <th width="35"></th>
+                                    <th width="180">资源名称</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td colspan="2">
+                                        <div style="overflow: auto; width:305px">
+                                            <ul id="{{businessChartNodeSynAddDialog.srcTree.treeId}}"
+                                                d-business-chart-resource-dialog-tree="businessChartNodeSynAddDialog.srcTree"
+                                                class="ztree lhztree"></ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-2" style="margin-right: -100px;">
+                    <div style="padding-top: 200px; padding-left: 0px">
+                        <button type="button" class="btn btn-primary btn-sm" style="min-width: 40px;"
+                                ng-click="businessChartNodeSynAddDialog.add()">
+                            <i class="fa fa-angle-double-right"></i>
+                        </button>
+                    </div>
+                    <div style="padding-top: 15px; padding-left: 0px">
+                        <button type="button" class="btn btn-primary btn-sm" style="min-width: 40px;"
+                                ng-click="businessChartNodeSynAddDialog.remove()">
+                            <i class="fa fa-angle-double-left"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-xs-5">
+                    <div style="border: 1px solid #ccc; height:345px;width: 540px;">
+                        <table class="table" style="margin: 0px;border: 0px;">
+                            <thead>
+                            <tr>
+                                <th width="50"></th>
+                                <th width="240">资源名称</th>
+                                <th width="110">资源类型组</th>
+                                <th>资源类型</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td colspan="4">
+                                    <ul id="{{businessChartNodeSynAddDialog.trgTree.treeId}}"
+                                        d-business-chart-resource-dialog-tree="businessChartNodeSynAddDialog.trgTree"
+                                        class="ztree rhztree"></ul>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-2">
+                            <label style="width:50px">权重:</label>
+                        </div>
+                        <div class="col-xs-3" style="margin-top: 12px">
+                            <input type="text" ng-model="businessChartNodeSynAddDialog.model.weights" name="weights" ng-maxlength="3" style="width:100px" onkeyup="this.value=value.replace(/[^\d]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<!-- 同步图元对话框 结束 -->
+
+
+<!-- 删除图元对话框 开始 -->
+<div dialog info="businessChartElementDelDialog" data="businessChartElementDelDialog.model">
+    <form name="form" novalidate>
+        <div class="dialog-con">
+            <div class="form-group tip_c">
+                <div class="msg-icon"></div>
+                <label class="row control-label">确认要删除所选的资源或线路吗？</label>
+            </div>
+        </div>
+    </form>
+</div>
+<!-- 删除图元对话框 结束 -->
+
+
+<!-- 添加线路对话框 开始 -->
+<div dialog info="businessChartLinkAddDialog" data="businessChartLinkAddDialog.model">
+    <form name="form" novalidate>
+        <div class="dialog-con">
+            <div class="row" style="margin-top: 15px">
+                <div class="col-xs-2" style="margin-left: -15px;width: 90px;">
+                    <label>左端图元:</label>
+                </div>
+                <div class="col-xs-2" style="margin-left: -30px;width: 130px;margin-top: 12px">
+                    <input type="text" ng-model="businessChartLinkAddDialog.model.leftLinkType" name="leftLinkType" ng-maxlength="32"
+                           disabled="disabled" style="width:110px">
+                </div>
+                <div class="col-xs-3" style="width: 240px;margin-top: 12px">
+                    <input type="text" ng-model="businessChartLinkAddDialog.model.leftName" name="leftName" ng-maxlength="32"
+                           disabled="disabled" style="width:240px">
+                </div>
+            </div>
+            <div class="row" style="margin-top: 15px">
+                <div class="col-xs-2" style="margin-left: -15px;width: 90px;">
+                    <label>右端图元:</label>
+                </div>
+                <div class="col-xs-2" style="margin-left: -30px;width: 130px;margin-top: 12px">
+                    <input type="text" ng-model="businessChartLinkAddDialog.model.rightLinkType" name="rightLinkType"
+                           ng-maxlength="32" disabled="disabled" style="width:110px">
+                </div>
+                <div class="col-xs-3" style="width: 240px;margin-top: 12px">
+                    <input type="text" ng-model="businessChartLinkAddDialog.model.rightName" name="rightName" ng-maxlength="32"
+                           disabled="disabled" style="width:240px">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-8" style="margin-top: 10px">
+                    <label style="margin-top: 0px">选择样式：</label>
+                    <span class="radio">
+                        <label for="l1">
+                            <input type="radio" class="ace" name="addLinkModeRadio" value="arc" id="l1"
+                                   ng-model="businessChartLinkAddDialog.addLinkStyleMode">
+                            <span class="lbl"></span>
+                        </label>直线
+                    </span>
+                    <span class="radio">
+                        <label for="l2">
+                            <input type="radio" class="ace" name="addLinkModeRadio" value="flexional" id="l2"
+                                   ng-model="businessChartLinkAddDialog.addLinkStyleMode">
+                            <span class="lbl"></span>
+                        </label>折线
+                    </span>
+                    <span class="radio">
+                        <label for="l3">
+                            <input type="radio" class="ace" name="addLinkModeRadio" value="orthogonal" id="l3"
+                                   ng-model="businessChartLinkAddDialog.addLinkStyleMode">
+                            <span class="lbl"></span>
+                        </label>正交线
+                    </span>
+                </div>
+                <!--<div class="col-xs-4">-->
+                    <!--<label>虚线</label>-->
+                    <!--<input class="ace ace-switch ace-switch-4" type="checkbox" name="addLinkIfDottedLine"-->
+                           <!--ng-model="businessChartLinkAddDialog.addLinkIfDottedLine" value=false/>-->
+                    <!--<span class="lbl" style="margin-top: 10px"></span>-->
+                <!--</div>-->
+            </div>
+        </div>
+    </form>
+</div>
+<!-- 添加线路对话框 结束 -->
+
+
+<!-- 线路样式对话框 开始 -->
+<div dialog info="businessChartLinkStyleDialog" data="businessChartLinkStyleDialog.model">
+    <form name="form" novalidate>
+        <div class="dialog-con">
+            <div class="row">
+                <div class="col-xs-6">
+                    <label>选择线路</label>
+                    <ul id="{{businessChartLinkStyleDialog.tree.treeId}}" d-business-chart-list-checkbox-dialog-tree="businessChartLinkStyleDialog.tree"
+                        class="ztree"></ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-8">
+                    <label>选择样式：</label>
+                    <span class="radio">
+                        <label for="s1">
+                            <input type="radio" class="ace" name="modeRadio" value="arc" id="s1"
+                                   ng-model="businessChartLinkStyleDialog.styleMode">
+                            <span class="lbl"></span>
+                        </label>直线
+                    </span>
+                    <span class="radio">
+                        <label for="s2">
+                            <input type="radio" class="ace" name="modeRadio" value="flexional" id="s2"
+                                   ng-model="businessChartLinkStyleDialog.styleMode">
+                            <span class="lbl"></span>
+                        </label>折线
+                    </span>
+                    <span class="radio">
+                        <label for="s3">
+                            <input type="radio" class="ace" name="modeRadio" value="orthogonal" id="s3"
+                                   ng-model="businessChartLinkStyleDialog.styleMode">
+                            <span class="lbl"></span>
+                        </label>正交线
+                    </span>
+                </div>
+                <div class="col-xs-4" style="margin-left: -100px">
+                    <label style="margin-top: 0px;">虚线</label>
+                    <input class="ace ace-switch ace-switch-4" type="checkbox" name="ifDottedLine"
+                           ng-model="businessChartLinkStyleDialog.ifDottedLine" value=false/>
+                    <span class="lbl"></span>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<!-- 线路样式对话框 结束 -->

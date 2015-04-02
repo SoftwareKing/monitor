@@ -1,0 +1,45 @@
+{
+    "count": 1,
+    "data":[
+        {
+            "id":"event1",
+            "level":2,
+            "categoryId":35,
+            "resourceTypeId":11,
+            "metricId":115,
+            "moId":32959,
+            "moDescription":"这个是资源描述",
+            "ruleId":"role1",
+            "alarmStatus":true,
+            "alarmText":"这个是告警内容",
+            "alarmTime":"2014-04-04 12:00:00",
+            "clearTime":"2014-04-04 12:00:00",
+            "clearWay":"自动恢复",
+            "confirmStatus":true,
+            "confirmTime":"2014-04-04 12:00:00",
+            "confirmUser":10,
+            "noticeWay":["SMS","Email"],
+            "noticeUsers":[10,2366]
+        },
+        {
+            "id":"event2",
+            "level":5,
+            "categoryId":9,
+            "resourceTypeId":11,
+            "metricId":115,
+            "moId":32959,
+            "moDescription":"这个是资源描述",
+            "ruleId":"role1",
+            "alarmStatus":true,
+            "alarmText":"这个是告警内容",
+            "alarmTime":"2014-04-04 12:00:00",
+            "clearTime":"2014-04-04 12:00:00",
+            "clearWay":"自动恢复",
+            "confirmStatus":false,
+            "confirmTime":"",
+            "confirmUser":"",
+            "noticeWay":[],
+            "noticeUsers":[]
+        }
+    ]
+}

@@ -1,0 +1,1015 @@
+<link rel="stylesheet" type="text/css" href="css/report/report.css">
+<div dialog info="timerReportRuleAddDialog" data="addPage.data" class="ldialog">
+    <div id="dlg" class="dialog-con" style="padding: 0px 0px 0px;">
+        <table width="100%">
+            <tr>
+                <td style="vertical-align: top;background: #f7f7f7;height: 405px;" width="20%">
+                    <div >
+                        <ul user-ztree="reportTree" id="reportTree" class="ztree" style="border: 0;height: 405px"></ul>
+                    </div>
+                </td>
+                <td>
+                <div style="height:400px;overflow: auto;">
+                <div class="row"><br/></div>
+                <div class="row">
+                    <div class="row-lable-aside">
+                        规则名称
+                    </div>
+                    <div class="col-xs-10" style="padding-left: 0px">
+                        <input ng-model="addPage.data.displayName" ng-pattern="/^[^<>%]*$/" type="text" maxlength="30" required/>
+                        <span class="required">*</span>
+                        <div class="warn">
+                            <!--<span id="a" style="display: none">此项不能为空或非法字符.</span>
+                            <span id="b" style="display: none">超出长度限制.</span>-->
+                        </div>
+                    </div>
+                </div>
+                <div class="row"><br/></div>
+                <div class="row">
+                    <div class="row-lable-aside" style="text-align: right">
+                        规则状态
+                    </div>
+                    <div class="col-xs-10" style="padding-left: 0px">
+                        <input type="checkbox" class="ace ace-switch ace-switch-4" ng-model="addPage.data.active" checked/>
+                        <span class="lbl"></span>
+                    </div>
+                </div>
+                <div ng-show="report1">
+                    <div class="row" style="margin-top: 15px">
+                        <div class="row-lable-aside">
+                            资源选择<span class="required">*</span>
+                        </div>
+                        <div class="col-xs-10" style="padding-left: 0px">
+                            <div style="border:1px solid #ccc;padding:0px;height: 100%;">
+                                <div style="background: #f5f5f5;height: 35px;line-height: 35px; vertical-align: middle;" >
+                                &nbsp;&nbsp;资源类型&nbsp;
+                                <select ng-model="addPage.data.mocpId"  style="width: 126px" >
+                                    <option value="">请选择</option>
+                                    <option ng-repeat="type in $root.report.mocTree" value={{type['id']}}>
+                                        {{type['displayName']}}
+                                    </option>
+                                </select>
+                                <select ng-model="addPage.data.mocId" style="width: 126px" >
+                                    <option value="">请选择</option>
+                                    <option ng-repeat="type in addPage.datas.mocs" value={{type['id']}}>
+                                        {{type['displayName']}}
+                                    </option>
+                                </select>
+                                </div>
+
+                                <div class="row" >
+                                    <table style="border: 1px solid #ccc;border-left: none;border-right: none;margin-bottom: 0px;" >
+                                        <thead>
+                                        <tr>
+                                            <th class="sour_choose_boxm_head">指标类型</th>
+                                            <th class="sour_choose_boxm_head">资源实例</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr style="height: 338px;">
+                                            <td width="40%" style="width: 207px;padding:0px;margin: 0px;border-right: 1px solid #ccc;">
+                                                <ul style="border:0;height: 336px;padding:10px 0px 0px 10px;margin: 0px;width: 100%;" class="ztree" z-tree="{
+                                            inData:'addPage.datas.metricTree',
+                                            outData:'addPage.data.metricsId',
+                                            outParentData:'',
+                                            type:'checkbox',
+                                            description:'displayName',
+                                            children:'children',
+                                            value:'id',
+                                            hasSameValue:true,
+                                            depth:2
+                                          }" id="metricTree"></ul>
+                                            </td>
+                                            <td width="60%" style="width: 300px;padding:0px;margin: 0px;">
+                                                <ul style="border: 0;height: 336px;padding:10px 10px 0px 10px;margin: 0px;width: 326px;" id="moTree" class="ztree" z-tree="{
+                                            inData:'addPage.datas.moTree',
+                                            outData:'addPage.data.mosId',
+                                            outParentData:'',
+                                            type:'checkbox',
+                                            description:'displayName',
+                                            children:'children',
+                                            hasSameValue:true,
+                                            value:'id',
+                                            depth:2}">
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <div style="text-align: center;padding-top: 5px;padding-bottom: 5px;background: #f5f5f5">
+                                        <form name="formcreate" novalidate>
+                                            <input type="hidden" ng-model="addPage.hidden.metric" required/>
+                                            <input type="hidden" ng-model="addPage.hidden.mo" required/>
+                                            <button class="btn btn-primary" ng-disabled="formcreate.$invalid" ng-click="listPreparePage.action.generate()" >命中规则</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div ng-show="isShowDiv && report1" class="row">
+                        <div class="row-lable-aside" style="padding-top:22px;">
+                            命中的规则
+                        </div>
+                        <div class="col-xs-10" style="padding-left: 0px">
+                            <br/>
+                            <div class="row" style="border:1px solid #ccc;background: #f5f5f5;height: 35px;line-height: 35px; vertical-align: middle;">
+                                &nbsp;&nbsp;资源实例 &nbsp;
+                                <input type="text" ng-model="addPage.data.molistName" style="width: 100px">
+                                &nbsp;资源类型&nbsp;
+                                <select ng-model="addPage.data.moclistId" style="width: 100px">
+                                    <option value=""> 不限</option>
+                                    <option ng-repeat="type in addPage.datas.moclist" value={{type['id']}}>
+                                        {{type['displayName']}}
+                                    </option>
+                                </select>
+                                &nbsp;指标&nbsp;
+                                <select ng-model="addPage.data.metriclistId" style="width: 100px">
+                                    <option value=""> 不限</option>
+                                    <option ng-repeat="type in addPage.datas.metriclist" value={{type['id']}}>
+                                        {{type['displayName']}}
+                                    </option>
+                                </select>
+                                <button class="btn btn-primary" ng-click="listPreparePage.settings.reload(true)">查询</button>
+                            </div>
+                            <table jq-table="listPreparePage.settings" class="table"></table>
+                        </div>
+                    </div>
+                    <div ng-show="listPreparePage.data.length>0&&reportprocess" class="row" style="padding-top:10px; ">
+                        <div class="row-lable-aside"  >
+                            报表排序
+                        </div>
+                        <div class="col-xs-10" style="padding-left: 0px;line-height: 30px; vertical-align: middle;">
+                            <div class="row">
+                                <input name="orderByType" ng-model="addPage.data.orderByType" type="radio" value="正序">&nbsp;正序&nbsp;
+                                <input name="orderByType" ng-model="addPage.data.orderByType" type="radio" value="倒序">&nbsp;倒序
+                            </div>
+                            <div id="sort"></div>
+                        </div>
+                    </div>
+                </div>
+                <div ng-show="report4">
+                    <div class="row">
+                        <div class="row-lable-aside" style="padding-top: 10px">
+                           工单类型
+                        </div>
+                        <div class="col-xs-10" style="padding-left: 0px">
+                            <div class="row">
+                                <div class="col-xs-4" style="margin-top: 15px">
+                                    <div class="checkbox"><label><input type="checkbox" ng-model="addPage.data.incident"><i></i></label></div>&nbsp;故障工单
+                                </div>
+                                <div class="col-xs-8" ng-show="addPage.data.incident">
+                                    <label>工单状态&nbsp;
+                                        <input type="text" readonly style="width: 126px"  z-tree="{
+                                        inData:'$root.itsm.state',
+                                        outData:'addPage.data.incidentState',
+                                        outParentData:'',
+                                        type:'checkbox',
+                                        description:'name',
+                                        children:'children',
+                                        value:'id',
+                                        depth:2,
+                                        radioCancel:true,
+                                        inputWidth:126
+                                        }" id="incidentState"/>
+                                        <span class="required">*</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-4" style="margin-top: 15px">
+                                    <div class="checkbox"><label><input type="checkbox" ng-model="addPage.data.problem"><i></i></label></div>&nbsp;问题工单
+                                </div>
+                                <div class="col-xs-8" ng-show="addPage.data.problem">
+                                    <label>工单状态&nbsp;
+                                        <input type="text" readonly style="width: 126px"  z-tree="{
+                                        inData:'$root.itsm.state',
+                                        outData:'addPage.data.problemState',
+                                        outParentData:'',
+                                        type:'checkbox',
+                                        description:'name',
+                                        children:'children',
+                                        value:'id',
+                                        depth:2,
+                                        radioCancel:true,
+                                        inputWidth:126
+                                        }" id="problemState"/>
+                                        <span class="required">*</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row" ng-show="!report7">
+                                <div class="col-xs-4" style="margin-top: 15px">
+                                <div class="checkbox"><label><input type="checkbox" ng-model="addPage.data.change"><i></i></label></div>&nbsp;变更工单
+                                </div>
+                                <div class="col-xs-8" ng-show="addPage.data.change">
+                                    <label>工单状态&nbsp;
+                                        <input type="text" readonly style="width: 126px"  z-tree="{
+                                        inData:'$root.itsm.state',
+                                        outData:'addPage.data.changeState',
+                                        outParentData:'',
+                                        type:'checkbox',
+                                        description:'name',
+                                        children:'children',
+                                        value:'id',
+                                        depth:2,
+                                        inputWidth:126,
+                                        treeId:'changeState'
+                                        }" id="changeState"/>
+                                        <span class="required">*</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div ng-show="report5">
+                    <div class="row" style="padding-top: 10px">
+                        <table>
+                            <tr>
+                                <td class="row-lable-aside" > 工单区域 </td>
+                                <td class="col-xs-10" style="padding-left: 0px" >
+                                    <ul user-ztree="locTree" id="locationTree" class="ztree" style="background: none;height: 150px;overflow-y: visible;margin-left: 0px;"></ul>
+                                </td>
+                                <td>
+                                   <span class="required">*</span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div ng-show="report6">
+                    <div class="row" >
+                        <div class="row-lable-aside" style="padding-top: 10px">
+                            角色选择
+                        </div>
+                        <div class="col-xs-10" style="padding-left: 0px">
+                            <div class="row">
+                                <div class="col-xs-4" style="margin-top: 15px">
+                                    <div class="checkbox"><label><input type="checkbox" ng-model="addPage.data.create"><i></i></label></div>&nbsp;创建人
+                                </div>
+                                <div class="col-xs-8" ng-show="addPage.data.create">
+                                    <label>
+                                        <input type="text" readonly style="width: 126px"  z-tree="{
+                                        inData:'$root.itsm.users',
+                                        outData:'addPage.data.createUsers',
+                                        outParentData:'',
+                                        type:'checkbox',
+                                        description:'realName',
+                                        children:'children',
+                                        value:'id',
+                                        depth:2,
+                                        radioCancel:true,
+                                        inputWidth:200
+                                        }" id="createUsers"/>
+                                        <span class="required">*</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-4" style="margin-top: 15px">
+                                    <div class="checkbox"><label><input type="checkbox" ng-model="addPage.data.resolve"><i></i></label></div>&nbsp;解决人
+                                </div>
+                                <div class="col-xs-8" ng-show="addPage.data.resolve">
+                                    <label>
+                                        <input type="text" readonly style="width: 126px"  z-tree="{
+                                        inData:'$root.itsm.users',
+                                        outData:'addPage.data.resolveUsers',
+                                        outParentData:'',
+                                        type:'checkbox',
+                                        description:'realName',
+                                        children:'children',
+                                        value:'id',
+                                        depth:2,
+                                        radioCancel:true,
+                                        inputWidth:200
+                                        }" id="resolveUsers"/>
+                                        <span class="required">*</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-4" style="margin-top: 15px">
+                                    <div class="checkbox"><label><input type="checkbox" ng-model="addPage.data.close"><i></i></label></div>&nbsp;关闭人
+                                </div>
+                                <div class="col-xs-8" ng-show="addPage.data.close">
+                                    <label>
+                                        <input type="text" readonly style="width: 126px"  z-tree="{
+                                        inData:'$root.itsm.users',
+                                        outData:'addPage.data.closeUsers',
+                                        outParentData:'',
+                                        type:'checkbox',
+                                        description:'realName',
+                                        children:'children',
+                                        value:'id',
+                                        depth:2,
+                                        radioCancel:true,
+                                        inputWidth:200
+                                        }" id="closeUsers"/>
+                                        <span class="required">*</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div ng-show="report7">
+                    <div class="row">
+                        <div class="row-lable-aside" style="padding-top: 10px">
+                            资源类型
+                        </div>
+                        <div class="col-xs-10" style="padding-left: 0px">
+                            <div class="row">
+                                <div class="col-xs-4" style="margin-top: 15px">
+                                    <div class="checkbox"><label><input type="checkbox" ng-model="addPage.data.host"><i></i></label></div>&nbsp;主机
+                                </div>
+                                <div class="col-xs-8" ng-show="addPage.data.host">
+                                    <label>
+                                        <input type="text" readonly style="width: 126px"  z-tree="{
+                                        inData:'$root.itsm.hosts',
+                                        outData:'addPage.data.hosts',
+                                        outParentData:'',
+                                        type:'checkbox',
+                                        description:'displayName',
+                                        children:'children',
+                                        value:'id',
+                                        depth:2,
+                                        radioCancel:true,
+                                        inputWidth:126
+                                        }" id="host"/>
+                                        <span class="required">*</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-4" style="margin-top: 15px">
+                                    <div class="checkbox"><label><input type="checkbox" ng-model="addPage.data.network"><i></i></label></div>&nbsp;网络
+                                </div>
+                                <div class="col-xs-8" ng-show="addPage.data.network">
+                                    <label>
+                                        <input type="text" readonly style="width: 126px"  z-tree="{
+                                        inData:'$root.itsm.networks',
+                                        outData:'addPage.data.networks',
+                                        outParentData:'',
+                                        type:'checkbox',
+                                        description:'displayName',
+                                        children:'children',
+                                        value:'id',
+                                        depth:2,
+                                        radioCancel:true,
+                                        inputWidth:126
+                                        }" id="network"/>
+                                        <span class="required">*</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-4" style="margin-top: 15px">
+                                    <div class="checkbox"><label><input type="checkbox" ng-model="addPage.data.storage"><i></i></label></div>&nbsp;存储
+                                </div>
+                                <div class="col-xs-8" ng-show="addPage.data.storage">
+                                    <label>
+                                        <input type="text" readonly style="width: 126px"  z-tree="{
+                                        inData:'$root.itsm.storages',
+                                        outData:'addPage.data.storages',
+                                        outParentData:'',
+                                        type:'checkbox',
+                                        description:'displayName',
+                                        children:'children',
+                                        value:'id',
+                                        depth:2,
+                                        radioCancel:true,
+                                        inputWidth:126
+                                        }" id="storage"/>
+                                        <span class="required">*</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-4" style="margin-top: 15px">
+                                    <div class="checkbox"><label><input type="checkbox" ng-model="addPage.data.database"><i></i></label></div>&nbsp;数据库
+                                </div>
+                                <div class="col-xs-8" ng-show="addPage.data.database">
+                                    <label>
+                                        <input type="text" readonly style="width: 126px"  z-tree="{
+                                        inData:'$root.itsm.databases',
+                                        outData:'addPage.data.databases',
+                                        outParentData:'',
+                                        type:'checkbox',
+                                        description:'displayName',
+                                        children:'children',
+                                        value:'id',
+                                        depth:2,
+                                        radioCancel:true,
+                                        inputWidth:126
+                                        }" id="database"/>
+                                        <span class="required">*</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-4" style="margin-top: 15px">
+                                    <div class="checkbox"><label><input type="checkbox" ng-model="addPage.data.middleware"><i></i></label></div>&nbsp;中间件
+                                </div>
+                                <div class="col-xs-8" ng-show="addPage.data.middleware">
+                                    <label>
+                                        <input type="text" readonly style="width: 126px"  z-tree="{
+                                        inData:'$root.itsm.middlewares',
+                                        outData:'addPage.data.middlewares',
+                                        outParentData:'',
+                                        type:'checkbox',
+                                        description:'displayName',
+                                        children:'children',
+                                        value:'id',
+                                        depth:2,
+                                        radioCancel:true,
+                                        inputWidth:126
+                                        }" id="middleware"/>
+                                        <span class="required">*</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-4" style="margin-top: 15px">
+                                    <div class="checkbox"><label><input type="checkbox" ng-model="addPage.data.service"><i></i></label></div>&nbsp;服务
+                                </div>
+                                <div class="col-xs-8" ng-show="addPage.data.service">
+                                    <label>
+                                        <input type="text" readonly style="width: 126px"  z-tree="{
+                                        inData:'$root.itsm.services',
+                                        outData:'addPage.data.services',
+                                        outParentData:'',
+                                        type:'checkbox',
+                                        description:'displayName',
+                                        children:'children',
+                                        value:'id',
+                                        depth:2,
+                                        radioCancel:true,
+                                        inputWidth:126
+                                        }" id="service"/>
+                                        <span class="required">*</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-4" style="margin-top: 15px">
+                                    <div class="checkbox"><label><input type="checkbox" ng-model="addPage.data.link"><i></i></label></div>&nbsp;线路
+                                </div>
+                                <div class="col-xs-8" ng-show="addPage.data.link">
+                                    <label>
+                                        <input type="text" readonly style="width: 126px"  z-tree="{
+                                        inData:'$root.itsm.links',
+                                        outData:'addPage.data.links',
+                                        outParentData:'',
+                                        type:'checkbox',
+                                        description:'displayName',
+                                        children:'children',
+                                        value:'id',
+                                        depth:2,
+                                        radioCancel:true,
+                                        inputWidth:126
+                                        }" id="link"/>
+                                        <span class="required">*</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-4" style="margin-top: 15px">
+                                    <div class="checkbox"><label><input type="checkbox" ng-model="addPage.data.environment"><i></i></label></div>&nbsp;机房动环
+                                </div>
+                                <div class="col-xs-8" ng-show="addPage.data.environment">
+                                    <label>
+                                        <input type="text" readonly style="width: 126px"  z-tree="{
+                                        inData:'$root.itsm.environments',
+                                        outData:'addPage.data.environments',
+                                        outParentData:'',
+                                        type:'checkbox',
+                                        description:'displayName',
+                                        children:'children',
+                                        value:'id',
+                                        depth:2,
+                                        radioCancel:true,
+                                        inputWidth:126
+                                        }" id="environment"/>
+                                        <span class="required">*</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-4" style="margin-top: 15px">
+                                    <div class="checkbox"><label><input type="checkbox" ng-model="addPage.data.application"><i></i></label></div>&nbsp;业务系统
+                                </div>
+                                <div class="col-xs-8" ng-show="addPage.data.application">
+                                    <label>
+                                        <input type="text" readonly style="width: 126px"  z-tree="{
+                                        inData:'$root.itsm.applications',
+                                        outData:'addPage.data.applications',
+                                        outParentData:'',
+                                        type:'checkbox',
+                                        description:'displayName',
+                                        children:'children',
+                                        value:'id',
+                                        depth:2,
+                                        radioCancel:true,
+                                        inputWidth:126
+                                        }" id="application"/>
+                                        <span class="required">*</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div ng-show="report8">
+                    <div class="row" style="padding-top: 10px">
+                        <div class="row-lable-aside" >
+                            机房名称
+                        </div>
+                        <div class="col-xs-10" style="padding-left: 0px">
+                            <select  ng-model="addPage.data.jf" style="width: 280px">
+                                <option value="">请选择</option>
+                                <option ng-repeat="type in $root.resource.jf" value={{type['id']}}>
+                                    {{type['name']}}
+                                </option>
+                            </select>
+                            <span class="required">*</span>
+                        </div>
+                    </div>
+                </div>
+                <div ng-show="report9">
+                    <div class="row" style="padding-top: 10px">
+                        <div class="row-lable-aside" >
+                            资源类型
+                        </div>
+                        <div class="col-xs-10" style="padding-left: 0px">
+                            <select  ng-model="addPage.data.portmocpId" style="width: 140px">
+                                <option value="2">网络</option>
+                            </select>
+                            <select  ng-model="addPage.data.portmocId" style="width: 140px">
+                                <option value="18">路由器</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row" style="padding-top: 10px">
+                        <div class="row-lable-aside" >
+                            指标类型
+                        </div>
+                        <div class="col-xs-10" style="padding-left: 0px">
+                            <select  ng-model="addPage.data.portindicatorId" style="width: 140px">
+                                <option  value="772">接口信息</option>
+                            </select>
+                            <select  ng-model="addPage.data.portmetricId" style="width: 140px">
+                                <option value="782">入流量</option>
+                                <option value="783">出流量</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row" style="padding-top: 10px">
+                        <div class="row-lable-aside" >端口选择<span class="required">*</span></div>
+                        <div class="col-xs-10" style="padding-left: 0px">
+                        <div class="row" style="border:1px solid #ccc;background: #f5f5f5;height: 35px;line-height: 35px; vertical-align: middle;">
+                            &nbsp;&nbsp;资源实例 &nbsp;
+                            <input type="text" ng-model="addPage.data.portMoName" style="width: 100px">
+                            &nbsp;所属区域&nbsp;
+                            <select ng-model="addPage.data.portLocId" style="width: 100px">
+                                <option value=""> 不限</option>
+                                <option ng-repeat="type in $root.resource.locations" value={{type['id']}}>
+                                    {{type['name']}}
+                                </option>
+                            </select>
+                            <button class="btn btn-primary" ng-click="listPreparePagePort.settings.reload(true)">查询</button>
+                        </div>
+                        <table jq-table="listPreparePagePort.settings" class="table"></table>
+                        </div>
+                    </div>
+                </div>
+                <div  ng-show="report10">
+                    <div class="row" style="padding-top: 10px">
+                        <div class="row-lable-aside" >线路选择</div>
+                        <div class="col-xs-10" style="padding-left: 0px">
+                            <div class="row" style="border:1px solid #ccc;background: #f5f5f5;height: 35px;line-height: 35px; vertical-align: middle;">
+                                <div class="col-xs-6">
+                                &nbsp;&nbsp;线路名称 &nbsp;
+                                <input type="text" ng-model="addPage.data.masterName" style="width: 100px">
+                                <button class="btn btn-primary" ng-click="linkListPage.action.queryMaster()">查询</button>
+                                </div>
+                                <div class="col-xs-6">
+                                &nbsp;&nbsp;线路名称 &nbsp;
+                                <input type="text" ng-model="addPage.data.slaveName" style="width: 100px">
+                                <button class="btn btn-primary" ng-click="linkListPage.action.querySlave()">查询</button>
+                                </div>
+                            </div>
+                            <div class="col-xs-6" style="height:200px;overflow: auto;padding-left: 0px;border-bottom: 1px solid #ccc;">
+                                <table  class="table" style="border: 1px solid #ccc;">
+                                     <thead>
+                                     <tr>
+                                         <th></th>
+                                         <th>线路名称</th>
+                                     </tr>
+                                     </thead>
+                                    <tr ng-repeat="type in addPage.datas.masterList">
+                                        <td><input name="master" type="radio" value="{{type.mo.id}}"/></td>
+                                        <td ><p title="{{type.mo.displayName}}" style="width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">{{type.mo.displayName}}</p></td>
+                                    </tr>
+                                 </table>
+                            </div>
+                            <div class="col-xs-6" style="height:200px;overflow: auto;padding-left: 0px;border-bottom: 1px solid #ccc;">
+                                <table  class="table" style="border: 1px solid #ccc;">
+                                    <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>线路名称</th>
+                                    </tr>
+                                    </thead>
+                                    <tr ng-repeat="type in addPage.datas.slaveList" class="ng-scope odd">
+                                        <td><input name="slave" type="radio" value="{{type.mo.id}}"/></td>
+                                        <td><p title="{{type.mo.displayName}}" style="width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">{{type.mo.displayName}}</p></td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <div style="text-align: center;padding-top: 208px;padding-bottom: 5px;background: #f5f5f5">
+                                <button class="btn btn-primary" ng-click="linkListPage.action.add()">增加主备广域线路</button>
+                            </div>
+
+                            <table jq-table="linkListPage.settings" class="table"></table>
+
+                        </div>
+                    </div>
+                </div>
+                <div ng-show="report9 || report10">
+                    <div class="row" style="padding-top: 10px">
+                        <div class="row-lable-aside" >筛选时段</div>
+                        <div class="col-xs-10" style="padding-left: 0px">
+                            <select ng-model="addPage.data.portTime" style="width: 126px" >
+                                <option ng-repeat="i in addPage.datas.portTimes" value={{i}}> {{i}} </option>
+                            </select>分钟
+                        </div>
+                    </div>
+                </div>
+
+                <div ng-show="report11 || report12">
+                        <div class="row" style="margin-top: 15px">
+                            <div class="row-lable-aside">
+                                资源选择<span class="required">*</span>
+                            </div>
+                            <div class="col-xs-10" style="padding-left: 0px">
+                                <div style="border:1px solid #ccc;padding:0px;height: 100%;">
+                                    <div style="background: #f5f5f5;height: 35px;line-height: 35px; vertical-align: middle;" >
+                                        &nbsp;&nbsp;资源类型&nbsp;
+                                        <select ng-model="addPage.data.mocpId"  style="width: 126px" >
+                                            <option value="">请选择</option>
+                                            <option ng-repeat="type in $root.report.mocTree" value={{type['id']}}>
+                                                {{type['displayName']}}
+                                            </option>
+                                        </select>
+                                        <select ng-model="addPage.data.mocId" style="width: 126px" >
+                                            <option value="">请选择</option>
+                                            <option ng-repeat="type in addPage.datas.mocs" value={{type['id']}}>
+                                                {{type['displayName']}}
+                                            </option>
+                                        </select>
+                                    </div>
+
+                                    <div class="row" >
+                                        <table style="border: 1px solid #ccc;border-left: none;border-right: none;margin-bottom: 0px;" >
+                                            <thead>
+                                            <tr>
+                                                <th class="sour_choose_boxm_head">资源实例</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr style="height: 338px;">
+                                                <td width="100%" style="width: 550px;padding:0px;margin: 0px;">
+                                                    <ul style="border: 0;height: 336px;padding:10px 10px 0px 10px;margin: 0px;width: 553px;" id="alarmmoTree" class="ztree" z-tree="{
+                                            inData:'addPage.datas.moTree',
+                                            outData:'addPage.data.mosId',
+                                            outParentData:'',
+                                            type:'checkbox',
+                                            description:'displayName',
+                                            children:'children',
+                                            value:'id',
+                                            depth:2}">
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                        <div style="text-align: center;padding-top: 5px;padding-bottom: 5px;background: #f5f5f5">
+                                            <form name="formcreate" novalidate>
+                                                <input type="hidden" ng-model="addPage.hidden.mo" required/>
+                                                <button class="btn btn-primary" ng-disabled="formcreate.$invalid" ng-click="listMoPreparePage.action.generate()" >选择实例</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div ng-show="isShowDiv && (report11 || report12)" class="row">
+                            <div class="row-lable-aside" style="padding-top:22px;">
+                                选择的实例
+                            </div>
+                            <div class="col-xs-10" style="padding-left: 0px">
+                               <br/>
+                                <!-- <div class="row" style="border:1px solid #ccc;background: #f5f5f5;height: 35px;line-height: 35px; vertical-align: middle;">
+                                    &nbsp;&nbsp;资源实例 &nbsp;
+                                    <input type="text" ng-model="addPage.data.molistName" style="width: 100px">
+                                    &nbsp;资源类型&nbsp;
+                                    <select ng-model="addPage.data.moclistId" style="width: 100px">
+                                        <option value=""> 不限</option>
+                                        <option ng-repeat="type in addPage.datas.moclist" value={{type['id']}}>
+                                            {{type['displayName']}}
+                                        </option>
+                                    </select>
+                                    <button class="btn btn-primary" ng-click="listMoPreparePage.settings.reload(true)">查询</button>
+                                </div>-->
+                                <table jq-table="listMoPreparePage.settings" class="table"></table>
+                            </div>
+                        </div>
+                    </div>
+                <div ng-show="report14">
+                    <div class="row" style="padding-top: 10px">
+                        <div class="row-lable-aside" >资产选择<span class="required">*</span></div>
+                        <div class="col-xs-10" style="padding-left: 0px">
+                            <input type="text" readonly style="width: 280px"  z-tree="{
+                                        inData:'$root.resource.assets',
+                                        outData:'addPage.data.assetId',
+                                        outParentData:'',
+                                        type:'checkbox',
+                                        description:'name',
+                                        children:'children',
+                                        value:'id',
+                                        depth:2,
+                                        radioCancel:true,
+                                        inputWidth:280
+                                        }" id="asset"/>
+                        </div>
+                    </div>
+                </div>
+
+                <!--<div ng-show="report15">-->
+                    <!--<div class="row" style="padding-top: 10px">-->
+                        <!--<div class="row-lable-aside" >指标<span class="required">*</span></div>-->
+                        <!--<div class="col-xs-10" style="padding-left: 0px">-->
+                            <!--<input type="text" readonly style="width: 280px"/>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+
+
+                <div class="row" style="padding-top: 10px;">
+                    <div class="row-lable-aside" >
+                       报表属性<span class="required">*</span>
+                    </div>
+                    <div ng-show="!report14&&!report15" class="col-xs-10" style="padding-left: 0px;margin-top: 6px" >
+                        <div class="row">
+                            <div class="checkbox"><label style="margin:0px"><input ng-click="listPage.action.reportAttributeCheck();" name="reportAttribute" type="checkbox" value="day" ><i></i></label></div>&nbsp;日报
+                        </div>
+                        <div class="row lh30" >
+                            时&nbsp;&nbsp;间&nbsp;&nbsp;段
+                            <div class="dropdown di date-component">
+                                <input id="day-start" type="text" style="width: 126px" data-toggle="dropdown" readonly>
+                                <div class="dropdown-menu" ng-show="addPage.data.reportlist!=2">
+                                    <div rjq-date start-view="day" max-view="1" max-view="1"  format="hh:ii" target-input="day-start"></div>
+                                </div>
+                            </div>
+                            <div class="dropdown di date-component">
+                                <input id="day-end" type="text" style="width: 126px" data-toggle="dropdown" readonly>
+                                <div class="dropdown-menu" ng-show="addPage.data.reportlist!=2">
+                                    <div rjq-date start-view="day" max-view="1"  format="hh:ii" target-input="day-end"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row lh40">
+                            执行时间
+                            <div class="dropdown di date-component">
+                                <input id="day-exe" type="text" style="width: 126px" data-toggle="dropdown" readonly>
+                                <div class="dropdown-menu">
+                                    <div rjq-date start-view="day" max-view="1"  format="hh:ii" target-input="day-exe"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="checkbox"><label><input ng-click="listPage.action.reportAttributeCheck();" name="reportAttribute" type="checkbox" value="week"><i></i></label></div>&nbsp;周报
+                        </div>
+                        <div class="row lh40">
+                            时&nbsp;&nbsp;间&nbsp;&nbsp;段
+                            <select id="week-start-week" ng-model="addPage.data.startWeek" style="width: 126px" ng-disabled="addPage.data.reportlist==2">
+                                <option value="1">星期一</option>
+                                <option value="2">星期二</option>
+                                <option value="3">星期三</option>
+                                <option value="4">星期四</option>
+                                <option value="5">星期五</option>
+                                <option value="6">星期六</option>
+                                <option value="7">星期日</option>
+                            </select>
+
+                            <div class="dropdown di date-component">
+                                <input id="week-start-week-h" type="text" style="width: 126px" data-toggle="dropdown" readonly>
+                                <div class="dropdown-menu" ng-show="addPage.data.reportlist!=2">
+                                    <div rjq-date start-view="day" max-view="1"  format="hh:ii" target-input="week-start-week-h"></div>
+                                </div>
+                            </div>
+
+                            <select id="week-end-week" style="width: 110px" ng-disabled="addPage.data.reportlist==2">
+                                <option ng-repeat="type in addPage.datas.endWeeks" value={{type['id']}}>
+                                    {{type['name']}}
+                                </option>
+                            </select>
+                            <div class="dropdown di date-component">
+                                <input id="week-end-week-h" type="text" style="width: 110px" data-toggle="dropdown" readonly>
+                                <div class="dropdown-menu" ng-show="addPage.data.reportlist!=2">
+                                    <div rjq-date start-view="day" max-view="1"  format="hh:ii" target-input="week-end-week-h"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row lh40">
+                            执行时间
+                            <select id="week-exe-week" style="width: 126px;" >
+                                <option value="1">星期一</option>
+                                <option value="2">星期二</option>
+                                <option value="3">星期三</option>
+                                <option value="4">星期四</option>
+                                <option value="5">星期五</option>
+                                <option value="6">星期六</option>
+                                <option value="7">星期日</option>
+                            </select>
+                            <div class="dropdown di date-component">
+                                <input id="week-exe" type="text" style="width: 126px" data-toggle="dropdown" readonly>
+                                <div class="dropdown-menu">
+                                    <div rjq-date start-view="day" max-view="1"  format="hh:ii" target-input="week-exe"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row lh40">
+                            <div class="checkbox"><label><input ng-click="listPage.action.reportAttributeCheck();" name="reportAttribute" type="checkbox" value="month" ><i></i></label></div>&nbsp;月报
+                        </div>
+                        <div class="row lh40">
+                            时&nbsp;&nbsp;间&nbsp;&nbsp;段
+                            <div class="dropdown di date-component">
+                                <input id="month-start" type="text" style="width: 126px" data-toggle="dropdown" readonly>
+                                <div class="dropdown-menu" ng-show="addPage.data.reportlist!=2">
+                                    <div rjq-date start-view="month" max-view="2"  format="dd hh:ii" target-input="month-start"></div>
+                                </div>
+                            </div>
+                            <div class="dropdown di date-component">
+                                <input id="month-end" type="text" style="width: 126px" data-toggle="dropdown" readonly>
+                                <div class="dropdown-menu" ng-show="addPage.data.reportlist!=2">
+                                    <div rjq-date start-view="month" max-view="2"  format="dd hh:ii" target-input="month-end"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row lh40">
+                            执行时间
+                            <div class="dropdown di date-component">
+                                <input id="month-exe" type="text" style="width: 126px" data-toggle="dropdown" readonly>
+                                <div class="dropdown-menu">
+                                    <div rjq-date start-view="month" max-view="2"  format="dd hh:ii" target-input="month-exe"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="checkbox"><label><input ng-click="listPage.action.reportAttributeCheck();" name="reportAttribute" type="checkbox" value="year" ><i></i></label></div>&nbsp;年报
+                        </div>
+                        <div class="row lh40">
+                            时&nbsp;&nbsp;间&nbsp;&nbsp;段
+                            <div class="dropdown di date-component">
+                                <input id="year-start" type="text" style="width: 126px" data-toggle="dropdown" readonly>
+                                <div class="dropdown-menu" ng-show="addPage.data.reportlist!=2">
+                                    <div rjq-date start-view="year" max-view="3"  format="mm-dd hh:ii" target-input="year-start"></div>
+                                </div>
+                            </div>
+                            <div class="dropdown di date-component">
+                                <input id="year-end" type="text" style="width: 126px" data-toggle="dropdown" readonly>
+                                <div class="dropdown-menu" ng-show="addPage.data.reportlist!=2">
+                                    <div rjq-date start-view="year" max-view="3"  format="mm-dd hh:ii" target-input="year-end"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row lh40">
+                            执行时间
+                                <div class="dropdown di date-component">
+                                    <input id="year-exe" type="text" style="width: 126px" data-toggle="dropdown" readonly>
+                                    <div class="dropdown-menu">
+                                        <div rjq-date start-view="year" max-view="3"  format="mm-dd hh:ii" target-input="year-exe"></div>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+
+                    <div ng-show="report14" class="col-xs-10" style="padding-left: 0px;margin-top: 6px" >
+                        <div class="row">
+                            <div class="checkbox"><label style="margin:0px"><input ng-click="listPage.action.reportAttributeCheck();" name="reportAttribute_asset" type="checkbox" value="day" ><i></i></label></div>&nbsp;日报
+                        </div>
+                        <div class="row lh40">
+                            执行时间
+                            <div class="dropdown di date-component">
+                                <input id="day-exe-asset" type="text" style="width: 126px" data-toggle="dropdown" readonly>
+                                <div class="dropdown-menu">
+                                    <div rjq-date start-view="day" max-view="1"  format="hh:ii" target-input="day-exe-asset"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-show="report15&&!report14" class="col-xs-10" style="padding-left: 0px;margin-top: 6px" >
+                        <div class="row">
+                            <div class="checkbox"><label style="margin:0px"><input ng-click="listPage.action.reportAttributeCheck();" name="reportAttribute_safe" type="checkbox" value="day" ><i></i></label></div>&nbsp;日报
+                        </div>
+                        <div class="row lh40">
+                            执行时间
+                            <div class="dropdown di date-component">
+                                <input id="day-exe-safe" type="text" style="width: 126px" data-toggle="dropdown" readonly>
+                                <div class="dropdown-menu">
+                                    <div rjq-date start-view="day" max-view="1"  format="hh:ii" target-input="day-exe-safe"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row"><br/></div>
+                </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <form name="form" novalidate>
+        <div class="modal-footer">
+            <input ng-model="addPage.data.displayName" type="hidden"  required/>
+            <input ng-model="addPage.hidden.reportAttribute" type="hidden"  required/>
+
+            <button type="button" class="btn btn-primary"  ng-show="report1 || report2" ng-disabled="form.$invalid
+             || addPage.data.allData.length==0
+             || addPage.hidden.reportAttribute" ng-click="timerReportRuleAddDialog.save()">确定</button>
+
+            <button type="button" class="btn btn-primary"  ng-show="report4 && report5==false && report6==false && report7==false" ng-disabled="form.$invalid
+             || (addPage.data.incident==false && addPage.data.problem==false && addPage.data.change==false)
+             || (addPage.data.incident==true && addPage.data.incidentState.length==0)
+             || (addPage.data.problem==true && addPage.data.problemState.length==0)
+             || (addPage.data.change==true && addPage.data.changeState.length==0)
+             || addPage.hidden.reportAttribute" ng-click="timerReportRuleAddDialog.save()">确定</button>
+
+            <button type="button" class="btn btn-primary"  ng-show="report5" ng-disabled="form.$invalid
+             || (addPage.data.incident==false && addPage.data.problem==false && addPage.data.change==false)
+             || (addPage.data.incident==true && addPage.data.incidentState.length==0)
+             || (addPage.data.problem==true && addPage.data.problemState.length==0)
+             || (addPage.data.change==true && addPage.data.changeState.length==0)
+             || addPage.data.location.length==0
+             || addPage.hidden.reportAttribute" ng-click="timerReportRuleAddDialog.save()">确定</button>
+
+            <button type="button" class="btn btn-primary"  ng-show="report6" ng-disabled="form.$invalid
+             || (addPage.data.incident==false && addPage.data.problem==false && addPage.data.change==false)
+             || (addPage.data.incident==true && addPage.data.incidentState.length==0)
+             || (addPage.data.problem==true && addPage.data.problemState.length==0)
+             || (addPage.data.change==true && addPage.data.changeState.length==0)
+
+             || (addPage.data.create==false && addPage.data.resolve==false && addPage.data.close==false)
+             || (addPage.data.create==true && addPage.data.createUsers.length==0)
+             || (addPage.data.resolve==true && addPage.data.resolveUsers.length==0)
+             || (addPage.data.close==true && addPage.data.closeUsers.length==0)
+             || addPage.hidden.reportAttribute" ng-click="timerReportRuleAddDialog.save()">确定</button>
+
+            <button type="button" class="btn btn-primary"  ng-show="report7" ng-disabled="form.$invalid
+             || (addPage.data.incident==false && addPage.data.problem==false )
+             || (addPage.data.incident==true && addPage.data.incidentState.length==0)
+             || (addPage.data.problem==true && addPage.data.problemState.length==0)
+
+             || (addPage.data.host==false && addPage.data.network==false && addPage.data.storage==false && addPage.data.database==false && addPage.data.middleware==false && addPage.data.service==false && addPage.data.link==false && addPage.data.environment==false && addPage.data.application==false)
+             || (addPage.data.host==true && addPage.data.hosts.length==0)
+             || (addPage.data.network==true && addPage.data.networks.length==0)
+             || (addPage.data.storage==true && addPage.data.storages.length==0)
+             || (addPage.data.database==true && addPage.data.databases.length==0)
+             || (addPage.data.middleware==true && addPage.data.middlewares.length==0)
+             || (addPage.data.service==true && addPage.data.services.length==0)
+             || (addPage.data.link==true && addPage.data.links.length==0)
+             || (addPage.data.environment==true && addPage.data.environments.length==0)
+             || (addPage.data.application==true && addPage.data.applications.length==0)
+             || addPage.hidden.reportAttribute" ng-click="timerReportRuleAddDialog.save()">确定</button>
+
+            <button type="button" class="btn btn-primary"  ng-show="report8" ng-disabled="form.$invalid
+             || addPage.data.jf == ''
+             || addPage.hidden.reportAttribute" ng-click="timerReportRuleAddDialog.save()">确定</button>
+
+            <button type="button" class="btn btn-primary"  ng-show="report9" ng-disabled="form.$invalid
+             || listPreparePagePort.checkedList.length==0
+             || addPage.hidden.reportAttribute" ng-click="timerReportRuleAddDialog.save()">确定</button>
+
+            <button type="button" class="btn btn-primary"  ng-show="report10" ng-disabled="form.$invalid
+             || linkListPage.alldata.length==0
+             || addPage.hidden.reportAttribute" ng-click="timerReportRuleAddDialog.save()">确定</button>
+
+            <button type="button" class="btn btn-primary"  ng-show="report11 || report12" ng-disabled="form.$invalid
+             || addPage.datas.allAlarmData.length==0
+             || addPage.hidden.reportAttribute" ng-click="timerReportRuleAddDialog.save()">确定</button>
+
+            <button type="button" class="btn btn-primary"  ng-show="report14" ng-disabled="form.$invalid
+             || addPage.data.assetId.length==0
+             || addPage.hidden.reportAttribute" ng-click="timerReportRuleAddDialog.save()">确定</button>
+
+            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+
+        </div>
+    </form>
+</div>

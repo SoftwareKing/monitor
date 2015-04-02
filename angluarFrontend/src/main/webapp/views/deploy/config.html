@@ -1,0 +1,39 @@
+﻿<link rel="stylesheet" type="text/css" href="css/resource/resource.css">
+<div class="content" ng-controller="configCtrl">
+    <bread-crumb>
+        <a>监控</a>
+	    <a>资源</a>
+        <a class="current">配置文件</a>
+        <a class="search-link ">高级搜索</a>
+    </bread-crumb>
+    <div class="page-content">
+        <div class="search-head">
+            <form name="sform" novalidate>
+                <div class="row">
+                    <label>资源类型：</label>
+                    <select ng-model="searchPage.data.mocpId" name="mocpId" ng-change="searchPage.data.mocId=''" >
+                        <option value="">不限</option>
+                        <option ng-value="moc.id" ng-repeat="moc in $root.history.mocTree">{{moc.displayName}}</option>
+                    </select>
+                    <select ng-model="searchPage.data.mocId" name="mocId">
+                        <option value="">不限</option>
+                        <option value="{{moc.id}}" ng-if="moc.parentId==searchPage.data.mocpId"
+                                ng-repeat="moc in searchPage.mocs">{{moc.displayName}}</option>
+                    </select>
+                    <label>资源实例：</label>
+                    <input type="text" ng-model="searchPage.data.moName" ng-maxlength="255" />
+                    <label>IP地址：</label>
+                    <input type="text" ng-model="searchPage.data.ip" ng-maxlength="255" />
+                    <label> 文件名称：</label>
+                    <input type="text" ng-model="searchPage.data.name" ng-maxlength="255" />
+                    <button class="btn" ng-click="searchPage.action.search()" ng-disabled="sform.$invalid">查询</button>
+                </div>
+            </form>
+        </div>
+        <!-- 数据列表 -->
+        <div class="pr">
+            <table jq-table="listPage.settings" class="table"></table>
+        </div>
+    </div>
+</div>
+

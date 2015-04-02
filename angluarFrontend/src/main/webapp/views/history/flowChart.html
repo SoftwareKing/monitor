@@ -1,0 +1,222 @@
+<link rel="stylesheet" type="text/css" href="css/history/history.css">
+<div class="content">
+    <bread-crumb>
+        <a>监控</a>
+        <a>视图</a>
+        <a class="current">流量分析</a>
+    </bread-crumb>
+
+    <layout-tb>
+        <panel-top>
+            <!--html内容-->
+            <layout-lr style="padding-left: 300px;">
+                <panel-left style="margin-left:-300px;width:300px;">
+                    <div id="sidebar" class="left-sidebar" style="width: 300px;">
+                        <div class="menu-title">
+                            <span>
+                                请选择线路
+                            </span>
+                        </div>
+                        <div>
+                            <form name="sform" novalidate>
+                                <input type="text" ng-model="flowchart.table.keyword" style="width:200px;margin-left:18px" maxlength="100" />
+                                <button class="btn" ng-click="flowchart.table.search()">查询</button>
+                            </form>
+                        <table jq-table="flowchart.table.settings" class="table" id="linkTable"></table>
+                        </div>
+                    </div>
+                </panel-left>
+                <panel-right>
+                    <div class="page-content">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <table class="table" style="border:1px solid #ddd;">
+                            <tr>
+                                <td style="padding-left:50px">
+                                    <table style="border: none">
+                                        <tr>
+                                            <td style="border: none;line-height: 40px;"><b>线路名称: </b></td>
+                                            <td style="border: none;max-width:350px;width:350px;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;" title="{{flowchart.selectFlowChartTemplate[0].linkDisplayName}}">{{flowchart.selectFlowChartTemplate[0].linkDisplayName}}</td>
+                                            <td style="border: none;"><b>采集实例: </b></td>
+                                            <td style="border: none;max-width:200;width:200px;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;" title="{{flowchart.selectFlowChartTemplate[0].moDisplayName}}">{{flowchart.selectFlowChartTemplate[0].moDisplayName}}</td>
+                                            <td style="border: none;"><b>采集端口: </b></td>
+                                            <td style="border: none;">{{flowchart.selectFlowChartTemplate[0].portName}}</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 0;">
+                                    <table style="width:100%">
+                                        <tr>
+                                            <td style="width:50%;text-align:center;border-bottom:1px solid #ddd;"><b>流量图</b></td>
+                                            <td style="width:50%;text-align:center;border-bottom:1px solid #ddd;"><b>广播量图</b></td>
+                                        </tr>
+                                        <tr>
+                                            <td ng-class="{true: 'mask', false: ''}[!flowchart.selectFlowChartTemplate[0]]" style="text-align:center;">
+                                                <table style="width:100%;">
+                                                    <tr>
+                                                        <td rowspan="3" style="width:130px">
+                                                            <div>
+                                                                <div class="checkbox"><label><input
+                                                                        ng-disabled="!flowchart.selectFlowChartTemplate[0]"
+                                                                        type="checkbox"
+                                                                        checklist-model="flowchart.selectReportTypeList[0]"
+                                                                        checklist-value="'Day'"/><i></i><span class="checkbox_span">日</span></label>
+                                                                </div>
+                                                                <div class="checkbox"><label><input
+                                                                        ng-disabled="!flowchart.selectFlowChartTemplate[0]"
+                                                                        type="checkbox"
+                                                                        checklist-model="flowchart.selectReportTypeList[0]"
+                                                                        checklist-value="'Week'"/><i></i><span class="checkbox_span">周</span></label>
+                                                                </div>
+                                                            </div>
+                                                            <div>
+                                                                <div class="checkbox"><label><input
+                                                                        ng-disabled="!flowchart.selectFlowChartTemplate[0]"
+                                                                        type="checkbox"
+                                                                        checklist-model="flowchart.selectReportTypeList[0]"
+                                                                        checklist-value="'Month'"/><i></i><span class="checkbox_span">月</span></label>
+                                                                </div>
+                                                                <div class="checkbox"><label><input
+                                                                        ng-disabled="!flowchart.selectFlowChartTemplate[0]"
+                                                                        type="checkbox"
+                                                                        checklist-model="flowchart.selectReportTypeList[0]"
+                                                                        checklist-value="'Year'"/><i></i><span class="checkbox_span">年</span></label>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td style="width:80px;text-align:center;border-bottom:1px solid #ddd;">入流量</td>
+                                                        <td ng-switch="flowchart.selectFlowChartTemplate[0].metrics[0].hasRule" style="border-bottom:1px solid #ddd;">
+                                                            <span ng-switch-when="true" class="green">已设置采集规则</span>
+                                                            <span ng-switch-when="false" class="red">未设置采集规则</span>
+                                                        </td>
+                                                        <td rowspan="3" style="width:100px;text-align:center">
+                                                            <button class="btn" ng-click="flowchart.addChart(0)"
+                                                                    ng-disabled="!flowchart.selectFlowChartTemplate[0] || flowchart.selectReportTypeList[0].length==0">
+                                                                添加
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="text-align:center;border-bottom:1px solid #ddd;">出流量</td>
+                                                        <td ng-switch="flowchart.selectFlowChartTemplate[0].metrics[1].hasRule" style="border-bottom:1px solid #ddd;">
+                                                            <span ng-switch-when="true" class="green">已设置采集规则</span>
+                                                            <span ng-switch-when="false" class="red">未设置采集规则</span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="text-align:center">总流量</td>
+                                                        <td ng-switch="flowchart.selectFlowChartTemplate[0].metrics[2].hasRule">
+                                                            <span ng-switch-when="true" class="green">已设置采集规则</span>
+                                                            <span ng-switch-when="false" class="red">未设置采集规则</span>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                            <td ng-class="{true: 'mask', false: ''}[!flowchart.selectFlowChartTemplate[1]]" style="text-align:center;">
+                                                <table style="width:100%">
+                                                    <tr>
+                                                        <td rowspan="3" style="width:130px">
+                                                            <div>
+                                                                <div class="checkbox"><label><input
+                                                                        ng-disabled="!flowchart.selectFlowChartTemplate[1]"
+                                                                        type="checkbox"
+                                                                        checklist-model="flowchart.selectReportTypeList[1]"
+                                                                        checklist-value="'Day'"/><i></i><span class="checkbox_span">日</span></label>
+                                                                </div>
+                                                                <div class="checkbox"><label><input
+                                                                        ng-disabled="!flowchart.selectFlowChartTemplate[1]"
+                                                                        type="checkbox"
+                                                                        checklist-model="flowchart.selectReportTypeList[1]"
+                                                                        checklist-value="'Week'"/><i></i><span class="checkbox_span">周</span></label>
+                                                                </div>
+                                                            </div>
+                                                            <div>
+                                                                <div class="checkbox"><label><input
+                                                                        ng-disabled="!flowchart.selectFlowChartTemplate[1]"
+                                                                        type="checkbox"
+                                                                        checklist-model="flowchart.selectReportTypeList[1]"
+                                                                        checklist-value="'Month'"/><i></i><span class="checkbox_span">月</span></label>
+                                                                </div>
+                                                                <div class="checkbox"><label><input
+                                                                        ng-disabled="!flowchart.selectFlowChartTemplate[1]"
+                                                                        type="checkbox"
+                                                                        checklist-model="flowchart.selectReportTypeList[1]"
+                                                                        checklist-value="'Year'"/><i></i><span class="checkbox_span">年</span></label>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td style="width:80px;text-align:center;border-bottom:1px solid #ddd;">入广播量</td>
+                                                        <td ng-switch="flowchart.selectFlowChartTemplate[1].metrics[0].hasRule" style="border-bottom:1px solid #ddd;">
+                                                            <span ng-switch-when="true" class="green">已设置采集规则</span>
+                                                            <span ng-switch-when="false" class="red">未设置采集规则</span>
+                                                        </td>
+                                                        <td rowspan="3" style="width:100px;text-align:center">
+                                                            <button class="btn" ng-click="flowchart.addChart(1)"
+                                                                    ng-disabled="!flowchart.selectFlowChartTemplate[1] || flowchart.selectReportTypeList[1].length==0">
+                                                                添加
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="text-align:center;border-bottom:1px solid #ddd;">出广播量</td>
+                                                        <td ng-switch="flowchart.selectFlowChartTemplate[1].metrics[1].hasRule" style="border-bottom:1px solid #ddd;">
+                                                            <span ng-switch-when="true" class="green">已设置采集规则</span>
+                                                            <span ng-switch-when="false" class="red">未设置采集规则</span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="text-align:center;">总广播量</td>
+                                                        <td ng-switch="flowchart.selectFlowChartTemplate[1].metrics[2].hasRule">
+                                                            <span ng-switch-when="true" class="green">已设置采集规则</span>
+                                                            <span ng-switch-when="false" class="red">未设置采集规则</span>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        </div>
+                    </div>
+
+                    <!-- 数据列表 -->
+                    <div class="pr mt20">
+                        <table jq-table="flowchart.settings" class="table"></table>
+                        <div class="mt20">
+                            <button type="button" class="btn" ng-click="flowchart.showChart()"
+                                    ng-disabled="flowchart.selectChartList.length==0"> 进行流量分析
+                            </button>
+                        </div>
+                    </div>
+                    </div>
+                </panel-right>
+            </layout-lr>
+
+        </panel-top>
+        <!--  关闭bottom，关闭top和bottom， 2选1 -->
+        <collapse-all></collapse-all>
+        <panel-bottom>
+            <!--html内容-->
+            <div class="page-content" id="flowchartBottomDiv">
+                <div ng-repeat="chart in flowchart.chartList track by $index">
+                    <div class="col-xs-6 widget-container-span">
+                        <widget-box>
+                            <widget-header></widget-header>
+                            <widget-body>
+                                <div class="flowchartDiv"></div>
+                            </widget-body>
+                        </widget-box>
+                    </div>
+                </div>
+            </div>
+        </panel-bottom>
+    </layout-tb>
+</div>
+<script>
+    $("#flowchartTopDiv").css("height",$(window).height()-170).css("overflow-y","auto");
+
+</script>

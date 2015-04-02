@@ -1,0 +1,91 @@
+
+<div class="content" xmlns="http://www.w3.org/1999/html">
+    <bread-crumb>
+        <a>设置</a>
+        <a class="current">排班管理</a>
+        <a class="search-link ">高级搜索</a>
+    </bread-crumb>
+    <div class="page-content">
+        <div>
+            <div class="search-head">
+                <form name="sform" novalidate>
+                <div class="row">
+                    <label>用户显示名称：</label>
+                    <input type="text"  ng-model="searchPage.data.name"/>
+                    <button class="btn" ng-click="searchPage.search()"  >查询</button>
+                </div>
+                    </form>
+            </div>
+            <div>
+                <div id='workcalendar' style="width:100%;font-size:14px;padding:20px;"></div>
+            </div>
+        </div>
+
+        <div dialog info="openDialog" data="openDialog.model">
+            <form name="form" novalidate>
+                <div class="dialog-con" style="overflow: auto">
+                    <table class="modal-table">
+                        <tr ng-if="openDialog.model.id==null">
+                            <td class="row-lable">人员</td>
+                            <td>
+                                <input type="text" id="addUserNames" z-tree="{
+                            inData:'departUsers',
+                            outData:'openDialog.userIds',
+                            outParentData:'',
+                            type:'all_checkbox',
+                            description:'name',
+                            children:'children',
+                            isLeaf:'isLeafNode',
+                            value:'id',
+                            inputWidth:280,
+                            depth:10,
+                            radioCancel:true
+                            }" readonly/>
+                                <input type="hidden" ng-model="openDialog.model.userIds" ng-maxLength="255" required/>
+                                <span class="required">*</span>
+                            </td>
+                        </tr>
+                        <tr ng-if="openDialog.model.id!=null">
+                            <td class="row-lable">人员</td>
+                            <td>
+                                <input type="text" id="editUserNames" readonly ng-model="openDialog.model.title" />
+                                <input type="hidden" ng-model="openDialog.model.userIds" ng-maxLength="255" required/>
+                                <span class="required">*</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="row-lable">开始时间</td>
+                            <td>
+                                <input jq-date format="yyyy-mm-dd" min-date="2015-01-01" max-date="null" type="text" ng-model="openDialog.model.start" name="start" required READONLY/>
+                                <span class="required">*</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="row-lable">结束时间</td>
+                            <td>
+                                <input jq-date format="yyyy-mm-dd" min-date="2015-01-01" max-date="null" type="text" ng-model="openDialog.model.end" name="end" required READONLY/>
+                                <span class="required">*</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="row-lable">颜色</td>
+                            <td>
+                                <input type="text" color-st id="color" READONLY ng-model="openDialog.model.color" name="color" required/>
+                                <span class="required">*</span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button  type="button" ng-if="openDialog.status==1" class="btn btn-primary" ng-disabled="true"  ng-click="openDialog.save()">保存</button>
+                    <button  type="button" ng-if="openDialog.status==0" class="btn btn-primary" ng-disabled="form.$invalid"  ng-click="openDialog.save()">保存</button>
+                   <!-- <button type="button" ng-if="openDialog.model.id==null" class="btn btn-primary" ng-disabled="form.$invalid" ng-click="openDialog.save()">保存</button>-->
+
+                    <button type="button" class="btn btn-primary" ng-show="openDialog.model.id" ng-click="openDialog.delete()">删除</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

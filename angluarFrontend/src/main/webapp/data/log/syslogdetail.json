@@ -1,0 +1,1814 @@
+{
+    "took" : 59,
+    "timed_out" : false,
+    "_shards" : {
+        "total" : 5,
+        "successful" : 5,
+        "failed" : 0
+    },
+    "hits" : {
+        "total" : 753,
+        "max_score" : null,
+        "hits" : [ {
+            "_shard" : 1,
+            "_node" : "jrJw12WYTymMkVyZ0B1B4g",
+            "_index" : "logstash-2014.04.28",
+            "_type" : "syslog",
+            "_id" : "Evl0oHVuTAWK_TDyLE1O9A",
+            "_score" : null, "_source" : {"message":"<38>Apr 28 13:55:20 sshd[1514]: Accepted password for root from 172.16.1.15 port 1133 ssh2","@version":"1","@timestamp":"2014-04-28T15:12:01.700Z","type":"syslog","host":"172.16.1.21","tags":["_grokparsefailure"],"priority":13,"severity":5,"facility":1,"facility_label":"user-level","severity_label":"Notice","receivedtime":"2014-04-28 15:12:01 UTC"},
+            "sort" : [ "utc" ],
+            "_explanation" : {
+                "value" : 1.0146737,
+                "description" : "weight(host:172.16.1.21 in 870) [PerFieldSimilarity], result of:",
+                "details" : [ {
+                    "value" : 1.0146737,
+                    "description" : "fieldWeight in 870, product of:",
+                    "details" : [ {
+                        "value" : 1.0,
+                        "description" : "tf(freq=1.0), with freq of:",
+                        "details" : [ {
+                            "value" : 1.0,
+                            "description" : "termFreq=1.0"
+                        } ]
+                    }, {
+                        "value" : 1.0146737,
+                        "description" : "idf(docFreq=6967, maxDocs=7071)"
+                    }, {
+                        "value" : 1.0,
+                        "description" : "fieldNorm(doc=870)"
+                    } ]
+                } ]
+            }
+        }, {
+            "_shard" : 1,
+            "_node" : "jrJw12WYTymMkVyZ0B1B4g",
+            "_index" : "logstash-2014.04.28",
+            "_type" : "syslog",
+            "_id" : "E7E6N3hEQQKj4xKdZj_k8w",
+            "_score" : null, "_source" : {"message":"<30>Apr 28 14:01:38 inetd[1779]: hacl-cfg/udp: Connection from localhost (127.0.0.1) at Mon Apr 28 14:01:38 2014","@version":"1","@timestamp":"2014-04-28T15:18:19.578Z","type":"syslog","host":"172.16.1.21","tags":["_grokparsefailure"],"priority":13,"severity":5,"facility":1,"facility_label":"user-level","severity_label":"Notice","receivedtime":"2014-04-28 15:18:19 UTC"},
+            "sort" : [ "utc" ],
+            "_explanation" : {
+                "value" : 1.0146737,
+                "description" : "weight(host:172.16.1.21 in 876) [PerFieldSimilarity], result of:",
+                "details" : [ {
+                    "value" : 1.0146737,
+                    "description" : "fieldWeight in 876, product of:",
+                    "details" : [ {
+                        "value" : 1.0,
+                        "description" : "tf(freq=1.0), with freq of:",
+                        "details" : [ {
+                            "value" : 1.0,
+                            "description" : "termFreq=1.0"
+                        } ]
+                    }, {
+                        "value" : 1.0146737,
+                        "description" : "idf(docFreq=6967, maxDocs=7071)"
+                    }, {
+                        "value" : 1.0,
+                        "description" : "fieldNorm(doc=876)"
+                    } ]
+                } ]
+            }
+        }, {
+            "_shard" : 1,
+            "_node" : "jrJw12WYTymMkVyZ0B1B4g",
+            "_index" : "logstash-2014.04.28",
+            "_type" : "syslog",
+            "_id" : "xTImIRaURTy772R1HGtWXA",
+            "_score" : null, "_source" : {"message":"<30>Apr 28 14:01:38 inetd[1780]: auth/tcp: Connection from rx46401 (172.16.1.11) at Mon Apr 28 14:01:38 2014","@version":"1","@timestamp":"2014-04-28T15:18:19.619Z","type":"syslog","host":"172.16.1.21","tags":["_grokparsefailure"],"priority":13,"severity":5,"facility":1,"facility_label":"user-level","severity_label":"Notice","receivedtime":"2014-04-28 15:18:19 UTC"},
+            "sort" : [ "utc" ],
+            "_explanation" : {
+                "value" : 1.0146737,
+                "description" : "weight(host:172.16.1.21 in 877) [PerFieldSimilarity], result of:",
+                "details" : [ {
+                    "value" : 1.0146737,
+                    "description" : "fieldWeight in 877, product of:",
+                    "details" : [ {
+                        "value" : 1.0,
+                        "description" : "tf(freq=1.0), with freq of:",
+                        "details" : [ {
+                            "value" : 1.0,
+                            "description" : "termFreq=1.0"
+                        } ]
+                    }, {
+                        "value" : 1.0146737,
+                        "description" : "idf(docFreq=6967, maxDocs=7071)"
+                    }, {
+                        "value" : 1.0,
+                        "description" : "fieldNorm(doc=877)"
+                    } ]
+                } ]
+            }
+        }, {
+            "_shard" : 1,
+            "_node" : "jrJw12WYTymMkVyZ0B1B4g",
+            "_index" : "logstash-2014.04.28",
+            "_type" : "syslog",
+            "_id" : "Cn6igoK1TZOjdDwhMmgq0A",
+            "_score" : null, "_source" : {"message":"<30>Apr 28 14:00:08 inetd[1714]: hacl-cfg/udp: Connection from localhost (127.0.0.1) at Mon Apr 28 14:00:08 2014","@version":"1","@timestamp":"2014-04-28T15:16:49.545Z","type":"syslog","host":"172.16.1.21","tags":["_grokparsefailure"],"priority":13,"severity":5,"facility":1,"facility_label":"user-level","severity_label":"Notice","receivedtime":"2014-04-28 15:16:49 UTC"},
+            "sort" : [ "utc" ],
+            "_explanation" : {
+                "value" : 1.0146737,
+                "description" : "weight(host:172.16.1.21 in 878) [PerFieldSimilarity], result of:",
+                "details" : [ {
+                    "value" : 1.0146737,
+                    "description" : "fieldWeight in 878, product of:",
+                    "details" : [ {
+                        "value" : 1.0,
+                        "description" : "tf(freq=1.0), with freq of:",
+                        "details" : [ {
+                            "value" : 1.0,
+                            "description" : "termFreq=1.0"
+                        } ]
+                    }, {
+                        "value" : 1.0146737,
+                        "description" : "idf(docFreq=6967, maxDocs=7071)"
+                    }, {
+                        "value" : 1.0,
+                        "description" : "fieldNorm(doc=878)"
+                    } ]
+                } ]
+            }
+        }, {
+            "_shard" : 1,
+            "_node" : "jrJw12WYTymMkVyZ0B1B4g",
+            "_index" : "logstash-2014.04.28",
+            "_type" : "syslog",
+            "_id" : "FvrfBq-RR768_OMxbmv8kg",
+            "_score" : null, "_source" : {"message":"<30>Apr 28 14:00:08 inetd[1715]: auth/tcp: Connection from rx46401 (172.16.1.11) at Mon Apr 28 14:00:08 2014","@version":"1","@timestamp":"2014-04-28T15:16:49.589Z","type":"syslog","host":"172.16.1.21","tags":["_grokparsefailure"],"priority":13,"severity":5,"facility":1,"facility_label":"user-level","severity_label":"Notice","receivedtime":"2014-04-28 15:16:49 UTC"},
+            "sort" : [ "utc" ],
+            "_explanation" : {
+                "value" : 1.0146737,
+                "description" : "weight(host:172.16.1.21 in 879) [PerFieldSimilarity], result of:",
+                "details" : [ {
+                    "value" : 1.0146737,
+                    "description" : "fieldWeight in 879, product of:",
+                    "details" : [ {
+                        "value" : 1.0,
+                        "description" : "tf(freq=1.0), with freq of:",
+                        "details" : [ {
+                            "value" : 1.0,
+                            "description" : "termFreq=1.0"
+                        } ]
+                    }, {
+                        "value" : 1.0146737,
+                        "description" : "idf(docFreq=6967, maxDocs=7071)"
+                    }, {
+                        "value" : 1.0,
+                        "description" : "fieldNorm(doc=879)"
+                    } ]
+                } ]
+            }
+        }, {
+            "_shard" : 1,
+            "_node" : "jrJw12WYTymMkVyZ0B1B4g",
+            "_index" : "logstash-2014.04.28",
+            "_type" : "syslog",
+            "_id" : "cmqTbRLiR3GvtzI4ZE9zSA",
+            "_score" : null, "_source" : {"message":"<30>Apr 28 14:03:08 inetd[1814]: hacl-cfg/udp: Connection from localhost (127.0.0.1) at Mon Apr 28 14:03:08 2014","@version":"1","@timestamp":"2014-04-28T15:19:49.612Z","type":"syslog","host":"172.16.1.21","tags":["_grokparsefailure"],"priority":13,"severity":5,"facility":1,"facility_label":"user-level","severity_label":"Notice","receivedtime":"2014-04-28 15:19:49 UTC"},
+            "sort" : [ "utc" ],
+            "_explanation" : {
+                "value" : 1.0146737,
+                "description" : "weight(host:172.16.1.21 in 880) [PerFieldSimilarity], result of:",
+                "details" : [ {
+                    "value" : 1.0146737,
+                    "description" : "fieldWeight in 880, product of:",
+                    "details" : [ {
+                        "value" : 1.0,
+                        "description" : "tf(freq=1.0), with freq of:",
+                        "details" : [ {
+                            "value" : 1.0,
+                            "description" : "termFreq=1.0"
+                        } ]
+                    }, {
+                        "value" : 1.0146737,
+                        "description" : "idf(docFreq=6967, maxDocs=7071)"
+                    }, {
+                        "value" : 1.0,
+                        "description" : "fieldNorm(doc=880)"
+                    } ]
+                } ]
+            }
+        }, {
+            "_shard" : 1,
+            "_node" : "jrJw12WYTymMkVyZ0B1B4g",
+            "_index" : "logstash-2014.04.28",
+            "_type" : "syslog",
+            "_id" : "9csoey0XSLC8-OHqsAfMeQ",
+            "_score" : null, "_source" : {"message":"<30>Apr 28 14:03:08 inetd[1815]: auth/tcp: Connection from rx46401 (172.16.1.11) at Mon Apr 28 14:03:08 2014","@version":"1","@timestamp":"2014-04-28T15:19:49.655Z","type":"syslog","host":"172.16.1.21","tags":["_grokparsefailure"],"priority":13,"severity":5,"facility":1,"facility_label":"user-level","severity_label":"Notice","receivedtime":"2014-04-28 15:19:49 UTC"},
+            "sort" : [ "utc" ],
+            "_explanation" : {
+                "value" : 1.0146737,
+                "description" : "weight(host:172.16.1.21 in 881) [PerFieldSimilarity], result of:",
+                "details" : [ {
+                    "value" : 1.0146737,
+                    "description" : "fieldWeight in 881, product of:",
+                    "details" : [ {
+                        "value" : 1.0,
+                        "description" : "tf(freq=1.0), with freq of:",
+                        "details" : [ {
+                            "value" : 1.0,
+                            "description" : "termFreq=1.0"
+                        } ]
+                    }, {
+                        "value" : 1.0146737,
+                        "description" : "idf(docFreq=6967, maxDocs=7071)"
+                    }, {
+                        "value" : 1.0,
+                        "description" : "fieldNorm(doc=881)"
+                    } ]
+                } ]
+            }
+        }, {
+            "_shard" : 1,
+            "_node" : "jrJw12WYTymMkVyZ0B1B4g",
+            "_index" : "logstash-2014.04.28",
+            "_type" : "syslog",
+            "_id" : "BW4bS3o9QxaZwTmBtvGsxA",
+            "_score" : null, "_source" : {"message":"<30>Apr 28 14:03:38 inetd[1838]: hacl-cfg/udp: Connection from localhost (127.0.0.1) at Mon Apr 28 14:03:38 2014","@version":"1","@timestamp":"2014-04-28T15:20:19.623Z","type":"syslog","host":"172.16.1.21","tags":["_grokparsefailure"],"priority":13,"severity":5,"facility":1,"facility_label":"user-level","severity_label":"Notice","receivedtime":"2014-04-28 15:20:19 UTC"},
+            "sort" : [ "utc" ],
+            "_explanation" : {
+                "value" : 1.0146737,
+                "description" : "weight(host:172.16.1.21 in 882) [PerFieldSimilarity], result of:",
+                "details" : [ {
+                    "value" : 1.0146737,
+                    "description" : "fieldWeight in 882, product of:",
+                    "details" : [ {
+                        "value" : 1.0,
+                        "description" : "tf(freq=1.0), with freq of:",
+                        "details" : [ {
+                            "value" : 1.0,
+                            "description" : "termFreq=1.0"
+                        } ]
+                    }, {
+                        "value" : 1.0146737,
+                        "description" : "idf(docFreq=6967, maxDocs=7071)"
+                    }, {
+                        "value" : 1.0,
+                        "description" : "fieldNorm(doc=882)"
+                    } ]
+                } ]
+            }
+        }, {
+            "_shard" : 1,
+            "_node" : "jrJw12WYTymMkVyZ0B1B4g",
+            "_index" : "logstash-2014.04.28",
+            "_type" : "syslog",
+            "_id" : "J9CPiFNITFe8J2oGwrX0ww",
+            "_score" : null, "_source" : {"message":"<30>Apr 28 13:55:38 inetd[1522]: hacl-cfg/udp: Connection from localhost (127.0.0.1) at Mon Apr 28 13:55:38 2014","@version":"1","@timestamp":"2014-04-28T15:12:19.444Z","type":"syslog","host":"172.16.1.21","tags":["_grokparsefailure"],"priority":13,"severity":5,"facility":1,"facility_label":"user-level","severity_label":"Notice","receivedtime":"2014-04-28 15:12:19 UTC"},
+            "sort" : [ "utc" ],
+            "_explanation" : {
+                "value" : 1.0146737,
+                "description" : "weight(host:172.16.1.21 in 883) [PerFieldSimilarity], result of:",
+                "details" : [ {
+                    "value" : 1.0146737,
+                    "description" : "fieldWeight in 883, product of:",
+                    "details" : [ {
+                        "value" : 1.0,
+                        "description" : "tf(freq=1.0), with freq of:",
+                        "details" : [ {
+                            "value" : 1.0,
+                            "description" : "termFreq=1.0"
+                        } ]
+                    }, {
+                        "value" : 1.0146737,
+                        "description" : "idf(docFreq=6967, maxDocs=7071)"
+                    }, {
+                        "value" : 1.0,
+                        "description" : "fieldNorm(doc=883)"
+                    } ]
+                } ]
+            }
+        }, {
+            "_shard" : 1,
+            "_node" : "jrJw12WYTymMkVyZ0B1B4g",
+            "_index" : "logstash-2014.04.28",
+            "_type" : "syslog",
+            "_id" : "uK77gleVRO6XlqootY0BXQ",
+            "_score" : null, "_source" : {"message":"<30>Apr 28 13:58:08 inetd[1616]: hacl-cfg/udp: Connection from localhost (127.0.0.1) at Mon Apr 28 13:58:08 2014","@version":"1","@timestamp":"2014-04-28T15:14:49.501Z","type":"syslog","host":"172.16.1.21","tags":["_grokparsefailure"],"priority":13,"severity":5,"facility":1,"facility_label":"user-level","severity_label":"Notice","receivedtime":"2014-04-28 15:14:49 UTC"},
+            "sort" : [ "utc" ],
+            "_explanation" : {
+                "value" : 1.0146737,
+                "description" : "weight(host:172.16.1.21 in 884) [PerFieldSimilarity], result of:",
+                "details" : [ {
+                    "value" : 1.0146737,
+                    "description" : "fieldWeight in 884, product of:",
+                    "details" : [ {
+                        "value" : 1.0,
+                        "description" : "tf(freq=1.0), with freq of:",
+                        "details" : [ {
+                            "value" : 1.0,
+                            "description" : "termFreq=1.0"
+                        } ]
+                    }, {
+                        "value" : 1.0146737,
+                        "description" : "idf(docFreq=6967, maxDocs=7071)"
+                    }, {
+                        "value" : 1.0,
+                        "description" : "fieldNorm(doc=884)"
+                    } ]
+                } ]
+            }
+        }, {
+            "_shard" : 1,
+            "_node" : "jrJw12WYTymMkVyZ0B1B4g",
+            "_index" : "logstash-2014.04.28",
+            "_type" : "syslog",
+            "_id" : "LTlPirzNQEmnEHfiCrB5kA",
+            "_score" : null, "_source" : {"message":"<30>Apr 28 13:59:38 inetd[1665]: hacl-cfg/udp: Connection from localhost (127.0.0.1) at Mon Apr 28 13:59:38 2014","@version":"1","@timestamp":"2014-04-28T15:16:19.534Z","type":"syslog","host":"172.16.1.21","tags":["_grokparsefailure"],"priority":13,"severity":5,"facility":1,"facility_label":"user-level","severity_label":"Notice","receivedtime":"2014-04-28 15:16:19 UTC"},
+            "sort" : [ "utc" ],
+            "_explanation" : {
+                "value" : 1.0146737,
+                "description" : "weight(host:172.16.1.21 in 885) [PerFieldSimilarity], result of:",
+                "details" : [ {
+                    "value" : 1.0146737,
+                    "description" : "fieldWeight in 885, product of:",
+                    "details" : [ {
+                        "value" : 1.0,
+                        "description" : "tf(freq=1.0), with freq of:",
+                        "details" : [ {
+                            "value" : 1.0,
+                            "description" : "termFreq=1.0"
+                        } ]
+                    }, {
+                        "value" : 1.0146737,
+                        "description" : "idf(docFreq=6967, maxDocs=7071)"
+                    }, {
+                        "value" : 1.0,
+                        "description" : "fieldNorm(doc=885)"
+                    } ]
+                } ]
+            }
+        }, {
+            "_shard" : 1,
+            "_node" : "jrJw12WYTymMkVyZ0B1B4g",
+            "_index" : "logstash-2014.04.28",
+            "_type" : "syslog",
+            "_id" : "UyUSIAYmR9uorhQpx0-jkQ",
+            "_score" : null, "_source" : {"message":"<30>Apr 28 13:58:38 inetd[1637]: hacl-cfg/udp: Connection from localhost (127.0.0.1) at Mon Apr 28 13:58:38 2014","@version":"1","@timestamp":"2014-04-28T15:15:19.511Z","type":"syslog","host":"172.16.1.21","tags":["_grokparsefailure"],"priority":13,"severity":5,"facility":1,"facility_label":"user-level","severity_label":"Notice","receivedtime":"2014-04-28 15:15:19 UTC"},
+            "sort" : [ "utc" ],
+            "_explanation" : {
+                "value" : 1.0146737,
+                "description" : "weight(host:172.16.1.21 in 886) [PerFieldSimilarity], result of:",
+                "details" : [ {
+                    "value" : 1.0146737,
+                    "description" : "fieldWeight in 886, product of:",
+                    "details" : [ {
+                        "value" : 1.0,
+                        "description" : "tf(freq=1.0), with freq of:",
+                        "details" : [ {
+                            "value" : 1.0,
+                            "description" : "termFreq=1.0"
+                        } ]
+                    }, {
+                        "value" : 1.0146737,
+                        "description" : "idf(docFreq=6967, maxDocs=7071)"
+                    }, {
+                        "value" : 1.0,
+                        "description" : "fieldNorm(doc=886)"
+                    } ]
+                } ]
+            }
+        }, {
+            "_shard" : 1,
+            "_node" : "jrJw12WYTymMkVyZ0B1B4g",
+            "_index" : "logstash-2014.04.28",
+            "_type" : "syslog",
+            "_id" : "bOF6yUzUQve4SguCFlPBow",
+            "_score" : null, "_source" : {"message":"<30>Apr 28 14:01:08 inetd[1737]: auth/tcp: Connection from rx46401 (172.16.1.11) at Mon Apr 28 14:01:08 2014","@version":"1","@timestamp":"2014-04-28T15:17:49.608Z","type":"syslog","host":"172.16.1.21","tags":["_grokparsefailure"],"priority":13,"severity":5,"facility":1,"facility_label":"user-level","severity_label":"Notice","receivedtime":"2014-04-28 15:17:49 UTC"},
+            "sort" : [ "utc" ],
+            "_explanation" : {
+                "value" : 1.0146737,
+                "description" : "weight(host:172.16.1.21 in 887) [PerFieldSimilarity], result of:",
+                "details" : [ {
+                    "value" : 1.0146737,
+                    "description" : "fieldWeight in 887, product of:",
+                    "details" : [ {
+                        "value" : 1.0,
+                        "description" : "tf(freq=1.0), with freq of:",
+                        "details" : [ {
+                            "value" : 1.0,
+                            "description" : "termFreq=1.0"
+                        } ]
+                    }, {
+                        "value" : 1.0146737,
+                        "description" : "idf(docFreq=6967, maxDocs=7071)"
+                    }, {
+                        "value" : 1.0,
+                        "description" : "fieldNorm(doc=887)"
+                    } ]
+                } ]
+            }
+        }, {
+            "_shard" : 1,
+            "_node" : "jrJw12WYTymMkVyZ0B1B4g",
+            "_index" : "logstash-2014.04.28",
+            "_type" : "syslog",
+            "_id" : "O522G4z7SOubzm_yLPvLUg",
+            "_score" : null, "_source" : {"message":"<30>Apr 28 14:11:08 inetd[2136]: hacl-cfg/udp: Connection from localhost (127.0.0.1) at Mon Apr 28 14:11:08 2014","@version":"1","@timestamp":"2014-04-28T15:27:49.789Z","type":"syslog","host":"172.16.1.21","tags":["_grokparsefailure"],"priority":13,"severity":5,"facility":1,"facility_label":"user-level","severity_label":"Notice","receivedtime":"2014-04-28 15:27:49 UTC"},
+            "sort" : [ "utc" ],
+            "_explanation" : {
+                "value" : 1.0146737,
+                "description" : "weight(host:172.16.1.21 in 888) [PerFieldSimilarity], result of:",
+                "details" : [ {
+                    "value" : 1.0146737,
+                    "description" : "fieldWeight in 888, product of:",
+                    "details" : [ {
+                        "value" : 1.0,
+                        "description" : "tf(freq=1.0), with freq of:",
+                        "details" : [ {
+                            "value" : 1.0,
+                            "description" : "termFreq=1.0"
+                        } ]
+                    }, {
+                        "value" : 1.0146737,
+                        "description" : "idf(docFreq=6967, maxDocs=7071)"
+                    }, {
+                        "value" : 1.0,
+                        "description" : "fieldNorm(doc=888)"
+                    } ]
+                } ]
+            }
+        }, {
+            "_shard" : 1,
+            "_node" : "jrJw12WYTymMkVyZ0B1B4g",
+            "_index" : "logstash-2014.04.28",
+            "_type" : "syslog",
+            "_id" : "Y06FwkuRQhOGtCLyIMwzKg",
+            "_score" : null, "_source" : {"message":"<30>Apr 28 14:12:38 inetd[2199]: hacl-cfg/udp: Connection from localhost (127.0.0.1) at Mon Apr 28 14:12:38 2014","@version":"1","@timestamp":"2014-04-28T15:29:19.825Z","type":"syslog","host":"172.16.1.21","tags":["_grokparsefailure"],"priority":13,"severity":5,"facility":1,"facility_label":"user-level","severity_label":"Notice","receivedtime":"2014-04-28 15:29:19 UTC"},
+            "sort" : [ "utc" ],
+            "_explanation" : {
+                "value" : 1.0146737,
+                "description" : "weight(host:172.16.1.21 in 889) [PerFieldSimilarity], result of:",
+                "details" : [ {
+                    "value" : 1.0146737,
+                    "description" : "fieldWeight in 889, product of:",
+                    "details" : [ {
+                        "value" : 1.0,
+                        "description" : "tf(freq=1.0), with freq of:",
+                        "details" : [ {
+                            "value" : 1.0,
+                            "description" : "termFreq=1.0"
+                        } ]
+                    }, {
+                        "value" : 1.0146737,
+                        "description" : "idf(docFreq=6967, maxDocs=7071)"
+                    }, {
+                        "value" : 1.0,
+                        "description" : "fieldNorm(doc=889)"
+                    } ]
+                } ]
+            }
+        }, {
+            "_shard" : 1,
+            "_node" : "jrJw12WYTymMkVyZ0B1B4g",
+            "_index" : "logstash-2014.04.28",
+            "_type" : "syslog",
+            "_id" : "aSrFyFvbSSyaKnnYuEuv3w",
+            "_score" : null, "_source" : {"message":"<30>Apr 28 14:13:08 inetd[2212]: hacl-cfg/udp: Connection from localhost (127.0.0.1) at Mon Apr 28 14:13:08 2014","@version":"1","@timestamp":"2014-04-28T15:29:49.835Z","type":"syslog","host":"172.16.1.21","tags":["_grokparsefailure"],"priority":13,"severity":5,"facility":1,"facility_label":"user-level","severity_label":"Notice","receivedtime":"2014-04-28 15:29:49 UTC"},
+            "sort" : [ "utc" ],
+            "_explanation" : {
+                "value" : 1.0146737,
+                "description" : "weight(host:172.16.1.21 in 890) [PerFieldSimilarity], result of:",
+                "details" : [ {
+                    "value" : 1.0146737,
+                    "description" : "fieldWeight in 890, product of:",
+                    "details" : [ {
+                        "value" : 1.0,
+                        "description" : "tf(freq=1.0), with freq of:",
+                        "details" : [ {
+                            "value" : 1.0,
+                            "description" : "termFreq=1.0"
+                        } ]
+                    }, {
+                        "value" : 1.0146737,
+                        "description" : "idf(docFreq=6967, maxDocs=7071)"
+                    }, {
+                        "value" : 1.0,
+                        "description" : "fieldNorm(doc=890)"
+                    } ]
+                } ]
+            }
+        }, {
+            "_shard" : 1,
+            "_node" : "jrJw12WYTymMkVyZ0B1B4g",
+            "_index" : "logstash-2014.04.28",
+            "_type" : "syslog",
+            "_id" : "iYeMKMKOQeOOnKkTSLuu-w",
+            "_score" : null, "_source" : {"message":"<30>Apr 28 14:15:08 inetd[2326]: hacl-cfg/udp: Connection from localhost (127.0.0.1) at Mon Apr 28 14:15:08 2014","@version":"1","@timestamp":"2014-04-28T15:31:49.879Z","type":"syslog","host":"172.16.1.21","tags":["_grokparsefailure"],"priority":13,"severity":5,"facility":1,"facility_label":"user-level","severity_label":"Notice","receivedtime":"2014-04-28 15:31:49 UTC"},
+            "sort" : [ "utc" ],
+            "_explanation" : {
+                "value" : 1.0146737,
+                "description" : "weight(host:172.16.1.21 in 891) [PerFieldSimilarity], result of:",
+                "details" : [ {
+                    "value" : 1.0146737,
+                    "description" : "fieldWeight in 891, product of:",
+                    "details" : [ {
+                        "value" : 1.0,
+                        "description" : "tf(freq=1.0), with freq of:",
+                        "details" : [ {
+                            "value" : 1.0,
+                            "description" : "termFreq=1.0"
+                        } ]
+                    }, {
+                        "value" : 1.0146737,
+                        "description" : "idf(docFreq=6967, maxDocs=7071)"
+                    }, {
+                        "value" : 1.0,
+                        "description" : "fieldNorm(doc=891)"
+                    } ]
+                } ]
+            }
+        }, {
+            "_shard" : 1,
+            "_node" : "jrJw12WYTymMkVyZ0B1B4g",
+            "_index" : "logstash-2014.04.28",
+            "_type" : "syslog",
+            "_id" : "kwwnjVv3RnKgcH1POck42w",
+            "_score" : null, "_source" : {"message":"<30>Apr 28 14:08:08 inetd[2024]: hacl-cfg/udp: Connection from localhost (127.0.0.1) at Mon Apr 28 14:08:08 2014","@version":"1","@timestamp":"2014-04-28T15:24:49.723Z","type":"syslog","host":"172.16.1.21","tags":["_grokparsefailure"],"priority":13,"severity":5,"facility":1,"facility_label":"user-level","severity_label":"Notice","receivedtime":"2014-04-28 15:24:49 UTC"},
+            "sort" : [ "utc" ],
+            "_explanation" : {
+                "value" : 1.0146737,
+                "description" : "weight(host:172.16.1.21 in 892) [PerFieldSimilarity], result of:",
+                "details" : [ {
+                    "value" : 1.0146737,
+                    "description" : "fieldWeight in 892, product of:",
+                    "details" : [ {
+                        "value" : 1.0,
+                        "description" : "tf(freq=1.0), with freq of:",
+                        "details" : [ {
+                            "value" : 1.0,
+                            "description" : "termFreq=1.0"
+                        } ]
+                    }, {
+                        "value" : 1.0146737,
+                        "description" : "idf(docFreq=6967, maxDocs=7071)"
+                    }, {
+                        "value" : 1.0,
+                        "description" : "fieldNorm(doc=892)"
+                    } ]
+                } ]
+            }
+        }, {
+            "_shard" : 1,
+            "_node" : "jrJw12WYTymMkVyZ0B1B4g",
+            "_index" : "logstash-2014.04.28",
+            "_type" : "syslog",
+            "_id" : "Ix7rTcrBSj6yypccsxIiTA",
+            "_score" : null, "_source" : {"message":"<30>Apr 28 14:08:38 inetd[2046]: auth/tcp: Connection from rx46401 (172.16.1.11) at Mon Apr 28 14:08:38 2014","@version":"1","@timestamp":"2014-04-28T15:25:19.778Z","type":"syslog","host":"172.16.1.21","tags":["_grokparsefailure"],"priority":13,"severity":5,"facility":1,"facility_label":"user-level","severity_label":"Notice","receivedtime":"2014-04-28 15:25:19 UTC"},
+            "sort" : [ "utc" ],
+            "_explanation" : {
+                "value" : 1.0146737,
+                "description" : "weight(host:172.16.1.21 in 893) [PerFieldSimilarity], result of:",
+                "details" : [ {
+                    "value" : 1.0146737,
+                    "description" : "fieldWeight in 893, product of:",
+                    "details" : [ {
+                        "value" : 1.0,
+                        "description" : "tf(freq=1.0), with freq of:",
+                        "details" : [ {
+                            "value" : 1.0,
+                            "description" : "termFreq=1.0"
+                        } ]
+                    }, {
+                        "value" : 1.0146737,
+                        "description" : "idf(docFreq=6967, maxDocs=7071)"
+                    }, {
+                        "value" : 1.0,
+                        "description" : "fieldNorm(doc=893)"
+                    } ]
+                } ]
+            }
+        }, {
+            "_shard" : 1,
+            "_node" : "jrJw12WYTymMkVyZ0B1B4g",
+            "_index" : "logstash-2014.04.28",
+            "_type" : "syslog",
+            "_id" : "VORL9nE-SwKpVfpvsKQwhQ",
+            "_score" : null, "_source" : {"message":"<30>Apr 28 14:10:38 inetd[2129]: auth/tcp: Connection from rx46401 (172.16.1.11) at Mon Apr 28 14:10:38 2014","@version":"1","@timestamp":"2014-04-28T15:27:19.822Z","type":"syslog","host":"172.16.1.21","tags":["_grokparsefailure"],"priority":13,"severity":5,"facility":1,"facility_label":"user-level","severity_label":"Notice","receivedtime":"2014-04-28 15:27:19 UTC"},
+            "sort" : [ "utc" ],
+            "_explanation" : {
+                "value" : 1.0146737,
+                "description" : "weight(host:172.16.1.21 in 894) [PerFieldSimilarity], result of:",
+                "details" : [ {
+                    "value" : 1.0146737,
+                    "description" : "fieldWeight in 894, product of:",
+                    "details" : [ {
+                        "value" : 1.0,
+                        "description" : "tf(freq=1.0), with freq of:",
+                        "details" : [ {
+                            "value" : 1.0,
+                            "description" : "termFreq=1.0"
+                        } ]
+                    }, {
+                        "value" : 1.0146737,
+                        "description" : "idf(docFreq=6967, maxDocs=7071)"
+                    }, {
+                        "value" : 1.0,
+                        "description" : "fieldNorm(doc=894)"
+                    } ]
+                } ]
+            }
+        }, {
+            "_shard" : 1,
+            "_node" : "jrJw12WYTymMkVyZ0B1B4g",
+            "_index" : "logstash-2014.04.28",
+            "_type" : "syslog",
+            "_id" : "I494XWVGSMOmkp6l1TQ_dg",
+            "_score" : null, "_source" : {"message":"<30>Apr 28 14:14:38 inetd[2277]: auth/tcp: Connection from rx46401 (172.16.1.11) at Mon Apr 28 14:14:38 2014","@version":"1","@timestamp":"2014-04-28T15:31:19.912Z","type":"syslog","host":"172.16.1.21","tags":["_grokparsefailure"],"priority":13,"severity":5,"facility":1,"facility_label":"user-level","severity_label":"Notice","receivedtime":"2014-04-28 15:31:19 UTC"},
+            "sort" : [ "utc" ],
+            "_explanation" : {
+                "value" : 1.0146737,
+                "description" : "weight(host:172.16.1.21 in 895) [PerFieldSimilarity], result of:",
+                "details" : [ {
+                    "value" : 1.0146737,
+                    "description" : "fieldWeight in 895, product of:",
+                    "details" : [ {
+                        "value" : 1.0,
+                        "description" : "tf(freq=1.0), with freq of:",
+                        "details" : [ {
+                            "value" : 1.0,
+                            "description" : "termFreq=1.0"
+                        } ]
+                    }, {
+                        "value" : 1.0146737,
+                        "description" : "idf(docFreq=6967, maxDocs=7071)"
+                    }, {
+                        "value" : 1.0,
+                        "description" : "fieldNorm(doc=895)"
+                    } ]
+                } ]
+            }
+        }, {
+            "_shard" : 1,
+            "_node" : "jrJw12WYTymMkVyZ0B1B4g",
+            "_index" : "logstash-2014.04.28",
+            "_type" : "syslog",
+            "_id" : "YptxQ734TKe8p-Qlqy6rww",
+            "_score" : null, "_source" : {"message":"<30>Apr 28 14:07:38 inetd[2014]: auth/tcp: Connection from rx46401 (172.16.1.11) at Mon Apr 28 14:07:38 2014","@version":"1","@timestamp":"2014-04-28T15:24:19.751Z","type":"syslog","host":"172.16.1.21","tags":["_grokparsefailure"],"priority":13,"severity":5,"facility":1,"facility_label":"user-level","severity_label":"Notice","receivedtime":"2014-04-28 15:24:19 UTC"},
+            "sort" : [ "utc" ],
+            "_explanation" : {
+                "value" : 1.0146737,
+                "description" : "weight(host:172.16.1.21 in 896) [PerFieldSimilarity], result of:",
+                "details" : [ {
+                    "value" : 1.0146737,
+                    "description" : "fieldWeight in 896, product of:",
+                    "details" : [ {
+                        "value" : 1.0,
+                        "description" : "tf(freq=1.0), with freq of:",
+                        "details" : [ {
+                            "value" : 1.0,
+                            "description" : "termFreq=1.0"
+                        } ]
+                    }, {
+                        "value" : 1.0146737,
+                        "description" : "idf(docFreq=6967, maxDocs=7071)"
+                    }, {
+                        "value" : 1.0,
+                        "description" : "fieldNorm(doc=896)"
+                    } ]
+                } ]
+            }
+        }, {
+            "_shard" : 1,
+            "_node" : "jrJw12WYTymMkVyZ0B1B4g",
+            "_index" : "logstash-2014.04.28",
+            "_type" : "syslog",
+            "_id" : "6iKpwkeLQnym50cYwKA3gw",
+            "_score" : null, "_source" : {"message":"<30>Apr 28 14:18:08 inetd[2436]: hacl-cfg/udp: Connection from localhost (127.0.0.1) at Mon Apr 28 14:18:08 2014","@version":"1","@timestamp":"2014-04-28T15:34:49.944Z","type":"syslog","host":"172.16.1.21","tags":["_grokparsefailure"],"priority":13,"severity":5,"facility":1,"facility_label":"user-level","severity_label":"Notice","receivedtime":"2014-04-28 15:34:49 UTC"},
+            "sort" : [ "utc" ],
+            "_explanation" : {
+                "value" : 1.0146737,
+                "description" : "weight(host:172.16.1.21 in 897) [PerFieldSimilarity], result of:",
+                "details" : [ {
+                    "value" : 1.0146737,
+                    "description" : "fieldWeight in 897, product of:",
+                    "details" : [ {
+                        "value" : 1.0,
+                        "description" : "tf(freq=1.0), with freq of:",
+                        "details" : [ {
+                            "value" : 1.0,
+                            "description" : "termFreq=1.0"
+                        } ]
+                    }, {
+                        "value" : 1.0146737,
+                        "description" : "idf(docFreq=6967, maxDocs=7071)"
+                    }, {
+                        "value" : 1.0,
+                        "description" : "fieldNorm(doc=897)"
+                    } ]
+                } ]
+            }
+        }, {
+            "_shard" : 1,
+            "_node" : "jrJw12WYTymMkVyZ0B1B4g",
+            "_index" : "logstash-2014.04.28",
+            "_type" : "syslog",
+            "_id" : "LPJx3iSnROm_9gDppKH6og",
+            "_score" : null, "_source" : {"message":"<30>Apr 28 14:18:08 inetd[2437]: auth/tcp: Connection from rx46401 (172.16.1.11) at Mon Apr 28 14:18:08 2014","@version":"1","@timestamp":"2014-04-28T15:34:49.979Z","type":"syslog","host":"172.16.1.21","tags":["_grokparsefailure"],"priority":13,"severity":5,"facility":1,"facility_label":"user-level","severity_label":"Notice","receivedtime":"2014-04-28 15:34:49 UTC"},
+            "sort" : [ "utc" ],
+            "_explanation" : {
+                "value" : 1.0146737,
+                "description" : "weight(host:172.16.1.21 in 898) [PerFieldSimilarity], result of:",
+                "details" : [ {
+                    "value" : 1.0146737,
+                    "description" : "fieldWeight in 898, product of:",
+                    "details" : [ {
+                        "value" : 1.0,
+                        "description" : "tf(freq=1.0), with freq of:",
+                        "details" : [ {
+                            "value" : 1.0,
+                            "description" : "termFreq=1.0"
+                        } ]
+                    }, {
+                        "value" : 1.0146737,
+                        "description" : "idf(docFreq=6967, maxDocs=7071)"
+                    }, {
+                        "value" : 1.0,
+                        "description" : "fieldNorm(doc=898)"
+                    } ]
+                } ]
+            }
+        }, {
+            "_shard" : 1,
+            "_node" : "jrJw12WYTymMkVyZ0B1B4g",
+            "_index" : "logstash-2014.04.28",
+            "_type" : "syslog",
+            "_id" : "Ajyme8v5S6GtgQzu8STLNA",
+            "_score" : null, "_source" : {"message":"<30>Apr 28 14:21:38 inetd[2597]: hacl-cfg/udp: Connection from localhost (127.0.0.1) at Mon Apr 28 14:21:38 2014","@version":"1","@timestamp":"2014-04-28T15:38:20.023Z","type":"syslog","host":"172.16.1.21","tags":["_grokparsefailure"],"priority":13,"severity":5,"facility":1,"facility_label":"user-level","severity_label":"Notice","receivedtime":"2014-04-28 15:38:20 UTC"},
+            "sort" : [ "utc" ],
+            "_explanation" : {
+                "value" : 1.0146737,
+                "description" : "weight(host:172.16.1.21 in 899) [PerFieldSimilarity], result of:",
+                "details" : [ {
+                    "value" : 1.0146737,
+                    "description" : "fieldWeight in 899, product of:",
+                    "details" : [ {
+                        "value" : 1.0,
+                        "description" : "tf(freq=1.0), with freq of:",
+                        "details" : [ {
+                            "value" : 1.0,
+                            "description" : "termFreq=1.0"
+                        } ]
+                    }, {
+                        "value" : 1.0146737,
+                        "description" : "idf(docFreq=6967, maxDocs=7071)"
+                    }, {
+                        "value" : 1.0,
+                        "description" : "fieldNorm(doc=899)"
+                    } ]
+                } ]
+            }
+        }, {
+            "_shard" : 1,
+            "_node" : "jrJw12WYTymMkVyZ0B1B4g",
+            "_index" : "logstash-2014.04.28",
+            "_type" : "syslog",
+            "_id" : "RvpuHcyQTVCaCVMxcRJFIw",
+            "_score" : null, "_source" : {"message":"<30>Apr 28 14:21:38 inetd[2598]: auth/tcp: Connection from rx46401 (172.16.1.11) at Mon Apr 28 14:21:38 2014","@version":"1","@timestamp":"2014-04-28T15:38:20.061Z","type":"syslog","host":"172.16.1.21","tags":["_grokparsefailure"],"priority":13,"severity":5,"facility":1,"facility_label":"user-level","severity_label":"Notice","receivedtime":"2014-04-28 15:38:20 UTC"},
+            "sort" : [ "utc" ],
+            "_explanation" : {
+                "value" : 1.0146737,
+                "description" : "weight(host:172.16.1.21 in 900) [PerFieldSimilarity], result of:",
+                "details" : [ {
+                    "value" : 1.0146737,
+                    "description" : "fieldWeight in 900, product of:",
+                    "details" : [ {
+                        "value" : 1.0,
+                        "description" : "tf(freq=1.0), with freq of:",
+                        "details" : [ {
+                            "value" : 1.0,
+                            "description" : "termFreq=1.0"
+                        } ]
+                    }, {
+                        "value" : 1.0146737,
+                        "description" : "idf(docFreq=6967, maxDocs=7071)"
+                    }, {
+                        "value" : 1.0,
+                        "description" : "fieldNorm(doc=900)"
+                    } ]
+                } ]
+            }
+        }, {
+            "_shard" : 1,
+            "_node" : "jrJw12WYTymMkVyZ0B1B4g",
+            "_index" : "logstash-2014.04.28",
+            "_type" : "syslog",
+            "_id" : "D2hABIjyT1K76hZB9aEeBw",
+            "_score" : null, "_source" : {"message":"<30>Apr 28 14:22:08 inetd[2604]: hacl-cfg/udp: Connection from localhost (127.0.0.1) at Mon Apr 28 14:22:08 2014","@version":"1","@timestamp":"2014-04-28T15:38:50.034Z","type":"syslog","host":"172.16.1.21","tags":["_grokparsefailure"],"priority":13,"severity":5,"facility":1,"facility_label":"user-level","severity_label":"Notice","receivedtime":"2014-04-28 15:38:50 UTC"},
+            "sort" : [ "utc" ],
+            "_explanation" : {
+                "value" : 1.0146737,
+                "description" : "weight(host:172.16.1.21 in 901) [PerFieldSimilarity], result of:",
+                "details" : [ {
+                    "value" : 1.0146737,
+                    "description" : "fieldWeight in 901, product of:",
+                    "details" : [ {
+                        "value" : 1.0,
+                        "description" : "tf(freq=1.0), with freq of:",
+                        "details" : [ {
+                            "value" : 1.0,
+                            "description" : "termFreq=1.0"
+                        } ]
+                    }, {
+                        "value" : 1.0146737,
+                        "description" : "idf(docFreq=6967, maxDocs=7071)"
+                    }, {
+                        "value" : 1.0,
+                        "description" : "fieldNorm(doc=901)"
+                    } ]
+                } ]
+            }
+        }, {
+            "_shard" : 1,
+            "_node" : "jrJw12WYTymMkVyZ0B1B4g",
+            "_index" : "logstash-2014.04.28",
+            "_type" : "syslog",
+            "_id" : "M8A7HUqTS0SE-g6aIq6xCg",
+            "_score" : null, "_source" : {"message":"<30>Apr 28 14:22:38 inetd[2619]: hacl-cfg/udp: Connection from localhost (127.0.0.1) at Mon Apr 28 14:22:38 2014","@version":"1","@timestamp":"2014-04-28T15:39:20.045Z","type":"syslog","host":"172.16.1.21","tags":["_grokparsefailure"],"priority":13,"severity":5,"facility":1,"facility_label":"user-level","severity_label":"Notice","receivedtime":"2014-04-28 15:39:20 UTC"},
+            "sort" : [ "utc" ],
+            "_explanation" : {
+                "value" : 1.0146737,
+                "description" : "weight(host:172.16.1.21 in 902) [PerFieldSimilarity], result of:",
+                "details" : [ {
+                    "value" : 1.0146737,
+                    "description" : "fieldWeight in 902, product of:",
+                    "details" : [ {
+                        "value" : 1.0,
+                        "description" : "tf(freq=1.0), with freq of:",
+                        "details" : [ {
+                            "value" : 1.0,
+                            "description" : "termFreq=1.0"
+                        } ]
+                    }, {
+                        "value" : 1.0146737,
+                        "description" : "idf(docFreq=6967, maxDocs=7071)"
+                    }, {
+                        "value" : 1.0,
+                        "description" : "fieldNorm(doc=902)"
+                    } ]
+                } ]
+            }
+        }, {
+            "_shard" : 1,
+            "_node" : "jrJw12WYTymMkVyZ0B1B4g",
+            "_index" : "logstash-2014.04.28",
+            "_type" : "syslog",
+            "_id" : "eSQ7V05BR4eRGmcfoFyhhA",
+            "_score" : null, "_source" : {"message":"<30>Apr 28 14:25:38 inetd[2734]: hacl-cfg/udp: Connection from localhost (127.0.0.1) at Mon Apr 28 14:25:38 2014","@version":"1","@timestamp":"2014-04-28T15:42:20.112Z","type":"syslog","host":"172.16.1.21","tags":["_grokparsefailure"],"priority":13,"severity":5,"facility":1,"facility_label":"user-level","severity_label":"Notice","receivedtime":"2014-04-28 15:42:20 UTC"},
+            "sort" : [ "utc" ],
+            "_explanation" : {
+                "value" : 1.0146737,
+                "description" : "weight(host:172.16.1.21 in 903) [PerFieldSimilarity], result of:",
+                "details" : [ {
+                    "value" : 1.0146737,
+                    "description" : "fieldWeight in 903, product of:",
+                    "details" : [ {
+                        "value" : 1.0,
+                        "description" : "tf(freq=1.0), with freq of:",
+                        "details" : [ {
+                            "value" : 1.0,
+                            "description" : "termFreq=1.0"
+                        } ]
+                    }, {
+                        "value" : 1.0146737,
+                        "description" : "idf(docFreq=6967, maxDocs=7071)"
+                    }, {
+                        "value" : 1.0,
+                        "description" : "fieldNorm(doc=903)"
+                    } ]
+                } ]
+            }
+        }, {
+            "_shard" : 1,
+            "_node" : "jrJw12WYTymMkVyZ0B1B4g",
+            "_index" : "logstash-2014.04.28",
+            "_type" : "syslog",
+            "_id" : "OR63m8mwT1SKpYTRSyfpsw",
+            "_score" : null, "_source" : {"message":"<30>Apr 28 14:26:08 inetd[2740]: hacl-cfg/udp: Connection from localhost (127.0.0.1) at Mon Apr 28 14:26:08 2014","@version":"1","@timestamp":"2014-04-28T15:42:50.123Z","type":"syslog","host":"172.16.1.21","tags":["_grokparsefailure"],"priority":13,"severity":5,"facility":1,"facility_label":"user-level","severity_label":"Notice","receivedtime":"2014-04-28 15:42:50 UTC"},
+            "sort" : [ "utc" ],
+            "_explanation" : {
+                "value" : 1.0146737,
+                "description" : "weight(host:172.16.1.21 in 904) [PerFieldSimilarity], result of:",
+                "details" : [ {
+                    "value" : 1.0146737,
+                    "description" : "fieldWeight in 904, product of:",
+                    "details" : [ {
+                        "value" : 1.0,
+                        "description" : "tf(freq=1.0), with freq of:",
+                        "details" : [ {
+                            "value" : 1.0,
+                            "description" : "termFreq=1.0"
+                        } ]
+                    }, {
+                        "value" : 1.0146737,
+                        "description" : "idf(docFreq=6967, maxDocs=7071)"
+                    }, {
+                        "value" : 1.0,
+                        "description" : "fieldNorm(doc=904)"
+                    } ]
+                } ]
+            }
+        }, {
+            "_shard" : 1,
+            "_node" : "jrJw12WYTymMkVyZ0B1B4g",
+            "_index" : "logstash-2014.04.28",
+            "_type" : "syslog",
+            "_id" : "1HOc04ZcTlKP82FQUmLUeg",
+            "_score" : null, "_source" : {"message":"<30>Apr 28 14:24:54 inetd[2677]: registrar/tcp: Connection from localhost (127.0.0.1) at Mon Apr 28 14:24:54 2014","@version":"1","@timestamp":"2014-04-28T15:41:35.587Z","type":"syslog","host":"172.16.1.21","tags":["_grokparsefailure"],"priority":13,"severity":5,"facility":1,"facility_label":"user-level","severity_label":"Notice","receivedtime":"2014-04-28 15:41:35 UTC"},
+            "sort" : [ "utc" ],
+            "_explanation" : {
+                "value" : 1.0146737,
+                "description" : "weight(host:172.16.1.21 in 905) [PerFieldSimilarity], result of:",
+                "details" : [ {
+                    "value" : 1.0146737,
+                    "description" : "fieldWeight in 905, product of:",
+                    "details" : [ {
+                        "value" : 1.0,
+                        "description" : "tf(freq=1.0), with freq of:",
+                        "details" : [ {
+                            "value" : 1.0,
+                            "description" : "termFreq=1.0"
+                        } ]
+                    }, {
+                        "value" : 1.0146737,
+                        "description" : "idf(docFreq=6967, maxDocs=7071)"
+                    }, {
+                        "value" : 1.0,
+                        "description" : "fieldNorm(doc=905)"
+                    } ]
+                } ]
+            }
+        }, {
+            "_shard" : 1,
+            "_node" : "jrJw12WYTymMkVyZ0B1B4g",
+            "_index" : "logstash-2014.04.28",
+            "_type" : "syslog",
+            "_id" : "ONv-9PRCR7maSl_DIJC9SQ",
+            "_score" : null, "_source" : {"message":"<30>Apr 28 14:23:08 inetd[2630]: auth/tcp: Connection from rx46401 (172.16.1.11) at Mon Apr 28 14:23:08 2014","@version":"1","@timestamp":"2014-04-28T15:39:50.096Z","type":"syslog","host":"172.16.1.21","tags":["_grokparsefailure"],"priority":13,"severity":5,"facility":1,"facility_label":"user-level","severity_label":"Notice","receivedtime":"2014-04-28 15:39:50 UTC"},
+            "sort" : [ "utc" ],
+            "_explanation" : {
+                "value" : 1.0146737,
+                "description" : "weight(host:172.16.1.21 in 906) [PerFieldSimilarity], result of:",
+                "details" : [ {
+                    "value" : 1.0146737,
+                    "description" : "fieldWeight in 906, product of:",
+                    "details" : [ {
+                        "value" : 1.0,
+                        "description" : "tf(freq=1.0), with freq of:",
+                        "details" : [ {
+                            "value" : 1.0,
+                            "description" : "termFreq=1.0"
+                        } ]
+                    }, {
+                        "value" : 1.0146737,
+                        "description" : "idf(docFreq=6967, maxDocs=7071)"
+                    }, {
+                        "value" : 1.0,
+                        "description" : "fieldNorm(doc=906)"
+                    } ]
+                } ]
+            }
+        }, {
+            "_shard" : 1,
+            "_node" : "jrJw12WYTymMkVyZ0B1B4g",
+            "_index" : "logstash-2014.04.28",
+            "_type" : "syslog",
+            "_id" : "C3aJ4pSnSDmXUInAz19kJg",
+            "_score" : null, "_source" : {"message":"<30>Apr 28 14:27:08 inetd[2794]: auth/tcp: Connection from rx46401 (172.16.1.11) at Mon Apr 28 14:27:08 2014","@version":"1","@timestamp":"2014-04-28T15:43:50.189Z","type":"syslog","host":"172.16.1.21","tags":["_grokparsefailure"],"priority":13,"severity":5,"facility":1,"facility_label":"user-level","severity_label":"Notice","receivedtime":"2014-04-28 15:43:50 UTC"},
+            "sort" : [ "utc" ],
+            "_explanation" : {
+                "value" : 1.0146737,
+                "description" : "weight(host:172.16.1.21 in 907) [PerFieldSimilarity], result of:",
+                "details" : [ {
+                    "value" : 1.0146737,
+                    "description" : "fieldWeight in 907, product of:",
+                    "details" : [ {
+                        "value" : 1.0,
+                        "description" : "tf(freq=1.0), with freq of:",
+                        "details" : [ {
+                            "value" : 1.0,
+                            "description" : "termFreq=1.0"
+                        } ]
+                    }, {
+                        "value" : 1.0146737,
+                        "description" : "idf(docFreq=6967, maxDocs=7071)"
+                    }, {
+                        "value" : 1.0,
+                        "description" : "fieldNorm(doc=907)"
+                    } ]
+                } ]
+            }
+        }, {
+            "_shard" : 1,
+            "_node" : "jrJw12WYTymMkVyZ0B1B4g",
+            "_index" : "logstash-2014.04.28",
+            "_type" : "syslog",
+            "_id" : "UVBSsYJsQCCHjHDQ9wKmlQ",
+            "_score" : null, "_source" : {"message":"<30>Apr 28 14:31:08 inetd[2908]: hacl-cfg/udp: Connection from localhost (127.0.0.1) at Mon Apr 28 14:31:08 2014","@version":"1","@timestamp":"2014-04-28T15:47:50.234Z","type":"syslog","host":"172.16.1.21","tags":["_grokparsefailure"],"priority":13,"severity":5,"facility":1,"facility_label":"user-level","severity_label":"Notice","receivedtime":"2014-04-28 15:47:50 UTC"},
+            "sort" : [ "utc" ],
+            "_explanation" : {
+                "value" : 1.0146737,
+                "description" : "weight(host:172.16.1.21 in 908) [PerFieldSimilarity], result of:",
+                "details" : [ {
+                    "value" : 1.0146737,
+                    "description" : "fieldWeight in 908, product of:",
+                    "details" : [ {
+                        "value" : 1.0,
+                        "description" : "tf(freq=1.0), with freq of:",
+                        "details" : [ {
+                            "value" : 1.0,
+                            "description" : "termFreq=1.0"
+                        } ]
+                    }, {
+                        "value" : 1.0146737,
+                        "description" : "idf(docFreq=6967, maxDocs=7071)"
+                    }, {
+                        "value" : 1.0,
+                        "description" : "fieldNorm(doc=908)"
+                    } ]
+                } ]
+            }
+        }, {
+            "_shard" : 1,
+            "_node" : "jrJw12WYTymMkVyZ0B1B4g",
+            "_index" : "logstash-2014.04.28",
+            "_type" : "syslog",
+            "_id" : "pFsYrZzoSjyXL8Jz3FAgRg",
+            "_score" : null, "_source" : {"message":"<30>Apr 28 14:37:08 inetd[3127]: hacl-cfg/udp: Connection from localhost (127.0.0.1) at Mon Apr 28 14:37:08 2014","@version":"1","@timestamp":"2014-04-28T15:53:50.368Z","type":"syslog","host":"172.16.1.21","tags":["_grokparsefailure"],"priority":13,"severity":5,"facility":1,"facility_label":"user-level","severity_label":"Notice","receivedtime":"2014-04-28 15:53:50 UTC"},
+            "sort" : [ "utc" ],
+            "_explanation" : {
+                "value" : 1.0146737,
+                "description" : "weight(host:172.16.1.21 in 909) [PerFieldSimilarity], result of:",
+                "details" : [ {
+                    "value" : 1.0146737,
+                    "description" : "fieldWeight in 909, product of:",
+                    "details" : [ {
+                        "value" : 1.0,
+                        "description" : "tf(freq=1.0), with freq of:",
+                        "details" : [ {
+                            "value" : 1.0,
+                            "description" : "termFreq=1.0"
+                        } ]
+                    }, {
+                        "value" : 1.0146737,
+                        "description" : "idf(docFreq=6967, maxDocs=7071)"
+                    }, {
+                        "value" : 1.0,
+                        "description" : "fieldNorm(doc=909)"
+                    } ]
+                } ]
+            }
+        }, {
+            "_shard" : 1,
+            "_node" : "jrJw12WYTymMkVyZ0B1B4g",
+            "_index" : "logstash-2014.04.28",
+            "_type" : "syslog",
+            "_id" : "-Xc6kXFFSfK_Gb8jdyJmQg",
+            "_score" : null, "_source" : {"message":"<30>Apr 28 14:37:38 inetd[3136]: hacl-cfg/udp: Connection from localhost (127.0.0.1) at Mon Apr 28 14:37:38 2014","@version":"1","@timestamp":"2014-04-28T15:54:20.381Z","type":"syslog","host":"172.16.1.21","tags":["_grokparsefailure"],"priority":13,"severity":5,"facility":1,"facility_label":"user-level","severity_label":"Notice","receivedtime":"2014-04-28 15:54:20 UTC"},
+            "sort" : [ "utc" ],
+            "_explanation" : {
+                "value" : 1.0146737,
+                "description" : "weight(host:172.16.1.21 in 910) [PerFieldSimilarity], result of:",
+                "details" : [ {
+                    "value" : 1.0146737,
+                    "description" : "fieldWeight in 910, product of:",
+                    "details" : [ {
+                        "value" : 1.0,
+                        "description" : "tf(freq=1.0), with freq of:",
+                        "details" : [ {
+                            "value" : 1.0,
+                            "description" : "termFreq=1.0"
+                        } ]
+                    }, {
+                        "value" : 1.0146737,
+                        "description" : "idf(docFreq=6967, maxDocs=7071)"
+                    }, {
+                        "value" : 1.0,
+                        "description" : "fieldNorm(doc=910)"
+                    } ]
+                } ]
+            }
+        }, {
+            "_shard" : 1,
+            "_node" : "jrJw12WYTymMkVyZ0B1B4g",
+            "_index" : "logstash-2014.04.28",
+            "_type" : "syslog",
+            "_id" : "CXs15xiPRdKuwGWLEtneWw",
+            "_score" : null, "_source" : {"message":"<30>Apr 28 14:28:38 inetd[2827]: hacl-cfg/udp: Connection from localhost (127.0.0.1) at Mon Apr 28 14:28:38 2014","@version":"1","@timestamp":"2014-04-28T15:45:20.178Z","type":"syslog","host":"172.16.1.21","tags":["_grokparsefailure"],"priority":13,"severity":5,"facility":1,"facility_label":"user-level","severity_label":"Notice","receivedtime":"2014-04-28 15:45:20 UTC"},
+            "sort" : [ "utc" ],
+            "_explanation" : {
+                "value" : 1.0146737,
+                "description" : "weight(host:172.16.1.21 in 911) [PerFieldSimilarity], result of:",
+                "details" : [ {
+                    "value" : 1.0146737,
+                    "description" : "fieldWeight in 911, product of:",
+                    "details" : [ {
+                        "value" : 1.0,
+                        "description" : "tf(freq=1.0), with freq of:",
+                        "details" : [ {
+                            "value" : 1.0,
+                            "description" : "termFreq=1.0"
+                        } ]
+                    }, {
+                        "value" : 1.0146737,
+                        "description" : "idf(docFreq=6967, maxDocs=7071)"
+                    }, {
+                        "value" : 1.0,
+                        "description" : "fieldNorm(doc=911)"
+                    } ]
+                } ]
+            }
+        }, {
+            "_shard" : 1,
+            "_node" : "jrJw12WYTymMkVyZ0B1B4g",
+            "_index" : "logstash-2014.04.28",
+            "_type" : "syslog",
+            "_id" : "Mzze9wo1RVSOr6UmwnbnYg",
+            "_score" : null, "_source" : {"message":"<30>Apr 28 14:32:34 inetd[2962]: registrar/tcp: Connection from rx46402 (172.16.1.21) at Mon Apr 28 14:32:34 2014","@version":"1","@timestamp":"2014-04-28T15:49:16.425Z","type":"syslog","host":"172.16.1.21","tags":["_grokparsefailure"],"priority":13,"severity":5,"facility":1,"facility_label":"user-level","severity_label":"Notice","receivedtime":"2014-04-28 15:49:16 UTC"},
+            "sort" : [ "utc" ],
+            "_explanation" : {
+                "value" : 1.0146737,
+                "description" : "weight(host:172.16.1.21 in 912) [PerFieldSimilarity], result of:",
+                "details" : [ {
+                    "value" : 1.0146737,
+                    "description" : "fieldWeight in 912, product of:",
+                    "details" : [ {
+                        "value" : 1.0,
+                        "description" : "tf(freq=1.0), with freq of:",
+                        "details" : [ {
+                            "value" : 1.0,
+                            "description" : "termFreq=1.0"
+                        } ]
+                    }, {
+                        "value" : 1.0146737,
+                        "description" : "idf(docFreq=6967, maxDocs=7071)"
+                    }, {
+                        "value" : 1.0,
+                        "description" : "fieldNorm(doc=912)"
+                    } ]
+                } ]
+            }
+        }, {
+            "_shard" : 1,
+            "_node" : "jrJw12WYTymMkVyZ0B1B4g",
+            "_index" : "logstash-2014.04.28",
+            "_type" : "syslog",
+            "_id" : "KZkT-PiZT5KNra3GuyciqQ",
+            "_score" : null, "_source" : {"message":"<30>Apr 28 14:29:38 inetd[2843]: auth/tcp: Connection from rx46401 (172.16.1.11) at Mon Apr 28 14:29:38 2014","@version":"1","@timestamp":"2014-04-28T15:46:20.244Z","type":"syslog","host":"172.16.1.21","tags":["_grokparsefailure"],"priority":13,"severity":5,"facility":1,"facility_label":"user-level","severity_label":"Notice","receivedtime":"2014-04-28 15:46:20 UTC"},
+            "sort" : [ "utc" ],
+            "_explanation" : {
+                "value" : 1.0146737,
+                "description" : "weight(host:172.16.1.21 in 913) [PerFieldSimilarity], result of:",
+                "details" : [ {
+                    "value" : 1.0146737,
+                    "description" : "fieldWeight in 913, product of:",
+                    "details" : [ {
+                        "value" : 1.0,
+                        "description" : "tf(freq=1.0), with freq of:",
+                        "details" : [ {
+                            "value" : 1.0,
+                            "description" : "termFreq=1.0"
+                        } ]
+                    }, {
+                        "value" : 1.0146737,
+                        "description" : "idf(docFreq=6967, maxDocs=7071)"
+                    }, {
+                        "value" : 1.0,
+                        "description" : "fieldNorm(doc=913)"
+                    } ]
+                } ]
+            }
+        }, {
+            "_shard" : 1,
+            "_node" : "jrJw12WYTymMkVyZ0B1B4g",
+            "_index" : "logstash-2014.04.28",
+            "_type" : "syslog",
+            "_id" : "zESuipClTc-yhql8thzsYw",
+            "_score" : null, "_source" : {"message":"<30>Apr 28 14:31:38 inetd[2947]: auth/tcp: Connection from rx46401 (172.16.1.11) at Mon Apr 28 14:31:38 2014","@version":"1","@timestamp":"2014-04-28T15:48:20.285Z","type":"syslog","host":"172.16.1.21","tags":["_grokparsefailure"],"priority":13,"severity":5,"facility":1,"facility_label":"user-level","severity_label":"Notice","receivedtime":"2014-04-28 15:48:20 UTC"},
+            "sort" : [ "utc" ],
+            "_explanation" : {
+                "value" : 1.0146737,
+                "description" : "weight(host:172.16.1.21 in 914) [PerFieldSimilarity], result of:",
+                "details" : [ {
+                    "value" : 1.0146737,
+                    "description" : "fieldWeight in 914, product of:",
+                    "details" : [ {
+                        "value" : 1.0,
+                        "description" : "tf(freq=1.0), with freq of:",
+                        "details" : [ {
+                            "value" : 1.0,
+                            "description" : "termFreq=1.0"
+                        } ]
+                    }, {
+                        "value" : 1.0146737,
+                        "description" : "idf(docFreq=6967, maxDocs=7071)"
+                    }, {
+                        "value" : 1.0,
+                        "description" : "fieldNorm(doc=914)"
+                    } ]
+                } ]
+            }
+        }, {
+            "_shard" : 1,
+            "_node" : "jrJw12WYTymMkVyZ0B1B4g",
+            "_index" : "logstash-2014.04.28",
+            "_type" : "syslog",
+            "_id" : "wvJIq4hRSVCp1im8ouvNWA",
+            "_score" : null, "_source" : {"message":"<30>Apr 28 14:32:38 inetd[2965]: auth/tcp: Connection from rx46401 (172.16.1.11) at Mon Apr 28 14:32:38 2014","@version":"1","@timestamp":"2014-04-28T15:49:20.305Z","type":"syslog","host":"172.16.1.21","tags":["_grokparsefailure"],"priority":13,"severity":5,"facility":1,"facility_label":"user-level","severity_label":"Notice","receivedtime":"2014-04-28 15:49:20 UTC"},
+            "sort" : [ "utc" ],
+            "_explanation" : {
+                "value" : 1.0146737,
+                "description" : "weight(host:172.16.1.21 in 915) [PerFieldSimilarity], result of:",
+                "details" : [ {
+                    "value" : 1.0146737,
+                    "description" : "fieldWeight in 915, product of:",
+                    "details" : [ {
+                        "value" : 1.0,
+                        "description" : "tf(freq=1.0), with freq of:",
+                        "details" : [ {
+                            "value" : 1.0,
+                            "description" : "termFreq=1.0"
+                        } ]
+                    }, {
+                        "value" : 1.0146737,
+                        "description" : "idf(docFreq=6967, maxDocs=7071)"
+                    }, {
+                        "value" : 1.0,
+                        "description" : "fieldNorm(doc=915)"
+                    } ]
+                } ]
+            }
+        }, {
+            "_shard" : 1,
+            "_node" : "jrJw12WYTymMkVyZ0B1B4g",
+            "_index" : "logstash-2014.04.28",
+            "_type" : "syslog",
+            "_id" : "jL4jU4fGTd6gQyt0uzT_TQ",
+            "_score" : null, "_source" : {"message":"<30>Apr 28 14:35:08 inetd[3067]: auth/tcp: Connection from rx46401 (172.16.1.11) at Mon Apr 28 14:35:08 2014","@version":"1","@timestamp":"2014-04-28T15:51:50.363Z","type":"syslog","host":"172.16.1.21","tags":["_grokparsefailure"],"priority":13,"severity":5,"facility":1,"facility_label":"user-level","severity_label":"Notice","receivedtime":"2014-04-28 15:51:50 UTC"},
+            "sort" : [ "utc" ],
+            "_explanation" : {
+                "value" : 1.0146737,
+                "description" : "weight(host:172.16.1.21 in 916) [PerFieldSimilarity], result of:",
+                "details" : [ {
+                    "value" : 1.0146737,
+                    "description" : "fieldWeight in 916, product of:",
+                    "details" : [ {
+                        "value" : 1.0,
+                        "description" : "tf(freq=1.0), with freq of:",
+                        "details" : [ {
+                            "value" : 1.0,
+                            "description" : "termFreq=1.0"
+                        } ]
+                    }, {
+                        "value" : 1.0146737,
+                        "description" : "idf(docFreq=6967, maxDocs=7071)"
+                    }, {
+                        "value" : 1.0,
+                        "description" : "fieldNorm(doc=916)"
+                    } ]
+                } ]
+            }
+        }, {
+            "_shard" : 1,
+            "_node" : "jrJw12WYTymMkVyZ0B1B4g",
+            "_index" : "logstash-2014.04.28",
+            "_type" : "syslog",
+            "_id" : "7b8LRq56QUy8PAKXt_N4gg",
+            "_score" : null, "_source" : {"message":"<30>Apr 28 14:40:38 inetd[3232]: hacl-cfg/udp: Connection from localhost (127.0.0.1) at Mon Apr 28 14:40:38 2014","@version":"1","@timestamp":"2014-04-28T15:57:20.448Z","type":"syslog","host":"172.16.1.21","tags":["_grokparsefailure"],"priority":13,"severity":5,"facility":1,"facility_label":"user-level","severity_label":"Notice","receivedtime":"2014-04-28 15:57:20 UTC"},
+            "sort" : [ "utc" ],
+            "_explanation" : {
+                "value" : 1.0146737,
+                "description" : "weight(host:172.16.1.21 in 917) [PerFieldSimilarity], result of:",
+                "details" : [ {
+                    "value" : 1.0146737,
+                    "description" : "fieldWeight in 917, product of:",
+                    "details" : [ {
+                        "value" : 1.0,
+                        "description" : "tf(freq=1.0), with freq of:",
+                        "details" : [ {
+                            "value" : 1.0,
+                            "description" : "termFreq=1.0"
+                        } ]
+                    }, {
+                        "value" : 1.0146737,
+                        "description" : "idf(docFreq=6967, maxDocs=7071)"
+                    }, {
+                        "value" : 1.0,
+                        "description" : "fieldNorm(doc=917)"
+                    } ]
+                } ]
+            }
+        }, {
+            "_shard" : 1,
+            "_node" : "jrJw12WYTymMkVyZ0B1B4g",
+            "_index" : "logstash-2014.04.28",
+            "_type" : "syslog",
+            "_id" : "5LC4Sj53T4Kz4GfSiDy4zA",
+            "_score" : null, "_source" : {"message":"<30>Apr 28 14:41:38 inetd[3279]: hacl-cfg/udp: Connection from localhost (127.0.0.1) at Mon Apr 28 14:41:38 2014","@version":"1","@timestamp":"2014-04-28T15:58:20.470Z","type":"syslog","host":"172.16.1.21","tags":["_grokparsefailure"],"priority":13,"severity":5,"facility":1,"facility_label":"user-level","severity_label":"Notice","receivedtime":"2014-04-28 15:58:20 UTC"},
+            "sort" : [ "utc" ],
+            "_explanation" : {
+                "value" : 1.0146737,
+                "description" : "weight(host:172.16.1.21 in 918) [PerFieldSimilarity], result of:",
+                "details" : [ {
+                    "value" : 1.0146737,
+                    "description" : "fieldWeight in 918, product of:",
+                    "details" : [ {
+                        "value" : 1.0,
+                        "description" : "tf(freq=1.0), with freq of:",
+                        "details" : [ {
+                            "value" : 1.0,
+                            "description" : "termFreq=1.0"
+                        } ]
+                    }, {
+                        "value" : 1.0146737,
+                        "description" : "idf(docFreq=6967, maxDocs=7071)"
+                    }, {
+                        "value" : 1.0,
+                        "description" : "fieldNorm(doc=918)"
+                    } ]
+                } ]
+            }
+        }, {
+            "_shard" : 1,
+            "_node" : "jrJw12WYTymMkVyZ0B1B4g",
+            "_index" : "logstash-2014.04.28",
+            "_type" : "syslog",
+            "_id" : "7L7ybWbFRIy0lanRm3BvmA",
+            "_score" : null, "_source" : {"message":"<30>Apr 28 14:40:35 inetd[3230]: registrar/tcp: Connection from rx46402 (172.16.1.21) at Mon Apr 28 14:40:35 2014","@version":"1","@timestamp":"2014-04-28T15:57:16.534Z","type":"syslog","host":"172.16.1.21","tags":["_grokparsefailure"],"priority":13,"severity":5,"facility":1,"facility_label":"user-level","severity_label":"Notice","receivedtime":"2014-04-28 15:57:16 UTC"},
+            "sort" : [ "utc" ],
+            "_explanation" : {
+                "value" : 1.0146737,
+                "description" : "weight(host:172.16.1.21 in 919) [PerFieldSimilarity], result of:",
+                "details" : [ {
+                    "value" : 1.0146737,
+                    "description" : "fieldWeight in 919, product of:",
+                    "details" : [ {
+                        "value" : 1.0,
+                        "description" : "tf(freq=1.0), with freq of:",
+                        "details" : [ {
+                            "value" : 1.0,
+                            "description" : "termFreq=1.0"
+                        } ]
+                    }, {
+                        "value" : 1.0146737,
+                        "description" : "idf(docFreq=6967, maxDocs=7071)"
+                    }, {
+                        "value" : 1.0,
+                        "description" : "fieldNorm(doc=919)"
+                    } ]
+                } ]
+            }
+        }, {
+            "_shard" : 1,
+            "_node" : "jrJw12WYTymMkVyZ0B1B4g",
+            "_index" : "logstash-2014.04.28",
+            "_type" : "syslog",
+            "_id" : "JkFEfLxYRom8p7xA45oLmQ",
+            "_score" : null, "_source" : {"message":"<30>Apr 28 14:40:08 inetd[3223]: auth/tcp: Connection from rx46401 (172.16.1.11) at Mon Apr 28 14:40:08 2014","@version":"1","@timestamp":"2014-04-28T15:56:50.479Z","type":"syslog","host":"172.16.1.21","tags":["_grokparsefailure"],"priority":13,"severity":5,"facility":1,"facility_label":"user-level","severity_label":"Notice","receivedtime":"2014-04-28 15:56:50 UTC"},
+            "sort" : [ "utc" ],
+            "_explanation" : {
+                "value" : 1.0146737,
+                "description" : "weight(host:172.16.1.21 in 920) [PerFieldSimilarity], result of:",
+                "details" : [ {
+                    "value" : 1.0146737,
+                    "description" : "fieldWeight in 920, product of:",
+                    "details" : [ {
+                        "value" : 1.0,
+                        "description" : "tf(freq=1.0), with freq of:",
+                        "details" : [ {
+                            "value" : 1.0,
+                            "description" : "termFreq=1.0"
+                        } ]
+                    }, {
+                        "value" : 1.0146737,
+                        "description" : "idf(docFreq=6967, maxDocs=7071)"
+                    }, {
+                        "value" : 1.0,
+                        "description" : "fieldNorm(doc=920)"
+                    } ]
+                } ]
+            }
+        }, {
+            "_shard" : 1,
+            "_node" : "jrJw12WYTymMkVyZ0B1B4g",
+            "_index" : "logstash-2014.04.28",
+            "_type" : "syslog",
+            "_id" : "IjoL_W-4TXeB0diIOWXqLg",
+            "_score" : null, "_source" : {"message":"<30>Apr 28 14:43:39 inetd[3326]: auth/tcp: Connection from rx46401 (172.16.1.11) at Mon Apr 28 14:43:39 2014","@version":"1","@timestamp":"2014-04-28T16:00:20.553Z","type":"syslog","host":"172.16.1.21","tags":["_grokparsefailure"],"priority":13,"severity":5,"facility":1,"facility_label":"user-level","severity_label":"Notice","receivedtime":"2014-04-28 16:00:20 UTC"},
+            "sort" : [ "utc" ],
+            "_explanation" : {
+                "value" : 1.0146737,
+                "description" : "weight(host:172.16.1.21 in 921) [PerFieldSimilarity], result of:",
+                "details" : [ {
+                    "value" : 1.0146737,
+                    "description" : "fieldWeight in 921, product of:",
+                    "details" : [ {
+                        "value" : 1.0,
+                        "description" : "tf(freq=1.0), with freq of:",
+                        "details" : [ {
+                            "value" : 1.0,
+                            "description" : "termFreq=1.0"
+                        } ]
+                    }, {
+                        "value" : 1.0146737,
+                        "description" : "idf(docFreq=6967, maxDocs=7071)"
+                    }, {
+                        "value" : 1.0,
+                        "description" : "fieldNorm(doc=921)"
+                    } ]
+                } ]
+            }
+        }, {
+            "_shard" : 1,
+            "_node" : "jrJw12WYTymMkVyZ0B1B4g",
+            "_index" : "logstash-2014.04.28",
+            "_type" : "syslog",
+            "_id" : "VYMJSk1gTS-WDANr_WXBhw",
+            "_score" : null, "_source" : {"message":"<30>Apr 28 14:45:39 inetd[3399]: auth/tcp: Connection from rx46401 (172.16.1.11) at Mon Apr 28 14:45:39 2014","@version":"1","@timestamp":"2014-04-28T16:02:20.595Z","type":"syslog","host":"172.16.1.21","tags":["_grokparsefailure"],"priority":13,"severity":5,"facility":1,"facility_label":"user-level","severity_label":"Notice","receivedtime":"2014-04-28 16:02:20 UTC"},
+            "sort" : [ "utc" ],
+            "_explanation" : {
+                "value" : 1.0146737,
+                "description" : "weight(host:172.16.1.21 in 922) [PerFieldSimilarity], result of:",
+                "details" : [ {
+                    "value" : 1.0146737,
+                    "description" : "fieldWeight in 922, product of:",
+                    "details" : [ {
+                        "value" : 1.0,
+                        "description" : "tf(freq=1.0), with freq of:",
+                        "details" : [ {
+                            "value" : 1.0,
+                            "description" : "termFreq=1.0"
+                        } ]
+                    }, {
+                        "value" : 1.0146737,
+                        "description" : "idf(docFreq=6967, maxDocs=7071)"
+                    }, {
+                        "value" : 1.0,
+                        "description" : "fieldNorm(doc=922)"
+                    } ]
+                } ]
+            }
+        }, {
+            "_shard" : 1,
+            "_node" : "jrJw12WYTymMkVyZ0B1B4g",
+            "_index" : "logstash-2014.04.28",
+            "_type" : "syslog",
+            "_id" : "Wt-qVFckTiKUTnEbMMDfnA",
+            "_score" : null, "_source" : {"message":"<30>Apr 28 14:46:09 inetd[3405]: auth/tcp: Connection from rx46401 (172.16.1.11) at Mon Apr 28 14:46:09 2014","@version":"1","@timestamp":"2014-04-28T16:02:50.607Z","type":"syslog","host":"172.16.1.21","tags":["_grokparsefailure"],"priority":13,"severity":5,"facility":1,"facility_label":"user-level","severity_label":"Notice","receivedtime":"2014-04-28 16:02:50 UTC"},
+            "sort" : [ "utc" ],
+            "_explanation" : {
+                "value" : 1.0146737,
+                "description" : "weight(host:172.16.1.21 in 923) [PerFieldSimilarity], result of:",
+                "details" : [ {
+                    "value" : 1.0146737,
+                    "description" : "fieldWeight in 923, product of:",
+                    "details" : [ {
+                        "value" : 1.0,
+                        "description" : "tf(freq=1.0), with freq of:",
+                        "details" : [ {
+                            "value" : 1.0,
+                            "description" : "termFreq=1.0"
+                        } ]
+                    }, {
+                        "value" : 1.0146737,
+                        "description" : "idf(docFreq=6967, maxDocs=7071)"
+                    }, {
+                        "value" : 1.0,
+                        "description" : "fieldNorm(doc=923)"
+                    } ]
+                } ]
+            }
+        }, {
+            "_shard" : 1,
+            "_node" : "jrJw12WYTymMkVyZ0B1B4g",
+            "_index" : "logstash-2014.04.28",
+            "_type" : "syslog",
+            "_id" : "YJrc8aonQDKBb8BkX3NKwg",
+            "_score" : null, "_source" : {"message":"<30>Apr 28 14:44:35 inetd[3339]: registrar/tcp: Connection from rx46402 (172.16.1.21) at Mon Apr 28 14:44:35 2014","@version":"1","@timestamp":"2014-04-28T16:01:16.603Z","type":"syslog","host":"172.16.1.21","tags":["_grokparsefailure"],"priority":13,"severity":5,"facility":1,"facility_label":"user-level","severity_label":"Notice","receivedtime":"2014-04-28 16:01:16 UTC"},
+            "sort" : [ "utc" ],
+            "_explanation" : {
+                "value" : 1.0146737,
+                "description" : "weight(host:172.16.1.21 in 924) [PerFieldSimilarity], result of:",
+                "details" : [ {
+                    "value" : 1.0146737,
+                    "description" : "fieldWeight in 924, product of:",
+                    "details" : [ {
+                        "value" : 1.0,
+                        "description" : "tf(freq=1.0), with freq of:",
+                        "details" : [ {
+                            "value" : 1.0,
+                            "description" : "termFreq=1.0"
+                        } ]
+                    }, {
+                        "value" : 1.0146737,
+                        "description" : "idf(docFreq=6967, maxDocs=7071)"
+                    }, {
+                        "value" : 1.0,
+                        "description" : "fieldNorm(doc=924)"
+                    } ]
+                } ]
+            }
+        }, {
+            "_shard" : 1,
+            "_node" : "jrJw12WYTymMkVyZ0B1B4g",
+            "_index" : "logstash-2014.04.28",
+            "_type" : "syslog",
+            "_id" : "B-u1r5DiRqiXy6F6nPEC_w",
+            "_score" : null, "_source" : {"message":"<30>Apr 28 14:48:35 inetd[3482]: registrar/tcp: Connection from rx46402 (172.16.1.21) at Mon Apr 28 14:48:35 2014","@version":"1","@timestamp":"2014-04-28T16:05:16.652Z","type":"syslog","host":"172.16.1.21","tags":["_grokparsefailure"],"priority":13,"severity":5,"facility":1,"facility_label":"user-level","severity_label":"Notice","receivedtime":"2014-04-28 16:05:16 UTC"},
+            "sort" : [ "utc" ],
+            "_explanation" : {
+                "value" : 1.0146737,
+                "description" : "weight(host:172.16.1.21 in 925) [PerFieldSimilarity], result of:",
+                "details" : [ {
+                    "value" : 1.0146737,
+                    "description" : "fieldWeight in 925, product of:",
+                    "details" : [ {
+                        "value" : 1.0,
+                        "description" : "tf(freq=1.0), with freq of:",
+                        "details" : [ {
+                            "value" : 1.0,
+                            "description" : "termFreq=1.0"
+                        } ]
+                    }, {
+                        "value" : 1.0146737,
+                        "description" : "idf(docFreq=6967, maxDocs=7071)"
+                    }, {
+                        "value" : 1.0,
+                        "description" : "fieldNorm(doc=925)"
+                    } ]
+                } ]
+            }
+        }, {
+            "_shard" : 1,
+            "_node" : "jrJw12WYTymMkVyZ0B1B4g",
+            "_index" : "logstash-2014.04.28",
+            "_type" : "syslog",
+            "_id" : "opC4pJ5zRdmmKpYKBtGzYg",
+            "_score" : null, "_source" : {"message":"<30>Apr 28 14:49:09 inetd[3493]: hacl-cfg/udp: Connection from localhost (127.0.0.1) at Mon Apr 28 14:49:09 2014","@version":"1","@timestamp":"2014-04-28T16:05:50.635Z","type":"syslog","host":"172.16.1.21","tags":["_grokparsefailure"],"priority":13,"severity":5,"facility":1,"facility_label":"user-level","severity_label":"Notice","receivedtime":"2014-04-28 16:05:50 UTC"},
+            "sort" : [ "utc" ],
+            "_explanation" : {
+                "value" : 1.0146737,
+                "description" : "weight(host:172.16.1.21 in 926) [PerFieldSimilarity], result of:",
+                "details" : [ {
+                    "value" : 1.0146737,
+                    "description" : "fieldWeight in 926, product of:",
+                    "details" : [ {
+                        "value" : 1.0,
+                        "description" : "tf(freq=1.0), with freq of:",
+                        "details" : [ {
+                            "value" : 1.0,
+                            "description" : "termFreq=1.0"
+                        } ]
+                    }, {
+                        "value" : 1.0146737,
+                        "description" : "idf(docFreq=6967, maxDocs=7071)"
+                    }, {
+                        "value" : 1.0,
+                        "description" : "fieldNorm(doc=926)"
+                    } ]
+                } ]
+            }
+        }, {
+            "_shard" : 1,
+            "_node" : "jrJw12WYTymMkVyZ0B1B4g",
+            "_index" : "logstash-2014.04.28",
+            "_type" : "syslog",
+            "_id" : "THSl8qdxT8GCZCFYBx2I-g",
+            "_score" : null, "_source" : {"message":"<30>Apr 28 14:49:09 inetd[3494]: auth/tcp: Connection from rx46401 (172.16.1.11) at Mon Apr 28 14:49:09 2014","@version":"1","@timestamp":"2014-04-28T16:05:50.672Z","type":"syslog","host":"172.16.1.21","tags":["_grokparsefailure"],"priority":13,"severity":5,"facility":1,"facility_label":"user-level","severity_label":"Notice","receivedtime":"2014-04-28 16:05:50 UTC"},
+            "sort" : [ "utc" ],
+            "_explanation" : {
+                "value" : 1.0146737,
+                "description" : "weight(host:172.16.1.21 in 927) [PerFieldSimilarity], result of:",
+                "details" : [ {
+                    "value" : 1.0146737,
+                    "description" : "fieldWeight in 927, product of:",
+                    "details" : [ {
+                        "value" : 1.0,
+                        "description" : "tf(freq=1.0), with freq of:",
+                        "details" : [ {
+                            "value" : 1.0,
+                            "description" : "termFreq=1.0"
+                        } ]
+                    }, {
+                        "value" : 1.0146737,
+                        "description" : "idf(docFreq=6967, maxDocs=7071)"
+                    }, {
+                        "value" : 1.0,
+                        "description" : "fieldNorm(doc=927)"
+                    } ]
+                } ]
+            }
+        }, {
+            "_shard" : 1,
+            "_node" : "jrJw12WYTymMkVyZ0B1B4g",
+            "_index" : "logstash-2014.04.28",
+            "_type" : "syslog",
+            "_id" : "LOCA_bhZS-O9j0Lv0Fio8w",
+            "_score" : null, "_source" : {"message":"<30>Apr 28 14:48:39 inetd[3485]: auth/tcp: Connection from rx46401 (172.16.1.11) at Mon Apr 28 14:48:39 2014","@version":"1","@timestamp":"2014-04-28T16:05:20.665Z","type":"syslog","host":"172.16.1.21","tags":["_grokparsefailure"],"priority":13,"severity":5,"facility":1,"facility_label":"user-level","severity_label":"Notice","receivedtime":"2014-04-28 16:05:20 UTC"},
+            "sort" : [ "utc" ],
+            "_explanation" : {
+                "value" : 1.0146737,
+                "description" : "weight(host:172.16.1.21 in 932) [PerFieldSimilarity], result of:",
+                "details" : [ {
+                    "value" : 1.0146737,
+                    "description" : "fieldWeight in 932, product of:",
+                    "details" : [ {
+                        "value" : 1.0,
+                        "description" : "tf(freq=1.0), with freq of:",
+                        "details" : [ {
+                            "value" : 1.0,
+                            "description" : "termFreq=1.0"
+                        } ]
+                    }, {
+                        "value" : 1.0146737,
+                        "description" : "idf(docFreq=6967, maxDocs=7071)"
+                    }, {
+                        "value" : 1.0,
+                        "description" : "fieldNorm(doc=932)"
+                    } ]
+                } ]
+            }
+        }, {
+            "_shard" : 1,
+            "_node" : "jrJw12WYTymMkVyZ0B1B4g",
+            "_index" : "logstash-2014.04.28",
+            "_type" : "syslog",
+            "_id" : "8rGwP1jYT5Ss6ur4cwKDmg",
+            "_score" : null, "_source" : {"message":"<30>Apr 28 14:49:39 inetd[3503]: auth/tcp: Connection from rx46401 (172.16.1.11) at Mon Apr 28 14:49:39 2014","@version":"1","@timestamp":"2014-04-28T16:06:20.693Z","type":"syslog","host":"172.16.1.21","tags":["_grokparsefailure"],"priority":13,"severity":5,"facility":1,"facility_label":"user-level","severity_label":"Notice","receivedtime":"2014-04-28 16:06:20 UTC"},
+            "sort" : [ "utc" ],
+            "_explanation" : {
+                "value" : 1.0146737,
+                "description" : "weight(host:172.16.1.21 in 933) [PerFieldSimilarity], result of:",
+                "details" : [ {
+                    "value" : 1.0146737,
+                    "description" : "fieldWeight in 933, product of:",
+                    "details" : [ {
+                        "value" : 1.0,
+                        "description" : "tf(freq=1.0), with freq of:",
+                        "details" : [ {
+                            "value" : 1.0,
+                            "description" : "termFreq=1.0"
+                        } ]
+                    }, {
+                        "value" : 1.0146737,
+                        "description" : "idf(docFreq=6967, maxDocs=7071)"
+                    }, {
+                        "value" : 1.0,
+                        "description" : "fieldNorm(doc=933)"
+                    } ]
+                } ]
+            }
+        }, {
+            "_shard" : 1,
+            "_node" : "jrJw12WYTymMkVyZ0B1B4g",
+            "_index" : "logstash-2014.04.28",
+            "_type" : "syslog",
+            "_id" : "2LmhwafnQeadUHsQg5dQ8A",
+            "_score" : null, "_source" : {"message":"<30>Apr 28 14:52:09 inetd[3620]: auth/tcp: Connection from rx46401 (172.16.1.11) at Mon Apr 28 14:52:09 2014","@version":"1","@timestamp":"2014-04-28T16:08:50.742Z","type":"syslog","host":"172.16.1.21","tags":["_grokparsefailure"],"priority":13,"severity":5,"facility":1,"facility_label":"user-level","severity_label":"Notice","receivedtime":"2014-04-28 16:08:50 UTC"},
+            "sort" : [ "utc" ],
+            "_explanation" : {
+                "value" : 1.0146737,
+                "description" : "weight(host:172.16.1.21 in 934) [PerFieldSimilarity], result of:",
+                "details" : [ {
+                    "value" : 1.0146737,
+                    "description" : "fieldWeight in 934, product of:",
+                    "details" : [ {
+                        "value" : 1.0,
+                        "description" : "tf(freq=1.0), with freq of:",
+                        "details" : [ {
+                            "value" : 1.0,
+                            "description" : "termFreq=1.0"
+                        } ]
+                    }, {
+                        "value" : 1.0146737,
+                        "description" : "idf(docFreq=6967, maxDocs=7071)"
+                    }, {
+                        "value" : 1.0,
+                        "description" : "fieldNorm(doc=934)"
+                    } ]
+                } ]
+            }
+        }, {
+            "_shard" : 2,
+            "_node" : "jrJw12WYTymMkVyZ0B1B4g",
+            "_index" : "logstash-2014.04.28",
+            "_type" : "syslog",
+            "_id" : "pkhiLZucRISzHMUQmlHV4Q",
+            "_score" : null, "_source" : {"message":"<38>Apr 28 13:55:20 sshd[1514]: SSH: Server;Ltype: Version;Remote: 172.16.1.15-1133;Protocol: 2.0;Client: TrileadSSH2Java_213","@version":"1","@timestamp":"2014-04-28T15:12:01.569Z","type":"syslog","host":"172.16.1.21","tags":["_grokparsefailure"],"priority":13,"severity":5,"facility":1,"facility_label":"user-level","severity_label":"Notice","receivedtime":"2014-04-28 15:12:01 UTC"},
+            "sort" : [ "utc" ],
+            "_explanation" : {
+                "value" : 1.0146737,
+                "description" : "weight(host:172.16.1.21 in 908) [PerFieldSimilarity], result of:",
+                "details" : [ {
+                    "value" : 1.0146737,
+                    "description" : "fieldWeight in 908, product of:",
+                    "details" : [ {
+                        "value" : 1.0,
+                        "description" : "tf(freq=1.0), with freq of:",
+                        "details" : [ {
+                            "value" : 1.0,
+                            "description" : "termFreq=1.0"
+                        } ]
+                    }, {
+                        "value" : 1.0146737,
+                        "description" : "idf(docFreq=6967, maxDocs=7071)"
+                    }, {
+                        "value" : 1.0,
+                        "description" : "fieldNorm(doc=908)"
+                    } ]
+                } ]
+            }
+        }, {
+            "_shard" : 2,
+            "_node" : "jrJw12WYTymMkVyZ0B1B4g",
+            "_index" : "logstash-2014.04.28",
+            "_type" : "syslog",
+            "_id" : "mS8IdiycQ0qCBDvHwri_1Q",
+            "_score" : null, "_source" : {"message":"<30>Apr 28 13:59:52 inetd[1669]: registrar/tcp: Connection from localhost (127.0.0.1) at Mon Apr 28 13:59:52 2014","@version":"1","@timestamp":"2014-04-28T15:16:33.610Z","type":"syslog","host":"172.16.1.21","tags":["_grokparsefailure"],"priority":13,"severity":5,"facility":1,"facility_label":"user-level","severity_label":"Notice","receivedtime":"2014-04-28 15:16:33 UTC"},
+            "sort" : [ "utc" ],
+            "_explanation" : {
+                "value" : 1.0146737,
+                "description" : "weight(host:172.16.1.21 in 909) [PerFieldSimilarity], result of:",
+                "details" : [ {
+                    "value" : 1.0146737,
+                    "description" : "fieldWeight in 909, product of:",
+                    "details" : [ {
+                        "value" : 1.0,
+                        "description" : "tf(freq=1.0), with freq of:",
+                        "details" : [ {
+                            "value" : 1.0,
+                            "description" : "termFreq=1.0"
+                        } ]
+                    }, {
+                        "value" : 1.0146737,
+                        "description" : "idf(docFreq=6967, maxDocs=7071)"
+                    }, {
+                        "value" : 1.0,
+                        "description" : "fieldNorm(doc=909)"
+                    } ]
+                } ]
+            }
+        }, {
+            "_shard" : 2,
+            "_node" : "jrJw12WYTymMkVyZ0B1B4g",
+            "_index" : "logstash-2014.04.28",
+            "_type" : "syslog",
+            "_id" : "9nZo_cdbTzWfSjf1odkl2A",
+            "_score" : null, "_source" : {"message":"<30>Apr 28 14:00:38 inetd[1730]: auth/tcp: Connection from rx46401 (172.16.1.11) at Mon Apr 28 14:00:38 2014","@version":"1","@timestamp":"2014-04-28T15:17:19.596Z","type":"syslog","host":"172.16.1.21","tags":["_grokparsefailure"],"priority":13,"severity":5,"facility":1,"facility_label":"user-level","severity_label":"Notice","receivedtime":"2014-04-28 15:17:19 UTC"},
+            "sort" : [ "utc" ],
+            "_explanation" : {
+                "value" : 1.0146737,
+                "description" : "weight(host:172.16.1.21 in 910) [PerFieldSimilarity], result of:",
+                "details" : [ {
+                    "value" : 1.0146737,
+                    "description" : "fieldWeight in 910, product of:",
+                    "details" : [ {
+                        "value" : 1.0,
+                        "description" : "tf(freq=1.0), with freq of:",
+                        "details" : [ {
+                            "value" : 1.0,
+                            "description" : "termFreq=1.0"
+                        } ]
+                    }, {
+                        "value" : 1.0146737,
+                        "description" : "idf(docFreq=6967, maxDocs=7071)"
+                    }, {
+                        "value" : 1.0,
+                        "description" : "fieldNorm(doc=910)"
+                    } ]
+                } ]
+            }
+        }, {
+            "_shard" : 2,
+            "_node" : "jrJw12WYTymMkVyZ0B1B4g",
+            "_index" : "logstash-2014.04.28",
+            "_type" : "syslog",
+            "_id" : "x3icGkvOSSWnk8arkWZjYQ",
+            "_score" : null, "_source" : {"message":"<30>Apr 28 13:54:08 inetd[1451]: auth/tcp: Connection from rx46401 (172.16.1.11) at Mon Apr 28 13:54:08 2014","@version":"1","@timestamp":"2014-04-28T15:10:49.446Z","type":"syslog","receivedtime":"2014-04-28 15:10:49 UTC","host":"172.16.1.21","tags":["_grokparsefailure"],"priority":13,"severity":5,"facility":1,"facility_label":"user-level","severity_label":"Notice"},
+            "sort" : [ "utc" ],
+            "_explanation" : {
+                "value" : 1.0146737,
+                "description" : "weight(host:172.16.1.21 in 911) [PerFieldSimilarity], result of:",
+                "details" : [ {
+                    "value" : 1.0146737,
+                    "description" : "fieldWeight in 911, product of:",
+                    "details" : [ {
+                        "value" : 1.0,
+                        "description" : "tf(freq=1.0), with freq of:",
+                        "details" : [ {
+                            "value" : 1.0,
+                            "description" : "termFreq=1.0"
+                        } ]
+                    }, {
+                        "value" : 1.0146737,
+                        "description" : "idf(docFreq=6967, maxDocs=7071)"
+                    }, {
+                        "value" : 1.0,
+                        "description" : "fieldNorm(doc=911)"
+                    } ]
+                } ]
+            }
+        } ]
+    }
+}

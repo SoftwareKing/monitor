@@ -1,0 +1,324 @@
+<link rel="stylesheet" type="text/css" href="css/report/report.css">
+<div dialog info="timerReportRuleEditDialog" data="editPage.data" class="ldialog">
+    <div id="dlg" class="dialog-con" style="padding: 0px 0px 0px;" >
+        <table width="100%">
+        <tr>
+        <td style="vertical-align: top;background: #f7f7f7;height: 405px;" width="20%">
+            <div >
+                <ul user-ztree="editReportTree" id="editReportTree" class="ztree" style="border: 0;height: 405px"></ul>
+            </div>
+        </td>
+        <td>
+        <div style="height:400px;overflow: auto;">
+        <div class="row"><br/></div>
+        <div class="row">
+            <div class="col-xs-2" style="text-align: right">
+                规则名称
+            </div>
+            <div class="col-xs-10" style="padding-left: 0px">
+                <div class="row">
+                    <input ng-model="editPage.data.displayName" ng-pattern="/^[^<>%]*$/" type="text" maxlength="30" required/>
+                    <span class="required">*</span>
+                </div>
+                <div class="warn">
+                    <!--<span id="a1" style="display: none">此项不能为空或非法字符.</span>
+                    <span id="b1" style="display: none">超出长度限制.</span>-->
+                </div>
+            </div>
+        </div>
+        <div class="row"><br/></div>
+        <div class="row">
+            <div class="col-xs-2" style="text-align: right">
+                规则状态
+            </div>
+            <div class="col-xs-10" style="padding-left: 0px">
+                <input type="checkbox" class="ace ace-switch ace-switch-4" ng-model="editPage.data.active" />
+                <span class="lbl middle"></span>
+            </div>
+        </div>
+        <div class="row" ng-if="editPage.data.reportType<3">
+            <div class="col-xs-2" style="text-align: right;padding-top:10px;">
+                命中的规则
+            </div>
+            <div class="col-xs-10" style="padding-left: 0px;padding-top:10px;">
+                <table jq-table="molistPage.settings" class="table"></table>
+            </div>
+            <div class="col-xs-2" style="text-align: right;padding-top:10px;">
+                报表排序
+            </div>
+            <div class="col-xs-10" style="padding-left: 0px">
+                <div class="row" style="margin-top: 10px">
+                    <input name="orderByType" ng-model="editPage.data.orderByType" type="radio" value="正序">正序
+                    <input name="orderByType" ng-model="editPage.data.orderByType" type="radio" value="倒序">倒序
+                </div>
+                <div class="row" style="margin-top: 10px">
+                    <div id="sortEdit"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row" ng-if="editPage.data.reportType==1501">
+            <div class="col-xs-2" style="text-align: right;padding-top:10px;">
+                命中的规则
+            </div>
+            <div class="col-xs-10" style="padding-left: 0px;padding-top:10px;">
+                <table jq-table="molistPage.settings" class="table"></table>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 10px" ng-show="editPage.data.reportType==4 || editPage.data.reportType==5 || editPage.data.reportType==6 || editPage.data.reportType==7">
+            <div class="col-xs-2" style="text-align: right;line-height: 30px">
+                工单类型
+            </div>
+            <div class="col-xs-10" style="padding-left: 0px">
+                <div id="w"></div>
+            </div>
+        </div>
+        <div class="row" ng-show="editPage.data.reportType==5">
+            <div class="col-xs-2" style="text-align: right;line-height: 30px">
+                工单区域
+            </div>
+            <div class="col-xs-10" style="padding-left: 0px">
+                <div id="loc"></div>
+            </div>
+        </div>
+        <div class="row" ng-show="editPage.data.reportType==6">
+            <div class="col-xs-2" style="text-align: right;line-height: 30px">
+                角色选择
+            </div>
+            <div class="col-xs-10" style="padding-left: 0px">
+                <div id="u"></div>
+            </div>
+        </div>
+        <div class="row" ng-show="editPage.data.reportType==7">
+            <div class="col-xs-2" style="text-align: right;line-height: 30px">
+                资源类型
+            </div>
+            <div class="col-xs-10" style="padding-left: 0px">
+                <div id="moc"></div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 10px" ng-show="editPage.data.reportType==8">
+            <div class="col-xs-2" style="text-align: right;line-height: 30px">
+                机房名称
+            </div>
+            <div class="col-xs-10" style="padding-left: 0px;line-height: 30px ">
+                <div id="jf1"></div>
+            </div>
+            <div class="row"><br/></div>
+        </div>
+        <div class="row" ng-show="editPage.data.reportType==9">
+            <div class="col-xs-2" style="text-align: right;padding-top:10px;">
+                资源类型
+            </div>
+            <div class="col-xs-10" style="padding-left: 0px;padding-top:10px;">
+                <div id="zy"></div>
+            </div>
+            <div class="col-xs-2" style="text-align: right;padding-top:10px;">
+                指标类型
+            </div>
+            <div class="col-xs-10" style="padding-left: 0px;padding-top:10px;">
+                <div id="zb"></div>
+            </div>
+            <div class="col-xs-2" style="text-align: right;padding-top:10px;">
+                资源实例
+            </div>
+            <div class="col-xs-10" style="padding-left: 0px;padding-top:10px;">
+                <table jq-table="molistPortPage.settings" class="table"></table>
+            </div>
+            <div class="col-xs-2" style="text-align: right;padding-top:10px;">
+                筛选时段
+            </div>
+            <div class="col-xs-10" style="padding-left: 0px;padding-top:10px;">
+                {{editPage.data.portTime}}分钟
+            </div>
+            <div class="row"><br/></div>
+        </div>
+        <div class="row" ng-show="editPage.data.reportType==10">
+            <div class="col-xs-2" style="text-align: right;padding-top:10px;">
+                线路选择
+            </div>
+            <div class="col-xs-10" style="padding-left: 0px;padding-top:10px;">
+                <table jq-table="editLinkListPage.settings" class="table"></table>
+            </div>
+            <div class="col-xs-2" style="text-align: right;padding-top:10px;">
+                筛选时段
+            </div>
+            <div class="col-xs-10" style="padding-left: 0px;padding-top:10px;">
+                {{editPage.data.portTime}}分钟
+            </div>
+            <div class="row"><br/></div>
+        </div>
+        <div class="row" ng-show="editPage.data.reportType==1101 || editPage.data.reportType==1201">
+            <div class="col-xs-2" style="text-align: right;padding-top:10px;">
+                选中的资源
+            </div>
+            <div class="col-xs-10" style="padding-left: 0px;padding-top:10px;">
+                <table jq-table="alarmmolistPage.settings" class="table"></table>
+            </div>
+        </div>
+        <div class="row" ng-show="editPage.data.reportType==1401">
+            <div class="col-xs-2" style="text-align: right;padding-top:10px;">
+                选中的资产
+            </div>
+            <div class="col-xs-10" style="padding-left: 0px;padding-top:10px;">
+                <table jq-table="assetlistPage.settings" class="table"></table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-2" style="text-align: right" >
+                报表属性
+            </div>
+            <div class="col-xs-10" style="padding-left: 0px">
+                <span id="day" style="display:none">
+                    日报
+                    <div class="row lh40" ng-show="editPage.data.reportType<1401">
+                        时&nbsp;&nbsp;间&nbsp;&nbsp;段
+                        <div class="dropdown di date-component">
+                            <input id="edit-day-start" type="text" style="width: 126px" data-toggle="dropdown" readonly>
+                            <div class="dropdown-menu" ng-show="editPage.data.reportType!=2">
+                                <div rjq-date start-view="day" max-view="1"  format="hh:ii" target-input="edit-day-start"></div>
+                            </div>
+                        </div>
+                        <div class="dropdown di date-component">
+                            <input id="edit-day-end" type="text" style="width: 126px" data-toggle="dropdown" readonly>
+                            <div class="dropdown-menu" ng-show="editPage.data.reportType!=2">
+                                <div rjq-date start-view="day" max-view="1"  format="hh:ii" target-input="edit-day-end"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row lh40">
+                    执行时间
+                    <div class="dropdown di date-component">
+                        <input id="edit-day-exe" type="text" style="width: 126px" data-toggle="dropdown" readonly>
+                        <div class="dropdown-menu">
+                            <div rjq-date start-view="day" max-view="1"  format="hh:ii" target-input="edit-day-exe"></div>
+                        </div>
+                    </div>
+                </div>
+                </span>
+                <span id="week" style="display:none">
+                        周报
+                    <div class="row lh40" >
+                        时&nbsp;&nbsp;间&nbsp;&nbsp;段
+                        <select id="edit-week-start-week" ng-model="editPage.data.startWeek" style="width: 126px" ng-disabled="editPage.data.reportType==2">
+                            <option value="1">星期一</option>
+                            <option value="2">星期二</option>
+                            <option value="3">星期三</option>
+                            <option value="4">星期四</option>
+                            <option value="5">星期五</option>
+                            <option value="6">星期六</option>
+                            <option value="7">星期日</option>
+                        </select>
+                        <div class="dropdown di date-component">
+                            <input id="edit-week-start-week-h" type="text" style="width: 126px" data-toggle="dropdown" readonly>
+                            <div class="dropdown-menu" ng-show="editPage.data.reportType!=2">
+                                <div rjq-date start-view="day" max-view="1"  format="hh:ii" target-input="edit-week-start-week-h"></div>
+                            </div>
+                        </div>
+                        <select id="edit-week-end-week" style="width: 115px" ng-disabled="editPage.data.reportType==2">
+                            <option ng-repeat="type in editPage.datas.endWeeks" value={{type['id']}}>
+                                {{type['name']}}
+                            </option>
+                        </select>
+                        <div class="dropdown di date-component">
+                            <input id="edit-week-end-week-h" type="text" style="width: 110px" data-toggle="dropdown" readonly>
+                            <div class="dropdown-menu" ng-show="editPage.data.reportType!=2">
+                                <div rjq-date start-view="day" max-view="1"  format="hh:ii" target-input="edit-week-end-week-h"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row lh40">
+                    执行时间
+                    <select id="edit-week-exe-week" style="width: 126px;" >
+                        <option value="1">星期一</option>
+                        <option value="2">星期二</option>
+                        <option value="3">星期三</option>
+                        <option value="4">星期四</option>
+                        <option value="5">星期五</option>
+                        <option value="6">星期六</option>
+                        <option value="7">星期日</option>
+                    </select>
+                        <div class="dropdown di date-component">
+                            <input id="edit-week-exe" type="text" style="width: 126px" data-toggle="dropdown" readonly>
+                            <div class="dropdown-menu">
+                                <div rjq-date start-view="day" max-view="1"  format="hh:ii" target-input="edit-week-exe"></div>
+                            </div>
+                        </div>
+                </div>
+                </span>
+                <span id="month" style="display:none">
+                        月报
+                    <div class="row lh40" >
+                        时&nbsp;&nbsp;间&nbsp;&nbsp;段
+                        <div class="dropdown di date-component">
+                            <input id="edit-month-start" type="text" style="width: 126px" data-toggle="dropdown" readonly>
+                            <div class="dropdown-menu" ng-show="editPage.data.reportType!=2">
+                                <div rjq-date start-view="month" max-view="2"  format="dd hh:ii" target-input="edit-month-start"></div>
+                            </div>
+                        </div>
+                        <div class="dropdown di date-component">
+                            <input id="edit-month-end" type="text" style="width: 126px" data-toggle="dropdown" readonly>
+                            <div class="dropdown-menu" ng-show="editPage.data.reportType!=2">
+                                <div rjq-date start-view="month" max-view="2"  format="dd hh:ii" target-input="edit-month-end"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row lh40">
+                    执行时间
+                        <div class="dropdown di date-component">
+                            <input id="edit-month-exe" type="text" style="width: 126px" data-toggle="dropdown" readonly>
+                            <div class="dropdown-menu">
+                                <div rjq-date start-view="month" max-view="2"  format="dd hh:ii" target-input="edit-month-exe"></div>
+                            </div>
+                        </div>
+                </div>
+                </span>
+                <span id="year" style="display:none">
+                        年报
+                    <div class="row lh40" >
+                        <nobr>
+                        时&nbsp;&nbsp;间&nbsp;&nbsp;段
+                            <div class="dropdown di date-component">
+                                <input id="edit-year-start" type="text" style="width: 126px" data-toggle="dropdown" readonly>
+                                <div class="dropdown-menu" ng-show="editPage.data.reportType!=2">
+                                    <div rjq-date start-view="year" max-view="3" max-view="year"  format="mm-dd hh:ii" target-input="edit-year-start"></div>
+                                </div>
+                            </div>
+
+                            <div class="dropdown di date-component">
+                                <input id="edit-year-end" type="text" style="width: 126px" data-toggle="dropdown" readonly>
+                                <div class="dropdown-menu" ng-show="editPage.data.reportType!=2">
+                                    <div rjq-date start-view="year" max-view="3" max-view="year"  format="mm-dd hh:ii" target-input="edit-year-end"></div>
+                                </div>
+                            </div>
+                        </nobr>
+                    </div>
+                    <div class="row lh40">
+                        <nobr>
+                    执行时间
+                        <div class="dropdown di date-component">
+                            <input id="edit-year-exe" type="text" style="width: 126px" data-toggle="dropdown" readonly>
+                            <div class="dropdown-menu">
+                                <div rjq-date start-view="year" max-view="3" max-view="year"  format="mm-dd hh:ii" target-input="edit-year-exe"></div>
+                            </div>
+                        </div>
+                        </nobr>
+                </div>
+                </span>
+                </div>
+            </div>
+        <div class="row">
+            <br/>
+        </div>
+        </div>
+        </td>
+        </tr>
+        </table>
+    </div>
+    <form name="form" novalidate>
+        <div class="modal-footer">
+            <input ng-model="editPage.data.displayName" type="hidden"  required/>
+            <button type="button" class="btn btn-primary" ng-disabled="form.$invalid" ng-click="timerReportRuleEditDialog.save()">确定</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,70 @@
+<div ng-include src="'views/resource/template/header-less.html'"></div>
+
+<div class="row" style="margin-top: 20px">
+    <div class="col-xs-6">
+        <label>描述</label>
+        <div class="row">
+            <input type="textarea" ng-model="editPage.data.remark"  name="description">
+        </div>
+    </div>
+</div>
+
+
+-----------------------------IPv4------------------------------
+<div class="row">
+    <div class="col-xs-6">
+        <label>网络地址</label>
+        <div class="row">
+            <input type="text" ng-model="editPage.resource.network_address"
+                   name="name" ng-maxlength="45">
+        </div>
+    </div>
+    <div class="col-xs-6">
+        <label>网络掩码</label>
+        <div class="row">
+            <input type="text" ng-model="editPage.resource.network_mask"
+                   name="name" ng-maxlength="45">
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-6">
+        <label>DNS</label>
+        <div class="row">
+            <input type="text" ng-model="editPage.resource.dns"
+                   name="name" ng-maxlength="45">
+        </div>
+    </div>
+    <div class="col-xs-6">
+        <label>网关</label>
+        <div class="row">
+            <input type="text" ng-model="editPage.resource.gateway"
+                   name="name" ng-maxlength="45">
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-6">
+        <label>起始网络地址</label>
+        <div class="row">
+            <input type="text" ng-model="editPage.resource.ip_start"
+                   name="name" ng-maxlength="45">
+        </div>
+    </div>
+    <div class="col-xs-6">
+        <label>结束网络地址</label>
+        <div class="row">
+            <input type="text" ng-model="editPage.resource.ip_end"
+                   name="name" ng-maxlength="45">
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-6">
+        <label>网桥</label>
+        <div class="row">
+            <input type="text" ng-model="editPage.resource.bridge"
+                   name="name" ng-maxlength="45">
+        </div>
+    </div>
+</div>

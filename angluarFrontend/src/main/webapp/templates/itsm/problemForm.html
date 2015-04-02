@@ -1,0 +1,176 @@
+
+<div ng-model="model">
+    <div class="list_button">
+        <div class="row">
+            <span class="btn-group-xs"> <button class="btn" ng-disabled="loginUserMenuMap[currentView]" ng-show="isStatus && model.xsbz==1 && model.status!=7" ng-disabled="model.status==10" ng-click="show(serviceIndex,model)">转派</button> </span>
+            <span class="btn-group-xs"> <button class="btn" ng-disabled="loginUserMenuMap[currentView]" ng-show="isStatus && model.xsbz==1" ng-disabled="model.status==1 || model.status==3 || model.status==4 || model.status==5 || model.status==6 || model.status==7" ng-click="add(serviceIndex,model,2)">接单</button> </span>
+            <span class="btn-group-xs"> <button class="btn" ng-disabled="loginUserMenuMap[currentView]" ng-show="isStatus && model.xsbz==1" ng-disabled="model.status==2 || model.status==1 || model.status==4 || model.status==5 || model.status==6 || model.status==7" ng-click="add(serviceIndex,model,3)">开始处理</button> </span>
+            <span class="btn-group-xs"> <button class="btn" ng-disabled="loginUserMenuMap[currentView]" ng-show="isStatus && model.xsbz==1" ng-disabled="model.status==1 || model.status==2 || model.status==3 || model.status==5 || model.status==6 || model.status==7" ng-click="add(serviceIndex,model,4)">解决</button> </span>
+            <span class="btn-group-xs"> <button class="btn" ng-disabled="loginUserMenuMap[currentView]" ng-show="isStatus && model.xsbz==1" ng-disabled="model.status==1 || model.status==2 || model.status==3 || model.status==4 || model.status==6 || model.status==7" ng-click="add(serviceIndex,model,5)">重开</button> </span>
+            <span class="btn-group-xs"> <button class="btn" ng-disabled="loginUserMenuMap[currentView]" ng-show="isStatus && model.xsbz==1" ng-disabled="model.status==1 || model.status==2 || model.status==3 || model.status==4 || model.status==6 || model.status==7" ng-click="add(serviceIndex,model,6)">关闭</button> </span>
+            <!-- 			<a ng-show="!isStatus && !isStatus2"   ng-click="add(serviceIndex,model,0)"><i class="fa fa-check"></i>确定</a>
+                   <a ng-show="!isStatus && !isStatus2"  ng-click="select(serviceIndex)"><i class="fa fa-times"></i>取消</a>
+                   <a  ng-show="isStatus2 && model.bz==0 && model.status!=7"  ng-click="add(serviceIndex,model,10)"><i class="fa fa-pencil"></i>修改</a>
+                   <a ng-show="isStatus2 && model.bz==0"  ng-click="select(serviceIndex)"><i class="fa fa-times"></i>取消</a> -->
+        </div>
+    </div>
+    <div class="datagrid-con datagrid-form">
+        <form class="form-horizontal" role="form">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">请求人：</label>
+                        <div class="col-sm-7">
+                            <span class="block "> <input type="text" readonly="" class="form-control" ng-disabled="model.bz==1 || xgbz==1" ng-model="model.requester" ng-click="showReqTree();stopEvent($event);" /> <i class="fa fa-caret-down icon-info-sign" ng-disabled="model.bz==1 || xgbz==1" ng-click="showReqTree();stopEvent($event);"></i> </span>
+                            <div class="ztreef" ng-show="reqTreeShowState && model.id==null" ng-disabled="model.bz==1 || xgbz==1">
+                                <i class="fa fa-angle-up up-icon"></i>
+                                <div itsm-ztree="" url="userTreeUrl" return="data" click="reqCheck" name="'pr1'" data="userTreeData"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">地点：</label>
+                        <div class="col-sm-7">
+                            <select class="form-control ng-pristine ng-valid" ng-model="model.location" ng-disabled="model.bz==1 || xgbz==1"> <option ng-repeat="s in locList" value="{{s.dm}}">{{s.mc}}</option> </select>
+                        </div>
+                        <div class="col-sm-1">
+                            <span class="required">*</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <span class="col-sm-2 control-label">类别：</span>
+                        <div class="col-sm-7">
+                            <select class="form-control ng-pristine ng-valid" ng-model="model.category" ng-change="changeCate()"> <option ng-repeat="s in cateList" value="{{s.id}}">{{s.label}}</option> </select>
+                        </div>
+                        <div class="col-sm-1">
+                            <span class="required">*</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <span class="col-sm-2 control-label">紧急度：</span>
+                        <div class="col-sm-7">
+                            <select class="form-control ng-pristine ng-valid" ng-change="change()" ng-model="model.urgency" ng-disabled="model.bz==1 || xgbz==1"> <option value="1">低</option> <option value="2">中</option> <option value="3">高</option> </select>
+                        </div>
+                        <div class="col-sm-1">
+                            <span class="required">*</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <span class="col-sm-2 control-label">优先级：</span>
+                        <div class="col-sm-7">
+                            <select class="form-control ng-pristine ng-valid" ng-model="model.priority" ng-disabled="true"> <option value="1">低</option> <option value="2">中</option> <option value="3">高</option> </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <span class="col-sm-2 control-label">关联CI：</span>
+                        <div class="col-sm-7">
+                            <select class="form-control ng-pristine ng-valid" id="ci2" ng-model="model.ci"> <option ng-repeat="s in ciList" value="{{s.name}}">{{s.name}}</option> </select>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-show="isStatus">
+                        <span class="col-sm-2 control-label">状态：</span>
+                        <span class="col-sm-7">{{model.statusmc}}</span>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">联系电话：</label>
+                        <div class="col-sm-7">
+                            <input type="text" ng-model="model.phone" class="form-control" ng-disabled="model.bz==1 || xgbz==1" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">服务级别：</label>
+                        <div class="col-sm-7">
+                            <select class="form-control ng-pristine ng-valid" ng-model="model.sla" ng-disabled="model.bz==1 || xgbz==1"> <option ng-repeat="s in slaList" value="{{s.id}}">{{s.name}}</option> </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <span class="col-sm-2 control-label">类型：</span>
+                        <div class="col-sm-7">
+                            <select class="form-control ng-pristine ng-valid" id="type2" ng-model="model.type" ng-change="change2()"> <option ng-repeat="s in typeList" value="{{s.name}}">{{s.label}}</option> </select>
+                        </div>
+                        <div class="col-sm-1">
+                            <span class="required">*</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <span class="col-sm-2 control-label">严重度：</span>
+                        <div class="col-sm-7">
+                            <select class="form-control ng-pristine ng-valid" ng-change="change()" ng-model="model.serious" ng-disabled="model.bz==1 || xgbz==1"> <option value="1" selected="">低</option> <option value="2">中</option> <option value="3">高</option> </select>
+                        </div>
+                        <div class="col-sm-1">
+                            <span class="required">*</span>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-show="!isStatus">
+                        <span class="col-sm-2 control-label">处理人：</span>
+                        <div class="col-sm-7 treef">
+                            <span class="block "> <input type="text" class="form-control" ng-model="usertreeText" ng-click="showUserTree();stopEvent($event);" /> <i class="fa fa-caret-down icon-info-sign" ng-click="showUserTree();stopEvent($event);"></i> </span>
+                            <div class="ztreef" ng-show="userTreeShowState">
+                                <i class="fa fa-angle-up up-icon"></i>
+                                <div itsm-ztree="" url="userTreeUrl" check="userCheck" checkbox="true" name="'tu12'" data="userTreeData"></div>
+                            </div>
+                            <input type="hidden" ng-model="model.handler" />
+                        </div>
+                    </div>
+                    <div class="form-group" ng-show="isStatus">
+                        <span class="col-sm-2 control-label">处理人：</span>
+                        <span class="block">{{usertreeText}}</span>
+                    </div>
+                    <div class="form-group" ng-show="isStatus">
+                        <span class="col-sm-2 control-label">创建时间：</span>
+                        <span class="col-sm-7">{{model.created}} </span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <span class="col-sm-1 control-label">主题：</span>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" ng-model="model.topic" ng-disabled="model.bz==1 || xgbz==1" />
+                </div>
+                <div class="col-sm-1">
+                    <span class="required">*</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <span class="col-sm-1 control-label">备注：</span>
+                <div class="col-sm-8">
+                    <textarea type="text" class="form-control" ng-model="model.description"> &lt;/div &lt;/div </textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <span class="col-sm-1 control-label"></span>
+                <div class="col-sm-8">
+                    <ul class="nav nav-tabs server-tab">
+                        <li><span class="ml10">历史记录</span></li>
+                    </ul>
+                    <!-- Tab panes -->
+                    <div class="tab-content server-content">
+                        <div class="tab-pane active">
+                            <ul ng-repeat="d in datas">
+                                <li>{{d.note1}}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <span class="col-sm-1 control-label"></span>
+                <div class="col-sm-8">
+                    <div class="modal-footer">
+                        <!-- 		    <button type="button" ng-show="isStatus && model.xsbz==1 && model.status!=7" class="btn btn-primary btn-lg" ng-disabled="model.status==10" ng-click="show(serviceIndex,model)">转派</button>
+                            <button type="button" ng-show="isStatus && model.xsbz==1" ng-disabled="model.status==1 || model.status==3 || model.status==4 || model.status==5 || model.status==6 || model.status==7" class="btn btn-primary btn-lg" ng-click="add(serviceIndex,model,2)">接单</button>
+                            <button type="button" ng-show="isStatus && model.xsbz==1" class="btn btn-primary btn-lg" ng-disabled="model.status==2 || model.status==1 || model.status==4 || model.status==5 || model.status==6 || model.status==7" ng-click="add(serviceIndex,model,3)">开始处理</button>
+                            <button type="button" ng-show="isStatus && model.xsbz==1" class="btn btn-primary btn-lg" ng-disabled="model.status==1 || model.status==2 || model.status==3 || model.status==5 || model.status==6 || model.status==7" ng-click="add(serviceIndex,model,4)">解决</button>
+                            <button type="button" ng-show="isStatus && model.xsbz==1" class="btn btn-primary btn-lg" ng-disabled="model.status==1 || model.status==2 || model.status==3 || model.status==4 || model.status==6 || model.status==7" ng-click="add(serviceIndex,model,5)">重开</button>
+                            <button type="button" ng-show="isStatus && model.xsbz==1" class="btn btn-primary btn-lg" ng-disabled="model.status==1 || model.status==2 || model.status==3 || model.status==4 || model.status==6 || model.status==7" ng-click="add(serviceIndex,model,6)">关闭</button> -->
+                        <button type="button" ng-if="!isStatus && !isStatus2" class="btn btn-primary btn-lg" ng-click="add(serviceIndex,model,0)">确定</button>
+                        <button type="button" ng-if="isStatus2 && model.bz==0 && model.status!=7" class="btn btn-primary btn-lg" ng-click="add(serviceIndex,model,10)">修改</button>
+                        <button type="button" class="btn btn-primary btn-lg" ng-click="select(serviceIndex)">取消</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

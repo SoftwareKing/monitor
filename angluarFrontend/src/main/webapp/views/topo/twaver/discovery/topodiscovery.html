@@ -1,0 +1,141 @@
+<div modal-dialog settings="discoveryPage.modal.settings">
+    <form name="form" novalidate>
+        <div class="dialog-con">
+            <!-- 扫描前-->
+            <div ng-show="!discoveryPage.isScan" style="max-height:380px;overflow-y: auto;">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <label style="padding-bottom:5px">扫描协议：</label>
+                        <span class="radio">
+                            <label>
+                                <input class="ace" type="radio" value=1 ng-model="discoveryPage.data.type">
+                                <span class="lbl" style="padding-bottom:3px"></span>
+                                SNMP
+                            </label>
+                        </span>
+                        <!--<span class="radio">-->
+                            <!--<label>-->
+                                <!--<input class="ace" type="radio" value=2 ng-model="discoveryPage.data.type">-->
+                                <!--<span class="lbl" style="padding-bottom:3px"></span>-->
+                                <!--NMAP-->
+                            <!--</label>-->
+                        <!--</span>-->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label style="padding-bottom:12px">IP地址范围：</label>
+                        <input type="text" ng-model="discoveryPage.row.ipBegin" style="width:150px"/>
+                        —
+                        <input type="text" ng-model="discoveryPage.row.ipEnd" style="width:150px"/>
+                        <button class="btn btn-primary" ng-click="discoveryPage.action.addIpRow()">添加</button>
+                    </div>
+                </div>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th width="200">起始地址</th>
+                        <th width="200">结束地址</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-show="!discoveryPage.ipTable.length">
+                        <td colspan="4">没有数据</td>
+                    </tr>
+                    <tr ng-repeat="row in discoveryPage.ipTable">
+                        <td width="200">{{row.ipBegin}}</td>
+                        <td width="200">{{row.ipEnd}}</td>
+                        <td><i class="fa fa-trash-o" ng-click="discoveryPage.action.deleteIpRow(row.id)"></i></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label style="padding-bottom:12px">共同体名称：</label>
+                        <input type="text" ng-model="discoveryPage.row.community" style="width:150px"/>
+                        <button class="btn btn-primary" ng-click="discoveryPage.action.addCommunityRow()">添加</button>
+                    </div>
+                </div>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th width="300">共同体名称</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-show="!discoveryPage.communityTable.length">
+                        <td colspan="4">没有数据</td>
+                    </tr>
+                    <tr ng-repeat="row in discoveryPage.communityTable">
+                        <td width="300">{{row.community}}</td>
+                        <td><i class="fa fa-trash-o" ng-click="discoveryPage.action.deleteCommunityRow(row.id)"></i>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="row">
+                    <button class="btn btn-primary right" ng-click="discoveryPage.action.scan()">开始扫描</button>
+                </div>
+            </div>
+
+            <!-- 扫描后-->
+            <div class="row" ng-show="discoveryPage.isScan">
+                <div class="col-xs-4">
+                    <img ng-src="{{discoveryPage.pic}}"/>
+                </div>
+                <div class="col-xs-8">
+                    <div class="row">
+                        <progressbar animate="false" class="progress-striped active" value="discoveryPage.progress"
+                                     type="{{discoveryPage.progressType}}"><i>{{discoveryPage.progressText}}</i>
+                        </progressbar>
+                        <div class="lh34 mt10">已扫描完成：{{discoveryPage.countText}}</div>
+                        <div>
+                            <table class="table"  style="border:none">
+                                <tbody>
+                                <tr>
+                                    <td style="padding:0px;">
+                                        <div style="max-height:70px;overflow-y: auto;">
+                                            <table width="100%">
+                                                <tr ng-repeat="row in discoveryPage.nodes">
+                                                    <td width="100%">{{row}}</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </td>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="lh34">扫描发现的资源设备：{{discoveryPage.resultText}}</div>
+                    </div>
+                </div>
+            </div>
+
+            <table class="table" ng-show="discoveryPage.isScan && !discoveryPage.tick">
+                <thead>
+                <tr>
+                    <th width="200">资源类型</th>
+                    <th width="230">IP地址</th>
+                </thead>
+                <tbody>
+                <tr>
+                    <td colspan="2" style="padding:0px;">
+                        <div style="max-height:120px;overflow-y: auto;">
+                            <table width="100%">
+                                <tr ng-show="!discoveryPage.result.length">
+                                    <td colspan="2">没有数据</td>
+                                </tr>
+                                <tr ng-repeat="row in discoveryPage.result">
+                                    <td width="200">{{row.type}}</td>
+                                    <td width="230">{{row.ip}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,106 @@
+<link rel="stylesheet" type="text/css" href="css/history/history.css">
+<div class="content">
+    <bread-crumb>
+        <a>监控</a>
+        <a>数据分析</a>
+        <a class="current">采集规则</a>
+        <a class="search-link ">高级搜索</a>
+    </bread-crumb>
+    <!--left right layout-->
+    <layout-lr>
+        <panel-left>
+            <div id="sidebar" class="left-sidebar" style="overflow-y: visible">
+                <div class="menu-title">资源类型组</div>
+                <ul user-ztree="seachmocTree" id="seachmocTree" class="ztree"></ul>
+            </div>
+            <collapse-left></collapse-left>
+        </panel-left>
+        <!--  关闭left，可选 -->
+        <panel-right>
+            <div class="page-content">
+                <div class="search-head">
+                    <div class="row">
+                        <label>资源类型：</label>
+                        <select id="jmocid" ng-model="searchPage.mocId">
+                            <option value="">不限</option>
+                            <option ng-repeat="type in searchPagedata.mocs" value={{type[$root.history.const.json.moType.value]}}>
+                                {{type[$root.history.const.json.moType.description]}}
+                            </option>
+                        </select>
+                        <label>资源实例：</label>
+                        <input type="text" ng-model="searchPage.moName" maxlength="30" />
+                        <label>指标类型：</label>
+                        <select ng-model="searchPage.indicatorId" >
+                            <option value=""> 不限</option>
+                            <option ng-repeat="type in searchPagedata.indicators" value={{type[$root.history.const.json.metric.value]}}>
+                                {{type[$root.history.const.json.metric.description]}}
+                            </option>
+                        </select>
+                        <select ng-model="searchPage.metricId" >
+                            <option value=""> 不限</option>
+                            <option ng-repeat="type in searchPagedata.metrics" value={{type[$root.history.const.json.metric.value]}}>
+                                {{type[$root.history.const.json.metric.description]}}
+                            </option>
+                        </select>
+                        <label ng-show="searchPage.pmocId!=10" >所属机房：</label>
+                        <input ng-show="searchPage.pmocId!=10" type="text" readonly z-tree="{
+                                                inData:'locationsForJFSearch',
+                                                outData:'searchPage.jfId',
+                                                outParentData:'',
+                                                type:'radio',
+                                                description:'name',
+                                                children:'children',
+                                                value:'id',
+                                                depth:2,
+                                                radioCancel:true,
+                                                isLeaf:'isLeaf'
+                                              }" id="jfsText"/>
+                    </div>
+                    <div class="row">
+                        <label>规则状态：</label>
+                        <select ng-model="searchPage.active">
+                            <option value=""> 不限</option>
+                            <option value=true> 启用</option>
+                            <option value=false> 停用</option>
+                        </select>
+                        <label>规则名称：</label>
+                        <input type="text" ng-model="searchPage.displayName" maxlength="30"/>
+                        <label>更新时段：</label>
+                        <input type="text" ng-model="searchPage.starttime" jq-date format="yyyy-mm-dd hh:ii" readonly/>
+                        <input type="text" ng-model="searchPage.endtime" jq-date format="yyyy-mm-dd hh:ii" readonly/>
+                        <label>采集间隔：</label>
+                        <select ng-model="searchPage.sampleInterval" class="yinput">
+                            <option value=""> 不限 </option>
+                            <option ng-repeat="i in $root.history.const.intervals" value={{i.value}}> {{i.label}}
+                            </option>
+                        </select>
+                        <button class="btn"  ng-click="listPage.action.clickSearchBtn()">查询</button>
+                    </div>
+                </div>
+                <!-- 数据列表 -->
+                <div class="pr">
+                    <div class="list_button">
+                        <button class="btn"  ng-click="listPage.action.add();" ng-disabled="loginUserMenuMap[$root.currentView]">新增</button>
+                        <button class="btn" ng-click="listPage.action.removes();" ng-disabled="loginUserMenuMap[$root.currentView]">删除</button>
+                        <button class="btn" ng-click="listPage.action.actives(true);" ng-disabled="loginUserMenuMap[$root.currentView]">启用</button>
+                        <button class="btn" ng-click="listPage.action.actives(false);" ng-disabled="loginUserMenuMap[$root.currentView]">停用</button>
+                        <!--<button type="button" class="btn btn-primary" onclick="javascript:document.body.innerHTML=$('#print').html();window.print();location.reload();">导出</button>-->
+                    </div>
+                    <div id="print">
+                    <table jq-table="listPage.settings" class="table"></table>
+                    </div>
+                </div>
+            </div>
+        </panel-right>
+    </layout-lr>
+
+
+</div>
+<!-- 添加  页面-->
+<div ng-include src="'views/history/historyAdd.html'"></div>
+<!-- 编辑  页面-->
+<div ng-include src="'views/history/historyEdit.html'"></div>
+<!-- 时序图 页面-->
+<div dialog info="historyChartDialog" class="ldialog">
+    <div id="container" style="height: 400px;width: 850px"></div>
+</div>

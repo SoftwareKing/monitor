@@ -1,0 +1,48 @@
+.modal-content .modal-body .form-group {
+    float: left;
+    width: 100%;
+}
+.modal-content .modal-body .form-group>.control-label{
+    text-align: right;
+    margin: 0;
+}
+
+.modal-content .modal-body input.s, .modal-content .modal-body select.s, .modal-content .modal-body textarea.s{
+    width:185px;
+}
+
+.item-row{
+    width:500px;
+}
+
+.item-user{
+    margin-left:20px;
+}
+#item-content{
+    width:390px!important;
+}
+
+.tab-content{
+    padding:10px 0;
+}
+
+.assetTable{
+    border: 1px solid #ccc;
+    width:100%;
+    min-height:68px;
+}
+.modal-table select{
+    width:120px;
+}
+
+.xl .modal-dialog{
+    margin-left: -624px;
+}
+.xl .modal-content{
+    width: 1248px!important;
+}
+
+#name:disabled{
+    color: #848484!important;
+    background-color: #eee!important;
+}

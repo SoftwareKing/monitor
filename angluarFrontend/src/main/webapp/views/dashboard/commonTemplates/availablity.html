@@ -1,0 +1,55 @@
+<widget-box>
+    <widget-header>
+        <h5>可用性</h5>
+    </widget-header>
+    <widget-body>
+        <div id="availablity-content" style="width:55%;border-right:1px solid #ccc;float:left;">
+            <div style="border-bottom:1px solid #ccc;padding:10px;">
+                <div ng-controller="availablityBarCtrl" process-bar></div>
+            </div>
+            <div>
+                <div class="left" style="width:50%;padding:10px 5px 10px 10px;">
+                    <div class="lh34">
+                        <span class="label-block w80" title="{{panelBase[3][1].name}}"> {{panelBase[3][1].name}} : </span>
+                        <span class="label-block w80" title="{{panelBase[3][1].value}}">{{panelBase[3][1].value}}</span>
+                    </div>
+                    <div class="lh34">
+                        <span class="label-block w80" title="{{panelBase[3][2].name}}"> {{panelBase[3][2].name}} : </span>
+                        <span class="label-block w80" title="{{panelBase[3][2].value}}">{{panelBase[3][2].value}}</span>
+                    </div>
+                </div>
+                <div class="left" style="width:50%;padding:10px 10px 10px 5px;">
+                    <div  class="lh34">
+                        <span class="label-block w80" title="{{panelBase[3][3].name}}"> {{panelBase[3][3].name}} : </span>
+                        <span class="label-block w80" title="{{panelBase[3][3].value}}">{{panelBase[3][3].value}}</span>
+                    </div>
+                    <div  class="lh34">
+                        <span class="label-block w80" title="{{panelBase[3][4].name}}"> {{panelBase[3][4].name}} : </span>
+                        <span class="label-block w80" title="{{panelBase[3][4].value}}">{{panelBase[3][4].value}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="width:45%;float:left;padding:10px;">
+            <h5>故障时间</h5>
+
+            <div class="time-wrapper">
+                <ul class="time-ul">
+                    <li class="clock-bg"><span>{{availablityBarObj.days[0]}}</span></li>
+                    <li class="clock-bg"><span>{{availablityBarObj.days[1]}}</span></li>
+                    <li style=" width:8px;"><img src="../../img/dashboard/Point.png" width="8" height="8"><img src="../../img/dashboard/Point.png" width="8" height="8"></li>
+                    <li class="clock-bg"><span>{{availablityBarObj.hours[0]}}</span></li>
+                    <li class="clock-bg"><span>{{availablityBarObj.hours[1]}}</span></li>
+                    <li style=" width:8px;"><img src="../../img/dashboard/Point.png" width="8" height="8"><img src="../../img/dashboard/Point.png" width="8" height="8"></li>
+                    <li class="clock-bg"><span>{{availablityBarObj.mins[0]}}</span></li>
+                    <li class="clock-bg"><span>{{availablityBarObj.mins[1]}}</span></li>
+                </ul>
+                <div>
+                    <div class="time-lable">天</div>
+                    <div class="time-lable">小时</div>
+                    <div class="time-lable">分钟</div>
+                </div>
+            </div>
+        </div>
+    </widget-body>
+</widget-box>

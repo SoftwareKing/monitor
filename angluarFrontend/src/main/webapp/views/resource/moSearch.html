@@ -1,0 +1,65 @@
+    <div id="mo_search_div" class="search-head">
+        <form name="sform" novalidate>
+        <div class="row">
+            <label>资源类型：</label>
+            <!--<select ng-model="searchPage.data.mocpId">-->
+                <!--<option value=""> 不限</option>-->
+                <!--<option ng-repeat="type in $root.resource.moc" value={{type.id}}> {{type.displayName}} </option>-->
+            <!--</select>-->
+
+            <select ng-model="searchPage.data.mocId">
+                <option value=""> 不限</option>
+                <option ng-repeat="type in searchPage.resourceTypes" value={{type.id}}> {{type.displayName}} </option>
+            </select>
+            <label>资源实例：</label>
+            <input type="text" ng-model="searchPage.data.displayName" />
+            <label ng-show="searchPage.hasLoc">所属区域：</label>
+            <input ng-show="searchPage.hasLoc" type="text" readonly z-tree="{
+                                                inData:'locationsForSearch',
+                                                outData:'searchPage.data.locId',
+                                                outParentData:'',
+                                                type:'all_radio',
+                                                description:'name',
+                                                children:'children',
+                                                value:'id',
+                                                depth:10,
+                                                radioCancel:true
+                                              }" id="locationsText"/>
+            <label ng-show="searchPage.hasBus && searchPage.data.mocpId!=8">所属业务：</label>
+            <select ng-show="searchPage.hasBus && searchPage.data.mocpId!=8" ng-model="searchPage.data.businessId">
+                 <option value=""> 不限 </option>
+                 <option value="-1"> 未设置业务 </option>
+                 <option ng-repeat="type in $root.resource.businesses" value={{type['id']}}>
+                         {{type['displayName']}}
+                 </option>
+            </select>
+            <label ng-show="searchPage.data.mocpId==8">所属机房：</label>
+            <input ng-show="searchPage.data.mocpId==8" type="text" readonly z-tree="{
+                                                inData:'locationsForJFSearch',
+                                                outData:'searchPage.data.jfId',
+                                                outParentData:'',
+                                                type:'radio',
+                                                description:'name',
+                                                children:'children',
+                                                value:'id',
+                                                depth:2,
+                                                radioCancel:true,
+                                                isLeaf:'searchPage.isLeaf'
+                                              }" id="jfsText"/>
+            <button ng-show="!searchPage.hasIp && !searchPage.canFresh" class="btn" ng-click="searchPage.action.search(true)" >查询</button>
+        </div>
+        <div class="row">
+            <label ng-show="searchPage.hasIp">&nbsp;&nbsp;&nbsp;&nbsp;管理IP：</label>
+            <input ng-show="searchPage.hasIp" type="text" ng-model="searchPage.data.ip" />
+            <label ng-show="searchPage.canFresh">同步状态：</label>
+            <select ng-show="searchPage.canFresh" ng-model="searchPage.data.refreshStatus">
+                <option value=""> 不限</option>
+                <option value=0> 未同步</option>
+                <option value=2> 同步中</option>
+                <option value=1> 同步成功</option>
+                <option value=3> 同步失败</option>
+            </select>
+            <button ng-show="searchPage.hasIp || searchPage.canFresh" class="btn" ng-click="searchPage.action.search(true)">查询</button>
+        </div>
+            </form>
+    </div>

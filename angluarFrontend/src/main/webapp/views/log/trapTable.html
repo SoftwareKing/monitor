@@ -1,0 +1,21 @@
+<div id="log_list_div">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12">
+        <div>当天日志信息（00:00--{{dateTimeTrap}}）
+            <div class="list_button">
+                <button class="btn" ng-click="refreshTrap()">刷新</button>
+            </div>
+        </div>
+        </div>
+    </div>
+    <div class="row table-responsive">
+        <div class="col-xs-12 col-sm-12">
+        <table jquery-table
+               aa-data="resultTrap"
+               ao-column-defs="columnDefs"
+               fn-row-callback="myCallback"
+               ao-columns="columns"
+               class="table"></table>
+         </div>
+    </div>
+</div>

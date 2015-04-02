@@ -1,0 +1,43 @@
+<div modal-dialog settings="addModalSetting" class="dialog">
+    <form name="addForm" novalidate>
+        <div class="dialog-con" style="overflow: auto;">
+            <table class="modal-table">
+                <tbody>
+                <tr>
+                    <td class="row-lable">主题</td>
+                    <td>
+                        <input type="text" name="subject" style="width:451px;" ng-model="model.subject" maxlength="64" />
+                        <span class="required">*</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="row-lable"> 盘点日期 </td>
+                    <td>
+                        <input type="text" style="width:224px;" ng-model="model.startDateTime" jq-date
+                               format="yyyy-mm-dd hh:ii" min-date="2000-01-01 00:00" max-date="2100-01-01 00:00" readonly/>
+
+                        <input type="text" style="width:224px;" ng-model="model.endDateTime" jq-date
+                               format="yyyy-mm-dd hh:ii" min-date="2000-01-01 00:00" max-date="2100-01-01 00:00" readonly/>
+                        <span class="required">*</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="row-lable"> 盘点人 </td>
+                    <td>
+                        <select style="width:224px;" ng-model="model.userId" ng-options="p.id as p.realName for p in $root.userList">
+                            <option value="">--请选择--</option>
+                        </select>
+                        <span class="required">*</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="row-lable"> 说明 </td>
+                    <td>
+                        <textarea id="summary" name="summary" ng-model="model.summary" maxlength="255" style="width:451px;max-width:451px;"> </textarea>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,32 @@
+<div ng-include src="'views/resource/template/header-less.html'"></div>
+
+<div class="row" style="margin-top: 20px">
+    <layout-tab>
+        <tab-titles>
+            <tab-title>访问参数</tab-title>
+            <tab-title>业务信息</tab-title>
+        </tab-titles>
+        <tab-contents>
+            <tab-content>
+                <div style="display:none;"><div ng-include src="'views/resource/template/protocols.html'"></div></div>
+
+                <div ng-include src="'views/resource/protocol/http.html'"></div>
+
+                <div ng-include src="'views/resource/template/testBtn.html'"></div>
+            </tab-content>
+            <tab-content>
+                <div ng-include src="'views/resource/business/info-less.html'"></div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div ng-include src="'views/resource/business/host-relationship.html'"></div>
+                    </div>
+                </div>
+            </tab-content>
+        </tab-contents>
+    </layout-tab>
+</div>
+
+
+
+
+

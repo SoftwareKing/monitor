@@ -1,0 +1,10 @@
+<widget-header>
+    <h5>区域资源统计</h5>
+    <a class="toolbar-delete" ng-click="deletePanel(p.panelId)"><i class="fa fa-times"></i></a>
+    <widget-toolbar></widget-toolbar>
+</widget-header>
+<widget-body>
+    <div class="chart-wrap">
+        <highchart id="locationChart" config="locationChart.config"></highchart>
+    </div>
+</widget-body>

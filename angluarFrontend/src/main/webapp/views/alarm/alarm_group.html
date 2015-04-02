@@ -1,0 +1,46 @@
+<link rel="stylesheet" type="text/css" href="css/resource/resource.css">
+<div class="content" >
+    <bread-crumb>
+        <a>监控</a>
+        <a>告警</a>
+        <a class="current">组合告警事件</a>
+        <a class="search-link ">高级搜索</a>
+    </bread-crumb>
+    <layout-lr>
+        <panel-left>
+            <div id="sidebar" class="left-sidebar" style="overflow-y: visible">
+                <div class="menu-title">
+                    <span></span>
+                </div>
+                <ul user-ztree="mocTree" id="{{mocTree.treeId}}" class="ztree"></ul>
+            </div>
+            <collapse-left></collapse-left>
+        </panel-left>
+        <!--  关闭left，可选 -->
+        <panel-right>
+            <div class="page-content">
+                <div class="search-head">
+                    <form name="sform" novalidate>
+                        <div class="row">
+                            <label> 规则名称：</label>
+                            <input type="text" ng-model="searchPage.data.name" ng-maxlength="255"  ng-pattern="/^[^'']*$/"/>
+                            <label> 告警内容：</label>
+                            <input type="text" ng-model="searchPage.data.content" ng-maxlength="255"  ng-pattern="/^[^'']*$/"/>
+                            <button class="btn" ng-click="searchPage.action.search()" ng-disabled="sform.$invalid" >查询</button>
+                        </div>
+                    </form>
+                </div>
+                <!-- 数据列表 -->
+                <div class="pr">
+                    <div class="list_button">
+                        <!--<button type="button" class="btn btn-primary" onclick="javascript:document.body.innerHTML=$('#print').html();window.print();location.reload();">导出</button>-->
+                    </div>
+                    <div id="print">
+                    <table jq-table="listPage.settings" class="table"></table>
+                    </div>
+                </div>
+            </div>
+        </panel-right>
+    </layout-lr>
+</div>
+

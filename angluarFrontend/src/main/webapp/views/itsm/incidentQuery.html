@@ -1,0 +1,44 @@
+<div dialog info="incidentDialog" class="ldialog">
+    <div class="dialog-con" style="overflow: auto;">
+        <div class="search-head" style="display: block">
+                <div class="row">
+                    <label>故障单号：</label>
+                    <input type="text"  ng-model="incidentSearchPage.data.id"  >
+                    <label>故障标题：</label>
+                    <input type="text"  ng-model="incidentSearchPage.data.title"  >
+                    <label >所属区域：</label>
+                    <input type="text" id="location1" name="location1" z-tree="{
+                            inData:'locationData',
+                            outData:'incidentSearchPage.data.location',
+                            outParentData:'',
+                            type:'all_radio',
+                            description:'name',
+                            children:'children',
+                            isLeaf:'isLeafNode',
+                            value:'id',
+                            inputWidth:280,
+                            depth:3,
+                            radioCancel:true
+                            }" readonly/>
+
+                </div>
+                <div class="row">
+                    <label >创&nbsp;&nbsp;建&nbsp;&nbsp;人：</label>
+                    <select  ng-model="incidentSearchPage.data.applyUser" >
+                        <option value="">不限</option>
+                        <option ng-repeat="type in initData.users" value={{type['name']}}>
+                            {{type['realName']}}
+                        </option>
+                    </select>
+                    <label >创建时段：</label>
+                    <input type="text" ng-model="incidentSearchPage.data.applyTime1" jq-date format="yyyy-mm-dd hh:ii" readonly  />
+                    <input type="text" ng-model="incidentSearchPage.data.applyTime2" jq-date format="yyyy-mm-dd hh:ii" readonly />
+                    <button type="button" class="btn" ng-click="incidentListPage.settings.reload(true)">查询</button>
+                </div>
+            </div>
+            <!-- 数据列表 -->
+            <div class="pr mt10">
+                <table  jq-table="incidentListPage.settings" class="table"></table>
+            </div>
+    </div>
+</div>

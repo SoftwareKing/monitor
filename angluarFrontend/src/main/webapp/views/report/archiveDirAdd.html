@@ -1,0 +1,48 @@
+<div dialog info="archiveDirAddDialog" class="dialog">
+    <form name="form" novalidate>
+    <div class="dialog-con">
+        <table class="modal-table">
+            <tr>
+                <td class="row-lable"> 目录名称 </td>
+                <td>
+                    <input type="text" ng-model="archiveDirAdd.data.name"  name="name" ng-maxlength="20" required/>
+                    <span class="required">*</span>
+                    <div class="required" ng-show="form.name.$dirty && form.name.$invalid">
+                        <span ng-show="form.name.$error.required">此项不能为空.</span>
+                        <span ng-show="!form.name.$error.required && form.name.$error.maxlength">超出长度限制.</span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="row-lable"> 父目录名称 </td>
+                <td>
+                    <input type="hidden" ng-model="archiveDirAdd.data.parentId" required/>
+                    <input type="text"  readonly style="width: 280px"  z-tree="{
+                                        inData:'archive.dir',
+                                        outData:'archiveDirAdd.data.parentId',
+                                        outParentData:'',
+                                        type:'all_radio',
+                                        description:'name',
+                                        children:'children',
+                                        value:'id',
+                                        depth:100,
+                                        radioCancel:true,
+                                        inputWidth:280
+                                        }" id="dir"/>
+                    <span class="required">*</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="row-lable"> 备注 </td>
+                <td>
+                    <textarea id="remark" ng-model="archiveDirAdd.data.remark" name="remark" ng-maxlength="255"> </textarea>
+                </td>
+            </tr>
+         </table>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" ng-disabled="form.$invalid" ng-click="archiveDirAddDialog.save()">确定</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+    </div>
+    </form>
+</div>

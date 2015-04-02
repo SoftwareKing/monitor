@@ -1,0 +1,77 @@
+<!--<div xmlns="http://www.w3.org/1999/html">-->
+<div ng-controller="syslogDetailController">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12">
+          <div class="mb20">{{syslogIp}}---最近60条信息</div>
+          <div class="search-head mb20">
+            <form name = "querySyslog" class="di">
+            <label class="control-label">开始时间:</label>
+            <select ng-model="syslog.beginTime.hour">
+                <option ng-repeat="i in [] | loop:0:23:1" value={{i}}> {{i}} </option>
+            </select>
+            <label class="after-label">时</label>
+            <select ng-model="syslog.beginTime.min">
+                <option ng-repeat="i in [] | loop:0:59:1" value={{i}}> {{i}} </option>
+            </select>
+            <label class="after-label">分</label>
+
+                <!--<label for="time1" class="col-sm-2 control-label">开始时间</label>-->
+                <!--<div class="col-sm-3">-->
+                    <!--<input type="text" class="form-control" id="time1" dn-timepicker="h:mm a" ng-model="syslogBeginTime"  />-->
+                <!--</div>-->
+                <label class=" control-label">结束时间:</label>
+                <select ng-model="syslog.endTime.hour">
+                    <option ng-repeat="i in [] | loop:0:23:1" value={{i}}> {{i}} </option>
+                </select>
+                <label class="after-label">时</label>
+                <select ng-model="syslog.endTime.min">
+                    <option ng-repeat="i in [] | loop:0:59:1" value={{i}}> {{i}} </option>
+                </select>
+                <label class="after-label">分</label>
+
+
+                <!--<label  for="time2" class="col-sm-2 control-label">结束时间</label>-->
+                <!--<div class="col-sm-3">-->
+                    <!--<input type="text" class="form-control" id="time2" dn-timepicker="h:mm a" ng-model="syslogEndTime"/>-->
+                <!--</div>-->
+                <span class="btn-group-xs">
+                    <button class="btn" ng-click="querySyslogByTime(true)"><i class="fa fa-search"></i>查询</button>
+                </span>
+                <span class="btn-group-xs">
+                    <button class="btn" ng-click="updateState(false)"><i class="fa fa-arrow-left"></i>返回上一级</button>
+                </span>
+            </form>
+            <!--<form name = "querySyslog" class="di">-->
+
+                <!--<input type="text" dn-timepicker ng-model="syslogBeginTime" min-time="00:00" max-time="24:00" step="10m" time-format="HH:mm" />-->
+                <!--<input type="text" dn-timepicker ng-model="syslogEndTime" min-time="00:00" max-time="24:00" step="10m" time-format="HH:mm" />-->
+                <!--&lt;!&ndash;<label>起始时间：</label>&ndash;&gt;-->
+                <!--&lt;!&ndash;<input type="datetime-local" id="beginInput" name="input" ng-model="syslogBeginTime"&ndash;&gt;-->
+                       <!--&lt;!&ndash;placeholder="yyyy-MM-ddTHH:mm" min="2001-01-01T00:00" max="3013-12-31T00:00" required/>&ndash;&gt;-->
+                <!--&lt;!&ndash;<label>结束时间：</label>&ndash;&gt;-->
+                <!--&lt;!&ndash;<input type="datetime-local" id="endInput" name="input" ng-model="syslogEndTime"&ndash;&gt;-->
+                       <!--&lt;!&ndash;placeholder="yyyy-MM-ddTHH:mm" min="2001-01-01T00:00" max="3013-12-31T00:00" required/>&ndash;&gt;-->
+                <!--<span class="btn-group-xs">-->
+                    <!--&lt;!&ndash;<button class="btn" ng-click="queryByTime()" ng-disabled="!querySyslog.$valid"><i class="fa fa-search"></i>查询</button>&ndash;&gt;-->
+                    <!--<button class="btn" ng-click="queryByTime()"><i class="fa fa-search"></i>查询</button>-->
+                <!--</span>-->
+            <!--</form>-->
+        </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12">
+        <!--<div>syslogBeginTime = {{syslogBeginTime | date: "yyyy-MM-ddTHH:mm"}}</div><br/>-->
+          <table jquery-table
+               aa-data="result"
+               ao-column-defs="columnDefs"
+               ao-columns="columns"
+               class="table"></table>
+        </div>
+    </div>
+    <!--<div id="log_list_div" class="form-horizontal">-->
+        <!--<div class="row table-responsive">-->
+            <!--<table jq-table="listPage.settings" class="table table-striped table-bordered table-hover"></table>-->
+        <!--</div>-->
+    <!--</div>-->
+</div>

@@ -1,0 +1,75 @@
+{
+    "result": "success",
+    "desc": "Find TopoView Ok!",
+    "msg": {
+        "topoNodeList":[
+            {
+                "id": 1,
+                "name": "linux101",
+                "ip": "192.168.1.101",
+                "cmdbKey": 8,
+                "classify": 9,
+                "viewId": 4,
+                "horizontal": 100.0,
+                "vertical": 100.0
+            },
+            {
+                "id": 2,
+                "name": "linux102",
+                "ip": "192.168.1.102",
+                "cmdbKey": 9,
+                "classify": 3,
+                "viewId": 4,
+                "horizontal": 200.0,
+                "vertical": 200.0
+            },
+            {
+                "id": 0,
+                "name": "linux100",
+                "ip": "192.168.1.100",
+                "cmdbKey": 10,
+                "classify": 9,
+                "viewId": 4,
+                "horizontal": 10.0,
+                "vertical": 10.0
+            }
+        ],
+        "topoNodePortList": [
+            {
+                "id": 30,
+                "history_rule_id": 40,
+                "moc_id": 9,
+                "mo_id":8,
+                "indicator_id":20,
+                "metrics_id":30,
+                "metrics_args":"",
+                "value":"71",
+                "time":""
+            },
+            {
+                "id": 31,
+                "history_rule_id": 40,
+                "moc_id": 9,
+                "mo_id":8,
+                "indicator_id":20,
+                "metrics_id":30,
+                "metrics_args":"",
+                "value":"81",
+                "time":""
+            },
+            {
+                "id": 32,
+                "history_rule_id": 40,
+                "moc_id": 10,
+                "mo_id":9,
+                "indicator_id":20,
+                "metrics_id":30,
+                "metrics_args":"",
+                "value":"91",
+                "time":""
+            }
+        ]
+    }
+}
+
+

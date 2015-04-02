@@ -1,0 +1,60 @@
+<div class="row" ng-show="editPage.access.protocol=='email'">
+    <input type="checkbox" name="ssltype" value=1 ng-model="editPage.access.ssltype">  使用SSL
+</div>
+
+<div class="row" ng-show="editPage.access.protocol=='email' || editPage.access.protocol=='pop3' || editPage.access.protocol=='pop3s'">
+    <div class="col-xs-6">
+        <label>POP3地址</label>
+        <div class="row">
+            <input type="text" name="pop3server" ng-pattern="editPage.emptyValidate" ng-model="editPage.access.pop3server"/>
+        </div>
+        <div class="warn" ng-show="editMoForm.pop3server.$invalid && editMoForm.pop3server.$dirty">
+            <span>请输入POP3地址.</span>
+        </div>
+    </div>
+    <div class="col-xs-6">
+        <label>POP3端口</label>
+        <div class="row">
+            <input type="text" name="pop3port"  ng-pattern="editPage.portValidate" ng-model="editPage.access.pop3port"/>
+        </div>
+        <div class="warn" ng-show="editMoForm.pop3port.$invalid && editMoForm.pop3port.$dirty">
+            <span>请输入有效的POP3端口.</span>
+        </div>
+    </div>
+</div>
+<div class="row" ng-show="editPage.access.protocol=='email' || editPage.access.protocol=='pop3' || editPage.access.protocol=='pop3s'">
+    <div class="col-xs-6">
+        <label>用户名</label>
+        <input type="text" name="username" ng-pattern="editPage.emptyValidate" ng-model="editPage.access.username"/>
+        <div class="warn" ng-show="editMoForm.username.$invalid && editMoForm.username.$dirty">
+            <span>请输入用户名.</span>
+        </div>
+    </div>
+    <div class="col-xs-6">
+        <label>密码</label>
+        <div class="row">
+            <input type="password" ng-model="editPage.access.password"/>
+        </div>
+    </div>
+</div>
+
+<div class="row" ng-show="editPage.access.protocol=='email' || editPage.access.protocol=='smtp' || editPage.access.protocol=='smtps'">
+    <div class="col-xs-6">
+        <label>SMTP地址</label>
+        <div class="row">
+            <input type="text" name="smtpserver" ng-pattern="editPage.emptyValidate" ng-model="editPage.access.smtpserver"/>
+        </div>
+        <div class="warn" ng-show="editMoForm.smtpserver.$invalid && editMoForm.smtpserver.$dirty">
+            <span>请输入SMTP地址.</span>
+        </div>
+    </div>
+    <div class="col-xs-6">
+        <label>SMTP端口</label>
+        <div class="row">
+            <input type="text" name="smtpport"  ng-pattern="editPage.portValidate" ng-model="editPage.access.smtpport"/>
+        </div>
+        <div class="warn" ng-show="editMoForm.smtpport.$invalid && editMoForm.smtpport.$dirty">
+            <span>请输入有效的SMTP端口.</span>
+        </div>
+    </div>
+</div>

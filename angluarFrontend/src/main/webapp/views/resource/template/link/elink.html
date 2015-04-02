@@ -1,0 +1,82 @@
+<div ng-include src="'views/resource/template/header-less.html'"></div>
+
+<div class="row">
+    <div class="col-xs-6">
+        <div class="form-group" style="margin-bottom: 0;">
+            <label>左端设备</label>
+            <div class="row" ng-show="editPage.isEdit" style="margin-top: 10px">
+                <label style="margin-top: 0px;margin-right: 10px;">资源类型</label>
+                <input type="text" ng-model="editPage.leftType" name="leftLinkType" ng-maxlength="32"
+                       disabled="disabled" style="width: 220px">
+            </div>
+            <div class="row" ng-show="editPage.isEdit" style="margin-top: 10px">
+                <label style="margin-top: 0px;margin-right: 10px;">资源实例</label>
+                <input type="text" ng-model="editPage.data.resource.leftDisplayName" name="leftName" ng-maxlength="32"
+                       disabled="disabled" style="width: 220px" title="{{editPage.data.resource.leftDisplayName}}">
+            </div>
+            <ul id="leftResources" resources-tree="listPage.leftTree" class="ztree link-tree" ng-show="!editPage.isEdit"></ul>
+        </div>
+    </div>
+    <div class="col-xs-6">
+        <div class="form-group" style="margin-bottom: 0;">
+            <label>右端设备</label>
+            <div class="row" ng-show="editPage.isEdit" style="margin-top: 10px">
+                <label style="margin-top: 0px;margin-right: 10px;">资源类型</label>
+                <input type="text" ng-model="editPage.rightType" name="rightLinkType" ng-maxlength="32"
+                       disabled="disabled" style="width: 220px">
+            </div>
+            <div class="row" ng-show="editPage.isEdit" style="margin-top: 10px">
+                <label style="margin-top: 0px;margin-right: 10px;">资源实例</label>
+                <input type="text" ng-model="editPage.data.resource.rightDisplayName" name="rightName" ng-maxlength="32"
+                       disabled="disabled" style="width: 220px" title="{{editPage.data.resource.rightDisplayName}}">
+            </div>
+            <ul id="rightResources" resources-tree="listPage.rightTree"  class="ztree link-tree" ng-show="!editPage.isEdit"></ul>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-6">
+        <label>左端port</label>
+        <div class="row">
+            <select ng-model="editPage.resource.leftPort" name="leftPort" ng-options="port.value as port.ifDescr for port in listPage.leftPorts" >
+                <option value=""> --- 请选择 --- </option>
+            </select>
+            <span class="required">*</span>
+        </div>
+    </div>
+    <div class="col-xs-6">
+        <label>右端port</label>
+        <div class="row">
+            <select ng-model="editPage.resource.rightPort" name="rightPort" ng-options="port.value as port.ifDescr for port in listPage.rightPorts" >
+                <option value=""> --- 请选择 --- </option>
+            </select>
+            <span class="required">*</span>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-6">
+        <label>取值设备</label>
+        <div class="row">
+            <span class="radio">
+              <label><input class="ace" type="radio" name="mainPort" value="true" ng-model="editPage.resource.sampleLeft">
+                  <span class="lbl"></span>
+              </label>左端设备
+            </span>
+            <span class="radio">
+              <label><input class="ace" type="radio" name="mainPort" value="false" ng-model="editPage.resource.sampleLeft">
+                  <span class="lbl"></span>
+              </label>右端设备
+            </span>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+

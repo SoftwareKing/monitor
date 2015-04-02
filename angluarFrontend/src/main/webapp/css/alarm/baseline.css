@@ -1,0 +1,216 @@
+/* sourceInstance begin*/
+.ldialog .col-xs-3 {
+    background: #f7f7f7;
+    padding:0;
+}
+.ldialog .col-xs-3 .ztree{
+    padding:14px 0 10px 18px;
+    height: 478px!important;
+}
+
+.ldialog .modal-body{
+    height: 478px!important;
+    background: #fff;
+}
+
+.ldialog .col-xs-9{
+    padding-top:10px;
+    height: 478px;
+    overflow: auto;
+}
+.ldialog .col-xs-9 .ztree{height:183px}
+.ldialog .col-xs-9 .test-postion{margin-top:10px;margin-right:15px;}
+
+#mo_edit_modal_div .tab-content{
+    height:325px!important;
+}
+.modal-content .modal-body .table {
+    border: 1px solid #ccc;
+    margin: 10px 0 10px;
+}
+.protocol-list{
+    border: 1px solid #ddd;
+    overflow: auto;
+    padding: 0 15px;
+}
+.protocol-list .col-xs-3{
+    background:#fff;
+}
+.link-tree{
+  height:210px!important;
+}
+
+.reminder{
+    color: #305c8b;
+    background: #d6dde7;
+    padding: 15px;
+}
+dt, dd {
+    line-height:2em;
+}
+.room-setting-btn{
+    margin-top: 40px;
+}
+.discoveryBtn{
+    width: 130px;
+}
+.protocol-header{
+    font-weight: bold;
+    color: #333;
+    height: 34px;
+    line-height: 34px;
+    border-color: #d5d5d5;
+    margin: 0 -15px;
+    padding: 0 15px;
+    background: -webkit-linear-gradient(top, #fafafa, #e9e9e9);
+}
+.row-content{
+    padding-top: 15px;
+}
+.protocol-header .col-xs-3{
+    background: -webkit-linear-gradient(top, #fafafa, #e9e9e9)!important;
+}
+/* sourceInstance end */
+
+/* sourceType begin */
+.widget-box .table{
+  margin-bottom:0!important;
+}
+.ztree li span label{
+    vertical-align: top;
+}
+
+.row-header{
+    font-weight: bold;
+    color: #333;
+    height: 34px;
+    line-height: 34px;
+    border-color: #d5d5d5;
+    background: -webkit-linear-gradient(top, #fafafa, #e9e9e9);
+}
+.small-data-row{
+    margin: 0;
+    height: 28px;
+    line-height: 28px;
+}
+.data-row{
+    margin: 2px 0;
+    height: 52px;
+    line-height: 52px;
+}
+.data-row .radio{
+    padding-left:20px;
+}
+#editColorForm .col-xs-1{
+    padding-top: 1px;
+}
+.saveColorBtn-wrap{
+    height: 40px;
+    background: #eee;
+    padding: 6px 0;
+}
+
+#line-div .sepline {
+    border-top: 1px solid #ccc;
+    height: 18px;
+    margin-top: -10px;
+    display: block;
+}
+#line-div .row-content>div:last-child>span{
+    height: 0;
+}
+/* sourceType end */
+
+.widget-header {
+	background: -ms-linear-gradient(rgb(250, 250, 250) 0%, rgb(233, 233, 233) 100%);
+	background: -moz-linear-gradient(center top, #FAFAFA 0%, #E9E9E9 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);
+	background: -webkit-linear-gradient(top, #fafafa 0%, #e9e9e9 100%);
+	border: 1px solid #D5D5D5;
+	height: 40px;
+	line-height: 40px;
+	position: relative;
+}
+.widget-table {
+	background: -ms-linear-gradient(rgb(250, 250, 250) 0%, rgb(233, 233, 233) 100%);
+	background: -moz-linear-gradient(center top, #FAFAFA 0%, #E9E9E9 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);
+	background: -webkit-linear-gradient(top, #fafafa 0%, #e9e9e9 100%);
+	border-top: 1px solid #D5D5D5;
+	border-left:0px solid #D5D5D5;
+	border-right:0px solid #D5D5D5;
+	height: 40px;
+	line-height: 40px;
+	position: relative;
+}
+.widget-header h3 {
+	color: #333;
+	display: inline-block;
+	font-size: 12px;
+	font-weight: 400;
+	left: 10px;
+	line-height: 0px;
+	margin-right: 3em;
+	position: relative;
+	text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
+	font-weight:bold;
+	top: 0;
+}
+.stacked:before {
+	bottom: -4px;
+	left: 6px;
+	right: 6px;
+}
+.widget-content:after {
+	clear: both;
+}
+.widget-header + .widget-content {
+	border-top: medium none;
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+}
+.widget-content {
+	width:100%;
+}
+.widget-content {
+	background: none repeat scroll 0 0 #FFFFFF;
+	border: 1px solid #D5D5D5;
+	padding: 25px 15px 15px;
+	float:left;
+}
+
+.stat{
+	display: table;
+	float: left;
+	text-align: center;
+	margin-bottom: 1.9em;
+	width: 100%;
+}
+
+.scrollDiv{
+	overflow-y:auto;
+    height:290px;
+}
+
+.scrollAccessDiv{
+    line-height: 28px;
+    min-height: 68px;
+}
+.reverse-up{
+    font-size: 14px;
+    position: relative;
+    top: -5px;
+}
+.reverse-down{
+    font-size: 14px;
+    position: relative;
+    top: -30px;
+}
+
+.groupTable{
+    border:1px solid #ccc;
+    margin-bottom: 5px ;
+    width: 750px;
+}
+
+.groupTable td{
+    padding:5px;
+}

@@ -1,0 +1,48 @@
+<div ng-include src="'views/resource/template/header-less.html'"></div>
+
+<div class="row" style="margin-top: 20px">
+    <div class="col-xs-6">
+        <label>数据存储</label>
+        <div class="row">
+            <select ng-model="editPage.resource.ds_mad" name="ds_mad">
+                <option value=""> --- 请选择 --- </option>
+                <option value="fs"> --- FileSystem --- </option>
+            </select>
+        </div>
+    </div>
+    <div class="col-xs-6">
+        <label>传输方式</label>
+        <div class="row">
+            <select ng-model="editPage.resource.tm_mad" name="tm_mad">
+                <option value=""> --- 请选择 --- </option>
+                <option value="shared"> --- Shared --- </option>
+            </select>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-6">
+        <label>存储类型</label>
+        <div class="row">
+            <span class="radio">
+                 <label>
+                     <input class="ace" type="radio" ng-model="editPage.resource.type" value="0">
+                     <span class="lbl"></span>
+                 </label>Images
+            </span>
+            <span class="radio">
+                 <label>
+                     <input class="ace" type="radio" ng-model="editPage.resource.type" value="1">
+                     <span class="lbl"></span>
+                 </label>System
+            </span>
+            <span class="radio">
+                 <label>
+                     <input class="ace" type="radio" ng-model="editPage.resource.type" value="2">
+                     <span class="lbl"></span>
+                 </label>Files
+            </span>
+        </div>
+    </div>
+</div>
+

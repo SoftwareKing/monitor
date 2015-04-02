@@ -1,0 +1,118 @@
+<link rel="stylesheet" type="text/css" href="css/user/user.css">
+<div class="content">
+    <bread-crumb>
+        <a>设置</a>
+        <a class="current">角色管理</a>
+        <a class="search-link ">高级搜索</a>
+    </bread-crumb>
+    <div class="page-content">
+        <div class="search-head">
+            <form name="sform" novalidate>
+            <div class="row">
+                <label>角色名称：</label>
+                <input type="text" ng-model="searchPage.data.name"  />
+                <label>所属区域：</label>
+                <input type="text" z-tree="{
+                            inData:'roleDailog.locTree.data',
+                            outData:'searchPage.data.location',
+                            outParentData:'',
+                            type:'all_radio',
+                            description:'name',
+                            children:'children',
+                            isLeaf:'false',
+                            value:'id',
+                            inputWidth:280,
+                            depth:3,
+                            radioCancel:true
+                            }"/>
+                <button class="btn" ng-click="listPage.settings.reload()" >查询</button>
+            </div>
+            </form>
+       </div>
+       <div class="list_button">
+           <button class="btn" ng-disabled="loginUserMenuMap[currentView]" ng-click="listPage.action.add();form.$setPristine();">新增</button>
+           <button class="btn" ng-disabled="loginUserMenuMap[currentView]" ng-click="listPage.action.removeAll()">删除</button>
+       </div>
+       <table jq-table="listPage.settings" class="table"></table>
+    </div>
+    <div dialog info="roleDailog" data="roleDailog.model" class="ldialog">
+        <form name="form" novalidate>
+            <div class="dialog-con">
+                <table class="modal-table">
+                    <tr>
+                        <td class="row-lable"> 角色名称 </td>
+                        <td>
+                            <input type="text" id="name" ng-model="roleDailog.model.name"  name="name"
+                                   ng-maxlength="20" required/>
+                            <span class="required">*</span>
+                            <div class="required" ng-show="form.name.$dirty && form.name.$invalid">
+                                <span ng-show="form.name.$error.required">此项不能为空.</span>
+                                <span ng-show="!form.name.$error.required && form.name.$error.maxlength">超出长度限制.</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="row-lable"> 备注 </td>
+                        <td>
+                            <textarea id="remark" ng-model="roleDailog.model.remark"
+                                      name="remark" ng-maxlength="255"> </textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="vt row-lable"> 菜单权限 </td>
+                        <td class="pt5">
+                            <ul style="margin-left: 0px;" id="{{roleDailog.menuTree.treeId}}" user-ztree="roleDailog.menuTree" class="ztree"></ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="row-lable"> 操作权限 </td>
+                        <td>
+                            <div class="inline-group">
+                                <span class='radio'><label><input class="ace"  style="position:relative;"  type='radio' name="menuScope" ng-model="roleDailog.menuScope" value="0"/><span class="lbl"></span></label>查看权限</span>
+                                <span class='radio'><label><input class="ace"  style="position:relative;"  type='radio' name="menuScope" ng-model="roleDailog.menuScope" value="1"/><span class="lbl"></span></label>操作权限</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr style="height: 160px;">
+                        <td class="vt row-lable"> 区域组织 </td>
+                        <td>
+                            <input type="hidden" ng-model="roleDailog.model.locId" name="locId" required />
+                            <ul id="locTree" user-ztree="roleDailog.locTree" class="ztree"
+                                style="background: none;height: 150px;overflow-y: visible;margin-left: 0px;"></ul>
+                        </td>
+                        <td class="vt row-lable" style="width: 10px;">
+                            <span class="required">*</span>
+                        </td>
+                    </tr>
+                    <tr ng-show="roleDailog.model.locId">
+                        <td class="vt row-lable"> 资源权限 </td>
+                        <td class="pt5">
+                            <div class="role-wrap" style="width: 99.5%">
+                                <layout-tab>
+                                    <tab-titles class="titles-wrap" >
+                                        <tab-title ng-repeat="moc in roleDailog.mocs" ng-click="showTab(moc.id)" name="{{moc.id}}">{{moc.name}}</tab-title>
+                                    </tab-titles>
+                                </layout-tab>
+                                <div class="inline-group m15" style="margin-bottom: 5px;">
+                                    <label style="margin-top:-5px;">资源类型:</label>
+                            <span class='checkbox ml10' ng-repeat="sub in roleDailog.allMocs" ng-show="sub.pid==roleDailog.currentMoc">
+                                <label><input type='checkbox' name="moCheckbox" ng-change="checkMo(sub.id)" checklist-model="roleDailog.selectedMoc" checklist-value="sub.id"/><i></i></label>{{sub.name}}</span>
+                                </div>
+                                <div style="margin-left: 15px" ng-show="moTreeShow">
+                                    资源实例:
+                                </div>
+                                <div class="m15" ng-show="moTreeShow" style="margin-top:10px;">
+                                    <ul id="{{roleDailog.moTree.treeId}}" user-ztree="roleDailog.moTree" class="ztree"></ul>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" ng-disabled="form.$invalid" ng-click="roleDailog.save();form.$setPristine();">确定</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="form.$setPristine();">取消</button>
+            </div>
+        </form>
+    </div>
+</div>

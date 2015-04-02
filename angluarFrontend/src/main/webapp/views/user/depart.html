@@ -1,0 +1,120 @@
+<link rel="stylesheet" type="text/css" href="css/topo/topo.css">
+<style>
+.ztree ul{
+    overflow: visible !important;
+}
+</style>
+<div class="content" ng-controller="departController">
+    <bread-crumb>
+        <a>设置</a>
+        <a class="current">组织管理</a>
+    </bread-crumb>
+        <!--left right layout-->
+        <layout-lr>
+            <panel-left>
+                <div id="sidebar" class="left-sidebar">
+                    <div class="topo-menu-title" style="padding-left:10px; ">区域组织
+                        <!--<i title="上移" class="fa fa-arrow-up" ng-disabled="departTree.data.length <= 0 || loginUserMenuMap[currentView] || departDialog.node.upDisabled" ng-click="departDialog.arrow('up')"></i>
+                        <i title="下移" class="fa fa-arrow-down" ng-disabled="departTree.data.length <= 0 || loginUserMenuMap[currentView] || departDialog.node.downDisabled" ng-click="departDialog.arrow('down')"></i>
+                        <i title="右移" class="fa fa-arrow-right" ng-disabled="departTree.data.length <= 0 || loginUserMenuMap[currentView] || departDialog.node.rightDisabled" ng-click="departDialog.arrow('in')"></i>
+                        <i title="左移" class="fa fa-arrow-left" ng-disabled="departTree.data.length <= 0 || loginUserMenuMap[currentView] || departDialog.node.leftDisabled" ng-click="departDialog.arrow('out')"></i>
+                        <i title="新增" class="fa fa-plus"  ng-disabled="loginUserMenuMap[currentView]" ng-click="departTree.add();form.$setPristine();"></i>-->
+                    </div>
+                    <div class="content-area"  style="overflow: auto;">
+                        <ul edit-ztree="departTree" id="departTree" class="ztree" style="overflow: visible !important;"></ul>
+                    </div>
+                </div>
+                <collapse-left></collapse-left>
+            </panel-left>
+            <!--  关闭left，可选 -->
+            <panel-right>
+                <div class="page-content">
+                  <div class="table-responsive">
+                     <table jq-table="listPage.settings" class="table"></table>
+                  </div>
+                </div>
+            </panel-right>
+        </layout-lr>
+
+
+<div class="modal fade" id="{{departDialog.id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">{{departDialog.title}}</h4>
+            </div>
+            <div class="modal-body">
+                <form name="form" novalidate>
+                    <div class="dialog-con" style="overflow: auto">
+                        <table class="modal-table">
+                            <tr>
+                                <td class="row-lable"> 显示名称 </td>
+                                <td>
+                                    <input type="text" ng-model="departDialog.model.name" name="name" ng-maxlength="50" required />
+                                    <span class="required">*</span>
+                                    <div class="required" ng-show="form.name.$dirty && form.name.$invalid">
+                                        <span ng-show="form.name.$error.required">此项不能为空.</span>
+                                        <span ng-show="!form.name.$error.required && form.name.$error.maxlength">超出长度限制.</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="row-lable"> 拼音简称 </td>
+                                <td>
+                                    <input type="text" ng-model="departDialog.model.desc" name="desc" required
+                                           ng-maxlength="20" ng-pattern="/^[A-Za-z]+$/"/>
+                                    <span class="required">*</span>
+                                    <div class="required" ng-show="form.desc.$dirty && form.desc.$invalid">
+                                        <span ng-show="form.desc.$error.required">此项不能为空.</span>
+                                        <span ng-show="!form.desc.$error.required && form.desc.$error.maxlength">超出长度限制.</span>
+                                        <span ng-show="!form.desc.$error.required && !form.desc.$error.maxlength && form.desc.$error.pattern">只能输入字母.</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="row-lable">级别</td>
+                                <td>
+                                    <select type="text" ng-model="departDialog.model.orgLevel" name="level" ng-disabled="loginUser.userName!='admin'" required>
+                                        <option value="省">省</option>
+                                        <option value="市州">市州</option>
+                                        <option value="区县">区县</option>
+                                    </select>
+                                    <span class="required">*</span>
+                                    <div class="required" ng-show="form.level.$dirty && form.level.$invalid">
+                                        <span ng-show="form.level.$error.required">此项不能为空.</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="row-lable">是否机房</td>
+                                <td>
+                                    <select type="text" ng-model="departDialog.model.isJF" name="isJf" required>
+                                        <option value=0>否</option>
+                                        <option value=1>是</option>
+                                    </select>
+                                    <span class="required">*</span>
+                                    <div class="required" ng-show="form.isJf.$dirty && form.isJf.$invalid">
+                                        <span ng-show="form.isJf.$error.required">此项不能为空.</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="row-lable"> 备注 </td>
+                                <td>
+                                    <textarea ng-model="departDialog.model.remark"  name="remark" ng-maxlength="255"
+                                              rows="3" cols="50" style="height: 30px;"> </textarea>
+                                    <div class="required">
+                                        <span ng-show="form.remark.$error.maxlength">超出长度限制.</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" ng-disabled="form.$invalid" ng-click="departDialog.save()">确定</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    </div>
+                </form>
+     </div></div></div></div>
+</div>

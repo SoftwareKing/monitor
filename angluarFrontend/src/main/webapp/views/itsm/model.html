@@ -1,0 +1,92 @@
+<div class="content">
+    <bread-crumb>
+        <a>运维</a>
+        <a>自定义流程</a>
+        <a class="current">流程模型</a>
+        <a class="search-link ">高级搜索</a>
+    </bread-crumb>
+    <div class="page-content">
+        <div ng-controller="modelController">
+            <div class="search-head">
+                <div class="row">
+                    <label>流程名称：</label>
+                    <input type="text"  ng-model="modelSearchPage.data.name"/>
+                    <label >创建人：</label>
+                    <input type="text"  ng-model="modelSearchPage.data.createBy"/>
+                    <label >更新时间：</label>
+                    <input type="text" ng-model="modelSearchPage.data.time1" jq-date format="yyyy-mm-dd hh:ii" readonly />
+                    <input type="text" ng-model="modelSearchPage.data.time2" jq-date format="yyyy-mm-dd hh:ii" readonly />
+                    <button class="btn" ng-click="searchPage.action.search()">查询</button>
+                </div>
+            </div>
+            <div class="list_button">
+                <button class="btn" ng-disabled="loginUserMenuMap[currentView]" ng-click="listPage.action.add();form.$setPristine();">新建模型</button>
+            </div>
+            <div>
+                <table jq-table="listPage.settings" class="table"></table>
+            </div>
+        </div>
+
+        <div dialog info="openDialog" data="openDialog.model">
+            <form name="form" novalidate>
+                <div class="dialog-con" style="overflow: auto">
+                    <table class="modal-table">
+                        <tr>
+                            <td class="row-lable">流程KEY</td>
+                            <td>
+                                <input type="text" ng-model="openDialog.model.key" name="key" required
+                                       ng-maxlength="20" ng-pattern="/^[^<>]*$/"/>
+                                <span class="required">*</span>
+                                <div class="required" ng-show="form.key.$dirty && form.key.$invalid">
+                                    <span ng-show="form.key.$error.required">此项不能为空.</span>
+                                    <span ng-show="!form.key.$error.required && form.key.$error.maxlength">超出长度限制.</span>
+                                    <span ng-show="!form.key.$error.required && !form.key.$error.maxlength && form.key.$error.pattern">不能输入‘<’或‘>’.</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="row-lable">流程名称</td>
+                            <td>
+                                <input type="text" ng-model="openDialog.model.name" name="name" required
+                                       ng-maxlength="20" ng-pattern="/^[^<>]*$/"/>
+                                <span class="required">*</span>
+                                <div class="required" ng-show="form.name.$dirty && form.name.$invalid">
+                                    <span ng-show="form.name.$error.required">此项不能为空.</span>
+                                    <span ng-show="!form.name.$error.required && form.name.$error.maxlength">超出长度限制.</span>
+                                    <span ng-show="!form.name.$error.required && !form.name.$error.maxlength && form.name.$error.pattern">不能输入‘<’或‘>’.</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="row-lable">流程类型</td>
+                            <td>
+                                <input type="text" ng-model="openDialog.model.type" name="type" required
+                                       ng-maxlength="20" ng-pattern="/^[^<>]*$/"/>
+                                <span class="required">*</span>
+                                <div class="required" ng-show="form.type.$dirty && form.type.$invalid">
+                                    <span ng-show="form.type.$error.required">此项不能为空.</span>
+                                    <span ng-show="!form.type.$error.required && form.type.$error.maxlength">超出长度限制.</span>
+                                    <span ng-show="!form.type.$error.required && !form.type.$error.maxlength && form.type.$error.pattern">不能输入‘<’或‘>’.</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="row-lable">描述 </td>
+                            <td>
+                                <textarea ng-model="departDialog.model.desc" name="desc" ng-maxlength="255"  rows="3" cols="50"> </textarea>
+                                <div class="required">
+                                    <span ng-show="form.desc.$error.maxlength">超出长度限制.</span>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-disabled="form.$invalid" ng-click="openDialog.save()">确定</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

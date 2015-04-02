@@ -1,0 +1,8 @@
+<div class="panel-wrap">
+  <ul id="base">
+    <li class="" ng-repeat="m in panelItems">
+        <div class="td-label" title="{{m.key}}">{{m.key}} :</div>
+        <div class="td-value" title="{{(m.value && (m.value+'').indexOf('<i'))>-1?'':m.value}}" compile="m.value?m.value:''"></div>
+    </li>
+</ul>
+</div>

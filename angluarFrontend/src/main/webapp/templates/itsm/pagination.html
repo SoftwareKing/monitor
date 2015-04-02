@@ -1,0 +1,26 @@
+<ul class="pagination">
+<!--    <li>
+	  <div class="btn-group">
+		    <a type="button" class="dropdown-toggle" data-toggle="dropdown">
+		      {{pagination.params.rows}}
+		      <span class="caret"></span>
+		    </a>
+		    <ul class="dropdown-menu">
+		      <li><a ng-click="pagination.params.rows=10;pagination.params.page=1;pageClick()">10</a></li>
+		      <li><a ng-click="pagination.params.rows=20;pagination.params.page=1;pageClick()">20</a></li>
+		      <li><a ng-click="pagination.params.rows=30;pagination.params.page=1;pageClick()">30</a></li>
+		      <li><a ng-click="pagination.params.rows=50;pagination.params.page=1;pageClick()">50</a></li>
+		      <li><a ng-click="pagination.params.rows=100;pagination.params.page=1;pageClick()">100</a></li>
+		    </ul>
+		 </div>
+
+    </li>-->
+	<li><a class="pn" href="javascript:" ng-click="pagination.params.page=1;pageClick();" >首页</a></li>
+	<li><a class="pn" href="javascript:" ng-click="pagination.params.page=pagination.params.page-1;pageClick()" >上一页</a></li>
+	<li ng-repeat="page in pagination.gridPageTotal" ng-class="pagination.params.page==page?'on':''">
+		<a href="javascript:" ng-click="pagination.params.page=page;pageClick()">{{page}}</a>
+	</li>
+	<li><a class="pn" href="javascript:" ng-click="pagination.params.page=pagination.params.page+1;pageClick()" >下一页</a></li>
+	<li><a class="pn" href="javascript:" ng-click="pagination.params.page=pagination.pageTotal;pageClick()" >末页</a></li>
+	<!--<li><a>{{pagination.params.page}} / {{pagination.pageTotal}}</a></li>-->
+</ul>

@@ -1,0 +1,39 @@
+var line = new iChart.LineBasic2D({
+        render : 'container',
+        data: #data#,
+        align:'center',
+        title : '#title#',
+        width : 800,
+        height : 400,
+        tip:{
+            enable:true,
+            shadow:true
+        },
+        legend : {
+            enable : true,
+            row:1,
+            column : 'max',
+            valign:'top',
+            sign:'bar',
+            background_color:null,
+            offsetx:-80,
+            border : true
+        },
+
+        sub_option : {
+            label:false,
+            point_hollow : false
+        },
+        coordinate:{
+            width:700,
+            height:240,
+
+            scale:[{
+                 position:'left',
+            },{
+                 position:'bottom',
+                 labels:#labels#
+            }]
+        }
+    });
+line.draw();

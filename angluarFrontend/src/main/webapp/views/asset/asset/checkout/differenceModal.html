@@ -1,0 +1,71 @@
+<div modal-dialog settings="differenceModalSetting" class="ldialog">
+    <div class="dialog-con" style="overflow: auto;height:435px;padding-bottom: 10px;">
+        <div class="assetTable">
+                    <table class="table dataTable">
+                        <thead>
+                        <tr>
+                            <td>资产编号</td>
+                            <td>资产名称</td>
+                            <td>资产类型</td>
+                            <td>资产状态</td>
+                            <td>存放地</td>
+                            <td>责任人</td>
+                            <td>使用部门</td>
+                            <td>账面数量</td>
+                            <td>实际数量</td>
+                            <td>盘点差异</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="child in differenceList">
+                            <td title="{{child[0]}}">{{child[0]}}</td>
+                            <td title="{{child[1]}}">{{child[1]}}</td>
+                            <td>
+                                <div ng-switch="child[2]">
+                                    <div ng-switch-when="MW">中间件</div>
+                                    <div ng-switch-when="DB">数据库</div>
+                                    <div ng-switch-when="SYS">业务系统</div>
+                                    <div ng-switch-when="VC">虚拟池</div>
+                                    <div ng-switch-when="VS">虚拟机</div>
+                                    <div ng-switch-when="PS">PC服务器</div>
+                                    <div ng-switch-when="CB">刀片服务器</div>
+                                    <div ng-switch-when="UM">小型机</div>
+                                    <div ng-switch-when="DA">存储</div>
+                                    <div ng-switch-when="TL">磁带库</div>
+                                    <div ng-switch-when="LB">负载均衡</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div ng-switch="child[3]">
+                                    <div ng-switch-when="1">未用</div>
+                                    <div ng-switch-when="2">在用</div>
+                                    <div ng-switch-when="3">停用</div>
+                                    <div ng-switch-when="4">在修</div>
+                                    <div ng-switch-when="5">维保</div>
+                                    <div ng-switch-when="6">报废</div>
+                                    <div ng-switch-when="7">出借</div>
+                                    <div ng-switch-when="8">领用</div>
+                                </div>
+                            </td>
+                            <td title="{{child[4]}}">{{child[4]}}</td>
+                            <td title="{{child[5]}}">{{child[5]}}</td>
+                            <td title="{{child[6]}}">{{child[6]}}</td>
+                            <td>1</td>
+                            <td>
+                                <div ng-switch="child[7]">
+                                    <div ng-switch-when="true">1</div>
+                                    <div ng-switch-when="false">0</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div ng-switch="child[7]">
+                                    <div ng-switch-when="true">0</div>
+                                    <div ng-switch-when="false">1</div>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+    </div>
+</div>

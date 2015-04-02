@@ -1,0 +1,31 @@
+{
+    "total": 1,
+    "rows":[
+        {
+            "alarm":{
+                "id":"role1",
+                "name":"规则一",
+                "active":false,
+                "level":2,
+                "interval":30,
+                "categoryId":35,
+                "resourceTypeId":11,
+                "metricId":115,
+                "moId":32959,
+                "threshold":{
+                    "metricId":116,
+                    "exp":">",
+                    "metricVal":"90"
+                },
+                "startTime":8,
+                "endTime":12,
+                "workDays":[1,2,3,7],
+                "noticeFlag":true,
+                "noticeWay":["SMS"],
+                "noticeUsers":[10],
+                "updateTime":"2014/4/22 10:39:00"
+            },
+            "mo": {"id":32988,"key":"9e87375b-c798-4edd-81c0-d9fcb780d712","name":"test-mo-windows-135","displayName":"test-mo-windows-135(编辑)","ip":"192.168.21.135","remark":null,"mocId":169,"locId":null,"businessId":null,"cabinet":null,"rack":null,"user":null,"userContact":null,"username":null,"password":null,"protocol":null,"port":null,"version":null,"reserve1":null,"reserve2":null,"reserve3":null,"reserve4":null}
+        }
+    ]
+}

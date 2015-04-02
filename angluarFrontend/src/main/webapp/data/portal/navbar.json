@@ -1,0 +1,47 @@
+[
+    {"id":"overview","name":"首页"},
+    {"id":"room","name":"机房监控","type":"multiple","children":[
+                              {"id": "roomSetting", "name":"机房设置"},
+                              {"id": "roomPic", "name":"机房监控图展示"}
+                              ]},
+    {"id":"topo","name":"网络监控","type":"multiple","children":[
+                              {"id": "gtopo/0", "name":"物理拓扑"},
+                              {"id": "anaylizy", "name":"流量分析"}
+                              ]},
+    {"id":"biz/1","name":"业务监控"},
+    {"id":"resource","name":"资源管理","type":"multiple","children":[
+                            {"id": "sourceType", "name":"资源类型"},
+                            {"id": "sourceInstance", "name":"资源实例"},
+                            {"id": "sourceCount", "name":"资源统计信息"}
+                            ]},
+    {"id":"alert","name":"告警管理","type":"multiple","children":[
+                            {"id":"alarmRule","name":"告警规则"},
+                            {"id":"alarmEvent","name":"实时告警"},
+                            {"id":"alarmCount","name":"告警统计"}
+                            ]},
+    {"id":"history","name":"历史记录管理","type":"multiple","children":[
+        {"id": "historySetting", "name":"规则设置"}
+    ]},
+    {"id":"itsm","name":"ITSM管理","type":"multiple","children":[
+        {"id": "itsm/service", "name":"服务台"},
+        {"id": "itsm/work", "name":"排班管理"},
+        {"id": "itsm/sla", "name":"SLA设置"},
+        {"id": "itsm/doc", "name":"工单通知配置"}
+    ]},
+    {"id":"report","name":"报表管理","type":"multiple","children":[
+                            {"id": "creport", "name":"报表"},
+                            {"id": "archive", "name":"归档"},
+                            {"id": "book", "name":"订阅"}
+                            ]},
+    {"id":"log","name":"日志管理","type":"multiple","children":[
+        {"id":"syslog","name":"syslog"},
+        {"id":"trap","name":"trap"}
+    ]},
+    {"id":"system","name":"系统管理","type":"multiple","children":[
+                            {"id":"construct","name":"组织架构"},
+                            {"id":"role","name":"角色管理"},
+                            {"id":"user","name":"用户管理"},
+                            {"id":"communicateSetting","name":"通信设置"},
+                            {"id":"action","name":"操作审计"}
+                            ]}
+]

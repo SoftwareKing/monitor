@@ -1,0 +1,16 @@
+<link rel="stylesheet" type="text/css" href="css/itsm/itsm.css">
+<div class="content">
+    <bread-crumb>
+        <a>运维</a>
+        <a>{{taskId?((childId==null || childId==23 || childId==24)?'查看':'处理'):'新建'}}</a>
+        <a class="current">问题工单</a>
+        <a ng-click="knowledgelibDialog.show();" class="search-link">知识库查询</a>
+    </bread-crumb>
+    <div class="container container-wraper" style="width: 1044px;">
+        <div class="modal-content" style="border: 0px;width: 100%;padding-top: 20px;">
+            <div class="modal-body">
+                <div  ng-include src="'views/itsm/problem-content.html'"></div>
+            </div>
+        </div>
+    </div>
+</div>

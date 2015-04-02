@@ -1,0 +1,91 @@
+<div>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div ng-include src="'../dashboard/commonTemplates/summary.html'"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <widget-box>
+                        <widget-header>
+                            <h5>会话数</h5>
+                        </widget-header>
+                        <widget-body>
+                            <table  class="simple-table">
+                                <tr>
+                                    <td width="33.33333%" ng-repeat="l in currentMoc.lockPies">
+                                        <div  style="text-align: center;padding-top:10px;">
+                                            <div ng-controller="lockPieCtrl" lock-pie></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="gray-bottom">
+                                    <td>当前会话总数</td>
+                                    <td>每秒死锁数</td>
+                                    <td> SQL解析比 </td>
+                                </tr>
+                            </table>
+                            <div class="row" ng-if="currentMoc.trend">
+                                <div class="col-xs-12">
+                                    <div class="trend-wrapper">
+                                        <trend-chart ng-controller="hisTrendCtrl"></trend-chart>
+                                    </div>
+                                </div>
+                            </div>
+                        </widget-body>
+                    </widget-box>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div ng-include src="'../dashboard/commonTemplates/availablity.html'"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div ng-include src="'../dashboard/commonTemplates/baseInfo.html'"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div ng-include src="'../dashboard/commonTemplates/resourceInfo.html'"></div>
+                </div>
+            </div>
+            <div class="row" ng-if="currentMoc.memPies || currentMoc.trend">
+                <div class="col-xs-12">
+                    <widget-box>
+                        <widget-header>
+                            <h5>性能信息</h5>
+                        </widget-header>
+                        <widget-body>
+                            <div class="row" style="padding:5px;">
+                                <div class="col-xs-6" ng-repeat="l in currentMoc.cpuPies">
+                                    <div ng-controller="cpuPieCtrl">
+                                        <div id="cpuChart{{$index}}" speed-chart></div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6" ng-repeat="l in currentMoc.memPies">
+                                    <div ng-controller="memPieCtrl">
+                                        <div id="memChart{{$index}}" speed-chart></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </widget-body>
+                    </widget-box>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" ng-if="currentMoc.tables">
+        <div class="col-sm-12">
+            <div ng-include src="'../dashboard/commonTemplates/tables.html'"></div>
+        </div>
+    </div>
+</div>
+
+
+

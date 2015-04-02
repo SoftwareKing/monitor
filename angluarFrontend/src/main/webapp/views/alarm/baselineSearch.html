@@ -1,0 +1,40 @@
+<div id="baseline_search_div" class="search-head">
+    <div class="row">
+
+        <label>基线名称：</label>
+        <input type="text" ng-model="searchPage.data.displayName"/>
+
+        <label>资源类型：</label>
+        <select ng-model="searchPage.data.mocId">
+            <option value=""> 不限</option>
+            <option ng-repeat="type in searchPage.mocList" value={{type.id}}> {{type.displayName}}</option>
+        </select>
+
+        <label>指标类型：</label>
+        <select ng-model="searchPage.data.indicatorId">
+            <option value=""> 不限</option>
+            <option ng-repeat="type in searchPage.indicatorList" value={{type.id}}> {{type.displayName}}</option>
+        </select>
+
+        <label></label>
+        <select ng-model="searchPage.data.metricId">
+            <option value=""> 不限</option>
+            <option ng-repeat="type in searchPage.metricList" value={{type.id}}> {{type["displayName"]}}</option>
+        </select>
+
+        <label>所属区域：</label>
+        <input type="text" readonly z-tree="{
+            inData:'locationsForSearch',
+            outData:'searchPage.data.locId',
+            outParentData:'',
+            type:'all_radio',
+            description:'name',
+            children:'children',
+            value:'id',
+            depth:10,
+            radioCancel:true
+            }" id="searchLocationsText"/>
+
+        <button class="btn" ng-click="searchPage.action.search(true)">查询</button>
+    </div>
+</div>

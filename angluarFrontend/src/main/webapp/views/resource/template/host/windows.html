@@ -1,0 +1,109 @@
+<div ng-include src="'views/resource/template/header-more.html'"></div>
+
+<div class="row" style="margin-top: 20px">
+    <layout-tab>
+        <tab-titles>
+            <tab-title>访问参数</tab-title>
+            <tab-title>业务信息</tab-title>
+        </tab-titles>
+        <tab-contents>
+            <tab-content>
+                <div ng-include src="'views/resource/template/protocols.html'"></div>
+
+                <div ng-show="editPage.access.protocol=='wmi'">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <label>管理IP</label>
+                            <div class="row">
+                                <input type="text" name="ipWmi" ng-pattern="editPage.ipValidate" ng-model="editPage.data.ip"  required/>
+                                <span class="required">*</span>
+                            </div>
+                            <div class="warn" ng-show="editMoForm.ipWmi.$invalid && editMoForm.ipWmi.$dirty">
+                                <span>请输入有效的IP地址.</span>
+                            </div>
+                        </div>
+                        <div class="col-xs-6" ng-show="false">
+                            <label>端口</label>
+                            <div class="row">
+                                <input type="text"  name="port" ng-pattern="editPage.portValidate" ng-model="editPage.access.port"  required/>
+                                <span class="required">*</span>
+                                <div class="warn" ng-show="editMoForm.port.$invalid && editMoForm.port.$dirty">
+                                    <span>请输入有效的端口号.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <label>用户名</label>
+                            <div class="row">
+                                <input type="text" name="user" ng-pattern="editPage.emptyValidate" ng-model="editPage.access.user" required/>
+                                <span class="required">*</span>
+                                <div class="warn" ng-show="editMoForm.user.$invalid && editMoForm.user.$dirty">
+                                    <span>请输入用户名.</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <label>密码</label>
+                            <div class="row">
+                                <input type="password" ng-model="editPage.access.password"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div ng-show="editPage.access.protocol=='snmp'">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <label>管理IP</label>
+                            <div class="row">
+                                <input type="text" name="ipSnmp" ng-pattern="editPage.ipValidate" ng-model="editPage.data.ip"  required/>
+                                <span class="required">*</span>
+                            </div>
+                            <div class="warn" ng-show="editMoForm.ipSnmp.$invalid && editMoForm.ipSnmp.$dirty">
+                                <span>请输入有效的IP地址.</span>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <label>端口</label>
+                            <div class="row">
+                                <input type="text" name="port"  ng-pattern="editPage.portValidate" ng-model="editPage.access.port" required/>
+                                <span class="required">*</span>
+                            </div>
+                            <div class="warn" ng-show="editMoForm.port.$invalid && editMoForm.port.$dirty">
+                                <span>请输入有效的端口号.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <label>版本</label>
+                            <div class="row">
+                                <select ng-model="editPage.access.version">
+                                    <option value="V1" selected> V1 </option>
+                                    <option value="V2C" selected> V2C </option>
+                                </select>
+                                <span class="required">*</span>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <label>共同体</label>
+                            <div class="row">
+                                <input type="text" name="public" ng-pattern="editPage.emptyValidate" ng-model="editPage.access.community" required/>
+                                <span class="required">*</span>
+                                <div class="warn" ng-show="editMoForm.public.$invalid && editMoForm.public.$dirty">
+                                    <span>请输入共同体.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div ng-include src="'views/resource/template/testBtn.html'"></div>
+            </tab-content>
+            <tab-content>
+                <div ng-include src="'views/resource/business/info-more.html'"></div>
+            </tab-content>
+        </tab-contents>
+    </layout-tab>
+</div>
