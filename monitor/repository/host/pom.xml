@@ -10,7 +10,7 @@
         <version>1.3.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>dnt.monitor.resource</groupId>
+    <groupId>dnt.monitor.model</groupId>
     <artifactId>host</artifactId>
     <name>Host Resource Model</name>
     <description>
@@ -19,8 +19,8 @@
 
     <modules>
         <module>host_model</module>
-        <module>server_host</module>
-        <module>engine_host</module>
+        <module>host_in_server</module>
+        <module>host_in_engine</module>
     </modules>
 
 

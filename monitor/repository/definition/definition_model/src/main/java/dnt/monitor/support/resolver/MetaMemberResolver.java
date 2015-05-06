@@ -5,8 +5,8 @@ import dnt.monitor.annotation.Keyed;
 import dnt.monitor.exception.MetaException;
 import dnt.monitor.meta.MetaField;
 import dnt.monitor.meta.MetaMember;
-import dnt.monitor.meta.misc.MetaDepends;
-import dnt.monitor.meta.misc.MetaKeyed;
+import dnt.monitor.meta.MetaDepends;
+import dnt.monitor.meta.MetaKeyed;
 import dnt.monitor.model.ManagedObject;
 import net.happyonroad.util.StringUtils;
 
@@ -22,21 +22,31 @@ import static org.apache.commons.lang.StringUtils.capitalize;
  */
 public abstract class MetaMemberResolver<M extends MetaMember> extends MetaObjectResolver {
 
-    abstract M createMetaMember(PropertyDescriptor descriptor, Field field) throws MetaException;
+    abstract M createMetaMember(Class klass, PropertyDescriptor descriptor, Field field) throws MetaException;
 
-    protected M resolve(Class klass, PropertyDescriptor descriptor, Field field) throws MetaException {
-        M member = createMetaMember(descriptor, field);
+    /**
+     * <h2>Resolve The meta member of klass, by specified annotation</h2>
+     *
+     * @param klass      the klass of the meta member defined for
+     * @param descriptor the field descriptor
+     * @param field      the field
+     * @return the resolved meta member
+     * @throws MetaException
+     */
+    protected M resolve(Class klass, PropertyDescriptor descriptor, Field field)
+            throws MetaException {
+        M member = createMetaMember(klass, descriptor, field);
         applyDefaults(klass, member);
         //Entry field without keyed
         if (ManagedObject.class.isAssignableFrom(klass)) {
-            Keyed keyed = (Keyed) findAnnotation(descriptor, field, Keyed.class);
+            Keyed keyed = findAnnotation(descriptor, field, Keyed.class);
             if (keyed != null) {
                 MetaKeyed metaKeyed = resolveMetaKeyed(keyed);
                 member.setKeyed(metaKeyed);
             }
         }
 
-        Depends depends = (Depends) findAnnotation(descriptor, field, Depends.class);
+        Depends depends = findAnnotation(descriptor, field, Depends.class);
         if (depends != null) {
             MetaDepends metaDepends = resolveMetaDepends(depends);
             member.setDepends(metaDepends);

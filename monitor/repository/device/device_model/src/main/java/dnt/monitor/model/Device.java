@@ -4,12 +4,13 @@
 package dnt.monitor.model;
 
 import dnt.monitor.annotation.Category;
-import dnt.monitor.annotation.Depends;
+import dnt.monitor.annotation.Config;
 import dnt.monitor.annotation.Indicator;
 import dnt.monitor.annotation.Keyed;
 import dnt.monitor.annotation.snmp.Group;
 import dnt.monitor.annotation.snmp.OID;
-import dnt.monitor.annotation.ssh.Command;
+import net.happyonroad.model.Credential;
+
 import java.util.List;
 
 /**
@@ -18,7 +19,7 @@ import java.util.List;
  * 参考 RFC-1213:
  * .1.3.6.1.2.1(org.dod.internet.mgmt.mib-2.system)
  */
-@Category("device")
+@Category( value = "device", credentials = Credential.Snmp)
 @Group(value = "1.3.6.1.2.1.1", prefix = "sys")
 public class Device extends Resource {
     private static final long   serialVersionUID = 642723794375481995L;
@@ -26,15 +27,13 @@ public class Device extends Resource {
     // sys.Descr
     @Indicator
     @OID("Descr")
-    @Command("uname -n")
     private String        description;
     @Indicator
     @OID("ObjectID")
     private String        objectID;
     // sys.UpTime
     @Indicator
-    @OID("UpTime")
-    @Command("cat /proc/uptime | awk '{print $1}'")
+    @OID("UpTimeInstance")
     private String        upTime;
     @Indicator
     @OID("Contact")
@@ -43,13 +42,11 @@ public class Device extends Resource {
     @Indicator
     @OID("Location")
     private String        location;
-    // TODO host has many NetworkService 的关系还没有表达
     // IP Services
     private List<Service> services;
 
-    @Indicator
+    @Config
     @OID("Name")
-    @Depends("description")
     @Override
     public String getLabel() {
         return super.getLabel();
@@ -88,7 +85,6 @@ public class Device extends Resource {
 
     public void setDescription(String description) {
         this.description = description;
-        setLabel(description);
     }
 
     public String getUpTime() {

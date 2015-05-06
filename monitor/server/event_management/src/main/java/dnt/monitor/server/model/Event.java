@@ -6,12 +6,9 @@ import net.happyonroad.type.Priority;
 import net.happyonroad.type.Severity;
 
 /**
- * 事件实体类
- *
- * @author Chris Zhu
- * @email zhulihongpm@163.com
+ * <h1>事件实体类</h1>
+ * TODO add resource_type, resource_id，支持通过资源类型方式过滤事件
  */
-
 public class Event extends Record
 {
     private static final long serialVersionUID = -664781305450218915L;

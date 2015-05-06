@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>dnt.monitor.model</groupId>
+        <artifactId>test_suite</artifactId>
+        <version>1.3.0-SNAPSHOT</version>
+    </parent>
+
+    <groupId>dnt.monitor.server</groupId>
+    <artifactId>test_in_server</artifactId>
+    <name>Test in Server</name>
+    <description>The test suite in server, provide integration data</description>
+
+    <profiles>
+        <profile>
+            <id>with-mock-data</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>net.happyonroad</groupId>
+                        <artifactId>spring-component-builder</artifactId>
+                        <version>${version.component-framework}</version>
+                        <executions>
+                            <execution>
+                                <id>extend-app</id>
+                                <goals><goal>extend</goal></goals>
+                                <configuration>
+                                    <target>${release.dir}</target>
+                                    <copyDependencies>true</copyDependencies>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>un_extend-app</id>
+                                <goals><goal>un_extend</goal></goals>
+                                <configuration>
+                                    <target>${release.dir}</target>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+    </profiles>
+</project>

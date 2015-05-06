@@ -35,5 +35,6 @@
     <logger name="dnt.monitor.server.support.ObjectEventPrinter" level="WARN" />
     <!--Set below level to warn to hide url mapping-->
     <logger name="net.happyonroad.platform.web.SpringMvcConfig" level="WARN" />
+    <logger name="dnt.monitor.server.resolver.ServerFeatureResolver" level="WARN" />
     <logger name="dnt.monitor.server.support.EventManager" level="WARN" />
 </configuration>

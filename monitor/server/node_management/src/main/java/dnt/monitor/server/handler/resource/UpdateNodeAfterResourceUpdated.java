@@ -11,8 +11,8 @@ import dnt.monitor.server.service.NodeService;
 import net.happyonroad.event.ObjectUpdatedEvent;
 import net.happyonroad.spring.Bean;
 import net.happyonroad.util.DiffUtils;
+import net.happyonroad.util.MiscUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
@@ -75,7 +75,7 @@ class UpdateNodeAfterResourceUpdated extends Bean
             nodeService.update(node, newNode);
         } catch (Exception e) {
             logger.error("Can't update label for " + node +
-                         ", because of " + ExceptionUtils.getRootCauseMessage(e), e);
+                         ", because of " + MiscUtils.describeException(e), e);
         }
     }
 

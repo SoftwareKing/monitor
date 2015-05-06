@@ -8,10 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 操作日志的数据访问接口
- *
- * @author Chris Zhu
- * @email zhulihongpm@163.com
+ * 事件的数据访问接口
  */
 
 public interface EventRepository
@@ -43,7 +40,6 @@ public interface EventRepository
 
     /**
      * 查询所有的事件
-     * @return
      */
     List<String> findDistinctPath();
 

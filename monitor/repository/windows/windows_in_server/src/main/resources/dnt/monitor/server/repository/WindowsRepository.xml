@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dnt.monitor.server.repository.WindowsRepository">
+
+    <sql id="selectFullWindows">
+        SELECT w.* FROM windows w
+    </sql>
+
+    <select id="findById" resultMap="fullWindowsResult">
+        <include refid="selectFullWindows"/>
+        <where>w.id = #{id}</where>
+    </select>
+
+    <select id="findByAddress" resultMap="fullWindowsResult">
+        <include refid="selectFullWindows"/>
+        <where>w.address = #{address}</where>
+    </select>
+
+    <select id="selectWinServices" resultMap="winServiceResult">
+        SELECT ws.* FROM win_services ws WHERE resource_id = #{id}
+    </select>
+
+    <insert id="create">
+        BEGIN;
+        <include refid="dnt.monitor.server.repository.ResourceRepository.insertResource"/>
+        <selectKey keyProperty="id" keyColumn="id" order="AFTER" resultType="long" statementType="PREPARED">
+            <include refid="dnt.monitor.server.repository.ResourceRepository.selectKey"/>
+        </selectKey>
+        <include refid="dnt.monitor.server.repository.DeviceRepository.insertDevice"/>
+        <include refid="dnt.monitor.server.repository.HostRepository.insertHost"/>
+        COMMIT;
+    </insert>
+
+
+    <resultMap id="fullWindowsResult" type="WindowsHost" autoMapping="true"
+               extends="dnt.monitor.server.repository.HostRepository.fullHostResult">
+        <collection property="services" select="selectWinServices"  column="id" />
+    </resultMap>
+
+    <resultMap id="winServiceResult" type="WinService" autoMapping="true"
+               extends="dnt.monitor.server.repository.ResourceRepository.componentResult"/>
+
+</mapper>

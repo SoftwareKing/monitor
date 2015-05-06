@@ -2,35 +2,15 @@ package dnt.monitor.support.resolver;
 
 import dnt.monitor.annotation.Depends;
 import dnt.monitor.annotation.Keyed;
-import dnt.monitor.annotation.snmp.Group;
-import dnt.monitor.annotation.snmp.OID;
-import dnt.monitor.annotation.snmp.Table;
-import dnt.monitor.annotation.ssh.Command;
-import dnt.monitor.annotation.ssh.Mapping;
-import dnt.monitor.annotation.ssh.Value;
-import dnt.monitor.meta.misc.MetaDepends;
-import dnt.monitor.meta.misc.MetaKeyed;
-import dnt.monitor.meta.snmp.MetaGroup;
-import dnt.monitor.meta.snmp.MetaOID;
-import dnt.monitor.meta.snmp.MetaTable;
-import dnt.monitor.meta.ssh.MetaCommand;
-import dnt.monitor.meta.ssh.MetaMapping;
-import dnt.monitor.meta.ssh.MetaValue;
+import dnt.monitor.meta.MetaDepends;
+import dnt.monitor.meta.MetaEvent;
+import dnt.monitor.meta.MetaKeyed;
 import dnt.monitor.model.ManagedObject;
 import dnt.monitor.service.MetaService;
-import net.happyonroad.spring.Bean;
+import net.happyonroad.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.NoSuchMessageException;
-import org.springframework.core.ResolvableType;
-import org.springframework.core.annotation.AnnotationUtils;
-
-import java.beans.PropertyDescriptor;
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Array;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.util.Collection;
 
 import static net.happyonroad.util.StringUtils.translate;
 
@@ -39,38 +19,11 @@ import static net.happyonroad.util.StringUtils.translate;
  *
  * @author Jay Xiong
  */
-public class MetaObjectResolver extends Bean {
+public class MetaObjectResolver extends MetaResolverHelper {
     @Autowired
     MessageSource messageSource;
     @Autowired
     MetaService   metaService;
-
-    static Annotation findAnnotation(PropertyDescriptor descriptor, Field field, Class... annotationKlasses) {
-        Method writeMethod = descriptor.getWriteMethod();
-        if (writeMethod != null) {
-            for (Class annotationKlass : annotationKlasses) {
-                Annotation annotation = AnnotationUtils.findAnnotation(writeMethod, annotationKlass);
-                if (annotation != null) return annotation;
-            }
-        }
-
-        Method readMethod = descriptor.getReadMethod();
-        if (readMethod != null) {
-            for (Class annotationKlass : annotationKlasses) {
-                Annotation annotation = AnnotationUtils.findAnnotation(readMethod, annotationKlass);
-                if (annotation != null) return annotation;
-            }
-        }
-
-        if (field != null) {
-            for (Class annotationKlass : annotationKlasses) {
-                Annotation annotation = field.getAnnotation(annotationKlass);
-                if (annotation != null) return annotation;
-            }
-        }
-
-        return null;
-    }
 
     protected MetaKeyed resolveMetaKeyed(Keyed keyed) {
         MetaKeyed metaKeyed = new MetaKeyed();
@@ -84,67 +37,39 @@ public class MetaObjectResolver extends Bean {
         return metaDepends;
     }
 
-    protected MetaTable resolveSnmpTable(Table table) {
-        MetaTable metaTable = new MetaTable();
-        metaTable.setValue(table.value());
-        metaTable.setPrefix(table.prefix());
-        return metaTable;
+
+    protected void translateEventLabel(Class klass, MetaEvent event, String... extra) {
+        String klassName = event.getSource();
+        event.setLabel(message(klass, ".label", klassName) /* Resource.label */
+                       + message("Syntax.OWN", "'s ") +
+                       message(klass, event.getProperty() + ".label", event.getProperty()) /*Resource.address.label*/
+                       + StringUtils.join(extra)
+                       + message("Syntax.IS", "=") +
+                       message(klass, event.getProperty() + "." + event.getValue(), event.getValue()) /*Resource.address.Changed*/
+                      );
     }
 
-    protected MetaGroup resolveSnmpGroup(Group group) {
-        MetaGroup metaGroup = new MetaGroup();
-        metaGroup.setValue(group.value());
-        metaGroup.setPrefix(group.prefix());
-        return metaGroup;
-    }
-
-    protected MetaOID resolveSnmpOID(OID oid) {
-        MetaOID metaOID = new MetaOID();
-        metaOID.setValue(oid.value());
-        return metaOID;
-    }
-
-
-    protected MetaMapping resolveSshMapping(Mapping mapping) {
-        MetaMapping metaMapping = new MetaMapping();
-        metaMapping.setValue(mapping.value());
-        metaMapping.setSkipLines(mapping.skipLines());
-        metaMapping.setColSeparator(mapping.colSeparator());
-        metaMapping.setRowSeparator(mapping.rowSeparator());
-        return metaMapping;
-    }
-
-    protected MetaCommand resolveSshCommand(Command command) {
-        MetaCommand metaCommand = new MetaCommand();
-        metaCommand.setValue(command.value());
-        metaCommand.setTimeout(command.timeout());
-        return metaCommand;
-    }
-
-    protected MetaValue resolveSshValue(Value value) {
-        MetaValue metaValue = new MetaValue();
-        metaValue.setValue(value.value());
-        metaValue.setConverter(value.converter());
-        metaValue.setUnitRate(value.unitRate());
-        metaValue.setFormat(value.format());
-        return metaValue;
-    }
-
-    protected Class findType(PropertyDescriptor descriptor, Field field) {
-        Class<?> propertyType = descriptor.getPropertyType();
-        if (ManagedObject.class.isAssignableFrom(propertyType)) {
-            return propertyType;
-        } else if (Collection.class.isAssignableFrom(propertyType)) {
-            ResolvableType returnType =
-                    ResolvableType.forMethodReturnType(descriptor.getReadMethod(), field.getDeclaringClass());
-            return (Class) returnType.getGeneric(0).getType();
-        } else if (propertyType.isArray()) {
-            return propertyType.getComponentType();
-        } else if (Array.class.isAssignableFrom(propertyType)) {
-            return propertyType.getComponentType();
-        } else {
-            return descriptor.getPropertyType();
+    protected void translateEventDescription(Class<?> klass, MetaEvent event, float critical, float warning,
+                                           String unit) {
+        String field = message(klass, event.getProperty() + ".label", event.getProperty());
+        String condition;
+        boolean normal = critical > warning ;
+        String GR = message("Syntax.GR", " > ");
+        String LT = message("Syntax.LT", " < ");
+        if( "Critical".equals(event.getValue())){
+            condition = (normal ? GR : LT) + critical + unit;
+            event.setDescription(field + condition);
+        }else if("Warning".equals(event.getValue())){
+            condition = normal ? ( GR + warning + unit + message("Syntax.And", " && ") + LT + critical + unit) :
+                        ( LT + warning + unit + message("Syntax.And", " && ") + GR + critical + unit);
+            event.setDescription(field + condition);
+        }else if("Normal".equals(event.getValue())){
+            condition = (normal ? LT : GR) + warning + unit;
+            event.setDescription(field + condition);
+        }else {//Unknown
+            event.setDescription(field + message("Syntax.Value", "value") + message("Syntax.IS", "value") + message("Unknown", "unknown"));
         }
+
     }
 
     /**
@@ -166,13 +91,27 @@ public class MetaObjectResolver extends Bean {
             if (ManagedObject.class.isAssignableFrom(klass.getSuperclass())) {
                 return message(klass.getSuperclass(), suffix, defaults);
             } else {
-                return defaults;
+                String code;
+                if( suffix.startsWith(".") ) code = suffix.substring(1);
+                else code = suffix;
+                return message(code, defaults);
             }
         }
     }
 
     protected String message(Class klass, String suffix) {
         return message(klass, suffix, null);
+    }
+
+    protected String message(String code, String defaults) {
+        try {
+            return translate(messageSource, code);
+        } catch (NoSuchMessageException e) {
+            if( code.contains(".") )
+                return message(code.substring(code.indexOf('.') + 1), defaults);
+            else
+                return defaults;
+        }
     }
 
     static String reduceCglibName(String className) {

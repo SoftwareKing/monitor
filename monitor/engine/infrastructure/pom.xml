@@ -45,20 +45,8 @@
             <artifactId>spring-websocket</artifactId>
         </dependency>
         <dependency>
-            <groupId>dnt.monitor.resource</groupId>
-            <artifactId>engine_monitor</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>dnt.monitor.resource</groupId>
-            <artifactId>engine_windows</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>dnt.monitor.resource</groupId>
-            <artifactId>engine_linux</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>dnt.monitor.resource</groupId>
-            <artifactId>engine_switch</artifactId>
+            <groupId>dnt.monitor.engine</groupId>
+            <artifactId>monitor_in_engine</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
@@ -86,22 +74,6 @@
                     <artifactId>spring-expression</artifactId>
                 </exclusion>
             </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.snmp4j</groupId>
-            <artifactId>snmp4j</artifactId>
-            <version>${version.snmp4j}</version>
-        </dependency>
-        <dependency>
-            <groupId>net.percederberg</groupId>
-            <artifactId>mibble</artifactId>
-            <version>${version.mibble}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.trilead</groupId>
-            <artifactId>trilead-ssh2</artifactId>
-            <version>${version.ssh}</version>
         </dependency>
     </dependencies>
 

@@ -13,23 +13,36 @@
     <groupId>dnt.monitor</groupId>
     <artifactId>repository</artifactId>
     <name>Monitor Resource Models</name>
+    <modules>
+        <!--The shared parent poms-->
+        <module>parent</module>
+        <!--The definition between engine & server, engine & extension, server & extension-->
+        <module>definition</module>
+        <!--Abilities-->
+        <module>abilities</module>
+
+        <!--Device Model-->
+        <module>device</module>
+        <!--Application Model-->
+        <!--
+                <module>application</module>
+        -->
+        <!--Host Model-->
+        <module>host</module>
+        <module>linux</module>
+        <module>windows</module>
+        <!--Network Model-->
+        <module>switch</module>
+        <module>jvm</module>
+        <!--The introspection resource model-->
+        <module>monitor_system</module>
+        <module>test_suite</module>
+    </modules>
+
     <description>
         Include all kinds of resources models;
         All those models should be deployed to the monitor server.
         But the engine can use partial resource models;
     </description>
-
-    <modules>
-        <module>parent</module>
-        <module>definition</module>
-        <!--The introspection resource model-->
-        <module>monitor_system</module>
-        <module>device</module>
-        <module>host</module>
-        <module>linux</module>
-        <module>windows</module>
-        <module>switch</module>
-        <module>data_suite</module>
-    </modules>
 
 </project>

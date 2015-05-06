@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE model>
+<model name="dnt.monitor.model.AddressEntry"
+       xmlns:snmp="http://www.w3.org/2001/XMLSchema/snmp">
+    <snmp:table>1.3.6.1.2.1.4.20</snmp:table>
+    <property name="ifIndex" snmp:oid="IfIndex" />
+    <property name="addr" snmp:oid="Addr" />
+    <property name="netMask" snmp:oid="NetMask" />
+    <property name="bcastAddr" snmp:oid="BcastAddr" />
+    <property name="reasmMaxSize" snmp:oid="ReasmMaxSize" />
+</model>

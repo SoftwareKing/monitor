@@ -32,6 +32,7 @@ public class MetaResourceResolver extends MetaModelResolver<Resource, MetaResour
         metaResource.setName(category.getType());
         metaResource.setLabel(category.getLabel());
         metaResource.setCategory(category);
+
         return metaResource;
     }
 

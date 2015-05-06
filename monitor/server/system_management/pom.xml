@@ -27,8 +27,8 @@
             <artifactId>redis</artifactId>
         </dependency>
         <dependency>
-            <groupId>dnt.monitor.resource</groupId>
-            <artifactId>server_monitor</artifactId>
+            <groupId>dnt.monitor.server</groupId>
+            <artifactId>monitor_in_server</artifactId>
         </dependency>
     </dependencies>
 

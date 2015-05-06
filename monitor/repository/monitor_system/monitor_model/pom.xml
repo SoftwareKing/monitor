@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>dnt.monitor.resource</groupId>
+        <groupId>dnt.monitor.model</groupId>
         <artifactId>model_parent</artifactId>
         <version>1.3.0-SNAPSHOT</version>
         <relativePath>../../parent/model_parent</relativePath>
@@ -19,12 +19,32 @@
 
     <dependencies>
         <dependency>
-            <groupId>dnt.monitor.resource</groupId>
-            <artifactId>host_model</artifactId>
+            <groupId>dnt.monitor.model</groupId>
+            <artifactId>jvm_model</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>dnt.monitor.model</groupId>
+            <artifactId>jdbc_model</artifactId>
         </dependency>
         <dependency>
             <groupId>net.happyonroad</groupId>
             <artifactId>remoting</artifactId>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifestEntries>
+                            <App-Message>dnt.monitor.model.monitor_system</App-Message>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

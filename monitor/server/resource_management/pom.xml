@@ -19,16 +19,16 @@
 
     <dependencies>
         <dependency>
-            <groupId>dnt.monitor.resource</groupId>
-            <artifactId>server_switch</artifactId>
+            <groupId>dnt.monitor.server</groupId>
+            <artifactId>switch_in_server</artifactId>
         </dependency>
         <dependency>
-            <groupId>dnt.monitor.resource</groupId>
-            <artifactId>server_host</artifactId>
+            <groupId>dnt.monitor.server</groupId>
+            <artifactId>host_in_server</artifactId>
         </dependency>
         <dependency>
-            <groupId>dnt.monitor.resource</groupId>
-            <artifactId>server_monitor</artifactId>
+            <groupId>dnt.monitor.server</groupId>
+            <artifactId>monitor_in_server</artifactId>
         </dependency>
     </dependencies>
 

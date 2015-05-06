@@ -86,8 +86,8 @@ angular.module("ServerIndex.NewNode", [])
         for child in data.children
           resourceTree.push child
         $scope.resourceTree = resourceTree
-        $scope.disabledNodes = [{"name": "type", "value": "/application"}]
-        $scope.removedNodes = [{"name": "type", "value": "/application/monitor_server"}]
+        $scope.disabledNodes = [{"name": "type", "value": "/app"}]
+        $scope.removedNodes = [{"name": "type", "value": "/app/jvm/monitor/server"}]
 
       $scope.$watch 'resourceType', (newVal, oldVal)->
         aNewVal = if newVal and newVal.length > 0 then newVal[0].type else null

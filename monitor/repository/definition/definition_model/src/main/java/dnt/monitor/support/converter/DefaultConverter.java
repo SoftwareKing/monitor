@@ -25,11 +25,15 @@ public class DefaultConverter implements TypeConverter {
         valueText = valueText.trim();
 
         if (Boolean.class == valueType || boolean.class == valueType) {
-            return Boolean.parseBoolean(valueText);
+            return Boolean.parseBoolean(valueText) || "1".equals(valueText);
         }
         if (Date.class == valueType) {
-            SimpleDateFormat sdf = new SimpleDateFormat(format);
-            return sdf.parse(valueText);
+            if( format != null ){
+                SimpleDateFormat sdf = new SimpleDateFormat(format);
+                return sdf.parse(valueText);
+            }else{
+                return new Date(Long.valueOf(valueText));
+            }
         }
 
         if (Integer.class == valueType || int.class == valueType) {
@@ -48,6 +52,6 @@ public class DefaultConverter implements TypeConverter {
             return v.floatValue();
         }
 
-        throw new Exception("not support for class:" + valueType);
+        throw new Exception("Not support for " + valueType);
     }
 }

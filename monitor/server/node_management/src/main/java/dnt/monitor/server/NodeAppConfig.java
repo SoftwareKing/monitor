@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Import;
  */
 @Configuration
 @Import({SystemUserConfig.class, EventUserConfig.class, ResourceUserConfig.class})
-public class NodeAppConfig extends AbstractAppConfig {
+public class NodeAppConfig extends DefaultServerAppConfig {
 
     @Override
     public void doExports()  {

@@ -12,6 +12,7 @@ import dnt.monitor.server.repository.NodeRepository;
 import dnt.monitor.server.service.*;
 import dnt.monitor.server.util.ResourceComparator;
 import dnt.monitor.service.MetaService;
+import net.happyonroad.credential.CredentialProperties;
 import net.happyonroad.credential.LocalCredential;
 import net.happyonroad.credential.SnmpCredential;
 import net.happyonroad.credential.SshCredential;
@@ -20,13 +21,15 @@ import net.happyonroad.model.*;
 import net.happyonroad.spring.ApplicationSupportBean;
 import net.happyonroad.type.Priority;
 import net.happyonroad.type.State;
+import net.happyonroad.type.TimeInterval;
 import net.happyonroad.util.DiffUtils;
 import net.happyonroad.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContextException;
 import org.springframework.context.ApplicationListener;
+import org.springframework.jmx.export.annotation.ManagedAttribute;
+import org.springframework.jmx.export.annotation.ManagedResource;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ValidationException;
@@ -37,8 +40,8 @@ import java.util.*;
  * 管理节点服务实现类
  */
 @Service
-@Transactional
-class NodeManager extends ApplicationSupportBean
+@ManagedResource("dnt.monitor.server:type=service,name=nodeService")
+public class NodeManager extends ApplicationSupportBean
         implements NodeService, ApplicationListener<SystemStartedEvent> {
 
     @Autowired
@@ -78,6 +81,7 @@ class NodeManager extends ApplicationSupportBean
             }
         }
     }
+
 
     @Override
     public ManagedNode findByPath(String path) {
@@ -350,6 +354,7 @@ class NodeManager extends ApplicationSupportBean
             legacyPath = legacyPath.substring(0, legacyPath.length() - 1);
         if (newPath.endsWith("/"))
             newPath = newPath.substring(0, newPath.length() - 1);
+        if( StringUtils.equals(legacyPath, newPath) ) return;
         ManagedNode node = findByPath(legacyPath);
         ManagedNode newNode;
         try {
@@ -405,6 +410,30 @@ class NodeManager extends ApplicationSupportBean
     }
 
     ////////////////////////////////////////
+    // JMX 可管理接口
+    ////////////////////////////////////////
+
+    @ManagedAttribute
+    public long getNodeSize(){
+        return repository.count(null);
+    }
+
+    @ManagedAttribute
+    public long getGroupNodeSize(){
+        return repository.count("type = 'Group'");
+    }
+
+    @ManagedAttribute
+    public long getRangeNodeSize(){
+        return repository.count("type = 'Range'");
+    }
+
+    @ManagedAttribute
+    public long getResourceNodeSize(){
+        return repository.count("type = 'Resource'");
+    }
+
+    ////////////////////////////////////////
     // 内部支持方法
     ////////////////////////////////////////
 
@@ -441,10 +470,17 @@ class NodeManager extends ApplicationSupportBean
         node.setComment("The system infrastructure");
         node.setState(State.Running);
         node.setPriority(Priority.Normal);
-        //基础架构下面的东西，默认采用本机监控方式
-        Credential[] credentials = new Credential[1];
-        credentials[0] = new LocalCredential();
-        node.setCredentials(credentials);
+        //基础架构下面的主机，默认采用本机监控方式
+        LocalCredential local= new LocalCredential();
+        //基础架构下的监控应用，默认采用通过rmi的jmx方式，没有用户名和密码
+        CredentialProperties jmx = new CredentialProperties();
+        jmx.setProperty("name", "jmx");
+        jmx.setProperty("protocol", "rmi");
+        //TODO 针对mysql, redis等基础架构应用，配置默认的方式
+        node.setCredentials(local, jmx);
+        //对基础架构下的东西，以30s的频度进行监控，相比一般被监控对象的5m频度，这个频度是相当高的
+        //这个默认参数，可以配置化(而不是hard code here)，用户也可以修改
+        node.setFrequency(new TimeInterval("30s"));
         return node;
     }
 
@@ -494,7 +530,7 @@ class NodeManager extends ApplicationSupportBean
             actual = resource.becomes(metaResource.getModelClass());
         }else{
             try {
-                ResourceService concreteResourceService = serviceLocator.locateResourceService(resource.getType());
+                ResourceService concreteResourceService = serviceLocator.locate(resource.getType());
                 actual = concreteResourceService.findById(resource.getId());
             } catch (ResourceException e) {
                 logger.warn("Can't find concrete resource service for " + resource.getType());

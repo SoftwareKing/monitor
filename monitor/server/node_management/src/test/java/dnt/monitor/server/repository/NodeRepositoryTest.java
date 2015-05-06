@@ -43,6 +43,14 @@ public class NodeRepositoryTest {
     }
 
     @Test
+    public void testCount() throws Exception {
+        long groupCount = repository.count("type = 'Group'");
+        assertTrue(groupCount > 0 );
+        long all = repository.count(null);
+        assertTrue(all > groupCount );
+    }
+
+    @Test
     public void testFindByPath() throws Exception {
         ManagedNode root = repository.findByPath("/");
         assertNotNull(root);

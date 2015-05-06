@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import dnt.monitor.annotation.Inheriting;
+import net.happyonroad.credential.ShellCredential;
 import net.happyonroad.model.Category;
 import net.happyonroad.model.Credential;
 import net.happyonroad.model.PropertiesSupportRecord;
@@ -23,12 +24,12 @@ import java.util.Map;
 /**
  * 管理节点对象
  */
-@JsonTypeInfo(use= JsonTypeInfo.Id.CLASS, include= JsonTypeInfo.As.PROPERTY)
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY)
 @JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class)
 public class ManagedNode extends PropertiesSupportRecord {
-    public static final String ROOT_PATH           = "/";
-    public static final String INFRASTRUCTURE_PATH = "/infrastructure";
-    private static final long serialVersionUID = 1861250126041241051L;
+    public static final  String ROOT_PATH           = "/";
+    public static final  String INFRASTRUCTURE_PATH = "/infrastructure";
+    private static final long   serialVersionUID    = 1861250126041241051L;
     //TODO add Pattern validation for the path
     // 管理节点的路径，新增对象的path为空，需要管理层设置
     private String path;
@@ -49,19 +50,21 @@ public class ManagedNode extends PropertiesSupportRecord {
     ////////////////////////////////////////
     // 监控控制
     @Inheriting
-    private State    state;
+    private State        state;
     // 地理位置
     @Inheriting
-    private Location location;
+    private Location     location;
     // 优先级
     @Inheriting
-    private Priority priority;
+    private Priority     priority;
     // 维护时间窗：在该时间段内产生的事件不发出告警
     @Inheriting
-    private TimeSpan maintainWindow;
+    private TimeSpan     maintainWindow;
+    @Inheriting
+    private TimeInterval frequency;
     // 监控计划，start -> stop, frequency, offset
     @Inheriting
-    private Schedule schedule;
+    private Schedule     schedule;
     // 登录凭据
     @Inheriting
     Credential[] credentials;
@@ -81,7 +84,7 @@ public class ManagedNode extends PropertiesSupportRecord {
     }
 
     @JsonIgnore
-    public String getParentPath(){
+    public String getParentPath() {
         return Category.parentOf(path);
     }
 
@@ -140,6 +143,16 @@ public class ManagedNode extends PropertiesSupportRecord {
         this.state = state;
     }
 
+    @JsonIgnore
+    public boolean isRunning() {
+        return state == State.Running;
+    }
+
+    @JsonIgnore
+    public boolean isStopped() {
+        return state == State.Stopped;
+    }
+
     public void setLocation(Location location) {
         this.location = location;
     }
@@ -162,6 +175,14 @@ public class ManagedNode extends PropertiesSupportRecord {
 
     public void setMaintainWindow(TimeSpan maintainWindow) {
         this.maintainWindow = maintainWindow;
+    }
+
+    public TimeInterval getFrequency() {
+        return frequency;
+    }
+
+    public void setFrequency(TimeInterval frequency) {
+        this.frequency = frequency;
     }
 
     public Schedule getSchedule() {
@@ -236,19 +257,19 @@ public class ManagedNode extends PropertiesSupportRecord {
             setSchedule(another.getSchedule());
         if (another.getOrganization() != null && this.organization == null)
             setOrganization(another.getOrganization());
-        if( another.getCredentials() != null ){
-            if( credentials == null ){
+        if (another.getCredentials() != null) {
+            if (credentials == null) {
                 this.credentials = another.getCredentials();
-            }else{
+            } else {
                 List<Credential> credentialList = new ArrayList<Credential>();
                 Collections.addAll(credentialList, credentials);
                 for (Credential credential : another.getCredentials()) {
                     boolean found = false;
-                    for (Credential exist: credentialList) {
-                        if( exist.getClass() == credential.getClass())
+                    for (Credential exist : credentialList) {
+                        if (exist.getClass() == credential.getClass())
                             found = true;
                     }
-                    if( !found){
+                    if (!found) {
                         credentialList.add(credential);
                     }
                 }
@@ -280,13 +301,42 @@ public class ManagedNode extends PropertiesSupportRecord {
                net.happyonroad.model.Category.depth(getPath()) == 2;
     }
 
+    @JsonIgnore
+    public boolean isSystemNode() {
+        return getPath().startsWith(INFRASTRUCTURE_PATH + "/");
+    }
+
     public <T extends Credential> T getCredential(Class<T> credentialClass) {
-        if( credentials == null ) return null;
+        return getCredential(credentialClass, null);
+    }
+
+    public <T extends Credential> T getCredential(Class<T> credentialClass, String name) {
+        if (credentials == null) return null;
         for (Credential credential : credentials) {
-            if( credentialClass.isAssignableFrom(credential.getClass()) )
+            if (credentialClass.isAssignableFrom(credential.getClass())) {
+                if (name != null && !name.equals(credential.name())) {
+                    continue;
+                }
                 //noinspection unchecked
                 return (T) credential;
+            }
         }
         return null;
+    }
+
+    /**
+     * <h2>排除其他的认证方式，只留下这一种</h2>
+     *
+     * @param credentialClass 认证类型
+     */
+    public void only(Class<? extends Credential> credentialClass) {
+        if (credentials == null) return;
+        List<Credential> credentialList = new ArrayList<Credential>(this.credentials.length);
+        for (Credential credential : credentials) {
+            if (credentialClass.isAssignableFrom(credential.getClass())) {
+                credentialList.add(credential);
+            }
+        }
+        this.credentials = credentialList.toArray(new Credential[credentialList.size()]);
     }
 }

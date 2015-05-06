@@ -12,8 +12,9 @@ public class ResourceNode extends ManagedNode {
     private static final long serialVersionUID = 7032283528722261131L;
     // Resource 对象ID，执行两级关联时，以该字段为依据
     private Long     resourceId;
-    // Resource 对象
-    private Resource resource;
+    private String   resourceType;
+    // Resource 对象，序列化时不包括之
+    private transient Resource resource;
 
     public Long getResourceId() {
         return resourceId;
@@ -31,16 +32,25 @@ public class ResourceNode extends ManagedNode {
         this.resource = resource;
         if (this.resource != null) {
             this.resourceId = this.resource.getId();
+            this.resourceType = this.resource.getType();
         }
     }
 
     @JsonIgnore
     public boolean isEngineNode(){
-        return "/application/monitor_engine".equals(getResource().getType());
+        return "/app/jvm/monitor/engine".equals(getResourceType());
     }
 
     @JsonIgnore
     public boolean isServerNode(){
-        return "/application/monitor_server".equals(getResource().getType());
+        return "/app/jvm/monitor/server".equals(getResourceType());
+    }
+
+    public String getResourceType() {
+        return resourceType;
+    }
+
+    public void setResourceType(String resourceType) {
+        this.resourceType = resourceType;
     }
 }

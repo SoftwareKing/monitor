@@ -5,7 +5,6 @@ package dnt.monitor.service;
 
 import dnt.monitor.exception.EngineException;
 import dnt.monitor.model.Device;
-import dnt.monitor.model.ManagedNode;
 import dnt.monitor.model.Resource;
 import net.happyonroad.annotation.Timeout;
 import net.happyonroad.model.IpRange;
@@ -56,18 +55,24 @@ public interface DiscoveryService {
     /**
      * <h2>检测某个资源节点有哪些组件构成</h2>
      *
-     * @param devicePaths 资源节点
+     *
+     * @param scopePath       发现时，从哪个管理节点处获取管理参数
+     * @param deviceAddresses 需要详细发现的设备地址
      * @return 包含了相应组件信息的资源对象
      */
     @Timeout("3m")
-    Device[] discoverComponents(Set<String> devicePaths)throws EngineException;
+    Device[] discoverComponents(String scopePath, Set<String> deviceAddresses)throws EngineException;
 
     /**
-     * <h2>检测某个资源节点上还有部署哪些其他资源（类似于主机上部署的数据库，中间件，应用等）</h2>
+     * <h2>检测某个主机上还有部署哪些其他资源（类似于主机上部署的数据库，中间件，应用等）</h2>
+     * 资源对应的主机地址，在资源的Properties里面，key为: hostAddress
      *
-     * @param resourceNode 资源节点
+     * 仅返回各种额外的资源（如数据库应用，redis应用），不返回原先的主机对象
+     *
+     * @param hostAddresses 资源节点
      * @return 该主机上的其他资源，这些资源与当前主机应该有 RunAt 的关系
      */
-    Resource[] discoverRelates(ManagedNode resourceNode)throws EngineException;
+    @Timeout("2m")
+    Resource[] discoverRelates(List<String> hostAddresses)throws EngineException;
 
 }

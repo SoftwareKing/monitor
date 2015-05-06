@@ -1,0 +1,1455 @@
+﻿<devicetypes>
+  <deviceclass id="-1" name="Unknown" icon="100">
+  </deviceclass>
+  <deviceclass id="1" name="Server/Workstation">
+    <category id="1" name="Windows Server" icon="30" sysicon="9501">
+      <subcategory id="1" name="Generic Windows Server">
+        <device oid="1.3.6.1.4.1.311.1.1.3.1.2"/>
+      </subcategory>
+      <subcategory id="2" name="Windows 2000 Server" icon="32">
+        <device description="WINDOWS 2000 VERSION 5.0" oid="1.3.6.1.4.1.311.1.1.3.1.2"/>
+      </subcategory>
+      <subcategory id="3" name="Windows 2003 Server" icon="33">
+        <device description="WINDOWS VERSION 5.2" oid="1.3.6.1.4.1.311.1.1.3.1.2"/>
+        <device description="WINDOWS VERSION 5.2" oid="1.3.6.1.4.1.311.1.1.3.1.3"/>
+      </subcategory>
+      <subcategory id="4" name="Windows 2008 Server" icon="85">
+        <device description="WINDOWS VERSION 6.0" oid="1.3.6.1.4.1.311.1.1.3.1.2"/>
+        <device description="WINDOWS VERSION 6.0" oid="1.3.6.1.4.1.311.1.1.3.1.3"/>
+      </subcategory>
+      <subcategory id="5" name="Windows 2008 R2 Server" icon="85">
+        <device description="WINDOWS VERSION 6.1" oid="1.3.6.1.4.1.311.1.1.3.1.2"/>
+        <device description="WINDOWS VERSION 6.1" oid="1.3.6.1.4.1.311.1.1.3.1.3"/>
+      </subcategory>
+      <subcategory id="6" name="Windows 2012 Server" icon="88">
+        <device description="WINDOWS VERSION 6.2" oid="1.3.6.1.4.1.311.1.1.3.1.2"/>
+        <device description="WINDOWS VERSION 6.2" oid="1.3.6.1.4.1.311.1.1.3.1.3"/>
+      </subcategory>
+      <subcategory id="7" name="Windows 2012 R2 Server" icon="88">
+        <device description="WINDOWS VERSION 6.3" oid="1.3.6.1.4.1.311.1.1.3.1.2"/>
+        <device description="WINDOWS VERSION 6.3" oid="1.3.6.1.4.1.311.1.1.3.1.3"/>
+      </subcategory>
+    </category>
+    <category id="2" name="Windows Workstation" icon="30" sysicon="9501">
+      <subcategory id="200" name="Generic Windows NT">
+        <device description="WINDOWS NT"/>
+      </subcategory>
+      <subcategory id="201" name="Generic Windows Workstation" icon="35">
+        <device oid="1.3.6.1.4.1.99.1.1.3.11"/>
+        <device oid="1.3.6.1.4.1.311.1.1.3.1.1"/>
+      </subcategory>
+      <subcategory id="202" name="Windows 2000" icon="28">
+        <device description="WINDOWS 2000 VERSION 5.0" oid="1.3.6.1.4.1.311.1.1.3.1.1"/>
+        <device description="WINDOWS NT VERSION 5.0"   oid="1.3.6.1.4.1.99.1.1.3.11"/>
+      </subcategory>
+      <subcategory id="203" name="Windows XP" icon="36" sysicon="9502">
+        <device description="WINDOWS 2000 VERSION 5.1" oid="1.3.6.1.4.1.311.1.1.3.1.1"/>
+        <device description="WINDOWS VERSION 5.2" oid="1.3.6.1.4.1.311.1.1.3.1.1"/>
+        <device description="WINDOWS NT VERSION 5.1" oid="1.3.6.1.4.1.99.1.1.3.11"/>
+      </subcategory>
+      <subcategory id="204" name="Windows Vista" icon="31" sysicon="9503">
+        <device description="WINDOWS VERSION 6.0" oid="1.3.6.1.4.1.311.1.1.3.1.1"/>
+      </subcategory>
+      <subcategory id="205" name="Windows 7" icon="87">
+        <device description="WINDOWS VERSION 6.1" oid="1.3.6.1.4.1.311.1.1.3.1.1"/>
+      </subcategory>
+      <subcategory id="206" name="Windows 8" icon="89">
+        <device description="WINDOWS VERSION 6.2" oid="1.3.6.1.4.1.311.1.1.3.1.1"/>
+      </subcategory>
+      <subcategory id="207" name="Windows 8.1" icon="89">
+        <device description="WINDOWS VERSION 6.3" oid="1.3.6.1.4.1.311.1.1.3.1.1"/>
+      </subcategory>
+      <subcategory id="100" name="Windows 95" icon="29">
+        <device description="WINDOWS 95" oid="1.3.6.1.4.1.311.1.1.3.2"/>
+        <device/>
+      </subcategory>
+      <subcategory id="101" name="Windows 98" icon="29">
+        <device description="WINDOWS 98" oid="1.3.6.1.4.1.311.1.1.3.2"/>
+        <device/>
+      </subcategory>
+    </category>
+    <category id="3" name="Novell NetWare" icon="19" sysicon="9505">
+      <subcategory id="300" name="Generic NetWare Server">
+        <device description="NOVELL"/>
+      </subcategory>
+      <subcategory id="301" name="NetWare 5.x" icon="22" sysicon="9505">
+        <device oid="1.3.6.1.4.1.23.1.6.5"/>
+        <device description="NETWARE 5.00" oid="1.3.6.1.4.1.23.1.6"/>
+      </subcategory>
+      <subcategory id="302" name="NetWare 4.x" icon="20">
+        <device oid="1.3.6.1.4.1.23.1.6.4"/>
+      </subcategory>
+      <subcategory id="303" name="NetWare 3.x">
+        <device oid="1.3.6.1.4.1.23.1.6.3"/>
+      </subcategory>
+      <subcategory id="304" name="NetWare 6.5" icon="25">
+        <device description="NETWARE 5.70" oid="1.3.6.1.4.1.23.1.6"/>
+      </subcategory>
+      <subcategory id="305" name="NetWare 6.0" icon="24">
+        <device oid="1.3.6.1.4.1.23.1.6"/>
+      </subcategory>
+      <subcategory id="306" name="NetWare 386 TCP/IP agent">
+        <device oid="1.3.6.1.4.1.23.1.3"/>
+      </subcategory>
+      <subcategory id="307" name="NetWare 5.1" icon="23">
+      </subcategory>
+      <subcategory id="308" name="NetWare 4.2" icon="21">
+      </subcategory>
+    </category>
+    <category id="4" name="Linux" icon="16" sysicon="9504">
+      <subcategory id="400" name="Generic Linux System">
+        <device oid="1.3.6.1.4.1.2021.250.10"/>
+        <device description="LINUX (NONE) 2.4.20 MIPS" oid="1.3.6.1.4.1.1575.1.5"/>
+        <device description="LINUX"/>
+        <device oid="1.3.6.1.4.1.8072.3.2.10"/>
+      </subcategory>
+    </category>
+    <category id="5" name="UNIX" icon="27">
+      <subcategory id="500" name="Generic UNIX System">
+        <device description="UNIX"/>
+      </subcategory>
+      <subcategory id="501" name="HP-UX">
+        <device oid="1.3.6.1.4.1.99.1.1.3.6"/>
+        <device oid="1.3.6.1.4.1.11.2.3.2"/>
+      </subcategory>
+      <subcategory id="502" name="HP-UX 9000/800">
+        <device oid="1.3.6.1.4.1.11.2.3.2.3"/>
+      </subcategory>
+      <subcategory id="503" name="IRIX">
+        <device oid="1.3.6.1.4.1.326.2.1"/>
+      </subcategory>
+      <subcategory id="504" name="Other UNIX-like">
+        <device oid="1.3.6.1.4.1.8072.3.2.255"/>
+      </subcategory>
+      <subcategory id="505" name="UNIX HP 386 agent">
+        <device oid="1.3.6.1.4.1.11.2.3.8"/>
+      </subcategory>
+      <subcategory id="506" name="AIX" icon="27">
+        <device description="Base Operating System Runtime AIX" oid="1.3.6.1.4.1.2.3.1.2.1.1.3"/>
+      </subcategory>
+    </category>
+    <category id="6" name="Sun OS" icon="26">
+      <subcategory id="601" name="Solaris">
+        <device oid="1.3.6.1.4.1.42.2.1.1"/>
+        <device oid="1.3.6.1.4.1.99.1.1.3.1"/>
+        <device oid="1.3.6.1.4.1.11.2.3.10.1.2"/>
+      </subcategory>
+      <subcategory id="602" name="SUN-OS">
+        <device oid="1.3.6.1.4.1.11.2.3.10.1"/>
+        <device oid="1.3.6.1.4.1.11.2.3.10.1.1"/>
+        <device description="SUN"/>
+      </subcategory>
+    </category>
+    <category id="7" name="BSD Family" icon="54">
+      <subcategory id="700" name="OpenBSD">
+        <device description="OPENBSD" oid="1.3.6.1.4.1.8072.3.2.12"/>
+      </subcategory>
+      <subcategory id="701" name="NetBSD">
+        <device oid="1.3.6.1.4.1.8072.3.2.7"/>
+      </subcategory>
+      <subcategory id="702" name="FreeBSD">
+        <device oid="1.3.6.1.4.1.8072.3.2.8"/>
+      </subcategory>
+    </category>
+    <category id="8" name="IBM">
+      <subcategory id="800" name="IBM OS/400">
+        <device description="IBM OS/400" oid="1.3.6.1.4.1.2.6.11"/>
+      </subcategory>
+    </category>
+    <category id="9" name="Mac OS X" icon="18">
+      <subcategory id="900" name="10.0 Cheetah">
+      </subcategory>
+      <subcategory id="901" name="10.1 Puma">
+      </subcategory>
+      <subcategory id="902" name="10.2 Jaguar">
+      </subcategory>
+      <subcategory id="903" name="10.3 Panther">
+      </subcategory>
+      <subcategory id="904" name="10.4 Tiger">
+      </subcategory>
+      <subcategory id="905" name="10.5 Leopard">
+      </subcategory>
+      <subcategory id="906" name="10.6 Snow Leopard">
+      </subcategory>
+      <subcategory id="907" name="10.7 Lion">
+      </subcategory>
+      <subcategory id="908" name="10.8 Mountain Lion">
+      </subcategory>
+      <subcategory id="909" name="10.9 Mavericks">
+      </subcategory>
+      <subcategory id="999" name="Generic Mac OS">
+        <device description="Darwin" oid="1.3.6.1.4.1.8072.3.2.255"/>
+      </subcategory>
+    </category>
+    <category id="10" name="VMware ESX" icon="86">
+      <subcategory id="1000" name="ESX Server 1.x">
+        <device oid="1.3.6.1.4.1.6876.60.1.1"/>
+      </subcategory>
+      <subcategory id="1001" name="ESX Server 2.x">
+        <device oid="1.3.6.1.4.1.6876.60.1.2"/>
+      </subcategory>
+      <subcategory id="1002" name="ESX Server 3.x">
+        <device oid="1.3.6.1.4.1.6876.60.1.3"/>
+      </subcategory>
+      <subcategory id="1003" name="ESX(i) Server 4.x">
+        <device description="VMware ESX 4" oid="1.3.6.1.4.1.6876.4.1"/>
+      </subcategory>
+      <subcategory id="1004" name="ESXi 5.x">
+        <device description="VMware ESXi 5" oid="1.3.6.1.4.1.6876.4.1"/>
+      </subcategory>
+    </category>
+    <category id="11" name="Citrix XenServer">
+      <subcategory id="1100" name="XenServer 3.1">
+      </subcategory>
+      <subcategory id="1101" name="XenServer 3.2">
+      </subcategory>
+      <subcategory id="1102" name="XenServer 4.0">
+      </subcategory>
+      <subcategory id="1103" name="XenServer 4.1">
+      </subcategory>
+      <subcategory id="1104" name="XenServer 5.0">
+      </subcategory>
+    </category>
+  </deviceclass>
+  <deviceclass id="2" name="Hardware Router" icon="2" sysicon="9506">
+    <category id="1001" name="Cisco" icon="60">
+      <subcategory id="2001" name="Cisco Router">
+        <device oid="1.3.6.1.4.1.9.1.185"/>
+        <device oid="1.3.6.1.4.1.9.1"/>
+      </subcategory>
+      <subcategory id="2002" name="Cisco Combo Router and Terminal Server">
+        <device oid="1.3.6.1.4.1.9.1.3"/>
+      </subcategory>
+      <subcategory id="2003" name="Cisco IGS Router">
+        <device oid="1.3.6.1.4.1.9.1.5"/>
+      </subcategory>
+      <subcategory id="2004" name="Cisco 2500 Series - Router/Hub Combination">
+        <device oid="1.3.6.1.4.1.9.1.21"/>
+        <device oid="1.3.6.1.4.1.9.1.23"/>
+      </subcategory>
+      <subcategory id="2005" name="Cisco 2500 Series - Dual LAN Router">
+        <device oid="1.3.6.1.4.1.9.1.29"/>
+        <device oid="1.3.6.1.4.1.9.1.30"/>
+        <device oid="1.3.6.1.4.1.9.1.31"/>
+        <device oid="1.3.6.1.4.1.9.1.42"/>
+      </subcategory>
+      <subcategory id="2006" name="Cisco 1000 Access Router">
+        <device oid="1.3.6.1.4.1.9.1.41"/>
+        <device oid="1.3.6.1.4.1.9.1.44"/>
+        <device oid="1.3.6.1.4.1.9.1.49"/>
+        <device oid="1.3.6.1.4.1.9.1.51"/>
+        <device oid="1.3.6.1.4.1.9.1.52"/>
+        <device oid="1.3.6.1.4.1.9.1.53"/>
+      </subcategory>
+      <subcategory id="2007" name="Cisco 7500 Series Router">
+        <device oid="1.3.6.1.4.1.9.1.45"/>
+        <device oid="1.3.6.1.4.1.9.1.46"/>
+        <device oid="1.3.6.1.4.1.9.1.48"/>
+      </subcategory>
+      <subcategory id="2008" name="Cisco Access 4000 Series Router">
+        <device oid="1.3.6.1.4.1.9.1.50"/>
+      </subcategory>
+      <subcategory id="2009" name="Cisco 1605 Router">
+        <device oid="1.3.6.1.4.1.9.1.172"/>
+      </subcategory>
+      <subcategory id="2010" name="Cisco 2650XM Router">
+        <device oid="1.3.6.1.4.1.9.1.470"/>
+      </subcategory>
+      <subcategory id="2011" name="Cisco 1760V">
+        <device oid="1.3.6.1.4.1.9.1.416"/>
+      </subcategory>
+      <subcategory id="2012" name="Cisco 2611XM Router">
+        <device oid="1.3.6.1.4.1.9.1.467"/>
+      </subcategory>
+      <subcategory id="2013" name="Cisco 2610 Router">
+        <device oid="1.3.6.1.4.1.9.1.185"/>
+      </subcategory>
+      <subcategory id="2014" name="Cisco 2621XM Router">
+        <device oid="1.3.6.1.4.1.9.1.469"/>
+      </subcategory>
+      <subcategory id="2040" name="Cisco 2801 Router">
+        <device oid="1.3.6.1.4.1.9.1.619"/>
+      </subcategory>
+      <subcategory id="2041" name="Cisco 7206 Router">
+        <device oid="1.3.6.1.4.1.9.1.222"/>
+      </subcategory>
+      <subcategory id="2042" name="Cisco 3620 Router">
+        <device oid="1.3.6.1.4.1.9.1.122"/>
+      </subcategory>
+      <subcategory id="2043" name="Cisco 3640 Router">
+        <device oid="1.3.6.1.4.1.9.1.110"/>
+      </subcategory>
+      <subcategory id="2044" name="Cisco 3745 XM Router">
+        <device oid="1.3.6.1.4.1.9.1.544"/>
+      </subcategory>
+      <subcategory id="2045" name="Cisco 1750 Router">
+        <device oid="1.3.6.1.4.1.9.1.216"/>
+      </subcategory>
+    </category>
+    <category id="1002" name="HP">
+      <subcategory id="2015" name="HP Router 440">
+        <device oid="1.3.6.1.4.1.11.2.3.7.2.1"/>
+      </subcategory>
+      <subcategory id="2016" name="HP Router 445">
+        <device oid="1.3.6.1.4.1.11.2.3.7.2.2"/>
+      </subcategory>
+      <subcategory id="2017" name="HP Router 430">
+        <device oid="1.3.6.1.4.1.11.2.3.7.2.3"/>
+      </subcategory>
+      <subcategory id="2018" name="HP Router FRa">
+        <device oid="1.3.6.1.4.1.11.2.3.7.2.4"/>
+      </subcategory>
+      <subcategory id="2019" name="HP Router 470">
+        <device oid="1.3.6.1.4.1.11.2.3.7.2.5"/>
+      </subcategory>
+      <subcategory id="2020" name="HP Router 480">
+        <device oid="1.3.6.1.4.1.11.2.3.7.2.6"/>
+      </subcategory>
+      <subcategory id="2021" name="HP Router PRa">
+        <device oid="1.3.6.1.4.1.11.2.3.7.2.7"/>
+      </subcategory>
+      <subcategory id="2022" name="HP Router 650">
+        <device oid="1.3.6.1.4.1.11.2.3.7.2.8"/>
+      </subcategory>
+      <subcategory id="2023" name="HP Router 230">
+        <device oid="1.3.6.1.4.1.11.2.3.7.2.9"/>
+      </subcategory>
+      <subcategory id="2024" name="HP Router 240">
+        <device oid="1.3.6.1.4.1.11.2.3.7.2.10"/>
+      </subcategory>
+      <subcategory id="2025" name="HP Router 245">
+        <device oid="1.3.6.1.4.1.11.2.3.7.2.11"/>
+      </subcategory>
+      <subcategory id="2026" name="HP Router 210">
+        <device oid="1.3.6.1.4.1.11.2.3.7.2.12"/>
+      </subcategory>
+      <subcategory id="2027" name="HP Router">
+        <device oid="1.3.6.1.4.1.11.2.3.7.2"/>
+      </subcategory>
+    </category>
+    <category id="1003" name="Fibronics">
+      <subcategory id="2028" name="Fibronics FDDI-Ethernet IP Router">
+        <device oid="1.3.6.1.4.1.22.1.1.1"/>
+      </subcategory>
+    </category>
+    <category id="1004" name="Wellfleet">
+      <subcategory id="2029" name="Wellfleet IP Router">
+        <device oid="1.3.6.1.4.1.18.1"/>
+      </subcategory>
+    </category>
+    <category id="1005" name="ACC">
+      <subcategory id="2030" name="ACC 4140 Bridge/Router">
+        <device oid="1.3.6.1.4.1.5.1.1.1.1"/>
+      </subcategory>
+    </category>
+    <category id="1006" name="Intel">
+      <subcategory id="2031" name="Intel 8210 Router">
+        <device oid="1.3.6.1.4.1.343.5.2.17"/>
+      </subcategory>
+    </category>
+    <category id="1007" name="Planet">
+      <subcategory id="2032" name="Broadband Residential Gateway">
+        <device oid="1.3.6.1.3.9999"/>
+      </subcategory>
+    </category>
+    <category id="1008" name="AdTran" icon="39">
+      <subcategory id="2033" name="AdTran Device">
+        <device oid="1.3.6.1.4.1.664"/>
+      </subcategory>
+    </category>
+    <category id="1009" name="Huawei">
+      <subcategory id="2034" name="Huawei Router">
+        <device oid="1.3.6.1.4.1.2011.2.47"/>
+      </subcategory>
+    </category>
+    <category id="1010" name="Zyxel">
+      <subcategory id="2035" name="Zyxel 650H/HW-31 Router">
+        <device oid="1.3.6.1.4.1.890.2.1.6.15"/>
+      </subcategory>
+      <subcategory id="2036" name="Zyxel 650R-31 Router">
+        <device oid="1.3.6.1.4.1.890.1.2.6.5"/>
+      </subcategory>
+    </category>
+    <category id="1011" name="Efficient Networks">
+      <subcategory id="2037" name="SpeedStream 5660">
+        <device oid="1.3.6.1.4.1.763.1.5660.2.1"/>
+      </subcategory>
+    </category>
+    <category id="1012" name="3Com" icon="72">
+      <subcategory id="2038" name="3Com ADSL 812 Router">
+        <device description="3COM ADSL 812" oid="1.3.6.1.4.1.429.2.13"/>
+      </subcategory>
+    </category>
+    <category id="1049" name="Juniper" icon="99">
+      <subcategory id="2046" name="Juniper SRX 3600">
+        <device oid="1.3.6.1.4.1.2636.1.1.1.2.34"/>
+      </subcategory>
+      <subcategory id="2047" name="Juniper SRX 3400">
+        <device oid="1.3.6.1.4.1.2636.1.1.1.2.35"/>
+      </subcategory>
+      <subcategory id="2048" name="Juniper SRX 210">
+        <device oid="1.3.6.1.4.1.2636.1.1.1.2.36"/>
+      </subcategory>
+      <subcategory id="2049" name="Juniper SRX 100">
+        <device oid="1.3.6.1.4.1.2636.1.1.1.2.41"/>
+      </subcategory>
+      <subcategory id="2050" name="Juniper J 4300">
+        <device oid="1.3.6.1.4.1.2636.1.1.1.2.14"/>
+      </subcategory>
+    </category>
+    <category id="1000" name="Unknown">
+      <subcategory id="2039" name="Generic Router">
+        <device description="ROUTER|GATEWAY"/>
+      </subcategory>
+    </category>
+  </deviceclass>
+  <deviceclass id="3" name="Firewall" icon="38">
+    <category id="1001" name="Cisco">
+      <subcategory id="3001" name="Cisco PIX Firewall 506E">
+        <device oid="1.3.6.1.4.1.9.1.450"/>
+      </subcategory>
+      <subcategory id="3002" name="Cisco PIX Firewall 515E">
+        <device oid="1.3.6.1.4.1.9.1.451"/>
+      </subcategory>
+      <subcategory id="3003" name="Cisco PIX Firewall 525">
+        <device oid="1.3.6.1.4.1.9.1.392"/>
+      </subcategory>
+      <subcategory id="3004" name="Cisco PIX Firewall 505E">
+        <device oid="1.3.6.1.4.1.9.1.451"/>
+      </subcategory>
+      <subcategory id="3005" name="Cisco PIX Firewall 501">
+        <device oid="1.3.6.1.4.1.9.1.417"/>
+      </subcategory>
+      <subcategory id="3006" name="Cisco VPN3000" icon="12">
+        <device oid="1.3.6.1.4.1.3076.1.2.1.1.1.2"/>
+      </subcategory>
+    </category>
+    <category id="1011" name="Fortinet">
+      <subcategory id="3007" name="Fortigate 800">
+        <device oid="1.3.6.1.4.1.123456.800"/>
+      </subcategory>
+      <subcategory id="3014" name="Fortigate 500A">
+        <device oid="1.3.6.1.4.1.12356.101.1.5001"/>
+      </subcategory>
+      <subcategory id="3015" name="Fortigate 310B">
+        <device oid="1.3.6.1.4.1.12356.3002"/>
+      </subcategory>
+    </category>
+    <category id="1012" name="BlueSocket">
+      <subcategory id="3008" name="BlueSocket 1000">
+        <device oid="1.3.6.1.4.1.9967.100.1000.2"/>
+      </subcategory>
+    </category>
+    <category id="1009" name="Huawei">
+      <subcategory id="3009" name="Huawei Firewall">
+        <device oid="1.3.6.1.4.1.2011.1.1.1.100"/>
+      </subcategory>
+    </category>
+    <category id="1010" name="Zyxel">
+      <subcategory id="3010" name="Zywall Firewall">
+        <device oid="1.3.6.1.4.1.890.1.2"/>
+      </subcategory>
+    </category>
+    <category id="1013" name="Nokia">
+      <subcategory id="3011" name="Nokia IP300 Firewall">
+        <device oid="1.3.6.1.4.1.94.1.21.2.1.9"/>
+      </subcategory>
+      <subcategory id="3012" name="Nokia IP650 Firewall">
+        <device oid="1.3.6.1.4.1.94.1.21.2.1.8"/>
+      </subcategory>
+    </category>
+    <category id="1049" name="Juniper">
+      <subcategory id="3016" name="SSG 140">
+        <device description="SSG-140" oid="1.3.6.1.4.1.3224.1.52"/>
+      </subcategory>
+      <subcategory id="3017" name="SSG 5 ISDN">
+        <device oid="1.3.6.1.4.1.3224.1.30"/>
+      </subcategory>
+      <subcategory id="3018" name="SSG 320M">
+        <device oid="1.3.6.1.4.1.3224.1.54"/>
+      </subcategory>
+      <subcategory id="3019" name="NetScreen 5200">
+        <device oid="1.3.6.1.4.1.3224.1.9"/>
+      </subcategory>
+      <subcategory id="3020" name="NetScreen ISG 2000">
+        <device oid="1.3.6.1.4.1.3224.1.16"/>
+      </subcategory>
+      <subcategory id="3021" name="NetScreen">
+        <device oid="1.3.6.1.4.1.3224"/>
+      </subcategory>
+    </category>
+    <category id="1055" name="SonicWall">
+      <subcategory id="3022" name="Firewall">
+        <device oid="1.3.6.1.4.1.8714"/>
+      </subcategory>
+    </category>
+    <category id="1000" name="Unknown">
+      <subcategory id="3013" name="Generic Firewall">
+      </subcategory>
+    </category>
+  </deviceclass>
+  <deviceclass id="4" name="Switch" icon="3" sysicon="9508">
+    <category id="1014" name="3Com" icon="82">
+      <subcategory id="4002" name="3Com SuperStack 3 Switch 4200">
+        <device oid="1.3.6.1.4.1.43.10.27.4.1.2.11"/>
+      </subcategory>
+      <subcategory id="4003" name="LinkSwitch 2200">
+        <device oid="1.3.6.1.4.1.114.1.3.3.2"/>
+      </subcategory>
+      <subcategory id="4004" name="LinkSwitch 1000">
+        <device oid="1.3.6.1.4.1.43.1.8.13"/>
+      </subcategory>
+      <subcategory id="4005" name="LinkSwitch 2700">
+        <device oid="1.3.6.1.4.1.43.1.8.16"/>
+      </subcategory>
+      <subcategory id="4006" name="LinkSwitch">
+        <device oid="1.3.6.1.4.1.43.1.8.8"/>
+      </subcategory>
+      <subcategory id="4007" name="MSH-LinkSwitch">
+        <device oid="1.3.6.1.4.1.43.1.8.9"/>
+      </subcategory>
+      <subcategory id="4008" name="LinkSwitch 500">
+        <device oid="1.3.6.1.4.1.870.1.1.5"/>
+      </subcategory>
+      <subcategory id="4009" name="3Com SuperStack II">
+        <device oid="1.3.6.1.4.1.43.10.27.4.1.2.1"/>
+        <device oid="1.3.6.1.4.1.43.10.27.4.1.2.2"/>
+      </subcategory>
+      <subcategory id="4010" name="3Com Superstack 3 Swicth 4400">
+        <device oid="1.3.6.1.4.1.43.10.27.4.1.2.4"/>
+      </subcategory>
+      <subcategory id="4011" name="3Com Superstack 3 Switch 4900">
+        <device oid="1.3.6.1.4.1.43.10.27.4.1.2.5"/>
+      </subcategory>
+      <subcategory id="4012" name="3Com Bridge">
+        <device oid="1.3.6.1.4.1.43.1.4.13.8"/>
+      </subcategory>
+      <subcategory id="4013" name="3Com ECS-L-Bridge">
+        <device oid="1.3.6.1.4.1.43.1.4.3"/>
+      </subcategory>
+      <subcategory id="4014" name="3Com FMS-Bridge">
+        <device oid="1.3.6.1.4.1.43.1.8.10"/>
+      </subcategory>
+      <subcategory id="4015" name="3Com MSH-TR-Bridge" icon="48">
+        <device oid="1.3.6.1.4.1.83"/>
+      </subcategory>
+      <subcategory id="4016" name="3Com SuperStack 3 Switch 3848">
+        <device oid="1.3.6.1.4.1.43.1.8.45"/>
+      </subcategory>
+      <subcategory id="4017" name="3Com SuperStack 3 Switch 3870">
+        <device oid="1.3.6.1.4.1.43.1.8.44"/>
+      </subcategory>
+      <subcategory id="4083" name="3Com Switch 4500G">
+        <device oid="1.3.6.1.4.1.43.1.16.4.3.30"/>
+      </subcategory>
+      <subcategory id="4084" name="3Com Switch 4200G">
+        <device oid="1.3.6.1.4.1.43.1.16.4.3.28"/>
+      </subcategory>
+      <subcategory id="4085" name="3Com Baseline Switch">
+        <device oid="1.3.6.1.4.1.43.1.8.57"/>
+        <device oid="1.3.6.1.4.1.43.1.8.58"/>
+        <device oid="1.3.6.1.4.1.43.1.8.61"/>
+      </subcategory>
+      <subcategory id="4093" name="3Com Switch 5500G-EI">
+        <device oid="1.3.6.1.4.1.43.1.16.4.3.7"/>
+      </subcategory>
+      <subcategory id="4094" name="3Com IntelliJack Switch NJ2000">
+        <device oid="1.3.6.1.4.1.43.1.21.11"/>
+      </subcategory>
+      <subcategory id="4095" name="3Com Switch 4500G">
+        <device oid="1.3.6.1.4.1.43.1.16.4.3.32"/>
+      </subcategory>
+      <subcategory id="4096" name="3Com Superstack 3 Switch 4924">
+        <device oid="1.3.6.1.4.1.43.10.27.4.1.2.5"/>
+      </subcategory>
+      <subcategory id="4097" name="3com Switch 7700">
+        <device oid="1.3.6.1.4.1.43.1.16.4.3.1"/>
+      </subcategory>
+      <subcategory id="4098" name="3Com Switch 4800G">
+        <device oid="1.3.6.1.4.1.43.1.16.4.3.34"/>
+      </subcategory>
+    </category>
+    <category id="1001" name="Cisco" icon="76">
+      <subcategory id="4018" name="Cisco Catalyst 2924R">
+        <device oid="1.3.6.1.4.1.9.1.217"/>
+      </subcategory>
+      <subcategory id="4019" name="Cisco Catalyst Switch">
+        <device oid="1.3.6.1.4.1.9.1.170"/>
+        <device oid="1.3.6.1.4.1.9.1.171"/>
+        <device oid="1.3.6.1.4.1.9.1.218"/>
+        <device oid="1.3.6.1.4.1.9.1.219"/>
+        <device oid="1.3.6.1.4.1.9.1.220"/>
+        <device oid="1.3.6.1.4.1.9.1.221"/>
+        <device oid="1.3.6.1.4.1.9.1.248"/>
+        <device oid="1.3.6.1.4.1.9.1.366"/>
+      </subcategory>
+      <subcategory id="4020" name="Cisco Catalyst 3548XL">
+        <device oid="1.3.6.1.4.1.9.1.278"/>
+      </subcategory>
+      <subcategory id="4021" name="Cisco Catalyst 2950">
+        <device oid="1.3.6.1.4.1.9.1.323"/>
+      </subcategory>
+      <subcategory id="4022" name="Cisco Catalyst 2950-24">
+        <device oid="1.3.6.1.4.1.9.1.324"/>
+      </subcategory>
+      <subcategory id="4023" name="Cisco Catalyst 2950T-24">
+        <device description="C2950-I6Q4L2-M" oid="1.3.6.1.4.1.9.1.359"/>
+      </subcategory>
+      <subcategory id="4024" name="Cisco Switch">
+        <device oid="1.3.6.1.4.1.9.1.359"/>
+      </subcategory>
+      <subcategory id="4025" name="Cisco Catalyst 6513 Switch">
+        <device oid="1.3.6.1.4.1.9.1.400"/>
+      </subcategory>
+      <subcategory id="4026" name="Cisco Catalyst 2950G-24">
+        <device oid="1.3.6.1.4.1.9.1.428"/>
+      </subcategory>
+      <subcategory id="4027" name="Cisco Catalyst 2950G-48">
+        <device oid="1.3.6.1.4.1.9.1.429"/>
+      </subcategory>
+      <subcategory id="4028" name="Cisco Catalyst 4506">
+        <device oid="1.3.6.1.4.1.9.1.502"/>
+      </subcategory>
+      <subcategory id="4029" name="Cisco Catalyst 3750G-24TS-1U">
+        <device oid="1.3.6.1.4.1.9.1.516"/>
+      </subcategory>
+      <subcategory id="4030" name="Cisco Catalyst 2940-8TT">
+        <device oid="1.3.6.1.4.1.9.1.540"/>
+      </subcategory>
+      <subcategory id="4079" name="Cisco Catalyst 2940-8TF">
+        <device oid="1.3.6.1.4.1.9.1.542"/>
+      </subcategory>
+      <subcategory id="4031" name="Cisco Catalyst 3560-24TS">
+        <device oid="1.3.6.1.4.1.9.1.633"/>
+      </subcategory>
+      <subcategory id="4032" name="Cisco Catalyst 1900">
+        <device oid="1.3.6.1.4.1.9.5.18"/>
+      </subcategory>
+      <subcategory id="4033" name="Cisco Catalyst 4003">
+        <device oid="1.3.6.1.4.1.9.5.40"/>
+      </subcategory>
+      <subcategory id="4034" name="Cisco Catalyst 4006">
+        <device oid="1.3.6.1.4.1.9.5.46"/>
+      </subcategory>
+      <subcategory id="4035" name="Cisco Catalyst">
+        <device description="CATALYST" oid="1.3.6.1.4.1.9.5"/>
+      </subcategory>
+      <subcategory id="4076" name="Cisco Catalyst 2960">
+        <device oid="1.3.6.1.4.1.9.1.716"/>
+        <device oid="1.3.6.1.4.1.9.1.717"/>
+        <device oid="1.3.6.1.4.1.9.1.694"/>
+        <device oid="1.3.6.1.4.1.9.1.695"/>
+        <device oid="1.3.6.1.4.1.9.1.696"/>
+        <device oid="1.3.6.1.4.1.9.1.697"/>
+      </subcategory>
+      <subcategory id="4086" name="Cisco Catalyst 3560">
+        <device description="C3560 Software" oid="1.3.6.1.4.1.9.1.615"/>
+      </subcategory>
+      <subcategory id="4099" name="Cisco Catalyst 6500 Series">
+        <device oid="1.3.6.1.4.1.9.1.283"/>
+        <device oid="1.3.6.1.4.1.9.1.449"/>
+        <device oid="1.3.6.1.4.1.9.1.534"/>
+        <device oid="1.3.6.1.4.1.9.1.657"/>
+        <device oid="1.3.6.1.4.1.9.1.832"/>
+        <device oid="1.3.6.1.4.1.9.1.896"/>
+        <device oid="1.3.6.1.4.1.9.5.56"/>
+        <device oid="1.3.6.1.4.1.9.5.64"/>
+      </subcategory>
+      <subcategory id="4100" name="Cisco Catalyst 3750 Series">
+        <device oid="1.3.6.1.4.1.9.1.1022"/>
+        <device oid="1.3.6.1.4.1.9.1.1023"/>
+        <device oid="1.3.6.1.4.1.9.1.1026"/>
+        <device oid="1.3.6.1.4.1.9.1.1027"/>
+        <device oid="1.3.6.1.4.1.9.1.1222"/>
+        <device oid="1.3.6.1.4.1.9.1.1223"/>
+        <device oid="1.3.6.1.4.1.9.5.1224"/>
+        <device oid="1.3.6.1.4.1.9.5.511"/>
+        <device oid="1.3.6.1.4.1.9.1.512"/>
+        <device oid="1.3.6.1.4.1.9.1.513"/>
+        <device oid="1.3.6.1.4.1.9.1.514"/>
+        <device oid="1.3.6.1.4.1.9.1.516"/>
+        <device oid="1.3.6.1.4.1.9.1.530"/>
+        <device oid="1.3.6.1.4.1.9.1.535"/>
+        <device oid="1.3.6.1.4.1.9.5.536"/>
+        <device oid="1.3.6.1.4.1.9.5.602"/>
+        <device oid="1.3.6.1.4.1.9.1.603"/>
+        <device oid="1.3.6.1.4.1.9.1.604"/>
+        <device oid="1.3.6.1.4.1.9.1.624"/>
+        <device oid="1.3.6.1.4.1.9.1.656"/>
+        <device oid="1.3.6.1.4.1.9.1.688"/>
+        <device oid="1.3.6.1.4.1.9.1.778"/>
+        <device oid="1.3.6.1.4.1.9.5.779"/>
+      </subcategory>
+      <subcategory id="4101" name="Cisco Catalyst 3750-E Series">
+        <device oid="1.3.6.1.4.1.9.1.789"/>
+        <device oid="1.3.6.1.4.1.9.1.790"/>
+        <device oid="1.3.6.1.4.1.9.1.791"/>
+        <device oid="1.3.6.1.4.1.9.1.792"/>
+      </subcategory>
+    </category>
+    <category id="1016" name="BUFFALO">
+      <subcategory id="4037" name="AirStation Series WLM2-SERIES Ver 2.44" icon="52">
+        <device oid="1.3.6.1.4.1.5227.4"/>
+      </subcategory>
+      <subcategory id="4102" name="LSM10/100">
+        <device oid="1.3.6.1.4.1.5227.9"/>
+      </subcategory>
+    </category>
+    <category id="1017" name="D-Link">
+      <subcategory id="4038" name="D-Link DES-3226">
+        <device oid="1.3.6.1.4.1.171.10.36.1.11"/>
+      </subcategory>
+      <subcategory id="4103" name="D-Link DES-3028">
+        <device oid="1.3.6.1.4.1.171.10.63.6"/>
+      </subcategory>
+      <subcategory id="4104" name="D-Link DGS-1224T">
+        <device oid="1.3.6.1.4.1.171.10.76.5"/>
+      </subcategory>
+      <subcategory id="4105" name="D-Link DES-3526">
+        <device oid="1.3.6.1.4.1.171.10.64.1"/>
+      </subcategory>
+      <subcategory id="4106" name="D-Link DES-3550">
+        <device oid="1.3.6.1.4.1.171.10.64.2"/>
+      </subcategory>
+      <subcategory id="4107" name="D-Link DGS-3627G">
+        <device oid="1.3.6.1.4.1.171.10.70.8"/>
+      </subcategory>
+      <subcategory id="4108" name="D-Link DES-3028G">
+        <device oid="1.3.6.1.4.1.171.10.63.11"/>
+      </subcategory>
+      <subcategory id="4109" name="D-Link DES-3052">
+        <device oid="1.3.6.1.4.1.171.10.63.8"/>
+      </subcategory>
+      <subcategory id="4110" name="D-Link DES-3010G">
+        <device oid="1.3.6.1.4.1.171.10.63.1.2"/>
+      </subcategory>
+      <subcategory id="4111" name="D-Link DES-7210">
+        <device oid="1.3.6.1.4.1.171.10.97.1.2"/>
+      </subcategory>
+      <subcategory id="4112" name="D-Link DES-2110">
+        <device oid="1.3.6.1.4.1.171.10.61.1"/>
+      </subcategory>
+    </category>
+    <category id="1002" name="HP">
+      <subcategory id="4040" name="HP Packet Switch">
+        <device oid="1.3.6.1.4.1.11.2.3.7.7"/>
+      </subcategory>
+      <subcategory id="4041" name="HP 28673A Bridge" icon="48">
+        <device oid="1.3.6.1.4.1.11.2.3.7.1.1"/>
+      </subcategory>
+      <subcategory id="4042" name="HP 28674A Bridge" icon="48">
+        <device oid="1.3.6.1.4.1.11.2.3.7.1.2"/>
+      </subcategory>
+      <subcategory id="4043" name="HP Switch 16">
+        <device oid="1.3.6.1.4.1.11.2.3.7.1.8"/>
+      </subcategory>
+      <subcategory id="4044" name="HP Switch 200">
+        <device oid="1.3.6.1.4.1.11.2.3.7.1.10"/>
+      </subcategory>
+      <subcategory id="4045" name="HP Switch">
+        <device oid="1.3.6.1.4.1.11.2.3.7.1"/>
+      </subcategory>
+      <subcategory id="4046" name="HP Switch-Hub">
+        <device oid="1.3.6.1.4.1.11.2.3.7.8.2.5"/>
+      </subcategory>
+      <subcategory id="4047" name="HP J4121A 4000M">
+        <device oid="1.3.6.1.4.1.11.2.3.7.11.9"/>
+      </subcategory>
+      <subcategory id="4048" name="HP 2424M ProCurve">
+        <device oid="1.3.6.1.4.1.11.2.3.7.11.11"/>
+      </subcategory>
+      <subcategory id="4049" name="HP 2512 ProCurve">
+        <device oid="1.3.6.1.4.1.11.2.3.7.11.18"/>
+      </subcategory>
+      <subcategory id="4078" name="HP 5308xl ProCurve">
+        <device oid="1.3.6.1.4.1.11.2.3.7.11.17"/>
+      </subcategory>
+      <subcategory id="4050" name="HP-SN Switch">
+        <device oid="1.3.6.1.4.1.11.2.3.7.11"/>
+      </subcategory>
+      <subcategory id="4113" name="HP ProCurve Switch">
+        <device oid="1.3.6.1.4.1.11.2.3.7.11.45"/>
+        <device oid="1.3.6.1.4.1.11.2.3.7.11.58"/>
+        <device oid="1.3.6.1.4.1.11.2.3.7.11.89"/>
+      </subcategory>
+    </category>
+    <category id="1018" name="Nortel" icon="78">
+      <subcategory id="4051" name="Nortel PPassport 1648T">
+        <device oid="1.3.6.1.4.1.2272.43"/>
+      </subcategory>
+      <subcategory id="4052" name="Nortel PPassport 8606">
+        <device oid="1.3.6.1.4.1.2272.31"/>
+      </subcategory>
+      <subcategory id="4053" name="Nortel PPassport Switch">
+        <device oid="1.3.6.1.4.1.2271.10"/>
+      </subcategory>
+      <subcategory id="4077" name="Nortel Bay Stack 3510">
+        <device oid="1.3.6.1.4.1.45.3.66"/>
+      </subcategory>
+      <subcategory id="4054" name="Nortel Bay Stack">
+        <device description="BAY STACK" oid="1.3.6.1.4.1.45.3.35.1"/>
+      </subcategory>
+      <subcategory id="4114" name="Nortel 5510-24T Switch">
+        <device oid="1.3.6.1.4.1.45.3.52.1"/>
+      </subcategory>
+      <subcategory id="4115" name="Nortel 2526T Switch">
+        <device oid="1.3.6.1.4.1.45.3.72.1"/>
+      </subcategory>
+      <subcategory id="4116" name="Nortel 4524GT Switch">
+        <device oid="1.3.6.1.4.1.45.3.71.8"/>
+      </subcategory>
+    </category>
+    <category id="1019" name="Foundry Networks">
+      <subcategory id="4055" name="ServerIron Switch">
+        <device oid="1.3.6.1.4.1.1991.1.3.3.2"/>
+      </subcategory>
+      <subcategory id="4056" name="FastIron 1500">
+        <device oid="1.3.6.1.4.1.1991.1.3.24.1"/>
+      </subcategory>
+      <subcategory id="4057" name="FastIron Edge 2402">
+        <device oid="1.3.6.1.4.1.1991.1.3.25.1"/>
+      </subcategory>
+      <subcategory id="4058" name="FastIron Edge 4802">
+        <device oid="1.3.6.1.4.1.1991.1.3.26.1"/>
+      </subcategory>
+      <subcategory id="4059" name="FastIron Edge 9604">
+        <device oid="1.3.6.1.4.1.1991.1.3.27.1"/>
+      </subcategory>
+    </category>
+    <category id="1020" name="Fore">
+      <subcategory id="4060" name="Fore ESX-2400">
+        <device oid="1.3.6.1.4.1.2154.1.1.1.2"/>
+      </subcategory>
+    </category>
+    <category id="1021" name="Corega">
+      <subcategory id="4061" name="Corega MSW-12EX Switch">
+        <device oid="1.3.6.1.4.1.16299.1.1.4"/>
+      </subcategory>
+    </category>
+    <category id="1022" name="Enterasys">
+      <subcategory id="4062" name="Enterasys E1">
+        <device oid="1.3.6.1.4.1.5624.2.1.34"/>
+      </subcategory>
+      <subcategory id="4063" name="Enterasys N7">
+        <device oid="1.3.6.1.4.1.5624.2.1.52"/>
+      </subcategory>
+      <subcategory id="4064" name="Enterasys N3">
+        <device oid="1.3.6.1.4.1.5624.2.1.53"/>
+      </subcategory>
+    </category>
+    <category id="1023" name="Extreme Networks">
+      <subcategory id="4065" name="Alpine 3808">
+        <device oid="1.3.6.1.4.1.1916.2.17"/>
+      </subcategory>
+      <subcategory id="4117" name="Summit 200 Series Switch">
+        <device oid="1.3.6.1.4.1.1916.2.54"/>
+        <device oid="1.3.6.1.4.1.1916.2.53"/>
+      </subcategory>
+      <subcategory id="4118" name="Summit Switch">
+        <device oid="1.3.6.1.4.1.1916.2.6"/>
+        <device oid="1.3.6.1.4.1.1916.2.66"/>
+        <device oid="1.3.6.1.4.1.1916.2.58"/>
+      </subcategory>
+    </category>
+    <category id="1024" name="Brocade">
+      <subcategory id="4066" name="Fibre Channel Switch">
+        <device oid="1.3.6.1.4.1.1588.2.1.1.1"/>
+      </subcategory>
+    </category>
+    <category id="1033" name="Alcatel" icon="75">
+      <subcategory id="4068" name="Omni Switch 9000">
+        <device oid="1.3.6.1.4.1.6486.800.1.1.2.1.8.1.3"/>
+      </subcategory>
+      <subcategory id="4069" name="Omni Switch 7000">
+        <device oid="1.3.6.1.4.1.6486.800.1.1.2.1.1.1.1"/>
+      </subcategory>
+      <subcategory id="4070" name="Omni Switch 6600">
+        <device oid="1.3.6.1.4.1.6486.800.1.1.2.1.3.1.4"/>
+      </subcategory>
+      <subcategory id="4119" name="Alcatel OmniStack LS 6200">
+        <device oid="1.3.6.1.4.1.6486.800.1.1.2.2.4.1.1"/>
+      </subcategory>
+      <subcategory id="4120" name="Alcatel OmniStack">
+        <device oid="1.3.6.1.4.1.6486.800.1.1.2.1.5.1.1"/>
+      </subcategory>
+    </category>
+    <category id="1043" name="Allied Telesis">
+      <subcategory id="4071" name="CentreCOM 8624EL">
+        <device oid="1.3.6.1.4.1.207.1.14.46"/>
+      </subcategory>
+      <subcategory id="4072" name="CentreCOM GS916M">
+        <device oid="1.3.6.1.4.1.207.1.4.110"/>
+      </subcategory>
+      <subcategory id="4073" name="Ethernet Switch AT-8024">
+        <device oid="1.3.6.1.4.1.207.1.4.66"/>
+      </subcategory>
+      <subcategory id="4074" name="Ethernet Switch AT-8024GB">
+        <device oid="1.3.6.1.4.1.207.1.4.67"/>
+      </subcategory>
+      <subcategory id="4075" name="Ethernet Switch AT-8024M">
+        <device oid="1.3.6.1.4.1.207.1.4.78"/>
+      </subcategory>
+      <subcategory id="4121" name="CentreCOM Switch">
+        <device oid="1.3.6.1.4.1.207.1.4.111"/>
+        <device oid="1.3.6.1.4.1.207.1.14.28"/>
+        <device oid="1.3.6.1.4.1.207.1.4.97"/>
+        <device oid="1.3.6.1.4.1.207.1.4.108"/>
+      </subcategory>
+      <subcategory id="4122" name="AT Switch">
+        <device oid="1.3.6.1.4.1.207.1.4.126"/>
+        <device oid="1.3.6.1.4.1.207.1.4.86"/>
+        <device oid="1.3.6.1.4.1.207.1.4.72"/>
+      </subcategory>
+    </category>
+    <category id="1046" name="Linksys">
+      <subcategory id="4080" name="SRW2048">
+        <device oid="1.3.6.1.4.1.3955.6.1.2048.1"/>
+      </subcategory>
+      <subcategory id="4081" name="SRW2024">
+        <device oid="1.3.6.1.4.1.3955.6.1.2024.1"/>
+      </subcategory>
+      <subcategory id="4082" name="SRW2016">
+        <device oid="1.3.6.1.4.1.3955.6.1.2016.1"/>
+      </subcategory>
+    </category>
+    <category id="1049" name="Juniper" icon="110">
+      <subcategory id="4087" name="EX 3200">
+        <device oid="1.3.6.1.4.1.2636.1.1.1.2.30"/>
+      </subcategory>
+      <subcategory id="4088" name="EX 4200">
+        <device oid="1.3.6.1.4.1.2636.1.1.1.2.31"/>
+      </subcategory>
+      <subcategory id="4089" name="EX 8208">
+        <device oid="1.3.6.1.4.1.2636.1.1.1.2.32"/>
+      </subcategory>
+      <subcategory id="4090" name="EX 8216">
+        <device oid="1.3.6.1.4.1.2636.1.1.1.2.33"/>
+      </subcategory>
+      <subcategory id="4091" name="EX 2200">
+        <device oid="1.3.6.1.4.1.2636.1.1.1.2.43"/>
+      </subcategory>
+      <subcategory id="4092" name="EX 4500">
+        <device oid="1.3.6.1.4.1.2636.1.1.1.2.44"/>
+      </subcategory>
+    </category>
+    <category id="1007" name="Planet">
+      <subcategory id="4123" name="WSW Switch">
+        <device oid="1.3.6.1.4.1.10456.1.1423"/>
+      </subcategory>
+      <subcategory id="4123" name="WGSW Switch">
+        <device oid="1.3.6.1.4.1.10456.1.1460"/>
+        <device oid="1.3.6.1.4.1.10456.25.1.1.1.1"/>
+      </subcategory>
+    </category>
+    <category id="1053" name="Alaxala">
+      <subcategory id="4124" name="AX Switch">
+        <device oid="1.3.6.1.4.1.21839.1.2.6"/>
+        <device oid="1.3.6.1.4.1.21839.1.2.8"/>
+        <device oid="1.3.6.1.4.1.21839.1.2.10"/>
+      </subcategory>
+    </category>
+    <category id="1042" name="Dell">
+      <subcategory id="4125" name="PowerConnect Switch">
+        <device oid="1.3.6.1.4.1.674.10895.3020"/>
+        <device oid="1.3.6.1.4.1.674.10895.3015"/>
+        <device oid="1.3.6.1.4.1.674.10895.3022"/>
+      </subcategory>
+    </category>
+    <category id="1000" name="Unknown">
+      <subcategory id="4067" name="Generic Switch">
+        <device>
+          <test name="Bridge" value="1"/>
+        </device>
+      </subcategory>
+    </category>
+  </deviceclass>
+  <deviceclass id="5" name="Hub" icon="53">
+    <category id="1014" name="3Com">
+      <subcategory id="5001" name="3Com SuperStack II PS Hub 40">
+        <device oid="1.3.6.1.4.1.43.10.27.4.1"/>
+      </subcategory>
+    </category>
+    <category id="1002" name="HP">
+      <subcategory id="5002" name="HP 28688A Hub">
+        <device oid="1.3.6.1.4.1.11.2.3.7.5.1"/>
+      </subcategory>
+      <subcategory id="5003" name="HP 28688B Hub">
+        <device oid="1.3.6.1.4.1.11.2.3.7.5.2"/>
+      </subcategory>
+      <subcategory id="5004" name="HP 28682A Hub">
+        <device oid="1.3.6.1.4.1.11.2.3.7.5.3"/>
+      </subcategory>
+      <subcategory id="5005" name="HP 28699A Hub">
+        <device oid="1.3.6.1.4.1.11.2.3.7.5.4"/>
+      </subcategory>
+      <subcategory id="5006" name="HP 28692A Hub">
+        <device oid="1.3.6.1.4.1.11.2.3.7.5.5"/>
+      </subcategory>
+      <subcategory id="5007" name="HP J2355A Hub">
+        <device oid="1.3.6.1.4.1.11.2.3.7.5.6"/>
+      </subcategory>
+      <subcategory id="5008" name="HP J2603A Hub">
+        <device oid="1.3.6.1.4.1.11.2.3.7.8.2.1"/>
+      </subcategory>
+      <subcategory id="5009" name="HP J2414A Hub">
+        <device oid="1.3.6.1.4.1.11.2.3.7.5.1"/>
+      </subcategory>
+      <subcategory id="5010" name="HP Hub">
+        <device oid="1.3.6.1.4.1.11.2.3.7.5"/>
+      </subcategory>
+    </category>
+    <category id="1025" name="Lantronix">
+      <subcategory id="5011" name="Lantronix MSS100">
+        <device oid="1.3.6.1.4.1.244.23"/>
+      </subcategory>
+    </category>
+    <category id="1000" name="Unknown">
+      <subcategory id="5012" name="Generic Hub">
+      </subcategory>
+    </category>
+  </deviceclass>
+  <deviceclass id="6" name="Access Server" icon="54">
+    <category id="1001" name="Cisco">
+      <subcategory id="6001" name="Cisco 2500 Series - Access Server">
+        <device oid="1.3.6.1.4.1.9.1.25"/>
+        <device oid="1.3.6.1.4.1.9.1.27"/>
+        <device oid="1.3.6.1.4.1.9.1.28"/>
+        <device oid="1.3.6.1.4.1.9.1.60"/>
+        <device oid="1.3.6.1.4.1.9.1.61"/>
+        <device oid="1.3.6.1.4.1.9.1.135"/>
+        <device oid="1.3.6.1.4.1.9.1.153"/>
+        <device oid="1.3.6.1.4.1.9.1.154"/>
+      </subcategory>
+      <subcategory id="6002" name="Cisco AS52000 Access Server">
+        <device oid="1.3.6.1.4.1.9.1.109"/>
+      </subcategory>
+      <subcategory id="6003" name="Cisco 3600 Series - Modular Dial Access Server">
+        <device oid="1.3.6.1.4.1.9.1.110"/>
+        <device oid="1.3.6.1.4.1.9.1.122"/>
+      </subcategory>
+    </category>
+    <category id="1000" name="Unknown">
+      <subcategory id="6006" name="Generic Server">
+        <device description="SERVER"/>
+      </subcategory>
+    </category>
+  </deviceclass>
+  <deviceclass id="7" name="Printer" icon="50" sysicon="9507">
+    <category id="1002" name="HP">
+      <subcategory id="7001" name="HP Network Printer">
+        <device oid="1.3.6.1.4.1.11.2.3.9.1"/>
+        <device oid="1.3.6.1.4.1.11.2.3.9.2"/>
+      </subcategory>
+      <subcategory id="7002" name="HP Plotter">
+        <device oid="1.3.6.1.4.1.11.2.3.9.2"/>
+      </subcategory>
+      <subcategory id="7003" name="Generic HP Printer">
+        <device description="JETDIRECT|PRINT"/>
+      </subcategory>
+    </category>
+    <category id="1017" name="D-Link">
+      <subcategory id="7004" name="D-Link Print Server">
+        <device oid="1.3.6.1.4.1.171.10.10.1"/>
+      </subcategory>
+    </category>
+    <category id="1027" name="Axis">
+      <subcategory id="7005" name="Axis Print Server">
+        <device description="NETWORK PRINT SERVER" oid="1.3.6.1.4.1.368.1.1"/>
+      </subcategory>
+    </category>
+    <category id="1028" name="Canon">
+      <subcategory id="7006" name="Canon PS1300-ETX Print Server">
+        <device description="PS1300/ETX" oid="1.3.6.1.4.1.108.1.1.9"/>
+      </subcategory>
+      <subcategory id="7007" name="Canon Network Printer">
+        <device description="CANON" oid="1.3.6.1.2.1.43"/>
+      </subcategory>
+      <subcategory id="7010" name="Canon Laser Printer">
+        <device description="CANON LBP" oid="1.3.6.1.4.1.1602.4.2"/>
+      </subcategory>
+    </category>
+    <category id="1029" name="EPSON">
+      <subcategory id="7008" name="EPL6200">
+        <device oid="1.3.6.1.4.1.1248.1.1.2.1.3.5.69.73.80.83.50"/>
+      </subcategory>
+    </category>
+    <category id="1064" name="Kyocera">
+      <subcategory id="7011" name="Kyocera Printer">
+        <device oid="1.3.6.1.4.1.1347.41"/>
+        <device oid="1.3.6.1.4.1.1347.43.5.1.1.1"/>
+      </subcategory>
+    </category>
+    <category id="1052" name="Brother">
+      <subcategory id="7012" name="Brother Printer">
+        <device description="Brother NC" oid="1.3.6.1.4.1.2435.2.3.9.1"/>
+      </subcategory>
+    </category>
+    <category id="1061" name="FUJI XEROX">
+      <subcategory id="7013" name="FUJI XEROX DocuCentre">
+        <device oid="1.3.6.1.4.1.297.1.11.93.1.34.17.1.1"/>
+        <device oid="1.3.6.1.4.1.297.1.11.93.1.21.7.2.3"/>
+        <device oid="1.3.6.1.4.1.297.1.11.93.1.28.32.1.3"/>
+        <device description="FUJI XEROX DocuCentre"/>
+      </subcategory>
+      <subcategory id="7014" name="FUJI XEROX ApeosPort">
+        <device oid="1.3.6.1.4.1.297.1.11.93.1.30.20.1.2"/>
+        <device oid="1.3.6.1.4.1.297.1.11.93.1.35.8.1.1"/>
+        <device description="FUJI XEROX ApeosPort"/>
+      </subcategory>
+      <subcategory id="7015" name="FUJI XEROX DocuPrint">
+        <device oid="1.3.6.1.4.1.297.1.11.93.1.27.36.1.1"/>
+        <device oid="1.3.6.1.4.1.297.1.11.93.1.7.40.1.1"/>
+        <device oid="1.3.6.1.4.1.297.1.11.93.1.27.5.1.1"/>
+        <device description="FUJI XEROX DocuPrint"/>
+      </subcategory>
+    </category>
+    <category id="1057" name="Ricoch">
+      <subcategory id="7016" name="RICOH imagio">
+        <device description="RICOH imagio" oid="1.3.6.1.4.1.367.1.1"/>
+      </subcategory>
+    </category>
+    <category id="1059" name="Konica">
+      <subcategory id="7017" name="Minolta C352">
+        <device oid="1.3.6.1.4.1.18334.1.1.1.2.1.20.3.2"/>
+      </subcategory>
+    </category>
+    <category id="1065" name="Xerox">
+      <subcategory id="7018" name="Phaser 8860">
+        <device oid="1.3.6.1.4.1.253.8.62.1.19.6.17.1"/>
+      </subcategory>
+    </category>
+    <category id="1048" name="Samsung">
+      <subcategory id="7019" name=" CLP-310 Series">
+        <device readonly="0" description="CLP-310" oid="1.3.6.1.4.1.236.11.5.1"/>
+      </subcategory>
+    </category>
+    <category id="1000" name="Unknown">
+      <subcategory id="7009" name="Generic Printer">
+      </subcategory>
+    </category>
+  </deviceclass>
+  <deviceclass id="8" name="Camera" icon="43">
+    <category id="1030" name="Mega Systems Technologies, Inc.">
+      <subcategory id="8001" name="iCamView">
+        <device description="CAMVIEW" oid="1.3.6.1.4.1.13409.2"/>
+      </subcategory>
+    </category>
+    <category id="1000" name="Unknown">
+      <subcategory id="8002" name="Generic Camera">
+      </subcategory>
+    </category>
+  </deviceclass>
+  <deviceclass id="9" name="Terminal" icon="57">
+    <category id="1002" name="HP">
+      <subcategory id="9001" name="HP X-terminal">
+        <device oid="1.3.6.1.4.1.11.2.3.9.3"/>
+      </subcategory>
+    </category>
+  </deviceclass>
+  <deviceclass id="10" name="Transceiver">
+    <category id="1002" name="HP">
+      <subcategory id="10001" name="HP Modem">
+        <device oid="1.3.6.1.4.1.11.2.3.7.4"/>
+      </subcategory>
+    </category>
+  </deviceclass>
+  <deviceclass id="11" name="UPS" icon="11">
+    <category id="1031" name="APC">
+      <subcategory id="11001" name="APC Environmental Monitoring Unit">
+        <device oid="1.3.6.1.4.1.318.1.3.8.3"/>
+      </subcategory>
+      <subcategory id="11002" name="APC UPS">
+        <device oid="1.3.6.1.4.1.318.1.3.4.5"/>
+      </subcategory>
+      <subcategory id="11003" name="APC SmartUPS 450">
+        <device oid="1.3.6.1.4.1.318.1.3.2.7"/>
+      </subcategory>
+      <subcategory id="11004" name="APC SmartUPS 3000">
+        <device oid="1.3.6.1.4.1.318.1.3.2.12"/>
+      </subcategory>
+      <subcategory id="11005" name="APC AP9603 SNMP Adapter-Token Ring">
+        <device oid="1.3.6.1.4.1.318.1.3.3.2"/>
+      </subcategory>
+      <subcategory id="11008" name="APC Smart UPS RT 5000">
+        <device oid="1.3.6.1.4.1.318.1.3.2.13"/>
+      </subcategory>
+      <subcategory id="11006" name="APC Web/SNMP Management Card">
+        <device description="APC Web/SNMP Management Card" oid="1.3.6.1.4.1.318.1.3.4.2"/>
+        <device description="APC Web/SNMP Management Card" oid="1.3.6.1.4.1.318.1.3.5.4"/>
+      </subcategory>
+      <subcategory id="11009" name="APC SmartUPS 1400">
+        <device oid="1.3.6.1.4.1.318.1.3.2.10"/>
+      </subcategory>
+    </category>
+    <category id="1000" name="Unknown">
+      <subcategory id="11007" name="Generic UPS">
+      </subcategory>
+    </category>
+  </deviceclass>
+  <deviceclass id="12" name="IP Phone" icon="61">
+    <category id="1033" name="Alcatel">
+      <subcategory id="12001" name="Alcatel IP Phone">
+        <device description="ALCATEL VOIP TERMINAL" oid="1.3.6.1.4.1.637.64.1.2.4035"/>
+      </subcategory>
+      <subcategory id="12002" name="Alcatel 4098 IP Reflexes Phone">
+        <device description="ALCATEL|VOICE OVER IP" oid="1.3.6.1.4.1.637.64.1.1"/>
+      </subcategory>
+    </category>
+    <category id="1034" name="Mitel Networks">
+      <subcategory id="12003" name="3300 VOIP ICP">
+        <device oid="1.3.6.1.4.1.1027.1.2.3"/>
+      </subcategory>
+    </category>
+    <category id="1000" name="Unknown">
+      <subcategory id="12004" name="Generic IP Phone">
+      </subcategory>
+    </category>
+  </deviceclass>
+  <deviceclass id="13" name="Sensor">
+    <category id="1035" name="AKCP">
+      <subcategory id="13001" name="AKCP cameraProbe 3.0 Sensor">
+        <device oid="1.3.6.1.4.1.3854.1"/>
+      </subcategory>
+    </category>
+    <category id="1036" name="Cyro">
+      <subcategory id="13002" name="Sensatronics Cyro Sensor">
+        <device oid="1.3.6.1.4.1.16174.1.1.2"/>
+      </subcategory>
+    </category>
+    <category id="1044" name="HW Group">
+      <subcategory id="13003" name="Poseidon 3268">
+        <device oid="1.3.6.1.4.1.21796.3.3"/>
+      </subcategory>
+    </category>
+  </deviceclass>
+  <deviceclass id="14" name="KVM">
+    <category id="1002" name="HP">
+      <subcategory id="14001" name="HP IP Console Switch">
+        <device oid="1.3.6.1.4.1.232.160.1.1"/>
+      </subcategory>
+    </category>
+    <category id="1037" name="Raritan">
+      <subcategory id="14002" name="Raritan IP Console Switch">
+        <device oid="1.3.6.1.4.1.2021.0.255"/>
+      </subcategory>
+    </category>
+    <category id="1038" name="Avocent">
+      <subcategory id="14003" name="2000R KVM Switch">
+        <device oid="1.3.6.1.4.1.10418.3.1.6"/>
+      </subcategory>
+      <subcategory id="14004" name="DSR2010 Switch">
+        <device oid="1.3.6.1.4.1.10418.7.1.5"/>
+      </subcategory>
+      <subcategory id="14005" name="DSR2161 Switch">
+        <device oid="1.3.6.1.4.1.10418.7.1.2"/>
+      </subcategory>
+      <subcategory id="14006" name="DSR4020 Switch">
+        <device oid="1.3.6.1.4.1.10418.7.1.11"/>
+      </subcategory>
+      <subcategory id="14007" name="DSR4160 Switch">
+        <device oid="1.3.6.1.4.1.10418.7.1.3"/>
+      </subcategory>
+      <subcategory id="14008" name="DSR2020 Switch">
+        <device oid="1.3.6.1.4.1.10418.7.1.10"/>
+      </subcategory>
+    </category>
+    <category id="1000" name="Unknown">
+      <subcategory id="14009" name="Generic KVM">
+        <device description="KVM"/>
+      </subcategory>
+    </category>
+  </deviceclass>
+  <deviceclass id="15" name="Network Storage" icon="54">
+    <category id="1039" name="NetApp">
+      <subcategory id="15001" name="NetApp FAS">
+        <device description="NETAPP" oid="1.3.6.1.4.1.789.2.1"/>
+      </subcategory>
+      <subcategory id="15002" name="NetApp FS270c">
+        <device oid="1.3.6.1.4.1.789.2.3"/>
+      </subcategory>
+    </category>
+    <category id="1040" name="HP">
+      <subcategory id="15003" name="Ultrium Tape Library 3583">
+        <device description="TAPE LIBRARY" oid="1.3.6.1.4.1.11.2.3.9.7.1"/>
+      </subcategory>
+    </category>
+    <category id="1041" name="Sony">
+      <subcategory id="15004" name="Sony StorStation LIB-81">
+        <device oid="1.3.6.1.4.1.122.1.3"/>
+      </subcategory>
+    </category>
+    <category id="1042" name="Dell">
+      <subcategory id="15006" name="Powervault 132T">
+        <device oid="1.3.6.1.4.1.674.10893.2.101"/>
+      </subcategory>
+      <subcategory id="15007" name="Equal Logic">
+        <device oid="1.3.6.1.4.1.12740.17.1"/>
+      </subcategory>
+    </category>
+    <category id="1000" name="Unknown">
+      <subcategory id="15005" name="Generic Network Storage">
+        <device description="TAPE LIBRARY"/>
+      </subcategory>
+    </category>
+  </deviceclass>
+  <deviceclass id="16" name="Wireless Device" icon="52">
+    <category id="1015" name="Sony">
+      <subcategory id="16001" name="Sony Wireless (PCW A100)">
+        <device oid="1.3.6.1.4.1.122.5500.1.1"/>
+      </subcategory>
+    </category>
+    <category id="1017" name="D-Link">
+      <subcategory id="16003" name="D-Link DWL2100AP">
+        <device oid="1.3.6.1.4.1.171.10.37.15"/>
+      </subcategory>
+      <subcategory id="16004" name="D-Link DWL-2200 AP">
+        <device oid="1.3.6.1.4.1.171.10.37.9"/>
+      </subcategory>
+    </category>
+    <category id="1014" name="3Com">
+      <subcategory id="16005" name="3Com Wireless Access Point">
+        <device description="WIRELESS" oid="1.3.6.1.4.1.43.1.20"/>
+      </subcategory>
+    </category>
+    <category id="1001" name="Cisco">
+      <subcategory id="16006" name="Cisco AP1210">
+        <device oid="1.3.6.1.4.1.9.1.525"/>
+      </subcategory>
+    </category>
+    <category id="1010" name="Zyxel">
+      <subcategory id="16007" name="Prestige 660HW-61">
+        <device description="PRESTIGE 660HW-61" oid="1.3.6.1.4.1.890.1.2.6.34"/>
+      </subcategory>
+    </category>
+    <category id="1040" name="Alvarion">
+      <subcategory id="16008" name="BREEZEACCESS VL">
+        <device oid="1.3.6.1.4.1.12394.4.1.13"/>
+      </subcategory>
+    </category>
+    <category id="1045" name="Apple">
+      <subcategory id="16010" name="AirPort">
+        <device oid="1.3.6.1.4.1.762.2"/>
+      </subcategory>
+    </category>
+    <category id="1046" name="Linksys">
+      <subcategory id="16011" name="WAP54G">
+        <device oid="1.3.6.1.4.1.1575.1.5"/>
+      </subcategory>
+    </category>
+    <category id="1062" name="Meru Networks">
+      <subcategory id="16012" name="Wireless LAN Controller MC 1500">
+        <device description="Wi-Fi" oid="1.3.6.1.4.1.15983.1.1.7.9"/>
+      </subcategory>
+    </category>
+    <category id="1000" name="Unknown">
+      <subcategory id="16009" name="Generic Wireless Device">
+      </subcategory>
+    </category>
+  </deviceclass>
+  <deviceclass id="17" name="Programmable Logic Controller">
+    <category id="1041" name="Rockwell Automation">
+      <subcategory id="17001" name="Allen-Bradley 1785-L40E">
+        <device oid="1.3.6.1.4.1.95.1.3"/>
+      </subcategory>
+      <subcategory id="17002" name="Allen-Bradley Ethernet Processor">
+        <device oid="1.3.6.1.4.1.95.1.4"/>
+      </subcategory>
+      <subcategory id="17003" name="Allen-Bradley 1747-L551">
+        <device oid="1.3.6.1.4.1.95.1.8"/>
+      </subcategory>
+      <subcategory id="17004" name="Allen-Bradley 1756-ENBT">
+        <device oid="1.3.6.1.4.1.95.1.12"/>
+      </subcategory>
+    </category>
+  </deviceclass>
+  <deviceclass id="18" name="Remote Management Adapter">
+    <category id="1026" name="IBM">
+      <subcategory id="18001" name="IBM Remote Supervisor Adapter">
+        <device oid="1.3.6.1.4.1.2.6.158.4"/>
+      </subcategory>
+    </category>
+    <category id="1042" name="Dell">
+      <subcategory id="18002" name="Dell Remote Access Controller">
+        <device oid="1.3.6.1.4.1.674.10892.2"/>
+      </subcategory>
+    </category>
+  </deviceclass>
+  <deviceclass id="19" name="Multimedia Device">
+    <category id="1045" name="Apple">
+      <subcategory id="19001" name="iPod" icon="83">
+        <device/>
+      </subcategory>
+      <subcategory id="19002" name="Apple TV" icon="84">
+        <device/>
+      </subcategory>
+    </category>
+  </deviceclass>
+  <deviceclass id="20" name="Other" icon="101">
+    <category id="1000" name="Unknown">
+      <subcategory id="20001" name="Unknown">
+        <device/>
+      </subcategory>
+    </category>
+  </deviceclass>
+  <deviceclass id="30" name="Smartphone" icon="63">
+    <category id="1045" name="Apple">
+      <subcategory id="30002" name="iPhone">
+        <device/>
+      </subcategory>
+    </category>
+    <category id="1048" name="Samsung">
+      <subcategory id="30003" name="Galaxy">
+        <device/>
+      </subcategory>
+      <subcategory id="30004" name="Samsung Smartphone">
+        <device/>
+      </subcategory>
+    </category>
+    <category id="1000" name="Unknown">
+      <subcategory id="30000" name="Generic Smartphone">
+        <device/>
+      </subcategory>
+      <subcategory id="30001" name="Generic Android Smartphone">
+        <device/>
+      </subcategory>
+    </category>
+  </deviceclass>
+  <deviceclass id="31" name="Tablet" icon="81">
+    <category id="1045" name="Apple">
+      <subcategory id="31002" name="iPad">
+        <device/>
+      </subcategory>
+    </category>
+    <category id="1048" name="Samsung">
+      <subcategory id="31003" name="Galaxy Tab">
+        <device/>
+      </subcategory>
+      <subcategory id="31004" name="Samsung Tablet">
+        <device/>
+      </subcategory>
+    </category>
+    <category id="1066" name="Motorola">
+      <subcategory id="31005" name="Motorola Xoom">
+        <device/>
+      </subcategory>
+    </category>
+    <category id="1015" name="Sony">
+      <subcategory id="31006" name="Sony Tablet">
+        <device/>
+      </subcategory>
+    </category>
+    <category id="1070" name="Asus">
+      <subcategory id="31007" name="Asus Transformer Pad">
+        <device/>
+      </subcategory>
+    </category>
+    <category id="1000" name="Unknown">
+      <subcategory id="31000" name="Generic Tablet">
+        <device/>
+      </subcategory>
+      <subcategory id="31001" name="Generic Android Tablet">
+        <device/>
+      </subcategory>
+    </category>
+  </deviceclass>
+</devicetypes>

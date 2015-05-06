@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE model>
+<model name="dnt.monitor.model.NIC"
+       xmlns:snmp="http://www.w3.org/2001/XMLSchema/snmp">
+    <snmp:table timeout="1m" prefix="if">1.3.6.1.2.1.2.2</snmp:table>
+    <property name="index" snmp:oid="Index"/>
+    <property name="ifType" snmp:oid="Type"/>
+    <property name="mtu" snmp:oid="Mtu"/>
+    <property name="speed" snmp:oid="Speed"/>
+    <property name="address" snmp:oid="PhysAddress"/>
+    <property name="adminStatus" snmp:oid="AdminStatus"/>
+    <property name="queueLength" snmp:oid="OutQLen"/>
+    <property name="rx" snmp:oid="InOctets"/>
+    <property name="tx" snmp:oid="OutOctets"/>
+    <property name="inPkts" snmp:oid="InUcastPkts"/>
+    <property name="inDiscards" snmp:oid="InDiscards"/>
+    <property name="inErrs" snmp:oid="InErrors"/>
+    <property name="outPkts" snmp:oid="OutUcastPkts"/>
+    <property name="outDiscards" snmp:oid="OutDiscards"/>
+    <property name="outErrs" snmp:oid="OutErrors"/>
+</model>

@@ -5,11 +5,13 @@ package dnt.monitor.engine.support;
 
 import dnt.monitor.engine.service.EngineServiceInvoker;
 import dnt.monitor.engine.service.EngineServiceRegistry;
-import dnt.monitor.exception.EngineException;
 import dnt.monitor.engine.util.EngineServiceExporter;
+import dnt.monitor.exception.EngineException;
 import net.happyonroad.remoting.InvocationRequestMessage;
 import net.happyonroad.remoting.InvocationResponseMessage;
 import net.happyonroad.spring.Bean;
+import net.happyonroad.util.MiscUtils;
+import net.happyonroad.util.StringUtils;
 import org.springframework.remoting.support.RemoteInvocationResult;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.TextMessage;
@@ -73,6 +75,11 @@ class DefaultEngineServiceInvoker extends Bean
 
         }catch (Exception ex){
             response.setError(ex);
+        }
+        if( response.getError() != null ){
+            logger.warn("Error while invoke {}: \n{}",
+                        StringUtils.abbreviate(request, 100),
+                        MiscUtils.describeException(response.getError()));
         }
         try {
             session.sendMessage(new TextMessage(replyTo + "@" + response.toJson()));

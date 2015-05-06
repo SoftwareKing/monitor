@@ -30,7 +30,7 @@ public class ResourceComparator implements Comparator<ManagedNode> {
         ResourceNode resourceNode = (ResourceNode) node;
         String type = resourceNode.getResource().getType();
         if( type == null ) return 0;
-        if( "/application/monitor_engine".equals(type))
+        if( "/app/jvm/monitor/engine".equals(type))
             return Integer.MAX_VALUE;
         return 0;
     }

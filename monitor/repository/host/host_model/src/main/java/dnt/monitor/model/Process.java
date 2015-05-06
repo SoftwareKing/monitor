@@ -6,31 +6,61 @@ package dnt.monitor.model;
 import dnt.monitor.annotation.Anchor;
 import dnt.monitor.annotation.Indicator;
 import dnt.monitor.annotation.Metric;
-import dnt.monitor.annotation.ssh.Command;
-import dnt.monitor.annotation.ssh.Mapping;
-import dnt.monitor.annotation.ssh.Value;
+import dnt.monitor.annotation.shell.*;
+import dnt.monitor.annotation.snmp.Table;
+import dnt.monitor.annotation.snmp.Transformer;
+import dnt.monitor.handler.ProcessTransformerHandler;
 
 /**
  * <h1>主机进程</h1>
  * Host -has many-> Processes
- *
+ * <p/>
  * 备注： 进程这个组件未必在每次采集/同步的时候，要存入
  * 或者，仅有设定了监控指标的进程，或者需要做报表的，才需要同步入数据库
  * 同理可知，其他的组件也未必非要入数据库的
  */
 @Anchor("pid")
-@Command("ps -eo fname,user,pid,ppid,pcpu,size,vsize,state,lstart,etime,cmd")
-@Mapping(skipLines = 1,value = {"fname","user","pid","ppid","cpuUsage","physicalMemory","virtualMemory","status","startTime1","startTime2","startTime3","startTime4","startTime5","time","command"})
+@Shell({
+        //注意，原则上，如果不需要命令行输出的表头，则不应该使用skip lines特性，而是让命令直接grep -v掉 头
+        @OS(type = "linux", command = @Command("ps -eo fname,user,pid,ppid,pcpu,size,vsize,state,lstart,etime,cmd | grep -v ^COMMAND @args[0]"),
+                mapping = @Mapping(
+                        //COMMAND  USER       PID  PPID %CPU    SZ    VSZ S                  STARTED     ELAPSED CMD
+                        //init     root         1     0  0.0   288  19232 S Mon Apr 20 19:52:24 2015  1-22:37:49 /sbin/init
+                        pattern = "(\\S+)\\s+(\\S+)\\s+(\\d+)\\s+(\\d+)\\s+([\\d|\\.]+)\\s+(\\d+)\\s+(\\d+)" +
+                                  "\\s+(\\w+)\\s+(.{24})\\s+(\\S+)\\s+(.+)",
+                        value = {"fname", "user", "pid", "ppid", "cpuUsage", "physicalMemory", "virtualMemory",
+                                 "status", "startTime", "time","command"})),
+        @OS(type = "aix", command = @Command("ps -e -o 'comm,user,pid,ppid,pcpu,rssize,vsz,state,etime,args' | tail -n +2 "),
+                mapping = @Mapping(
+                        pattern = "(\\S+)\\s+(\\S+)\\s+(\\d+)\\s+(\\d+)\\s+([\\d|\\.]+)\\s+(\\d+)\\s+(\\d+)\\s+(\\w+)\\s+(\\S+)\\s+(.+)",
+                        value = {"fname", "user", "pid", "ppid", "cpuUsage", "physicalMemory", "virtualMemory",
+                                "status", "time","command"})),
+
+        @OS(type = "osx", command = @Command("ps -lcfwax | grep -v ^UID @args[0]"),
+                //UID   PID  PPID        F CPU PRI NI       SZ    RSS WCHAN     S             ADDR TTY           TIME CMD   STIME
+                //501 11137 11136     4006   0  31  0  2464092    944 -      S                   0 ttys000    0:00.16 -bash Mon02PM
+                mapping = @Mapping(
+                        value = {"user", "pid", "ppid", "flags", "cpuUsage", "priority", "nice",
+                                 "physicalMemory", "virtualMemory", "wchan","status", "addr", "tty", "time", "command", "startTime"}))
+})
+@dnt.monitor.annotation.snmp.OS(
+        tables = {
+                @Table(value = "1.3.6.1.2.1.25.4.2", prefix = "hr", timeout = "1m", name = "main"),
+                @Table(value = "1.3.6.1.2.1.25.5.1", prefix = "hr", timeout = "1m", name = "performance")
+        },
+        transformer = @Transformer(ProcessTransformerHandler.class)
+)
 public class Process extends Component<Host> {
     private static final long serialVersionUID = 7524270593767846009L;
 
     @Indicator
     @Override
-    @Value("fname")
+    @Shell(@OS(type = "linux", value = @Value("fname")))
     public String getLabel() {
         return super.getLabel();
     }
-
+    @Indicator
+    private String user;
     @Indicator
     private Integer pid;
     @Indicator
@@ -38,20 +68,19 @@ public class Process extends Component<Host> {
     @Metric
     private Integer handles;
     @Indicator
-    @Value("startTime1+startTime2+startTime3+startTime4+startTime5")
-    private String startTime;
+    private String  startTime;
     @Indicator
-    private String time;
+    private String  time;
+    @Metric(unit = "KB")
+    private Long    physicalMemory;
     @Metric
-    private Long physicalMemory;
-    @Metric
-    private Long virtualMemory;
+    private Long    virtualMemory;
     @Indicator
-    private String command;
+    private String  command;
     @Metric
-    private Float cpuUsage;
+    private Float   cpuUsage;
     @Metric   // enum
-    private String status;
+    private String  status;
 
     public Integer getPid() {
         return pid;
@@ -67,6 +96,14 @@ public class Process extends Component<Host> {
 
     public void setPpid(Integer ppid) {
         this.ppid = ppid;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
     }
 
     public Integer getHandles() {

@@ -4,21 +4,21 @@ import dnt.monitor.meta.MetaResource;
 import dnt.monitor.model.*;
 import dnt.monitor.server.repository.NodeRepository;
 import dnt.monitor.server.service.NodeService;
-import dnt.monitor.service.MetaService;
 import dnt.monitor.server.service.ResourceService;
 import dnt.monitor.server.service.ServiceLocator;
+import dnt.monitor.service.MetaService;
 import net.happyonroad.component.core.ComponentContext;
 import net.happyonroad.type.Location;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import static org.easymock.EasyMock.*;
@@ -121,7 +121,7 @@ public class NodeManagerTest {
         newResource.setResource(new Resource());
 
         //noinspection unchecked
-        expect(context.getApplicationFeatures()).andStubReturn(Collections.EMPTY_LIST);
+        expect(context.getApplicationFeatures()).andStubReturn(new ArrayList<ApplicationContext>());
 
         nodeRepository.create(newResource);
         expectLastCall().once();
@@ -159,7 +159,7 @@ public class NodeManagerTest {
         newEngine.setComment("changed engine");
         expect(nodeRepository.update(anyObject(ManagedNode.class))).andReturn(1);
         //noinspection unchecked
-        expect(context.getApplicationFeatures()).andStubReturn(Collections.EMPTY_LIST);
+        expect(context.getApplicationFeatures()).andStubReturn(new ArrayList<ApplicationContext>());
 
         replay(nodeRepository);
         replay(context);
@@ -180,7 +180,7 @@ public class NodeManagerTest {
         expect(metaService.getMetaResource(anyString())).andStubReturn(new MetaResource(Resource.class));
 
         ResourceService mockEngineService = createMock(ResourceService.class);
-        expect(serviceLocator.locateResourceService(defaultEngine.getResource().getType())).andStubReturn(mockEngineService);
+        expect(serviceLocator.locate(defaultEngine.getResource().getType())).andStubReturn(mockEngineService);
         expect(mockEngineService.findById(anyLong())).andReturn(defaultEngine.getResource()).anyTimes();
 
         replay(nodeRepository);
@@ -202,7 +202,7 @@ public class NodeManagerTest {
     @SuppressWarnings("unchecked")
     @Test
     public void testDeleteLeafNode() throws Exception {
-        expect(context.getApplicationFeatures()).andStubReturn(Collections.EMPTY_LIST);
+        expect(context.getApplicationFeatures()).andStubReturn(new ArrayList<ApplicationContext>());
         nodeRepository.delete(defaultEngine);
         expectLastCall().once();
         nodeRepository.increaseNodeResourceSize("/default", -1);
@@ -227,16 +227,16 @@ public class NodeManagerTest {
         nodes.add(defaultHost);
         expect(nodeRepository.findAllByPath(defaultScope.getPath(), 1, 1001, true)).andReturn(nodes);
 
-        expect(context.getApplicationFeatures()).andStubReturn(Collections.EMPTY_LIST);
+        expect(context.getApplicationFeatures()).andStubReturn(new ArrayList<ApplicationContext>());
         expect(metaService.getMetaResource(anyString())).andStubReturn(new MetaResource(Resource.class));
 
         ResourceService mockEngineService = createMock(ResourceService.class);
-        expect(serviceLocator.locateResourceService(defaultEngine.getResource().getType())).andStubReturn(
+        expect(serviceLocator.locate(defaultEngine.getResource().getType())).andStubReturn(
                 mockEngineService);
         expect(mockEngineService.findById(anyLong())).andReturn(defaultEngine.getResource()).anyTimes();
 
         ResourceService mockHostService = createMock(ResourceService.class);
-        expect(serviceLocator.locateResourceService(defaultHost.getResource().getType())).andStubReturn(mockHostService);
+        expect(serviceLocator.locate(defaultHost.getResource().getType())).andStubReturn(mockHostService);
         expect(mockHostService.findById(anyLong())).andReturn(defaultHost.getResource()).anyTimes();
 
         nodeRepository.delete(defaultHost);

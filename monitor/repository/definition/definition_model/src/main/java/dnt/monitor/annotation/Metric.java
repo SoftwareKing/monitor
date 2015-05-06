@@ -38,4 +38,10 @@ public @interface Metric {
      * @return 字符串形式的单位，最终应该有地方统一管理
      */
     String unit() default "";
+
+    /**
+     * <h2>指标状态变化时，需要满足的发生次数</h2>
+     * @return 发生次数，默认为1
+     */
+    int occurrences() default 1;
 }

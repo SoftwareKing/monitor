@@ -8,7 +8,7 @@ import dnt.monitor.server.exception.NodeException;
 import dnt.monitor.server.service.NodeService;
 import net.happyonroad.platform.web.annotation.BeforeFilter;
 import net.happyonroad.platform.web.exception.WebServerSideException;
-import org.apache.commons.lang.exception.ExceptionUtils;
+import net.happyonroad.util.MiscUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,7 +44,7 @@ class DiscoveryController extends GreedyPathController {
         } catch (NodeException e) {
             throw new WebServerSideException(HttpStatus.INTERNAL_SERVER_ERROR,
                                              "Failed to discover managed node of " + targetPath +
-                                             ", because of:" + ExceptionUtils.getRootCauseMessage(e));
+                                             ", because of:" + MiscUtils.describeException(e));
         }
         logger.warn("Discovered   {}", targetNode);
     }

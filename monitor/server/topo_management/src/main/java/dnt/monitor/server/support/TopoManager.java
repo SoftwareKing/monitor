@@ -14,9 +14,12 @@ import dnt.monitor.server.service.TopoService;
 import net.happyonroad.event.*;
 import net.happyonroad.model.Category;
 import net.happyonroad.spring.ApplicationSupportBean;
+import net.happyonroad.type.Point;
 import net.happyonroad.util.DiffUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jmx.export.annotation.ManagedAttribute;
+import org.springframework.jmx.export.annotation.ManagedResource;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
@@ -25,7 +28,8 @@ import java.util.Set;
  * Topo Manager
  */
 @Service
-class TopoManager extends ApplicationSupportBean implements TopoService {
+@ManagedResource(objectName = "dnt.monitor.server:type=service,name=topoService")
+public class TopoManager extends ApplicationSupportBean implements TopoService {
     @Autowired
     TopoRepository repository;
 
@@ -96,6 +100,9 @@ class TopoManager extends ApplicationSupportBean implements TopoService {
         publishEvent(new ObjectCreatingEvent<TopoNode>(node));
         try {
             node.setMap(map);
+            if(node.getCoordinate() == null ){
+                autoLayout(map, node);
+            }
             repository.createNode(node);
             if(node.getNode() instanceof GroupNode){
                 repository.increaseMapSize(map.getId(), 1);
@@ -108,6 +115,24 @@ class TopoManager extends ApplicationSupportBean implements TopoService {
             throw new TopoException("Can't create topo node for path = " +  node.getPath() , e);
         }
         publishEvent(new ObjectCreatedEvent<TopoNode>(node));
+    }
+
+    protected void autoLayout(TopoMap map, TopoNode node) {
+        Point position = new Point();
+        int row = Integer.valueOf(map.getProperty("auto.layout.row", "1"));
+        int col = Integer.valueOf(map.getProperty("auto.layout.col", "1"));
+        position.setX(col * 100);
+        position.setY(row * 100);
+        node.setCoordinate(position);
+        if( col > 10 ){
+            row ++;
+            col = 1;
+        }else {
+            col ++;
+        }
+        map.setProperty("auto.layout.row", String.valueOf(row));
+        map.setProperty("auto.layout.col", String.valueOf(col));
+        repository.updateMap(map);
     }
 
     @Override
@@ -279,6 +304,11 @@ class TopoManager extends ApplicationSupportBean implements TopoService {
             throw new TopoException("Can't delete topo link  " +  topoLink , e);
         }
         publishEvent(new ObjectDestroyedEvent<TopoLink>(topoLink));
+    }
+
+    @ManagedAttribute
+    public int getMapCount(){
+        return repository.countMaps();
     }
 
     // 暂时不能很好的掌控 Mybatis 的 Repository，让其为我们构建好对象之间的关系

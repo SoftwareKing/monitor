@@ -10,7 +10,7 @@
         <version>1.3.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>dnt.monitor.resource</groupId>
+    <groupId>dnt.monitor.model</groupId>
     <artifactId>switch</artifactId>
     <name>Switch Resource Model</name>
     <description>
@@ -19,8 +19,8 @@
 
     <modules>
         <module>switch_model</module>
-        <module>server_switch</module>
-        <module>engine_switch</module>
+        <module>switch_in_server</module>
+        <module>switch_in_engine</module>
     </modules>
 
     

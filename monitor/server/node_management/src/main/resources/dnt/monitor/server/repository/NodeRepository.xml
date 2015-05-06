@@ -43,19 +43,20 @@
         INSERT INTO managed_nodes
         ( type,
           path,    depth,   label,     icon,
-          <if test="_parameter instanceof dnt.monitor.model.ResourceNode">resource_id,</if>
+          <if test="_parameter instanceof dnt.monitor.model.ResourceNode">resource_id,resource_type,</if>
           <if test="_parameter instanceof dnt.monitor.model.RangeNode">`range`,</if>
           `comment`,    state,    priority,    organization,
           properties,
           location,
           maintain_window,
+          frequency,
           `schedule`,
           credentials,
           created_at,   updated_at)
         VALUES
         ( <include refid="detectNodeType"/>,
           #{path}, #{depth}, #{label}, #{icon},
-          <if test="_parameter instanceof dnt.monitor.model.ResourceNode">#{resourceId},</if>
+          <if test="_parameter instanceof dnt.monitor.model.ResourceNode">#{resourceId},#{resourceType},</if>
           <if test="_parameter instanceof dnt.monitor.model.RangeNode">
               #{range,typeHandler=net.happyonroad.util.IpRangeHandler},
           </if>
@@ -63,6 +64,7 @@
           #{properties, typeHandler=net.happyonroad.util.PropertiesHandler},
           #{location, typeHandler=net.happyonroad.util.LocationHandler},
           #{maintainWindow, typeHandler=net.happyonroad.util.TimeSpanHandler},
+          #{frequency, typeHandler=net.happyonroad.util.TimeIntervalHandler},
           #{schedule, typeHandler=net.happyonroad.util.ScheduleHandler},
           #{credentials, typeHandler=net.happyonroad.util.CredentialsHandler},
           #{createdAt}, #{updatedAt});
@@ -73,6 +75,7 @@
         <set>
             <if test="_parameter instanceof dnt.monitor.model.ResourceNode">
                 resource_id = #{resourceId},
+                resource_type = #{resourceType},
             </if>
             <if test="_parameter instanceof dnt.monitor.model.RangeNode">
                 `range` = #{range,typeHandler=net.happyonroad.util.IpRangeHandler},
@@ -87,6 +90,7 @@
             properties     = #{properties, typeHandler=net.happyonroad.util.PropertiesHandler},
             location       = #{location, typeHandler=net.happyonroad.util.LocationHandler},
             maintain_window = #{maintainWindow, typeHandler=net.happyonroad.util.TimeSpanHandler},
+            `frequency`    = #{frequency, typeHandler=net.happyonroad.util.TimeIntervalHandler},
             `schedule`     = #{schedule, typeHandler=net.happyonroad.util.ScheduleHandler},
             credentials    = #{credentials, typeHandler=net.happyonroad.util.CredentialsHandler},
             updated_at     = CURRENT_TIMESTAMP()
@@ -139,6 +143,15 @@
             ( IF(#{path} = '/', 0, (LENGTH(#{path}) - LENGTH(Replace(#{path}, '/', ''))))
             - IF(path = '/', 0, (LENGTH(path) - LENGTH(Replace(path, '/', '')))) = 1)
         </where>
+    </select>
+
+    <select id="count" resultType="long">
+        SELECT count(0) FROM managed_nodes
+        <if test="filter != null">
+            <where>
+                ${filter}
+            </where>
+        </if>
     </select>
 
     <update id="updateNodeChildrenSize">
@@ -199,6 +212,7 @@
 
     <resultMap id="resourceNodeResult" type="ResourceNode" autoMapping="true" extends="managedNodeResult">
         <result property="resourceId" column="resource_id"/>
+        <result property="resourceType" column="resource_type"/>
         <association property="resource" columnPrefix="resource_" autoMapping="true"
                      resultMap="dnt.monitor.server.repository.ResourceRepository.resourceResult" />
     </resultMap>
@@ -215,6 +229,7 @@
         <result property="properties" column="properties" typeHandler="net.happyonroad.util.PropertiesHandler"/>
         <result property="location" column="location" typeHandler="net.happyonroad.util.LocationHandler"/>
         <result property="maintainWindow" column="maintain_window" typeHandler="net.happyonroad.util.TimeSpanHandler"/>
+        <result property="frequency" column="frequency" typeHandler="net.happyonroad.util.TimeIntervalHandler"/>
         <result property="schedule" column="schedule" typeHandler="net.happyonroad.util.ScheduleHandler"/>
         <result property="credentials" column="credentials" typeHandler="net.happyonroad.util.CredentialsHandler"/>
     </resultMap>

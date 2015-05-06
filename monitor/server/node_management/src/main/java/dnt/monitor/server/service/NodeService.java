@@ -137,4 +137,5 @@ public interface NodeService {
      * @throws NodeException
      */
     void discover(ManagedNode node) throws NodeException;
+
 }

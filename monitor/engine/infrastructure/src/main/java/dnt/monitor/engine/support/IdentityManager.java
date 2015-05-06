@@ -3,35 +3,37 @@
  */
 package dnt.monitor.engine.support;
 
-import dnt.monitor.model.Host;
-import dnt.monitor.model.LinuxHost;
+import dnt.monitor.engine.jmx.JmxVisitor;
+import dnt.monitor.engine.jmx.JmxVisitorFactory;
+import dnt.monitor.engine.service.SampleService;
+import dnt.monitor.meta.MetaResource;
 import dnt.monitor.model.MonitorEngine;
-import dnt.monitor.model.WindowsHost;
+import dnt.monitor.model.ResourceNode;
+import dnt.monitor.service.MetaService;
+import net.happyonroad.credential.CredentialProperties;
+import net.happyonroad.event.SystemStartedEvent;
 import net.happyonroad.spring.ApplicationSupportBean;
 import net.happyonroad.type.Availability;
 import net.happyonroad.type.ConfigStatus;
 import net.happyonroad.type.Performance;
 import net.happyonroad.util.IpUtils;
+import net.happyonroad.util.MiscUtils;
 import net.happyonroad.util.StringUtils;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.SystemUtils;
-import org.apache.commons.lang.exception.ExceptionUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContextException;
+import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.lang.management.ManagementFactory;
-import java.sql.Timestamp;
-import java.util.Date;
-import java.util.HashSet;
+import java.util.Collection;
 import java.util.Properties;
-import java.util.Set;
 
 /**
  * <h1>引擎的身份管理</h1>
@@ -60,48 +62,67 @@ import java.util.Set;
  * </ol>
  */
 @Component
-class IdentityManager extends ApplicationSupportBean{
+class IdentityManager extends ApplicationSupportBean
+        implements ApplicationListener<SystemStartedEvent>{
     @Value("${server.address}")
-    private String serverAddress;
+    private String  serverAddress;
     @Value("${server.port}")
     private Integer serverPort;
 
+    @Autowired
+    MetaService metaService;
+    @Autowired
+    JmxVisitorFactory jmxVisitorFactory;
+    @Autowired
+    @Qualifier("jmxSampleService")
+    SampleService     sampleService;
+
+    public IdentityManager() {
+        //系统启动第1件事情，就是身份管理
+        setOrder(1000);
+    }
+
     @Override
-    protected void performStart() {
-        super.performStart();
+    public void onApplicationEvent(SystemStartedEvent event) {
         String engineId = getEngineId();
-        if(StringUtils.isEmpty(engineId)){
-            //尚未注册
-            performRegistration();
+        if (StringUtils.isEmpty(engineId)) {
+            //手工发布的引擎，在服务器上没有记录
+            engineId = performRegistration();
         }
         String apiToken = getApiToken();
-        if( StringUtils.isEmpty(apiToken)){
-            logger.warn("{} not approved", engineId);
-        }else{
-            boolean valid = performValidation(engineId, apiToken);
-            if( ! valid ){
-                logger.error("The engine {}/{} is blocked, exit now", engineId, apiToken);
-                System.exit(1);
-            }
+        if (StringUtils.isEmpty(apiToken)) {
+            //在服务器上先建立记录，（但没有批准），再下载下来的引擎
+            performRegistration();
+        }
+        boolean valid = performValidation(engineId, apiToken);
+        if (!valid) {
+            logger.error("The engine {}/{} is blocked, exit now", engineId, apiToken);
+            System.exit(1);
         }
     }
 
-    void performRegistration() {
-        MonitorEngine engine = createLocalEngine();
-        Host host = createLocalhost();
-        host.setAddress(engine.getAddress());
-        host.setLabel(host.getAddress());
-        engine.setHost(host);
+
+    String performRegistration() {
+        String address = System.getProperty("app.host");
+        //address = localhost as default
+        if ("localhost".equalsIgnoreCase(address)) {
+            Collection<String> localAddresses = IpUtils.getLocalAddresses();
+            if (localAddresses.isEmpty()) {
+                throw new ApplicationContextException("The engine host network is not configured!");
+            }
+            address = localAddresses.iterator().next();
+        }
+        MonitorEngine engine = createLocalEngine(address);
         RestTemplate rest = new RestTemplate();
         MonitorEngine registered = null;
-        while(registered == null){
+        while (registered == null) {
             try {
                 logger.info("Registering as {}", engine);
                 registered = rest.postForObject("http://{0}:{1}/engine/self",
-                        engine, MonitorEngine.class, serverAddress, serverPort);
-                logger.info("Registered  as {}", engine);
+                                                engine, MonitorEngine.class, serverAddress, serverPort);
+                logger.info("Registered  as {}", registered);
             } catch (RestClientException e) {
-                logger.warn("Failed to register {}, because of {}", engine, ExceptionUtils.getRootCauseMessage(e));
+                logger.warn("Failed to register {}, because of {}", engine, MiscUtils.describeException(e));
                 try {
                     Thread.sleep(1000 * 30);
                 } catch (InterruptedException e1) {
@@ -110,6 +131,7 @@ class IdentityManager extends ApplicationSupportBean{
             }
         }
         updateEngine(registered);
+        return registered.getEngineId();
     }
 
     //注册成功之后，不需要发出什么事件
@@ -117,7 +139,7 @@ class IdentityManager extends ApplicationSupportBean{
     private void updateEngine(MonitorEngine registered) {
         String engineId = registered.getEngineId();
         String apiToken = registered.getApiToken();
-        if( apiToken == null ) apiToken = "";
+        if (apiToken == null ) apiToken = "";
         logger.info("{} registered with {}/{}", registered, engineId, apiToken);
         Properties identities = new Properties();
         identities.setProperty("engine.id", engineId);
@@ -138,8 +160,13 @@ class IdentityManager extends ApplicationSupportBean{
 
     }
 
-    MonitorEngine createLocalEngine(){
+    MonitorEngine createLocalEngine(String address){
+        ResourceNode node = new ResourceNode();
+
         MonitorEngine engine = new MonitorEngine();
+        node.setResource(engine);
+        String jmxPort = System.getProperty("com.sun.management.jmxremote.port", "1096");
+        engine.setAddress(address + ":" + jmxPort);
         // Engine name is assigned by server
         // 1. default engine: server judge it's host address
         // 2. pre-assigned engine: server judge it's identify
@@ -148,69 +175,22 @@ class IdentityManager extends ApplicationSupportBean{
         engine.setConfigStatus(ConfigStatus.Unchanged);
         // Session Created之后会自行维护这个字段
         engine.setAvailability(Availability.Unavailable);
-
-        Set<Integer> pids = new HashSet<Integer>();
-        String pid = ManagementFactory.getRuntimeMXBean().getName().split("@")[0];
-        pids.add(Integer.valueOf(pid));
-        engine.setPids(pids);
-
-        Set<String> localAddresses = IpUtils.getLocalAddresses();
-        if( localAddresses.isEmpty() )
-            throw new ApplicationContextException("The engine host network is not configured!");
-        String address = localAddresses.iterator().next();
-        engine.setAddress(address);
-        engine.setHome(SystemUtils.getUserDir().getAbsolutePath());
-        engine.setLabel(engine.getAddress());
-
-        Properties properties = new Properties();
-        FileInputStream fis = null;
         try {
-            File configFile = new File(System.getProperty("app.home"), "config/engine.properties");
-            fis = new FileInputStream(configFile);
-            properties.load(fis);
-        } catch (IOException e) {
-            logger.warn("Can't load engine properties", e);
-        } finally {
-            IOUtils.closeQuietly(fis);
+            //noinspection unchecked
+            MetaResource model = (MetaResource<MonitorEngine>) metaService.resolve(MonitorEngine.class);
+            JmxVisitor visitor = jmxVisitorFactory.visitor(node, new CredentialProperties());
+            MonitorEngine sampled = (MonitorEngine) sampleService.sampleResource(visitor, model);
+            sampled.setEngineId(sampled.getProperty("engine.id"));
+            sampled.setApiToken(sampled.getProperty("engine.apiToken"));
+            return sampled;
+        } catch (Exception e) {
+            throw new ApplicationContextException("Can't sample engine itself", e);
         }
-        engine.setProperties(properties);
-        localAddresses.remove(address);
-        if( !localAddresses.isEmpty() ){
-            engine.setProperty("addresses", StringUtils.join(localAddresses, ";"));
-        }
-        return engine;
-    }
-
-    // TODO 采用本机对象采集/刷新接口
-    Host createLocalhost() {
-        Host host;
-        if( SystemUtils.IS_OS_WINDOWS){
-            host = new WindowsHost();
-            host.setType("/device/host/windows");
-        }else {  //actually, Mac OSX in my env
-            host = new LinuxHost();
-            host.setType("/device/host/linux");
-        }
-        host.setDescription("The host description");
-        host.setPerformance(Performance.Normal);
-        host.setConfigStatus(ConfigStatus.Unchanged);
-        host.setAvailability(Availability.Available);
-        host.setHostname("it-test-host");
-        host.setManufacturer("Dell");
-        host.setModelName("Dell 2800");
-        host.setOs(SystemUtils.OS_NAME);
-        host.setVersion(SystemUtils.OS_VERSION);
-        host.setSerialNumber("The host SN");
-        host.setDomain("The host domain");
-        host.setStartAt(new Date(System.currentTimeMillis() - 12802020));
-        host.setUpTime("any time");
-        host.setLocalTime(new Timestamp(System.currentTimeMillis()));
-        host.setProcessCount(100);
-        return host;
     }
 
     boolean performValidation(String engineId, String apiToken) {
-        return true;
+        //TODO 验证这个配置文件是正确的
+        return engineId != null && !engineId.isEmpty();
     }
 
 

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE model >
+<model name="dnt.monitor.model.Device"
+       xmlns:snmp="http://www.w3.org/2001/XMLSchema/snmp">
+    <snmp:group prefix="sys">1.3.6.1.2.1.1</snmp:group>
+
+    <property name="description" snmp:oid="Descr"/>
+    <property name="objectID" snmp:oid="ObjectID"/>
+    <property name="upTime" snmp:oid="UpTime"/>
+    <property name="contact" snmp:oid="Contact"/>
+    <property name="location" snmp:oid="Location"/>
+    <property name="label" snmp:oid="Name"/>
+    <property name="queueLength" snmp:oid="OutQLen"/>
+    <property name="rx" snmp:oid="InOctets"/>
+    <property name="tx" snmp:oid="OutOctets"/>
+    <property name="inPkts" snmp:oid="InUcastPkts"/>
+    <property name="inDiscards" snmp:oid="InDiscards"/>
+    <property name="inErrs" snmp:oid="InErrors"/>
+    <property name="outPkts" snmp:oid="OutUcastPkts"/>
+    <property name="outDiscards" snmp:oid="OutDiscards"/>
+    <property name="outErrs" snmp:oid="OutErrors"/>
+</model>

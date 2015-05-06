@@ -10,7 +10,7 @@
         <version>1.3.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>dnt.monitor.resource</groupId>
+    <groupId>dnt.monitor.model</groupId>
     <artifactId>monitor_system</artifactId>
     <name>Monitor System Model</name>
     <description>
@@ -20,8 +20,8 @@
 
     <modules>
         <module>monitor_model</module>
-        <module>server_monitor</module>
-        <module>engine_monitor</module>
+        <module>monitor_in_server</module>
+        <module>monitor_in_engine</module>
     </modules>
 
 </project>

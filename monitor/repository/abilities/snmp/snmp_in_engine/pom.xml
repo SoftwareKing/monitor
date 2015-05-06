@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>dnt.monitor.engine</groupId>
+        <artifactId>engine_parent</artifactId>
+        <version>1.3.0-SNAPSHOT</version>
+        <relativePath>../../../parent/engine_parent</relativePath>
+    </parent>
+
+    <artifactId>snmp_in_engine</artifactId>
+    <name>SNMP Ability for Engine</name>
+    <description>
+        Enhance the monitor engine to sample by SNMP
+    </description>
+
+    <properties>
+        <version.snmp4j>2.2.3</version.snmp4j>
+        <version.mibble>2.9.4</version.mibble>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>dnt.monitor.model</groupId>
+            <artifactId>snmp_model</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>dnt.monitor.engine</groupId>
+            <artifactId>definition_in_engine</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.snmp4j</groupId>
+            <artifactId>snmp4j</artifactId>
+            <version>${version.snmp4j}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.percederberg</groupId>
+            <artifactId>mibble</artifactId>
+            <version>${version.mibble}</version>
+        </dependency>
+
+    </dependencies>
+    
+
+    <build>
+        <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifestEntries>
+                            <App-Config>dnt.monitor.engine.EngineSnmpAppConfig</App-Config>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
+</project>

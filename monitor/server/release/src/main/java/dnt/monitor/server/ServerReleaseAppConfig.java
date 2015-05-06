@@ -14,7 +14,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
  */
 @Configuration
 @Import({SystemUserConfig.class})
-public class ServerReleaseAppConfig extends AbstractAppConfig{
+public class ServerReleaseAppConfig extends DefaultServerAppConfig{
     // Import for profile controller
     @Bean
     UserDetailsService userDetailsService(){

@@ -4,7 +4,6 @@
 package dnt.monitor.server;
 
 import dnt.monitor.server.service.UserSessionService;
-import net.happyonroad.spring.config.AbstractAppConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
@@ -16,8 +15,8 @@ import org.springframework.web.socket.WebSocketHandler;
  * <h1>System Management模块的应用配置</h1>
  */
 @Configuration
-@Import(ServerDefinitionUserConfig.class)
-public class SystemAppConfig  extends AbstractAppConfig{
+@Import({ServerDefinitionUserConfig.class, MonitorSystemUserConfig.class})
+public class SystemAppConfig  extends DefaultServerAppConfig{
     @Autowired
     @Qualifier("operatorManager")
     UserDetailsService userDetailsService;

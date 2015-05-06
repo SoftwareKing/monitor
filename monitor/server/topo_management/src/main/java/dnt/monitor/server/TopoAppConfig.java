@@ -11,5 +11,5 @@ import org.springframework.context.annotation.Import;
  */
 @Configuration
 @Import({SystemUserConfig.class, NodeUserConfig.class})
-public class TopoAppConfig {
+public class TopoAppConfig extends DefaultServerAppConfig{
 }

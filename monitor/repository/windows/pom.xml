@@ -10,7 +10,7 @@
         <version>1.3.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>dnt.monitor.resource</groupId>
+    <groupId>dnt.monitor.model</groupId>
     <artifactId>windows</artifactId>
     <name>Windows Resource Model</name>
     <description>
@@ -19,8 +19,8 @@
 
     <modules>
         <module>windows_model</module>
-        <module>server_windows</module>
-        <module>engine_windows</module>
+        <module>windows_in_server</module>
+        <module>windows_in_engine</module>
     </modules>
 
 </project>

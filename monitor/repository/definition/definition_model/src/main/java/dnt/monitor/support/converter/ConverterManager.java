@@ -40,6 +40,7 @@ public class ConverterManager implements TypeConverterService {
         register("boolean", converter);
         register(Date.class.getName(), converter);
         register("secondToDate", new SecondToDateConverter());
+        register("extractor", new ExtractorConverter());
     }
 
     @Override

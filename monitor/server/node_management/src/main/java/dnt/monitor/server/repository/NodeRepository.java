@@ -77,4 +77,11 @@ public interface NodeRepository {
      * @param diff 变化的资源节点数量
      */
     void increaseNodeResourceSize(@Param("path") String path, @Param("diff") int diff);
+
+    /**
+     * <h2>手工更新某个节点的直接资源节点数量</h2>
+     *
+     * @param filter 统计节点数量的SQL表达式
+     */
+    long count(@Param("filter")String filter);
 }

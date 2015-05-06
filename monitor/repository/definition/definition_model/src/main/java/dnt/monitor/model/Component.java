@@ -23,8 +23,6 @@ public class Component<R extends Resource> extends ManagedObject {
     private R    resource;
     //所属的资源ID
     private Long resourceId;
-    //是否是关键组件
-    private boolean keyed;
 
     public Resource getResource() {
         return resource;
@@ -43,14 +41,6 @@ public class Component<R extends Resource> extends ManagedObject {
 
     public void setResourceId(Long resourceId) {
         this.resourceId = resourceId;
-    }
-
-    public boolean isKeyed() {
-        return keyed;
-    }
-
-    public void setKeyed(boolean keyed) {
-        this.keyed = keyed;
     }
 
     public String getType() {

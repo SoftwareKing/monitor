@@ -9,6 +9,8 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import net.happyonroad.util.StringUtils;
 import org.springframework.jmx.export.annotation.ManagedAttribute;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -23,8 +25,10 @@ public abstract class MetaObject implements Cloneable {
     protected String description;
 
     /// Properties support ///
-    // 扩展属性
+    // 字符串扩展属性
     private Properties properties;
+    // 对象扩展属性
+    protected Map<Class, Object> attributes;
 
     public Properties getProperties() {
         return properties;
@@ -46,6 +50,25 @@ public abstract class MetaObject implements Cloneable {
 
     public String getProperty(String name){
         return getProperty(name, null);
+    }
+
+    public Map<Class, Object> getAttributes() {
+        return attributes;
+    }
+
+    public void setAttributes(Map<Class, Object> attributes) {
+        this.attributes = attributes;
+    }
+
+    public <T> T getAttribute(Class<T> klass){
+        if( attributes == null )  return null;
+        //noinspection unchecked
+        return (T) attributes.get(klass);
+    }
+
+    public <T> void setAttribute(Class<T> klass, T value){
+        if( attributes == null ) attributes = new HashMap<Class, Object>();
+        attributes.put(klass, value);
     }
 
     @ManagedAttribute
@@ -78,5 +101,29 @@ public abstract class MetaObject implements Cloneable {
     @Override
     public String toString() {
         return getClass().getSimpleName() + "(" + (getLabel() == null ? getName() : getLabel())+ ")";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof MetaObject)) return false;
+
+        MetaObject that = (MetaObject) o;
+
+        if (attributes != null ? !attributes.equals(that.attributes) : that.attributes != null) return false;
+        if (description != null ? !description.equals(that.description) : that.description != null) return false;
+        if (label != null ? !label.equals(that.label) : that.label != null) return false;
+        if (properties != null ? !properties.equals(that.properties) : that.properties != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = label != null ? label.hashCode() : 0;
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (properties != null ? properties.hashCode() : 0);
+        result = 31 * result + (attributes != null ? attributes.hashCode() : 0);
+        return result;
     }
 }

@@ -4,15 +4,12 @@
 package dnt.monitor.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import dnt.monitor.annotation.Anchor;
-import dnt.monitor.annotation.Config;
-import dnt.monitor.annotation.Indicator;
-import dnt.monitor.annotation.Metric;
+import dnt.monitor.annotation.*;
+import dnt.monitor.annotation.shell.*;
 import dnt.monitor.annotation.snmp.OID;
 import dnt.monitor.annotation.snmp.Table;
-import dnt.monitor.annotation.ssh.Command;
-import dnt.monitor.annotation.ssh.Mapping;
 import net.happyonroad.type.Availability;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -22,22 +19,47 @@ import java.util.Map;
  * Host -has many-> NICs
  */
 @Anchor("index")
-@Table(value = "1.3.6.1.2.1.2.2", prefix = "if")
-@Command("cat /proc/net/dev | sed s/:/\\ \\ /g")
-@Mapping(skipLines = 2,colSeparator = "\\s+|\\s*\\|\\s*",value = {"label","","inPkts","inErrs","inDiscards","","","","","","outPkts","outErrs","outDiscards","","","",""})
+@Table(value = "1.3.6.1.2.1.2.2", prefix = "if", timeout = "1m")
+@Shell({
+        @OS(type = "linux", command = @Command("cat /proc/net/dev | grep -v ^Inter | grep -v ^\\ face | sed s/:/\\ \\ /g"),
+                mapping = @Mapping(colSeparator = "\\s+|\\s*\\|\\s*",
+                        value = {"label", "inOctets", "inPkts", "inErrs", "inDiscards", "", "", "", "",
+                                 "outOctets", "outPkts", "outErrs", "outDiscards", "", "", "", ""})),
+        @OS(type = "aix", command = @Command("netstat -in | egrep -v 'link|::1' | tail -n +2 | awk '{print NR,$1,$2,$5,$6,$7,$8}'"),
+                mapping = @Mapping({"index", "label", "mtu","inPkts", "inErrs", "outPkts", "outErrs"})),
+        @OS(type = "osx", command = @Command("classpath:./NIC@osx.sh"),
+                mapping = @Mapping(colSeparator = "\\s+|\\s*\\|\\s*",
+                        value = {"label", "mtu", "", "address", "inPkts", "inErrs",
+                                 "outPkts", "outErrs", "collisions", "discards"}))
+})
 public class NIC extends Component<Device> {
     private static final long serialVersionUID = 3186700680010583518L;
 
     @Config  // stored at label
     @Override
-    public String getLabel() {
-        return super.getLabel();
+    @Value("label")
+    @OID("Descr")
+    public void setLabel(String label) {
+        if (label != null && label.endsWith("*")) {
+            label = label.substring(1, label.indexOf("*"));
+        }
+        super.setLabel(label);
     }
 
+    @JsonIgnore
+    // for below IfIndex.sh
+    @SuppressWarnings("UnusedDeclaration")
+    public String getIfDescr() {
+        return getLabel();
+    }
+
+    //接口序号（Index）
     @Indicator
     @OID("Index")
-    @Command("ip address show ${label} | awk '{if(NR==1){split($1,a,\":\");print a[1];}}'")
-    //接口序号（Index）
+    @Shell({
+            @OS(type = "linux", command = @Command("classpath:./IfIndex@linux.sh")),
+            @OS(type = "osx"  , command = @Command("classpath:./IfIndex@osx.sh"))
+    })
     private int    index;
     @Indicator
     //接口类型（Type）, 1-32
@@ -50,11 +72,18 @@ public class NIC extends Component<Device> {
     //当前带宽速度：Speed(Bandwidth)
     @Indicator
     @OID("Speed")
-    private long    speed;
+    @Shell({
+            //netstat -v ${ifDescr} | grep "Media Speed Running:" | sed 's/Media Speed Running://g' | sed 's/Unknown/0/g' | awk '{print 1000*1000*$1}'
+            @OS(type = "aix", command = @Command("if [ ${ifDescr} != 'lo0' ] ; then netstat -v ${ifDescr} | grep \"Media Speed Running:\" | sed 's/Media Speed Running://g' | sed 's/Unknown/0/g' | awk '{print 1000*1000*$1}';fi")),
+    })
+    private long   speed;
     //Mac地址：  PhysAddress
     @Indicator
     @OID("PhysAddress")
     //@Command("ip addr show $label")
+    @Shell ({
+            @OS(type = "aix"  , command=@Command("if [ ${ifDescr} != 'lo0' ] ; then entstat ${ifDescr} | grep Hardware | sed 's/Hardware Address://g' | sed 's/ //g' ; fi"))
+    })
     private String address;
     //使用状态: UsageStatus
     //  Active, Idle, Busy
@@ -62,7 +91,8 @@ public class NIC extends Component<Device> {
     // Locked, Shutting Down, Unlocked
     @Indicator
     @OID("AdminStatus")
-    private int adminStatus;
+    private int    adminStatus;
+
     // 将 oper status 转换为可用性指标
     //操作状态： OperStatus
     // 1(down, disabled), 2(up, enabled), 3(testing)
@@ -74,49 +104,70 @@ public class NIC extends Component<Device> {
     }
     //北塔还增加了一个组合的status：UP，DOWN，DORMANT（睡眠状态），UNKNOWN
 
-    @Metric
+    @Metric(critical = 90, warning = 80, unit = "%")
     private Float usage;
 
-    @Metric
+    @Metric(critical = 10000, warning = 5000, unit = "Package")
     @OID("OutQLen")
     private Long queueLength;
 
-    @Metric
+    //底层设备的InOctets这个字段给出的相应时间点的接收了多少bytes，绝对值
     @OID("InOctets")
+    @Indicator
+    @Shell ({
+            @OS(type = "aix"  , command=@Command("entstat ${label} | grep Bytes| sed 's/Bytes://g'| awk '{print $2}'"))//,
+                   // mapping = @Mapping(value = {  "outOctets", "inOctets"}))
+    })
+    private Long inOctets;
+
+    // 入流量，以MB为单位
+    // rx 由 inOctets 差分计算得来, 在计算该值时，还需要提供上次采值的记录(updatedAt, inOctets)
+    @Metric(critical = 1, warning = 0.5f, unit = "MB/s")
+    @Depends("inOctets")
     private Double rx;
-    @Metric
+
+    //底层设备的OutOctets这个字段给出的相应时间点的接收了多少bytes，绝对值
     @OID("OutOctets")
+    @Indicator
+    @Shell ({
+            @OS(type = "aix"  , command=@Command("entstat en0 | grep Bytes| sed 's/Bytes://g'| awk '{print $1}'"))
+    })
+    private Long outOctets;
+
+    // tx 由 outOctets 差分计算得来
+    @Metric(critical = 2, warning = 1, unit = "MB/s")
+    @Depends("outOctets")
     private Double tx;
-    @Metric
+
+
+    //这个数值，是将接收 + 发送的 bytes  / interval
+    @Metric(critical = 2, warning = 1, unit = "MB/s")
+    @Depends({"inOctets", "outOctets"})
     private Double rtx;
 
-    @Metric
-    private Double trx;
-    @Metric
-    private Double ttx;
-    @Metric
-    private Double trtx;
-
-    @Metric
+    @Indicator
     @OID("InUcastPkts")
     private Long inPkts;
-    @Metric
+    @Indicator
     @OID("InDiscards")
     private Long inDiscards;
-    @Metric
+    @Indicator
     @OID("InErrors")
     private Long inErrs;
-    @Metric
+    @Indicator
     @OID("OutUcastPkts")
     private Long outPkts;
-    @Metric
+    @Indicator
     @OID("OutDiscards")
     private Long outDiscards;
-    @Metric
+    @Indicator
     @OID("OutErrors")
     private Long outErrs;
-    @Metric
+    @Indicator
     private Long collisions;
+    //丢弃的包总数，mac下面可以获得总数，但获得不了inDiscards/outDiscards
+    @Indicator
+    private Long discards;
 
     public int getIndex() {
         return index;
@@ -213,28 +264,27 @@ public class NIC extends Component<Device> {
         this.rtx = rtx;
     }
 
-    public Double getTrx() {
-        return trx;
+    public Long getInOctets() {
+        return inOctets;
     }
 
-    public void setTrx(Double trx) {
-        this.trx = trx;
+    public void setInOctets(Long inOctets) {
+        this.inOctets = inOctets;
     }
 
-    public Double getTtx() {
-        return ttx;
+    public Long getOutOctets() {
+        return outOctets;
     }
 
-    public void setTtx(Double ttx) {
-        this.ttx = ttx;
+    public void setOutOctets(Long outOctets) {
+        this.outOctets = outOctets;
     }
 
-    public Double getTrtx() {
-        return trtx;
-    }
-
-    public void setTrtx(Double trtx) {
-        this.trtx = trtx;
+    @JsonIgnore
+    public Long getTotalOctets() {
+        long inOct = this.inOctets == null ? 0 : this.inOctets;
+        long outOct = this.outOctets == null ? 0 : this.outOctets;
+        return inOct + outOct;
     }
 
     public Long getInPkts() {
@@ -291,6 +341,14 @@ public class NIC extends Component<Device> {
 
     public void setCollisions(Long collisions) {
         this.collisions = collisions;
+    }
+
+    public Long getDiscards() {
+        return discards;
+    }
+
+    public void setDiscards(Long discards) {
+        this.discards = discards;
     }
 
     //  type means

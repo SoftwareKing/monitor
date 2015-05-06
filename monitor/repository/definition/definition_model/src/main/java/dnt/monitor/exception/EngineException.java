@@ -7,6 +7,8 @@ package dnt.monitor.exception;
  * <h1>引擎端发出的异常</h1>
  */
 public class EngineException extends ResourceException {
+    private static final long serialVersionUID = -5135175852519749336L;
+
     public EngineException(String message) {
         super(message);
     }

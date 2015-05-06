@@ -6,33 +6,25 @@ package dnt.monitor.support.resolver;
 import dnt.monitor.annotation.Config;
 import dnt.monitor.annotation.Indicator;
 import dnt.monitor.annotation.Metric;
-import dnt.monitor.annotation.snmp.Group;
-import dnt.monitor.annotation.snmp.Table;
-import dnt.monitor.annotation.ssh.Command;
-import dnt.monitor.annotation.ssh.Mapping;
 import dnt.monitor.exception.MetaException;
+import dnt.monitor.meta.MetaEvent;
 import dnt.monitor.meta.MetaMember;
 import dnt.monitor.meta.MetaModel;
-import dnt.monitor.meta.snmp.MetaGroup;
-import dnt.monitor.meta.snmp.MetaTable;
-import dnt.monitor.meta.ssh.MetaCommand;
-import dnt.monitor.meta.ssh.MetaMapping;
 import dnt.monitor.model.Entry;
 import dnt.monitor.model.ManagedObject;
+import dnt.monitor.service.MetaModelResolverHelper;
 import dnt.monitor.service.MetaResolver;
 import net.happyonroad.util.StringUtils;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.reflect.FieldUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.annotation.AnnotationUtils;
 
 import java.beans.PropertyDescriptor;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
+import java.util.ServiceLoader;
 
 import static org.apache.commons.lang.StringUtils.capitalize;
 
@@ -43,14 +35,17 @@ import static org.apache.commons.lang.StringUtils.capitalize;
 public abstract class MetaModelResolver<T, M extends MetaModel<T>> extends MetaObjectResolver
         implements MetaResolver<T, M> {
 
+    static ServiceLoader<MetaModelResolverHelper> helpers;
+
     @Autowired
-    MetaRelationResolver relationResolver ;
+    MetaRelationResolver relationResolver;
+
     @Autowired
     MetaIndicatorResolver indicatorResolver;
     @Autowired
-    MetaMetricResolver metricResolver;
+    MetaMetricResolver    metricResolver;
     @Autowired
-    MetaConfigResolver configResolver;
+    MetaConfigResolver    configResolver;
 
     abstract M createMetaModel(Class<T> klass) throws MetaException;
 
@@ -58,14 +53,16 @@ public abstract class MetaModelResolver<T, M extends MetaModel<T>> extends MetaO
     public M resolve(Class<T> klass) throws MetaException {
         M metaModel = createMetaModel(klass);
 
-        resolveSnmp(klass, metaModel);
-        resolveSsh(klass, metaModel);
+        for(MetaModelResolverHelper helper : helpers()) {
+            helper.resolveModel(klass, metaModel);
+        }
 
         applyDefaults(metaModel);
 
         metaService.register(metaModel);
         try {
             processMembers(klass, metaModel);
+            resolveEvents(klass, metaModel);
             return metaModel;
         } catch (MetaException e) {
             metaService.unregister(metaModel);
@@ -109,46 +106,12 @@ public abstract class MetaModelResolver<T, M extends MetaModel<T>> extends MetaO
             for (MetaMember member : (List<MetaMember>) parentMeta.getMembers()) {
                 childMeta.register(member);
             }
-    }
-
-    protected void resolveSnmp(Class klass, MetaModel metaModel) {
-        //snmp的annotation不继承
-        Group group = AnnotationUtils.findAnnotation(klass, Group.class);
-        if (group != null) {
-            MetaGroup metaGroup = resolveSnmpGroup(group);
-            metaModel.setSnmpGroup(metaGroup);
-        }
-        Table table = AnnotationUtils.findAnnotation(klass, Table.class);
-        if (table != null) {
-            MetaTable metaTable = resolveSnmpTable(table);
-            metaModel.setSnmpTable(metaTable);
-        }
-    }
-
-    protected void resolveSsh(Class klass, MetaModel metaModel) {
-        //ssh的annotation要继承
-        Class processing = klass;
-        List<MetaCommand> commands = new ArrayList<MetaCommand>(3);
-        List<MetaMapping> mappings = new ArrayList<MetaMapping>(3);
-        while(processing != ManagedObject.class && processing != null){
-            Command command = (Command) processing.getAnnotation(Command.class);
-            Mapping mapping = (Mapping) processing.getAnnotation(Mapping.class);
-            if( command != null || mapping != null ){
-                if( command != null ){
-                    MetaCommand metaCommand = resolveSshCommand(command);
-                    commands.add(metaCommand);
-                }
-                if( mapping != null ){
-                    MetaMapping metaMapping = resolveSshMapping(mapping);
-                    mappings.add(metaMapping);
-                }
+        if (parentMeta.getEvents() != null) {
+            List<MetaEvent> events = parentMeta.getEvents();
+            for (MetaEvent event : events) {
+                childMeta.addEvent(event);
             }
-            processing = processing.getSuperclass();
         }
-        Collections.reverse(commands);
-        Collections.reverse(mappings);
-        metaModel.setCommands(commands);
-        metaModel.setMappings(mappings);
     }
 
     /**
@@ -160,7 +123,7 @@ public abstract class MetaModelResolver<T, M extends MetaModel<T>> extends MetaO
     protected void processMembers(Class<T> klass, M metaModel) throws MetaException {
         PropertyDescriptor[] descriptors = PropertyUtils.getPropertyDescriptors(klass);
         for (PropertyDescriptor descriptor : descriptors) {
-            MetaMember metaMember;
+            MetaMember metaMember = null;
             //没有对应类型的描述，肯定不合法，过滤之
             if (descriptor.getPropertyType() == null) continue;
             //不可写的字段，一般不是指标/属性，过滤之
@@ -175,40 +138,84 @@ public abstract class MetaModelResolver<T, M extends MetaModel<T>> extends MetaO
             //父类中定义的
             if (field.getDeclaringClass() != klass) {
                 MetaMember exist = metaModel.getMember(descriptor.getName());
-                if( exist != null ) continue;
-                Annotation annotation = findAnnotation(descriptor, field, Indicator.class, Metric.class, Config.class);
-                if( annotation == null ) continue;
-            }
-            Class type = findType(descriptor, field);
-            if (ManagedObject.class.isAssignableFrom(type)) {
-                metaMember = relationResolver.resolve(klass, descriptor, field);
-            } else if (Entry.class.isAssignableFrom(type)) {
-                metaMember =  relationResolver.resolve(klass, descriptor, field);
-            } else {
-                Annotation annotation = findAnnotation(descriptor, field, Indicator.class, Metric.class, Config.class);
-                // Entry类的字段，可能没有标记，但都作为 Indicator
-                // TODO 可用性/性能/配置 三个属性的处理需要根据以后的情况考虑
-                if (annotation == null) {
-                    if (Entry.class.isAssignableFrom(klass)) {
-                        metaMember = indicatorResolver.resolve(klass, descriptor, field);
+                if( exist != null ){
+                    MetaMember latest = resolveIt(klass, descriptor, field);
+                    if( !exist.equals(latest) ){
+                        //override
+                        metaModel.setMember(descriptor.getName(), latest);
                     } else {
                         continue;
                     }
-                } else {
-                    if (annotation instanceof Indicator) {
-                        metaMember = indicatorResolver.resolve(klass,  descriptor, field);
-                    } else if (annotation instanceof Config) {
-                        metaMember = configResolver.resolve(klass, descriptor, field);
-                    } else if (annotation instanceof Metric) {
-                        metaMember = metricResolver.resolve(klass, descriptor, field);
-                    } else {
-                        continue;
-                    }
+                } else{
+                    metaMember = resolveIt(klass, descriptor, field);
                 }
+            }else{
+                metaMember = resolveIt(klass, descriptor, field);
             }
             if (metaMember != null) metaModel.register(metaMember);
         }
 
+    }
+
+    protected MetaMember resolveIt(Class<T> klass, PropertyDescriptor descriptor, Field field) throws MetaException {
+        MetaMember metaMember ;
+        Class type = findType(descriptor, field);
+        if (ManagedObject.class.isAssignableFrom(type)) {
+            metaMember = relationResolver.resolve(klass, descriptor, field);
+        } else if (Entry.class.isAssignableFrom(type)) {
+            metaMember = relationResolver.resolve(klass, descriptor, field);
+        } else {
+            Annotation annotation = findAnnotation(descriptor, field, Indicator.class, Metric.class, Config.class);
+            // TODO 可用性/性能/配置 三个属性的处理需要根据以后的情况考虑
+            if (annotation == null) {
+                // Entry类的字段，可能没有标记，但都作为 Indicator
+                if (Entry.class.isAssignableFrom(klass)) {
+                    metaMember = indicatorResolver.resolve(klass, descriptor, field);
+                } else {
+                    return null;
+                }
+            } else {
+                if (annotation instanceof Indicator) {
+                    metaMember = indicatorResolver.resolve(klass, descriptor, field);
+                } else if (annotation instanceof Config) {
+                    metaMember = configResolver.resolve(klass, descriptor, field);
+                } else if (annotation instanceof Metric) {
+                    metaMember = metricResolver.resolve(klass, descriptor, field);
+                } else {
+                    return null;
+                }
+            }
+        }
+        return metaMember;
+    }
+
+    protected void resolveEvents(Class<T> klass, M metaModel) {
+        //MO的直接子类
+        if (ManagedObject.class == klass.getSuperclass()) {
+            String klassName = klass.getSimpleName();
+            metaModel.addEvent(new MetaEvent(klassName, "performance", "Critical"));
+            metaModel.addEvent(new MetaEvent(klassName, "performance", "Warning"));
+            metaModel.addEvent(new MetaEvent(klassName, "performance", "Normal"));
+            metaModel.addEvent(new MetaEvent(klassName, "performance", "Unknown"));
+
+            metaModel.addEvent(new MetaEvent(klassName, "availability", "Available"));
+            metaModel.addEvent(new MetaEvent(klassName, "availability", "Unavailable"));
+            metaModel.addEvent(new MetaEvent(klassName, "availability", "Testing"));
+            metaModel.addEvent(new MetaEvent(klassName, "availability", "Unknown"));
+
+            metaModel.addEvent(new MetaEvent(klassName, "configStatus", "Changed"));
+            metaModel.addEvent(new MetaEvent(klassName, "configStatus", "Unchanged"));
+            metaModel.addEvent(new MetaEvent(klassName, "availability", "Unknown"));
+
+            for (MetaEvent event : metaModel.getEvents()) {
+                translateEventLabel(klass, event);
+            }
+        }
+    }
+
+    public static ServiceLoader<MetaModelResolverHelper> helpers() {
+        if (helpers == null) helpers = ServiceLoader.load(MetaModelResolverHelper.class);
+        return helpers;
     }
 
 

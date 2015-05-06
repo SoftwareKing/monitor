@@ -6,9 +6,10 @@ package dnt.monitor.model;
 import dnt.monitor.annotation.Anchor;
 import dnt.monitor.annotation.Config;
 import dnt.monitor.annotation.Metric;
-import dnt.monitor.annotation.ssh.Command;
-import dnt.monitor.annotation.ssh.Mapping;
-import dnt.monitor.annotation.ssh.Value;
+import dnt.monitor.annotation.shell.*;
+import dnt.monitor.annotation.snmp.Table;
+import dnt.monitor.annotation.snmp.Transformer;
+import dnt.monitor.handler.MemoryTransformerHandler;
 
 /**
  * <h1>内存</h1>
@@ -16,27 +17,37 @@ import dnt.monitor.annotation.ssh.Value;
  * 这里这个Memory不是指某个实际的内存条，而是一个主机的内存总体对象
  */
 @Anchor(value = "", connector = "") // Anchor == "Memory"
-@Command("free -m | awk '{if(NR==2||NR==4){printf $2 \" \" $3 \" \" $4 \" \";}}'")
+@Shell({
+        @OS(type = "linux",
+                command = @Command("free -m | awk '{if(NR==2||NR==4){printf $2 \" \" $3 \" \" $4 \" \";}}'"),
+                mapping = @Mapping({"total", "used", "free", "virtualTotal", "virtualUsed", "virtualFree"})),
+        @OS(type = "aix"  , 
+                command = @Command("x=`vmstat -v|egrep 'memory pages|free pages'|awk '{printf \"%d\\n\", $1*4/1024}'|sed 'N;s/\\n/ /'|" +
+                "awk '{print $1,$1-$2,$2}';swap -s |awk '{printf \"%d,%d\",$3*4/1024,$11*4/1024}'|awk -F, '{print $1,$1-$2,$2}'`;echo $x"))
+        
+})
 @Mapping({"total","used","free","virtualTotal","virtualUsed","virtualFree"})
+@Table(value = "1.3.6.1.2.1.25.2.3",prefix = "hr", timeout = "1m")
+@Transformer(MemoryTransformerHandler.class)
 public class Memory extends Component<Host> {
     private static final long serialVersionUID = -4917021969415343522L;
-    @Config
+    @Config(unit = "MB")
     private Integer total;
-    @Metric
+    @Metric(unit = "MB")
     private Integer used;
-    @Metric
+    @Metric(unit = "MB")
     private Integer free;
-    @Metric
+    @Metric(unit = "%")
     @Value("used/total")
     private Float   usage;
 
-    @Config
+    @Config(unit = "MB")
     private Integer virtualTotal;
-    @Metric
+    @Metric(unit = "MB")
     private Integer virtualUsed;
-    @Metric
+    @Metric(unit = "MB")
     private Integer virtualFree;
-    @Metric
+    @Metric(unit = "%")
     @Value("virtualUsed/virtualTotal")
     private Float   virtualUsage;
 

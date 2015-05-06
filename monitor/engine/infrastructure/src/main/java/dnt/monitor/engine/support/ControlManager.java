@@ -28,4 +28,10 @@ class ControlManager extends ApplicationSupportBean implements ControlService {
         logger.info("I'm rejected");
         publishEvent(new EngineRejectedEvent(this));
     }
+
+    @Override
+    public void restart() throws EngineException {
+        logger.warn("I'm requested to restart");
+        //TODO perform restart logic and publish corresponding events
+    }
 }

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE model>
+<model name="dnt.monitor.model.NIC"
+       xmlns:shell="http://www.w3.org/2001/XMLSchema/shell">
+        <shell:command timeout="5s">cat /proc/net/dev | sed s/:/\ \ /g</shell:command>
+        <shell:mapping skipLines="2" colSeperator="\s+|\s*\|\s*">
+            "label", "", "inPkts", "inErrs", "inDiscards",
+            "", "", "", "", "", "outPkts", "outErrs", "outDiscards", "", "", "", ""
+        </shell:mapping>
+
+        <property name="index">
+            <shell:command>ip address show ${label} | awk '{if(NR==1){split($1,a,":");print a[1];}}</shell:command>
+        </property>
+</model>

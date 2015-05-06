@@ -7,8 +7,8 @@ import dnt.monitor.annotation.Anchor;
 import dnt.monitor.annotation.Keyed;
 import dnt.monitor.exception.MetaException;
 import dnt.monitor.meta.MetaComponent;
-import dnt.monitor.meta.misc.MetaAnchor;
-import dnt.monitor.meta.misc.MetaKeyed;
+import dnt.monitor.meta.MetaAnchor;
+import dnt.monitor.meta.MetaKeyed;
 import dnt.monitor.model.Component;
 import org.springframework.core.annotation.AnnotationUtils;
 

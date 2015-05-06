@@ -20,4 +20,6 @@ public interface ControlService {
     void approve() throws EngineException;
 
     void reject()throws EngineException;
+
+    void restart()throws EngineException;
 }

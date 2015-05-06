@@ -29,7 +29,10 @@
 
     <logger name="dnt.monitor" level="INFO" />
     <logger name="dnt.monitor.resolver" level="WARN" />
+<!--
     <logger name="dnt.monitor.engine.support.DefaultNodeStore" level="WARN" />
+    <logger name="dnt.monitor.engine.support.DefaultPolicyStore" level="WARN" />
+-->
     <logger name="net.happyonroad.platform.resolver" level="ERROR" />
     <!--Set below level to warn to suppress component loading message-->
     <logger name="net.happyonroad.component.container.support.DefaultComponentLoader" level="WARN" />

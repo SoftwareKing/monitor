@@ -23,7 +23,6 @@ import java.util.*;
 /**
  * <h1>元模型管理器</h1>
  */
-@ManagedResource(objectName = "dnt.monitor:name=metaService")
 @org.springframework.stereotype.Component
 @SuppressWarnings("unchecked")
 class MetaManager extends ApplicationSupportBean implements MetaService {
@@ -185,6 +184,13 @@ class MetaManager extends ApplicationSupportBean implements MetaService {
         if( metaResource == null )
             throw new IllegalArgumentException("Can't find MetaResource of " + type.getName() );
         return metaResource;
+    }
+
+    @Override
+    public List<MetaResource> getMetaResources() {
+        ArrayList<MetaResource> metaResources = new ArrayList<MetaResource>(resourceModels.values());
+        Collections.sort(metaResources);
+        return metaResources;
     }
 
     @Override

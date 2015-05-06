@@ -4,10 +4,6 @@
 package dnt.monitor.meta;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import dnt.monitor.meta.snmp.MetaGroup;
-import dnt.monitor.meta.snmp.MetaTable;
-import dnt.monitor.meta.ssh.MetaCommand;
-import dnt.monitor.meta.ssh.MetaMapping;
 import org.springframework.jmx.export.annotation.ManagedAttribute;
 import org.springframework.jmx.export.annotation.ManagedResource;
 
@@ -35,18 +31,13 @@ public class MetaModel<Model> extends MetaObject {
 
     // 指向其他字段的元成员
     protected List<MetaMember> metaMembers;
-
-    protected MetaGroup         snmpGroup;
-    protected MetaTable         snmpTable;
-    // 命令模型
-    protected List<MetaCommand> commands;
-    // 里面可能是 Mapping, Tabular或者null
-    protected List<MetaMapping> mappings;
-
+    // 事件模型，TODO Entry有没有事件?
+    protected List<MetaEvent> metaEvents;
 
     public MetaModel(Class<Model> klass) {
         this.klass = klass;
         this.metaMembers = new LinkedList<MetaMember>();
+        this.metaEvents  = new LinkedList<MetaEvent>();
     }
 
     public Class<Model> getModelClass() {
@@ -63,45 +54,18 @@ public class MetaModel<Model> extends MetaObject {
         this.name = name;
     }
 
-    ////////////////////////////////////////////////
-    // Snmp Meta Information
-    ////////////////////////////////////////////////
-
-    public MetaGroup getSnmpGroup() {
-        return snmpGroup;
-    }
-
-    public void setSnmpGroup(MetaGroup snmpGroup) {
-        this.snmpGroup = snmpGroup;
-    }
-
-    public MetaTable getSnmpTable() {
-        return snmpTable;
-    }
-
-    public void setSnmpTable(MetaTable snmpTable) {
-        this.snmpTable = snmpTable;
-    }
-
-    public List<MetaCommand> getCommands() {
-        return commands;
-    }
-
-    public void setCommands(List<MetaCommand> commands) {
-        this.commands = commands;
-    }
-
-    public List<MetaMapping> getMappings() {
-        return mappings;
-    }
-
-    public void setMappings(List<MetaMapping> mappings) {
-        this.mappings = mappings;
-    }
 
     @JsonIgnore
     public List<MetaMember> getMembers() {
         return Collections.unmodifiableList(this.metaMembers);
+    }
+
+    public List<MetaEvent> getEvents() {
+        return metaEvents;
+    }
+
+    public void addEvent(MetaEvent metaEvent){
+        this.metaEvents.add(metaEvent);
     }
 
     @JsonIgnore
@@ -176,5 +140,21 @@ public class MetaModel<Model> extends MetaObject {
             if(member.getName().equals(name)) return member;
         }
         return null;
+    }
+
+    public void setMember(String name, MetaMember member) {
+        MetaMember old = getMember(name);
+        int index = metaMembers.indexOf(old);
+        if( index >= 0 ){
+            metaMembers.set(index, member);
+        }
+    }
+
+    public Model newInstance() {
+        try {
+            return getModelClass().newInstance();
+        }catch (Exception ex){
+            throw new RuntimeException("Can't create " + getModelClass().getSimpleName() + " instance", ex);
+        }
     }
 }

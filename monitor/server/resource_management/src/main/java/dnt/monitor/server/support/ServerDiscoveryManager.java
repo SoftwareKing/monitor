@@ -14,8 +14,8 @@ import net.happyonroad.model.CollectionRange;
 import net.happyonroad.model.IpRange;
 import net.happyonroad.model.SubnetRange;
 import net.happyonroad.spring.Bean;
+import net.happyonroad.util.MiscUtils;
 import net.happyonroad.util.StringUtils;
-import org.apache.commons.lang.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContextException;
 import org.springframework.context.ApplicationListener;
@@ -31,8 +31,6 @@ import static dnt.monitor.model.Resource.*;
 @SuppressWarnings("unchecked")
 @Component
 class ServerDiscoveryManager extends Bean implements ServerDiscoveryService, ApplicationListener<SystemStartedEvent> {
-    //TODO 变为server/engine的控制参数
-    private static final int MAX_DEPTH = 3;
 
     @Autowired
     EngineServiceLocator engineServiceLocator;
@@ -52,7 +50,7 @@ class ServerDiscoveryManager extends Bean implements ServerDiscoveryService, App
     public void onApplicationEvent(SystemStartedEvent event) {
         try {
             //noinspection unchecked
-            deviceService = (DeviceService<Device>) serviceLocator.locateResourceService("/device");
+            deviceService = (DeviceService<Device>) serviceLocator.locate(Device.class);
         } catch (ClassCastException e) {
             throw new ApplicationContextException("Located Device Service is not capable", e);
         } catch (ResourceException e) {
@@ -81,7 +79,8 @@ class ServerDiscoveryManager extends Bean implements ServerDiscoveryService, App
         String netAddress = convertAsNetAddress(address);
         String rangeAddress = netAddress + "/24";
         SubnetRange localRange = new SubnetRange(rangeAddress);
-        discoveryRange(engine, localRange, MAX_DEPTH);
+        int depth = Integer.valueOf(engine.getProperty("discovery.depth", "1"));
+        discoveryRange(engine, localRange, depth);
     }
 
     public void discoveryRange(MonitorEngine engine,
@@ -89,29 +88,45 @@ class ServerDiscoveryManager extends Bean implements ServerDiscoveryService, App
                                int depth) throws DiscoveryException {
         String netAddress = convertAsNetAddress(range.getAddress());
         String scopePath = engine.getScopePath() + "/" + Device.convertAsPath(netAddress);
+        logger.info("Discovery of {} for {}, depth = {} started", engine, netAddress, depth);
         Set<Device> devices = new HashSet<Device>();
         Set<IpRange> ranges = new HashSet<IpRange>();
         discoveryRange(engine, range, scopePath, devices, ranges, depth);
         setupEthernetLinks(devices);
+        logger.info("Discovery of {} for {}, depth = {} finished", engine, netAddress, depth);
     }
 
-    public void discoveryRange(MonitorEngine engine,
-                               IpRange range,
-                               String scopePath,
-                               Set<Device> deviceSet,
-                               Set<IpRange> ranges,
-                               int depth)
+    /**
+     * <h2>对特定范围进行发现</h2>
+     *
+     * @param engine    发现所使用的监控引擎
+     * @param range     被发现的IP范围
+     * @param scopePath 发现出来的设备存放的管理路径
+     * @param deviceSet 已经发现的设备，此次发现的结果也应该被存放于该集合中
+     * @param ranges    已经发现的IP范围，此次发现的目标range稍后也应该存放与该集合中
+     * @param depth     发现的深度
+     * @return 此次发现的设备，不包括深度/广度递归发现的其他设备
+     * @throws DiscoveryException 发现过程中碰到的异常
+     */
+    public List<Device> discoveryRange(MonitorEngine engine,
+                                       IpRange range,
+                                       String scopePath,
+                                       Set<Device> deviceSet,
+                                       Set<IpRange> ranges,
+                                       int depth)
             throws DiscoveryException {
-        if (depth < 0) {
-            logger.warn("Stop discovery " + range + ", because of depth is less than zero");
-            return;
+        if (depth <= 0) {
+            logger.warn("Stop discovery " + range + ", because of depth({}) <= zero", depth);
+            return Collections.emptyList();
         }
         if (ranges.contains(range)) {
             logger.debug("Stop discovery " + range + ", because of it's discovered already");
-            return;
+            return Collections.emptyList();
         }
+        logger.info("Discovering {} by {}, depth = {}", range, engine, depth);
         //将当前被发现的range放到已经发现的ranges里面，避免递归时重复进行发现
         ranges.add(range);
+        String engineHostAddress = engine.getHostAddress();
         // 第1步: 对该动态range进行发现
         DiscoveryService discoveryService = engineServiceLocator.locate(engine, DiscoveryService.class);
         Device[] devices;
@@ -120,75 +135,119 @@ class ServerDiscoveryManager extends Bean implements ServerDiscoveryService, App
         } catch (EngineException e) {
             throw new DiscoveryException("Can't search devices by " + engine + " for " + range, e);
         }
-        // 第2步: 将发现出来的设备入库
-        List<Device> createdDevices = new ArrayList<Device>(devices.length);
+        // 第2步: 过滤发现出来的设备(防止与现有设备重复)
+        List<Device> deviceList = new ArrayList<Device>(devices.length);
         for (Device device : devices) {
-            //如果这个设备已经在设备集合中，则不进行后继的发现
+            //如果这个设备已经在设备集合中，则应该被过滤掉
             if (deviceSet.contains(device))
                 continue;
             //如果这个设备，已经在数据库中，则不进行后继的发现
             Device exist = deviceService.findWithAddress(device.getAddress());
             if (exist != null) {
+                //TODO 对于服务器中已经有的某些设备，如监控服务器默认创建的所在主机，可能是预先构建，并没有被监控，应该如何处理？
+                // 可能的方案是:
+                // 1. 此地仍然略过
+                // 2. assign server to default engine时，也把这个主机assign过去
+                // 3. default engine monitor server & server's host
                 logger.warn("Skip {} which is duplicate with {}", device, exist);
                 continue;
             }
-            device.setProperty(PROPERTY_SCOPE_PATH, scopePath);
-            Device created = createDevice(device);
-            if (created != null) createdDevices.add(created);
+            deviceList.add(device);
+            //Device created = createDevice(device);
+            //if (created != null) deviceList.add(created);
         }
-        Set<String> discoveryPaths = new HashSet<String>();
-        // 第3步: 对发现出来的设备进行更细致的发现(仅对存在服务的设备)
-        for (Device dev : createdDevices) {
-            if (dev.getServices() != null && !dev.getServices().isEmpty()) {
-                String path = dev.getProperty(PROPERTY_SCOPE_PATH) + "/" + dev.getProperty(PROPERTY_RELATIVE_PATH);
-                discoveryPaths.add(path);
+        Set<String> scopeAddresses = new HashSet<String>();
+        Set<String> localAddresses = new HashSet<String>();
+        // 第3步: 对发现出来的设备进行更细致的发现(仅对存在snmp/ssh/wmi服务的设备)
+        for (Device dev : deviceList) {
+            //虽然没有服务，但该设备为引擎所在主机
+            if (StringUtils.equals(dev.getAddress(), engineHostAddress)) {
+                localAddresses.add(dev.getAddress());
+            } else if (dev.getServices() != null && !dev.getServices().isEmpty()) {
+                //TODO 如果以后下面发现的服务包括其他服务，那么这里就需要判断是不是包括snmp/ssh/wmi
+                scopeAddresses.add(dev.getAddress());
             }
         }
         //让下面的引擎同时对如下路径的资源发起细致的发现，这一步操作在下面是并发的
-        List<Device> detailDevices = new ArrayList<Device>();
         try {
-            logger.info("{} devices need to be discovered in deep", discoveryPaths.size());
-            Device[] details = discoveryService.discoverComponents(discoveryPaths);
-            detailDevices.addAll(Arrays.asList(details));
-            logger.info("{} devices discovered actually", detailDevices.size());
+            logger.info("{} devices need to be discovered in deep", localAddresses.size() + scopeAddresses.size());
+            Device[] locals = discoverDevices(discoveryService, engine.getSystemPath(), localAddresses);
+            Device[] details = discoverDevices(discoveryService, scopePath, scopeAddresses);
+            Device[] all = new Device[locals.length + details.length];
+            System.arraycopy(locals, 0, all, 0, locals.length);
+            System.arraycopy(details, 0, all, locals.length, details.length);
+            for (Device detail : all) {
+                //DEVICE equals/hashCode by address
+                int index = indexOf(deviceList, detail);
+                if (index >= 0)
+                    deviceList.set(index, detail);
+                else {
+                    logger.warn("Can't find {} in device list", detail);
+                }
+            }
+            logger.info("{} devices discovered actually", details.length);
         } catch (EngineException e) {
-            String msg = "Can't discovery components by " + engine + " for " + StringUtils.join(discoveryPaths, ",");
+            String msg =
+                    "Can't discovery components by " + engine + " for " + StringUtils.join(scopeAddresses, ",");
             throw new DiscoveryException(msg, e);
         }
         // 在这一步发现的的详细设备，可能就有重复
-        List<Device> reducedDevices = reduceDuplicates(detailDevices);
-        // 从 created devices里面删除该记录，避免稍后删除之
-        for (Device device : reducedDevices) {
-            createdDevices.remove(device);
+        List<Device> reducedDevices = reduceDuplicates(deviceList);
+        if (!reducedDevices.isEmpty()) {
+            logger.info("Found {} duplicate devices", reducedDevices.size());
         }
-        removeDuplicates(reducedDevices);
-
-        // 第4步: 将细致发现的结果入库
-        for (Device detail : detailDevices) {
-            //根据id找到原来的对象
-            Device legacy = findDevice(createdDevices, detail);
-            // 下面的采集的代码可能有错，丢失了数据库id，导致这里不能正常工作
-            // 再次更新入库
-            updateDevice(legacy, detail);
-            //Replace created device with detailed one
-            int pos = createdDevices.indexOf(detail);
-            createdDevices.set(pos, detail);
+        List<String> hostAddresses = new LinkedList<String>();
+        // 第4步: 将发现的结果入库
+        Iterator<Device> it = deviceList.iterator();
+        while (it.hasNext()) {
+            Device detail = it.next();
             //与数据库里面已有的设备进行比对，去除数据库中的重复
             List<String> addresses = new ArrayList<String>();
             for (AddressEntry addressEntry : detail.getAddresses()) {
                 //略过本地地址
                 if (addressEntry.getAddr().startsWith("127.")) continue;
+                if (addressEntry.getAddr().startsWith("169.")) continue;
                 addresses.add(addressEntry.getAddr());
             }
             if (!addresses.isEmpty()) {
                 List<Device> duplicates = deviceService.findAllInAddresses(addresses, detail);
-                removeDuplicates(duplicates);
+                if (!duplicates.isEmpty()) {
+                    it.remove();
+                    continue;
+                }
+            }
+            //现在保证发现的设备是新设备，且与数据库现有对象不重复
+            Device created = createDevice(engine.getSystemPath(), scopePath, detail, engineHostAddress);
+            deviceSet.add(created);
+            //交换机被创建之后，会自动构建相应的子网
+            if (created instanceof Host) {
+                hostAddresses.add(created.getAddress());
             }
         }
+        // 第5步: 对可以执行关联发现的设备(主机)进行关联发现
+        try {
+            Resource[] relatedResources = discoveryService.discoverRelates(hostAddresses);
+            for (Resource resource : relatedResources) {
+                Resource created = createResource(engine.getSystemPath(),scopePath, resource, engineHostAddress);
+                if (created != null) {
+                    String hostAddress = created.getProperty(Resource.PROPERTY_HOST_ADDRESS);
+                    Device host = findDeviceByAddress(deviceSet, hostAddress);
+                    //Link应该由server发现? 还是由引擎发现? 现在为了能够发现全局对象直接的链接，让server发现
+                    //但对于有些关系，如 engine -use-> mysql, redis 是根据engine的配置文件决定的
+                    //server -use-> mysql, redis, nginx 也是由 server的配置文件决定的
+                    //这种关系应该由引擎发现，并告知服务器
+                    //但这条通道尚未建立
+                    setupLink(created, host, LinkType.RunOn, new Properties());
+                }
+            }
+        } catch (EngineException e) {
+            logger.warn("Can't find related resources", MiscUtils.describeException(e));
+        }
 
-        //第5步: 递归处理交换机设备的上联/外联设备
+        // 第6步: 递归处理交换机设备的上联/外联设备
+        // TODO 并发之
         Map<String, Set<Device>> switch2devices = new HashMap<String, Set<Device>>();
-        for (Device device : detailDevices) {
+        for (Device device : deviceList) {
             if (!(device instanceof Switch))
                 continue;
             Switch switchDevice = (Switch) device;
@@ -216,11 +275,17 @@ class ServerDiscoveryManager extends Bean implements ServerDiscoveryService, App
         //向上进行发现，需要避免过深
         if (!switch2devices.isEmpty()) {
             CollectionRange upRange = new CollectionRange(switch2devices.keySet());
-            discoveryRange(engine, upRange, engine.getScopePath(), deviceSet, ranges, depth - 1);
+            List<Device> upLinks = discoveryRange(engine, upRange, engine.getScopePath(), deviceSet, ranges, depth - 1);
+            for (Device upLink : upLinks) {
+                Set<Device> downLinks = switch2devices.remove(upLink.getAddress());
+                for (Device downLink : downLinks) {
+                    setupLink(downLink, upLink, LinkType.UpLink, null);
+                }
+            }
         }
         //向下进行发现，也需要避免过深，向下发现的switch与subnet之间的关系，不是Resource之间的Link
-        // （因为Subnet不是Resource，而只是Topo Node直接的TopoLink)
-        for (Device device : createdDevices) {
+        // （因为Subnet不是Resource，而只是Topo Node之间的TopoLink)
+        for (Device device : deviceList) {
             if (device instanceof Switch) {
                 for (RouteEntry entry : device.getRouteEntries()) {
                     if (entry.getDest().startsWith("0.")) continue;
@@ -229,20 +294,36 @@ class ServerDiscoveryManager extends Bean implements ServerDiscoveryService, App
                     if (entry.getType() != 3) continue;//direct
                     SubnetRange subnetRange = new SubnetRange(entry.getDest(), entry.getMask());
                     String subScopePath = engine.getScopePath() + "/" + Device.convertAsPath(entry.getDest());
-                    discoveryRange(engine, subnetRange, subScopePath, deviceSet, ranges, depth - 1);
+                    List<Device> devs = discoveryRange(engine, subnetRange, subScopePath, deviceSet, ranges, depth - 1);
+                    // 这里可以建立Switch到下面每个直接设备的连接，TODO 要不要建立呢？
+                    for (Device dev : devs) {
+                        setupLink(dev, device, LinkType.UpLink, null);
+                    }
                 }
             }
         }
+        logger.info("Discovered  {} by {}, depth = {}", range, engine, depth);
+        return deviceList;
+    }
 
+    protected Device[] discoverDevices(DiscoveryService discoveryService, String scopePath, Set<String> scopeAddresses)
+            throws EngineException {
+        Device[] details;
+        if(scopeAddresses.isEmpty()){
+            details = new Device[0];
+        }else{
+            details = discoveryService.discoverComponents(scopePath, scopeAddresses);
+        }
+        return details;
     }
 
 
-    private void setupLink(Device left, Device right, LinkType type, Properties properties) {
+    private void setupLink(Resource left, Resource right, LinkType type, Properties properties) {
         try {
             linkService.link(left, right, type, properties);
         } catch (ResourceException e) {
             logger.warn("Can't setup {} link between {} and {}, because of {}",
-                        type, left, right, ExceptionUtils.getRootCauseMessage(e));
+                        type, left, right, MiscUtils.describeException(e));
         }
     }
 
@@ -286,10 +367,21 @@ class ServerDiscoveryManager extends Bean implements ServerDiscoveryService, App
     private Device findDeviceByLabel(Set<Device> devices, String label) {
         //先在已有设备中寻找
         for (Device device : devices) {
+            if (device == null) continue;
             if (StringUtils.equals(device.getLabel(), label)) return device;
         }
         //再到数据库中寻找
         return deviceService.findByLabel(label);
+    }
+
+    private Device findDeviceByAddress(Set<Device> devices, String address) {
+        //先在已有设备中寻找
+        for (Device device : devices) {
+            if (device == null) continue;
+            if (StringUtils.equals(device.getAddress(), address)) return device;
+        }
+        //再到数据库中寻找
+        return deviceService.findByAddress(address);
     }
 
     static class CandidateLink {
@@ -351,16 +443,23 @@ class ServerDiscoveryManager extends Bean implements ServerDiscoveryService, App
         return result;
     }
 
-    Device findDevice(List<Device> devices, Device device) {
-        for (Device legacy : devices) {
-            if (legacy.getId().equals(device.getId())) return legacy;
+    int indexOf(List<Device> devices, Device target) {
+        for (int i = 0; i < devices.size(); i++) {
+            Device device = devices.get(i);
+            if (StringUtils.equals(device.getAddress(), target.getAddress())) return i;
         }
-        return null;
+        return -1;
     }
 
     //该方法返回时，相应的resource node也应该已经被创建并分配到监控引擎上了
-    Device createDevice(Device device) {
-        device.setLabel(device.getAddress());
+    Device createDevice(String systemPath, String scopePath, Device device, String engineHostAddress) {
+        //这些设备的属性，是服务器侧加上的，随着下次同步的动作，将会被引擎冲掉
+        if (device.getLabel() == null) device.setLabel(device.getAddress());
+        if (StringUtils.equals(device.getAddress(), engineHostAddress)) {
+            device.setProperty(PROPERTY_SYSTEM_PATH, systemPath);
+        } else {
+            device.setProperty(PROPERTY_SCOPE_PATH, scopePath);
+        }
         device.setProperty(PROPERTY_RELATIVE_PATH, Device.convertAsPath(device.getAddress()));
         device.setProperty(PROPERTY_SOURCE, "discovery");
         try {
@@ -368,6 +467,25 @@ class ServerDiscoveryManager extends Bean implements ServerDiscoveryService, App
             return concreteDeviceService.create(device);
         } catch (Exception e) {
             logger.error("Can't create " + device, e);
+            return null;
+        }
+    }
+
+    Resource createResource(String systemPath, String scopePath, Resource resource, String engineHostAddress) {
+        if (resource.getLabel() == null) resource.setLabel(resource.getAddress());
+        String resourceHostAddress = resource.getProperty(PROPERTY_HOST_ADDRESS);
+        if (StringUtils.equals(resourceHostAddress, engineHostAddress)) {
+            resource.setProperty(PROPERTY_SYSTEM_PATH, systemPath);
+        } else {
+            resource.setProperty(PROPERTY_SCOPE_PATH, scopePath);
+        }
+        resource.setProperty(PROPERTY_RELATIVE_PATH, Device.convertAsPath(resource.getAddress()));
+        resource.setProperty(PROPERTY_SOURCE, "discovery");
+        try {
+            ResourceService service = serviceLocator.locate(resource);
+            return service.create(resource);
+        } catch (Exception e) {
+            logger.error("Can't create " + resource, e);
             return null;
         }
     }
@@ -399,8 +517,9 @@ class ServerDiscoveryManager extends Bean implements ServerDiscoveryService, App
             //为了兼容，采集来的地址不全的问题
             Set<String> referenceAddresses = extractAddresses(reference.getAddresses());
             for (String deviceAddress : deviceAddresses) {
-                if( referenceAddresses.contains(deviceAddress) ){
-                    logger.warn("Skip {} because of its address {} is duplicate with {}", device, deviceAddress, reference);
+                if (referenceAddresses.contains(deviceAddress)) {
+                    logger.warn("Skip {} because of its address {} is duplicate with {}", device, deviceAddress,
+                                reference);
                     return true;
                 }
             }
@@ -416,35 +535,6 @@ class ServerDiscoveryManager extends Bean implements ServerDiscoveryService, App
             result.add(entry.getAddr());
         }
         return result;
-    }
-
-    void removeDuplicates(List<Device> duplicates) {
-        if (!duplicates.isEmpty()) {
-            logger.info("Found {} devices duplicate, and reduced them", duplicates.size());
-
-            for (Device duplicate : duplicates) {
-                removeDevice(duplicate);
-            }
-        }
-    }
-
-    private void updateDevice(Device legacy, Device detailed) {
-        try {
-            DeviceService<Device> concreteDeviceService = (DeviceService<Device>) serviceLocator.locate(detailed);
-            concreteDeviceService.update(legacy, detailed);
-        } catch (ResourceException e) {
-            logger.error("Can't update " + detailed, e);
-        }
-
-    }
-
-    private void removeDevice(Device device) {
-        try {
-            deviceService.delete(device);
-        } catch (ResourceException e) {
-            logger.error("Can't delete " + device, e);
-        }
-
     }
 
     private String convertAsNetAddress(String address) {

@@ -6,11 +6,8 @@ package dnt.monitor.server.handler.engine;
 import dnt.monitor.model.MonitorEngine;
 import dnt.monitor.server.exception.NodeException;
 import dnt.monitor.server.service.NodeService;
-import net.happyonroad.event.ObjectUpdatedEvent;
-import net.happyonroad.spring.Bean;
 import net.happyonroad.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
 /**
@@ -22,31 +19,35 @@ import org.springframework.stereotype.Component;
  * 批准成功后，主要是修改相应管理节点的scope path
  */
 @Component
-class UpdateRelatedNodesAfterEngineApproved extends Bean
-        implements ApplicationListener<ObjectUpdatedEvent<MonitorEngine>> {
+class UpdateRelatedNodesAfterEngineApproved extends EngineApprovalListener {
     @Autowired
     NodeService nodeService;
 
+    public UpdateRelatedNodesAfterEngineApproved() {
+        setOrder(28);
+    }
+
     @Override
-    public void onApplicationEvent(ObjectUpdatedEvent<MonitorEngine> event) {
-        MonitorEngine engine = event.getLegacySource();
-        MonitorEngine newEngine = (MonitorEngine) ((ObjectUpdatedEvent) event).getSource();
-        if (isApproving(engine, newEngine)) {
-            String legacySystemPath = engine.getSystemPath();
-            String systemPath = newEngine.getSystemPath();
-            autoUpdateNodesForEngine(legacySystemPath, systemPath);
-            String legacyScopePath = engine.getScopePath();
-            String scopePath = newEngine.getScopePath();
-            autoUpdateNodesForEngine(legacyScopePath, scopePath);
-        } else if (isRejecting(engine, newEngine)) {
-            logger.info("Perform some work after engine was rejected");
-        }
+    protected void onApprove(MonitorEngine engine, MonitorEngine... oldEngines) {
+        if( oldEngines.length == 0 ) return;
+        MonitorEngine oldEngine = oldEngines[0];
+        String legacySystemPath = oldEngine.getSystemPath();
+        String systemPath = engine.getSystemPath();
+        autoUpdateNodesForEngine(legacySystemPath, systemPath);
+        String legacyScopePath = oldEngine.getScopePath();
+        String scopePath = engine.getScopePath();
+        autoUpdateNodesForEngine(legacyScopePath, scopePath);
+    }
+
+    @Override
+    protected void onReject(MonitorEngine engine, MonitorEngine... oldEngines) {
+        logger.info("Perform some work after engine was rejected");
     }
 
     // 当引擎被批准时，其路径也应该随着用户设定的新路径发生了变化，修改之
     // Topo节点也会自动随之而修改
     void autoUpdateNodesForEngine(String legacyPath, String path) {
-        if (StringUtils.isNotBlank(path)) {
+        if (StringUtils.isNotBlank(path) && !StringUtils.equals(legacyPath, path)) {
             try {
                 nodeService.updateNodesPath(legacyPath, path);
             } catch (NodeException e) {
@@ -55,12 +56,4 @@ class UpdateRelatedNodesAfterEngineApproved extends Bean
         }
     }
 
-    boolean isApproving(MonitorEngine oldEngine, MonitorEngine newEngine) {
-        return (oldEngine.isRequesting()) && (newEngine.isApproved());
-
-    }
-    boolean isRejecting(MonitorEngine oldEngine, MonitorEngine newEngine) {
-        return (oldEngine.isRequesting()) && (newEngine.isRejected());
-
-    }
 }

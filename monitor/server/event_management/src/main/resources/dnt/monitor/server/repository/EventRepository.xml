@@ -21,7 +21,7 @@
         </if>
     </sql>
 
-    <select id="summary" resultMap="SummaryResult">
+    <select id="summary" resultMap="summaryResult">
         SELECT severity, count(*) count FROM events
         <include refid="judgeByPath" />
         GROUP BY severity
@@ -31,7 +31,7 @@
         SELECT COUNT(0) FROM events
         <include refid="judgeByPath" />
     </select>
-    <select id="findPaginationByPath" resultMap="EventResult">
+    <select id="findPaginationByPath" resultMap="eventResult">
         SELECT * FROM events
         <include refid="judgeByPath" />
         <include refid="paginate" />
@@ -49,12 +49,12 @@
                 #{createdAt}, #{updatedAt})
     </insert>
 
-    <resultMap id="EventResult" type="Event" autoMapping="true">
+    <resultMap id="eventResult" type="Event" autoMapping="true">
         <result property="severity" column="severity" typeHandler="net.happyonroad.util.SeverityHandler" />
         <result property="priority" column="priority" typeHandler="net.happyonroad.util.PriorityHandler" />
         <result property="ack" column="ack" typeHandler="net.happyonroad.util.AckStatusHandler" />
     </resultMap>
-    <resultMap id="SummaryResult" type="java.util.HashMap" autoMapping="true">
+    <resultMap id="summaryResult" type="java.util.HashMap" autoMapping="true">
         <result property="severity" column="severity" javaType="net.happyonroad.type.Severity" typeHandler="net.happyonroad.util.SeverityHandler" />
         <result property="count" column="count" javaType="java.lang.Integer" />
     </resultMap>

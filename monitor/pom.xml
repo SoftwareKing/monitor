@@ -23,8 +23,8 @@
 
     <properties>
 
-        <version.component-framework>2.2.0</version.component-framework>
-        <version.components>1.5.0</version.components>
+        <version.component-framework>2.3.0</version.component-framework>
+        <version.components>1.6.0</version.components>
 
         <release.root>/opt/releases/itsnow</release.root>
     </properties>
@@ -35,6 +35,19 @@
         <connection>scm:git:git@git.itsnow.com:insight/monitor.git</connection>
         <developerConnection>scm:git:git@git.itsnow.com:insight/monitor.git</developerConnection>
     </scm>
+
+    <repositories>
+        <repository>
+            <id>dnt-releases</id>
+            <url>http://nexus.itsnow.com/content/groups/public</url>
+        </repository>
+        <repository>
+            <id>dnt-snapshots</id>
+            <url>
+                http://nexus.itsnow.com/content/groups/public-snapshots
+            </url>
+        </repository>
+    </repositories>
 
     <modules>
         <module>repository</module>
@@ -124,9 +137,10 @@
             </dependency>
 
             <dependency>
-                <groupId>dnt.monitor</groupId>
-                <artifactId>data_suite</artifactId>
+                <groupId>dnt.monitor.server</groupId>
+                <artifactId>test_in_server</artifactId>
                 <version>${project.version}</version>
+                <scope>test</scope>
             </dependency>
 
             <dependency>

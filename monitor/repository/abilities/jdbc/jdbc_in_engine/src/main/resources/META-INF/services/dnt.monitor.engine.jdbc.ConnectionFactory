@@ -1,0 +1,9 @@
+# 采用Java SPI(Service Loader)机制对数据库连接工厂进行扩展
+# 其他的探针包如果提供了新的数据库连接工厂
+# 应该在其探针包内部的META-INF/services目录下增加dnt.dss.probes.jdbc.DBConnectionFactory文件
+# 并且把自己的实现类逐行列出
+dnt.monitor.engine.jdbc.factory.H2ConnectionFactory
+dnt.monitor.engine.jdbc.factory.MssqlConnectionFactory
+dnt.monitor.engine.jdbc.factory.MysqlConnectionFactory
+dnt.monitor.engine.jdbc.factory.OracleConnectionFactory
+dnt.monitor.engine.jdbc.factory.SybaseConnectionFactory

@@ -6,7 +6,6 @@ package dnt.monitor.engine;
 import net.happyonroad.CacheUserConfig;
 import net.happyonroad.MessagingUserConfig;
 import net.happyonroad.UtilUserConfig;
-import net.happyonroad.spring.config.AbstractAppConfig;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
@@ -15,7 +14,7 @@ import org.springframework.context.annotation.Import;
  */
 @Configuration
 @Import({UtilUserConfig.class, CacheUserConfig.class, MessagingUserConfig.class})
-public class EngineReleaseAppConfig extends AbstractAppConfig{
+public class EngineReleaseAppConfig extends DefaultEngineAppConfig{
 
 
 }

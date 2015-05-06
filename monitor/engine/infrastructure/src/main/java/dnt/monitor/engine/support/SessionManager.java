@@ -4,15 +4,15 @@
 package dnt.monitor.engine.support;
 
 
-import dnt.monitor.engine.service.EngineServiceInvoker;
 import dnt.monitor.engine.event.EngineConnectedEvent;
 import dnt.monitor.engine.event.EngineDisconnectedEvent;
 import dnt.monitor.engine.event.EngineStatusEvent;
+import dnt.monitor.engine.service.EngineServiceInvoker;
 import net.happyonroad.event.SystemEvent;
 import net.happyonroad.event.SystemStartedEvent;
 import net.happyonroad.spring.ApplicationSupportBean;
 import net.happyonroad.type.TimeInterval;
-import org.apache.commons.lang.exception.ExceptionUtils;
+import net.happyonroad.util.MiscUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationListener;
@@ -60,6 +60,9 @@ class SessionManager extends ApplicationSupportBean
     private Thread           workThread;
     private WebSocketSession session;
 
+    public SessionManager() {
+        setOrder(2000);
+    }
 
     @Override
     public void onApplicationEvent(SystemEvent event) {
@@ -114,6 +117,7 @@ class SessionManager extends ApplicationSupportBean
     }
 
     protected void stopSelf() {
+        stopConnecting();
         if (sockJsClient != null && sockJsClient.isRunning()) {
             sockJsClient.stop();
         }
@@ -145,7 +149,7 @@ class SessionManager extends ApplicationSupportBean
                 result = session.getId();
             } catch (Throwable e) {
                 if (session == null) {
-                    result = ExceptionUtils.getRootCauseMessage(e);
+                    result = MiscUtils.describeException(e);
                     //有可能已经建立连接，譬如，本线程被成功线程打断
                 } else {
                     result = session.toString();

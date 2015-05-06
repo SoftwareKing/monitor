@@ -68,7 +68,7 @@ public class EngineTest extends AbstractTest {
 
     CPU createCPU(int i, Performance performance) {
         CPU cpu = new CPU();
-        cpu.setIdx(i);
+        cpu.setIdx(String.valueOf(i));
         cpu.setModelName("Intel Xeron");
         cpu.setFrequency(1024f);
         cpu.setUsage(0.7f);

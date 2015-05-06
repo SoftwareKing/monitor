@@ -3,8 +3,6 @@
  */
 package dnt.monitor.meta;
 
-import dnt.monitor.meta.misc.MetaAnchor;
-import dnt.monitor.meta.misc.MetaKeyed;
 import dnt.monitor.model.Component;
 
 /**

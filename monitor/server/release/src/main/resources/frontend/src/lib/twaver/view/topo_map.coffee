@@ -113,7 +113,7 @@ angular.module("Lib.Twaver.View.TopoMap", [])
       return if !map.nodes
       @topoView.createNode( data ) for data in map.nodes
       @topoView.createLinks( map )
-      @topoView.layout( map )
+      # @topoView.layout( map )
 
     showNode: (node)->
       return if !node

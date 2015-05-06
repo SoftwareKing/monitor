@@ -4,14 +4,15 @@
 package dnt.monitor.server.handler.node;
 
 import dnt.monitor.exception.EngineException;
-import dnt.monitor.server.exception.OfflineException;
 import dnt.monitor.model.ManagedNode;
 import dnt.monitor.model.MonitorEngine;
+import dnt.monitor.model.Resource;
 import dnt.monitor.model.ResourceNode;
 import dnt.monitor.server.exception.NodeException;
+import dnt.monitor.server.exception.OfflineException;
+import dnt.monitor.server.service.EngineServiceLocator;
 import dnt.monitor.server.service.NodeService;
 import dnt.monitor.service.ConfigurationService;
-import dnt.monitor.server.service.EngineServiceLocator;
 import net.happyonroad.event.ObjectCreatedEvent;
 import net.happyonroad.spring.Bean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,7 @@ import org.springframework.stereotype.Component;
 class AssignNode2EngineAfterCreated extends Bean
         implements ApplicationListener<ObjectCreatedEvent<ManagedNode>> {
     @Autowired
-    NodeService nodeService;
+    NodeService          nodeService;
     @Autowired
     EngineServiceLocator engineServiceLocator;
 
@@ -52,12 +53,18 @@ class AssignNode2EngineAfterCreated extends Bean
         if (node.isRoot() || node.isInfrastructure()) return;
         //ScopeNode也不应该在创建后发送到监控引擎上(因为其早于engine创建)
         //Scope Node 应该将root node的信息copy带过去
-        if( node.isScope() ) return;
+        if (node.isScope()) return;
         //SystemNode也不应该在创建后发送到监控引擎上(因为其早于engine创建)
-        if( node.isSystem() ) return;
-        //EngineNode由CreatedRelatedNodes自行创建
-        if (node instanceof ResourceNode){
-            if( ((ResourceNode) node).isEngineNode() ) return;
+        if (node.isSystem()) return;
+        //Engine, ServerNode由 AssignRelatedNodes2EngineAfterCreated 自行分配过去
+        // 因为如果在他们的节点创建时就直接分配过去的话，其上级管理节点还没有分配过去呢
+        if (node instanceof ResourceNode) {
+            ResourceNode rescNode = (ResourceNode) node;
+            //Resource has been removed
+            if( rescNode.getResource() == null ) return;
+            if (rescNode.isEngineNode()) return;
+            //
+            if (rescNode.isServerNode()) return;
         }
         MonitorEngine engine;
         try {
@@ -65,18 +72,31 @@ class AssignNode2EngineAfterCreated extends Bean
         } catch (NodeException e) {
             throw new ApplicationContextException("Can't find engine for " + node);
         }
-        if( engine.isRequesting()) {
+        if (engine.isRequesting()) {
             logger.debug("The engine is not approved, do not assign any node to it");
             return;
-        }else if (engine.isRejected() ){
+        } else if (engine.isRejected()) {
             logger.debug("The engine is rejected, do not assign any node to it");
             return;
         }
         // get Engine NBI for resource service by factory bean
         ConfigurationService configurationService = engineServiceLocator.locate(engine, ConfigurationService.class);
         try {
-            //无论是ip range，还是具体节点，都分配过去，由引擎处理
-            configurationService.assignNode(node);
+            //分配节点时，不将resource发送过去
+            if (node instanceof ResourceNode) {
+                ResourceNode resourceNode = ((ResourceNode) node);
+                String address = resourceNode.getResource().getAddress();
+                Resource resource = resourceNode.getResource();
+                resourceNode.setResource(null);
+                try {
+                    configurationService.assignResourceNode(resourceNode, address);
+                } finally {
+                    resourceNode.setResource(resource);
+                }
+            } else{
+                //无论是ip range，还是具体节点，都分配过去，由引擎处理
+                configurationService.assignNode(node);
+            }
         } catch (OfflineException e) {
             logger.debug("{} has been assigned to an offline {}", node, engine);
         } catch (EngineException e) {

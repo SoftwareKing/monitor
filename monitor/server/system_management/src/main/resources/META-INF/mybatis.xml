@@ -4,5 +4,7 @@
     <typeAliases>
         <typeAlias type="dnt.monitor.server.model.MonitorLog" alias="MonitorLog" />
         <typeAlias type="dnt.monitor.server.model.OperationLog" alias="OperationLog" />
+        <typeAlias type="dnt.monitor.policy.ResourcePolicy" alias="ResourcePolicy"/>
+        <typeAlias type="dnt.monitor.policy.ComponentPolicy" alias="ComponentPolicy"/>
     </typeAliases>
 </configuration>

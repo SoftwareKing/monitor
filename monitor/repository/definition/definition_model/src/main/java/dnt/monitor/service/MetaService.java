@@ -8,6 +8,7 @@ import dnt.monitor.meta.*;
 import dnt.monitor.model.*;
 import org.springframework.core.type.AnnotationMetadata;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -42,7 +43,7 @@ public interface MetaService {
      */
     void unregister(MetaModel metaModel);
     /**
-     * 查询某个资源class对应的资源模型
+     * <h2>查询某个资源class对应的资源模型 </h2>
      *
      * @param type 资源的class，必须为Resource的子类
      * @return 对应的资源模型
@@ -50,7 +51,7 @@ public interface MetaService {
     MetaResource getMetaResource(Class<? extends Resource> type);
 
     /**
-     * 查询某个组件class对应的组件模型
+     * <h2>查询某个组件class对应的组件模型</h2>
      *
      * @param type 组件的class，必须为Component的子类
      * @return 对应的组件模型
@@ -58,7 +59,7 @@ public interface MetaService {
     MetaComponent getMetaComponent(Class<? extends Component> type);
 
     /**
-     * 查询某个结构体class对应的组件模型
+     * <h2>查询某个结构体class对应的组件模型</h2>
      *
      * @param type 结构体的class，必须为Entry的子类
      * @return 对应的结构体模型
@@ -66,7 +67,7 @@ public interface MetaService {
     MetaEntry getMetaEntry(Class<? extends Entry> type);
 
     /**
-     * 查询某个link class对应的Link模型
+     * <h2>查询某个link class对应的Link模型</h2>
      *
      * @param type 资源的class，必须为Link的子类
      * @return 对应的资源模型
@@ -75,7 +76,7 @@ public interface MetaService {
 
 
     /**
-     * 查询某个资源type对应的资源模型
+     * <h2>查询某个资源type对应的资源模型</h2>
      *
      * @param type 资源的 type ，必须为Resource的子类
      * @return 对应的资源模型
@@ -83,7 +84,7 @@ public interface MetaService {
     MetaResource getMetaResource(String type);
 
     /**
-     * 获取某个分类下所有的资源模型
+     * <h2>获取某个分类下所有的资源模型</h2>
      *
      * @param category 分类名称
      * @return 资源模型集合
@@ -91,11 +92,17 @@ public interface MetaService {
     Set<MetaResource> getMetaResources(String category);
 
     /**
-     * 由 Model Feature Resolver回调的解析入口方法
+     * <h2>由 Model Feature Resolver回调的解析入口方法</h2>
      *
      * @param klass 被解析的类
      */
     MetaModel resolve(Class klass) throws MetaException;
 
 
+    /**
+     * <h2>获取所有的资源模型</h2>
+     *
+     * @return 资源模型集合
+     */
+    List<MetaResource> getMetaResources();
 }

@@ -12,23 +12,20 @@ import net.happyonroad.platform.util.DefaultPage;
 import net.happyonroad.spring.ApplicationSupportBean;
 import net.happyonroad.type.Severity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jmx.export.annotation.ManagedAttribute;
+import org.springframework.jmx.export.annotation.ManagedResource;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.events.EventException;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 事件相关业务方法的实现
- *
- * @author Chris Zhu
- * @email  zhulihongpm@163.com
  */
 
 @Service
-class EventManager extends ApplicationSupportBean implements EventService {
+@ManagedResource(objectName = "dnt.monitor.server:type=service,name=eventService")
+public class EventManager extends ApplicationSupportBean implements EventService {
     @Autowired
     private EventRepository repository;
 
@@ -79,5 +76,15 @@ class EventManager extends ApplicationSupportBean implements EventService {
         List<String> paths = repository.findDistinctPath();
         logger.debug("Found   distinct event paths: {}", paths.size());
         return paths;
+    }
+
+    @ManagedAttribute
+    public Properties getEventSize(){
+        Map<Severity, Integer> summary = summary("/");
+        Properties properties = new Properties();
+        for (Map.Entry<Severity, Integer> entry : summary.entrySet()) {
+             properties.setProperty(entry.getKey().toString(), entry.getValue().toString());
+        }
+        return properties;
     }
 }

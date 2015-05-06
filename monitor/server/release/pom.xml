@@ -98,6 +98,7 @@
                                     <propertyFiles>${project.basedir}/config/server.properties,${project.basedir}/db/migrate/environments/development.properties</propertyFiles>
                                     <logbackFile>${project.basedir}/config/logback.xml</logbackFile>
                                     <frontendNodeModules>${release.root}/../node_modules</frontendNodeModules>
+                                    <repositoryBase>${project.basedir}/../../repository</repositoryBase>
                                 </configuration>
                             </execution>
 
@@ -128,37 +129,7 @@
                                 </configuration>
                             </execution>
 
-                            <execution>
-                                <id>build-frontend</id>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>run</goal>
-                                </goals>
-                                <configuration>
-                                    <target>
-                                        <exec dir="${release.dir}/webapp/frontend" executable="${grunt.exec}" failonerror="true">
-                                            <arg line="build --verbose"/>
-                                        </exec>
-                                        <echo message="Frontend is built" />
-                                    </target>
-                                </configuration>
-                            </execution>
-                            <execution>
-                                <id>compile-frontend</id>
-                                <phase>install</phase>
-                                <goals>
-                                    <goal>run</goal>
-                                </goals>
-                                <configuration>
-                                    <target>
-                                        <exec dir="${release.dir}/webapp/frontend" executable="${grunt.exec}" failonerror="true">
-                                            <arg line="compile"/>
-                                        </exec>
-                                        <delete dir="${release.dir}/webapp/build/"/>
-                                        <echo message="Frontend is compiled" />
-                                    </target>
-                                </configuration>
-                            </execution>
+
 
                         </executions>
                     </plugin>

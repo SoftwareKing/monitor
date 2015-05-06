@@ -51,7 +51,10 @@ public interface MetricService {
      * @param resolution 分辨率
      * @return 抓取到的数据
      */
-    MetricValues fetch(String path, String funcName,
-                       long fetchStart, long fetchEnd, long resolution)
+    MetricValues fetch(String path,
+                       String funcName,
+                       long fetchStart,
+                       long fetchEnd,
+                       long resolution)
             throws EngineException;
 }

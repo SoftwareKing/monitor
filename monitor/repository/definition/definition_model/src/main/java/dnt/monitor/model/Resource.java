@@ -29,6 +29,7 @@ public class Resource extends ManagedObject {
     public static final String PROPERTY_SYSTEM_PATH   = "systemPath";
     public static final String PROPERTY_SOURCE        = "source";
     public static final String PROPERTY_UP_LINK       = "upLink";
+    public static final String PROPERTY_HOST_ADDRESS  = "hostAddress";
 
     private static final long serialVersionUID = 6879227819554909475L;
     @Config

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE model>
+<model name="dnt.monitor.model.AddressEntry"
+       xmlns:shell="http://www.w3.org/2001/XMLSchema/shell">
+    <shell:command>classpath:./AddressEntry.sh</shell:command>
+    <shell:mapping>"ifIndex","ifDescr","reasmMaxSize","addr","netMask","bcastAddr"</shell:mapping>
+</model>

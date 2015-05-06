@@ -63,7 +63,7 @@ class TeardownHostWhileEngineNodeDestroying extends Bean
                 throw new IllegalStateException("Can't find link service for link type = " + LinkType.RunOn);
             linkService.unlink(engine, host, LinkType.RunOn);
             //noinspection unchecked
-            HostService<Host> hostService = (HostService<Host>) serviceLocator.locateResourceService(host.getType());
+            HostService<Host> hostService = (HostService<Host>) serviceLocator.locate(host.getType());
             try{
                 hostService.delete(host);
             }catch (ResourceException e){

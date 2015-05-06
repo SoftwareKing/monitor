@@ -25,7 +25,7 @@ import java.util.*;
 /**
  * <h1>缺省的类别服务</h1>
  */
-@ManagedResource(objectName = "dnt.monitor:name=categoryService")
+@ManagedResource(objectName = "dnt.monitor:type=service,name=categoryService")
 @Component
 class CategoryManager extends ApplicationSupportBean
         implements CategoryService, Comparator<String>{

@@ -184,4 +184,12 @@ public interface TopoRepository {
      * @param newParentPath 新的父map的path
      */
     void updateNodesParent(String newParentPath);
+
+    /**
+     * <h2>查询到所有的TopoMap的数量</h2>
+     * FOR JMX
+     *
+     * @return 所有的TopoMap的数量
+     */
+    int countMaps();
 }

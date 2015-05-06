@@ -20,9 +20,6 @@ import java.util.Map;
 
 /**
  * 验证事件数据访问层各个方法的正确性
- *
- * @author Chris Zhu
- * @email zhulihongpm@163.com
  */
 
 @ContextConfiguration(classes = EventRepositoryConfig.class)

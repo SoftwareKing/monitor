@@ -3,12 +3,9 @@
  */
 package dnt.monitor.engine;
 
-import dnt.monitor.engine.service.DeviceRecognizer;
-import dnt.monitor.engine.service.EngineServiceRegistry;
-import dnt.monitor.engine.snmp.SnmpVisitorFactory;
-import dnt.monitor.engine.ssh.SshVisitorFactory;
-import dnt.monitor.service.SampleService;
+import dnt.monitor.engine.service.*;
 import net.happyonroad.CacheUserConfig;
+import net.happyonroad.extension.GlobalClassLoader;
 import net.happyonroad.spring.config.AbstractUserConfig;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,38 +19,32 @@ import org.springframework.context.annotation.Import;
 public class InfrastructureUserConfig extends AbstractUserConfig{
 
     @Bean
-    public EngineServiceRegistry engineServiceRegistry() {
+    EngineServiceRegistry engineServiceRegistry() {
         return imports(EngineServiceRegistry.class);
     }
 
     @Bean
-    public SnmpVisitorFactory snmpVisitorFactory(){
-        return imports(SnmpVisitorFactory.class);
+    GlobalClassLoader globalClassLoader(){
+        return imports(GlobalClassLoader.class);
     }
 
     @Bean
-    public SshVisitorFactory sshVisitorFactory(){
-        return imports(SshVisitorFactory.class);
+    NodeStore nodeStore(){
+        return imports(NodeStore.class);
     }
 
     @Bean
-    public DeviceRecognizer snmpDeviceRecognizer(){
-        return imports(DeviceRecognizer.class, "snmp");
+    PolicyStore policyStore(){
+        return imports(PolicyStore.class);
     }
 
     @Bean
-    public SampleService snmpSampleService(){
-        return imports(SampleService.class, "snmp");
+    ResourceStore resourceStore(){
+        return imports(ResourceStore.class);
     }
 
     @Bean
-    public SampleService sshSampleService(){
-        return imports(SampleService.class, "ssh");
+    SampleHelperFactory sampleFactory(){
+        return imports(SampleHelperFactory.class);
     }
-
-    @Bean
-    public SampleService mockSampleService(){
-        return imports(SampleService.class, "mock");
-    }
-
 }

@@ -54,8 +54,8 @@ public class NodesTest extends AbstractTest {
         node.setState(State.Stopped);
         node.setPriority(Priority.High);
         node.setOrganization("itsnow");
+        node.setFrequency(new TimeInterval("5s"));
         Schedule schedule = new Schedule();
-        schedule.setFrequency(new TimeInterval("5s"));
         long now = System.currentTimeMillis();
         schedule.setStartAt(new Date(now - 12832020));
         schedule.setEndAt(new Date(now + 19293202));
@@ -97,7 +97,7 @@ public class NodesTest extends AbstractTest {
 
     CPU createCPU(int i, Performance performance) {
         CPU cpu = new CPU();
-        cpu.setIdx(i);
+        cpu.setIdx(String.valueOf(i));
         cpu.setModelName("Intel Xeron");
         cpu.setFrequency(1024f);
         cpu.setUsage(0.7f);
@@ -183,7 +183,7 @@ public class NodesTest extends AbstractTest {
         public void testUpdateSimpleNode() throws Exception {
             final String path = "default/192_168_10_199";
             simple.setLabel("192.168.10.120");
-            simple.getSchedule().setFrequency(new TimeInterval("10s"));
+            simple.setFrequency(new TimeInterval("10s"));
             // not implemented now
             simple.getResource().setAddress("192.168.10.120");
             ManagedNode updated = withLoginUser(new Callback<ManagedNode>() {
@@ -197,7 +197,7 @@ public class NodesTest extends AbstractTest {
             });
             System.out.println(ParseUtils.toJSONString(updated));
             assertEquals("192.168.10.120", updated.getLabel());
-            assertEquals("10s", updated.getSchedule().getFrequency().toString());
+            assertEquals("10s", updated.getFrequency().toString());
 
 
         }

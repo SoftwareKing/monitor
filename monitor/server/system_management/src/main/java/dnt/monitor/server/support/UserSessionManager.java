@@ -8,6 +8,8 @@ import dnt.monitor.server.service.UserSessionService;
 import net.happyonroad.event.*;
 import net.happyonroad.spring.ApplicationSupportBean;
 import org.apache.commons.lang.Validate;
+import org.springframework.jmx.export.annotation.ManagedAttribute;
+import org.springframework.jmx.export.annotation.ManagedResource;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -20,7 +22,8 @@ import java.util.Map;
  * <h1>会话管理</h1>
  */
 @Service
-class UserSessionManager extends ApplicationSupportBean implements UserSessionService {
+@ManagedResource(objectName = "dnt.monitor.server:type=service,name=userSessionService")
+public class UserSessionManager extends ApplicationSupportBean implements UserSessionService {
     Map<String, ClientSession> sessions = new HashMap<String, ClientSession>();
 
     @Override
@@ -75,6 +78,11 @@ class UserSessionManager extends ApplicationSupportBean implements UserSessionSe
                 sendMessage(session, message);
             }
         }
+    }
+
+    @ManagedAttribute
+    public int getActiveSessionCount(){
+        return sessions.size();
     }
 
     private void sendMessage(ClientSession session, String message) {

@@ -106,4 +106,42 @@ public class CdpEntry extends Entry {
         properties.setProperty("nativeVLAN", String.valueOf(nativeVLAN));
         return properties;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof CdpEntry)) return false;
+
+        CdpEntry cdpEntry = (CdpEntry) o;
+
+        if (addressType != cdpEntry.addressType) return false;
+        if (nativeVLAN != cdpEntry.nativeVLAN) return false;
+        if (!address.equals(cdpEntry.address)) return false;
+        if (capabilities != null ? !capabilities.equals(cdpEntry.capabilities) : cdpEntry.capabilities != null)
+            return false;
+        if (!deviceId.equals(cdpEntry.deviceId)) return false;
+        if (devicePort != null ? !devicePort.equals(cdpEntry.devicePort) : cdpEntry.devicePort != null) return false;
+        if (platform != null ? !platform.equals(cdpEntry.platform) : cdpEntry.platform != null) return false;
+        if (version != null ? !version.equals(cdpEntry.version) : cdpEntry.version != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = address.hashCode();
+        result = 31 * result + addressType;
+        result = 31 * result + (version != null ? version.hashCode() : 0);
+        result = 31 * result + deviceId.hashCode();
+        result = 31 * result + (devicePort != null ? devicePort.hashCode() : 0);
+        result = 31 * result + (platform != null ? platform.hashCode() : 0);
+        result = 31 * result + (capabilities != null ? capabilities.hashCode() : 0);
+        result = 31 * result + nativeVLAN;
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "CdpEntry(" +address + ')';
+    }
 }

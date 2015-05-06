@@ -10,7 +10,7 @@
         <version>1.3.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>dnt.monitor.resource</groupId>
+    <groupId>dnt.monitor.model</groupId>
     <artifactId>definition</artifactId>
     <name>Resource Model Definition</name>
     <description>
@@ -19,8 +19,8 @@
 
     <modules>
         <module>definition_model</module>
-        <module>server_definition</module>
-        <module>engine_definition</module>
+        <module>definition_in_server</module>
+        <module>definition_in_engine</module>
     </modules>
 
 

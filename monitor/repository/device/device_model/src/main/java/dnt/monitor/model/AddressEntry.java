@@ -3,37 +3,47 @@
  */
 package dnt.monitor.model;
 
-import dnt.monitor.annotation.snmp.OID;
-import dnt.monitor.annotation.snmp.Table;
-import dnt.monitor.annotation.ssh.Command;
-import dnt.monitor.annotation.ssh.Mapping;
+import dnt.monitor.annotation.shell.*;
+import dnt.monitor.annotation.shell.OS;
+import dnt.monitor.annotation.snmp.*;
+import net.happyonroad.util.IpUtils;
+import org.apache.commons.net.util.SubnetUtils;
 
 /**
  * <h1>IP Addr表项</h1>
- *  <dl>
- *      <dt>包括:</dt>
- *      <dd>接口序号：ifIndex</dd>
- *      <dd>地址：addr</dd>
- *      <dd>掩码：netMask</dd>
- *      <dd>是否广播地址：bcastAddr</dd>
- *      <dd>最大组包大小：ReasmMaxSize</dd>
- *  </dl>
+ * <dl>
+ * <dt>包括:</dt>
+ * <dd>接口序号：ifIndex</dd>
+ * <dd>接口序号：ifDescr</dd>
+ * <dd>最大组包大小：reasmMaxSize</dd>
+ * <dd>地址：addr</dd>
+ * <dd>掩码：betMask</dd>
+ * <dd>是否广播地址：bcastAddr</dd>
+ * </dl>
  */
 @Table(value = "1.3.6.1.2.1.4.20", prefix = "ipAdEnt")
-@Command("classpath:dnt/monitor/model/AddressEntry.sh")
-@Mapping({"ifIndex","ifDescr","reasmMaxSize","addr","netMask","bcastAddr"})
-public class AddressEntry extends Entry{
+@Shell({
+        @OS(type = "linux", command = @Command("classpath:./AddressEntry@linux.sh")),
+        @OS(type = "aix"  , command = @Command("ifconfig -a | egrep \"flags|inet\" | grep -v \"inet6\" | sed 'N;s/\\n/ :/' | awk -F: '{print $1,$3}' | awk '{if (\"broadcast\"==$6) { print NR,$1,$3,$5,\"true\"; } else {print $NR,$1,$3,$5,\"false\";}}'"),
+                mapping = @Mapping(value = {"ifIndex", "ifDescr", "addr", "netMask", "bcastAddr"})),
+        @OS(type = "osx"  , command = @Command("classpath:./AddressEntry@osx.sh")),
+})
+@Mapping({"ifIndex", "ifDescr", "reasmMaxSize", "addr", "netMask", "bcastAddr"})
+public class AddressEntry extends Entry {
     private static final long serialVersionUID = 7336442864329942789L;
     @OID("IfIndex")
-    private int ifIndex;
-    private String ifDescr;
+    private int     ifIndex;
+    private String  ifDescr;
     @OID("Addr")
     private String  addr;
     @OID("NetMask")
     private String  netMask;
     @OID("BcastAddr")
     private boolean bcastAddr;
-    @OID("ReasmMaxSize")
+    @dnt.monitor.annotation.snmp.OS(
+        type = "windows",
+        oid = @OID("ReasmMaxSize")
+    )
     private int     reasmMaxSize;
 
     public String getAddr() {
@@ -65,6 +75,17 @@ public class AddressEntry extends Entry{
     }
 
     public void setNetMask(String netMask) {
+        if( netMask == null ){
+            this.netMask = null;
+            return;
+        }
+        //Linux/osx net mask will got /16, /8, /24这种
+        if (netMask.startsWith("/")) {
+            netMask = new SubnetUtils(getAddr() + netMask).getInfo().getNetmask();
+        } else if (netMask.startsWith("0x")) {
+            // like: 0xffffff00
+            netMask = IpUtils.toMask(netMask);
+        }
         this.netMask = netMask;
     }
 

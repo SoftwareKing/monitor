@@ -3,30 +3,39 @@
  */
 package dnt.monitor.model;
 
+import dnt.monitor.annotation.shell.*;
 import dnt.monitor.annotation.snmp.OID;
 import dnt.monitor.annotation.snmp.Table;
-import dnt.monitor.annotation.ssh.Command;
-import dnt.monitor.annotation.ssh.Mapping;
-import dnt.monitor.annotation.ssh.Value;
 
 /**
  * <h1>MAC(NetToMedia)表项</h1>
- *  <dl>
- *      <dt>包括:</dt>
- *      <dd>类型：Type</dd>
- *      <dd>网络地址：NetAddress</dd>
- *      <dd>物理地址：PhysAddress</dd>
- *      <dd>接口序号：IfIndex</dd>
- *  </dl>
+ * <dl>
+ * <dt>包括:</dt>
+ * <dd>类型：Type</dd>
+ * <dd>网络地址：NetAddress</dd>
+ * <dd>物理地址：PhysAddress</dd>
+ * <dd>接口序号：IfIndex</dd>
+ * </dl>
  */
-@Table(value = "1.3.6.1.2.1.4.22", prefix = "ipNetToMedia")
-@Command("arp -n")
-@Mapping(skipLines = 1,value = {"netAddress","","physAddress","","ifDescr"})
+@Table(value = "1.3.6.1.2.1.4.22", prefix = "ipNetToMedia", timeout = "5m")
+@Shell({
+        @OS(type = "linux", command = @Command("arp -n | grep -v ^Address"),
+                mapping = @Mapping({"netAddress", "", "physAddress", "", "ifDescr"})),
+        @OS(type = "aix"  , command = @Command("arp -an   | grep stor | awk '{print  $2,$4,$1}' | sed 's/(//g;s/)//g'"),
+                mapping = @Mapping({"netAddress",   "physAddress",   "ifDescr"})),
+        @OS(type = "osx", command = @Command("classpath:./ARPEntry@osx.sh"),
+                mapping = @Mapping({"netAddress", "physAddress", "ifDescr"}))
+})
 public class ARPEntry extends Entry implements Comparable<ARPEntry> {
     private static final long serialVersionUID = -329269806640624189L;
     @OID("IfIndex")
-    @Command("ip address show ${ifDescr} | awk '{if(NR==1){split($1,a,\":\");print a[1];}}'")
-    private int    ifIndex;
+    @Shell({
+            @OS(type = "linux", command = @Command("classpath:./IfIndex@linux.sh")),
+            //@OS(type = "aix"  , command = @Command("ifconfig -a | grep \"<\" | awk -F: '{print NR,$1}; END {print \"0\",\"?\"}' | grep '${ifDescr}' | awk '{print $1}'")),
+            @OS(type = "aix"  , command = @Command("echo 0")),
+            @OS(type = "osx"  , command = @Command("classpath:./IfIndex@osx.sh"))
+    })
+    private int ifIndex;
 
     private String ifDescr;
 
@@ -37,7 +46,7 @@ public class ARPEntry extends Entry implements Comparable<ARPEntry> {
     private String physAddress;
 
     @OID("Type")
-    private int    type;
+    private int type;
 
     @Override
     public int compareTo(@SuppressWarnings("NullableProblems") ARPEntry another) {
@@ -111,6 +120,6 @@ public class ARPEntry extends Entry implements Comparable<ARPEntry> {
 
     @Override
     public String toString() {
-        return "ARPEntry(" + netAddress + '@' + physAddress + ')';
+        return "ARPEntry(" + netAddress + '@' + physAddress + '/' + ifIndex + ')';
     }
 }

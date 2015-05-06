@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dnt.monitor.server.repository.PolicyRepository">
+
+    <!--对外接口映射-->
+
+    <select id="findAll" resultMap="policyResult">
+        <include refid="selectPolicies"/>
+    </select>
+
+    <select id="findAllByResourceType" resultMap="policyResult">
+        <include refid="selectPolicies"/>
+        <include refid="judgeByResourceType"/>
+    </select>
+
+    <select id="findById" resultMap="policyResult">
+        <include refid="selectPolicy"/>
+        <include refid="judgeById"/>
+    </select>
+
+    <select id="count" resultType="int">
+        <include refid="countPolicies"/>
+    </select>
+
+    <insert id="create" useGeneratedKeys="true" keyProperty="id">
+        <include refid="insertPolicy"/>
+    </insert>
+
+    <update id="update" keyProperty="id">
+        <include refid="updatingPolicy"/>
+        <include refid="judgeById"/>
+    </update>
+
+    <delete id="deleteById">
+        <include refid="deletingPolicy"/>
+        <include refid="judgeById"/>
+    </delete>
+
+    <insert id="createComponentPolicy" useGeneratedKeys="true" keyProperty="id">
+        <include refid="insertComponentPolicy"/>
+    </insert>
+
+    <update id="updateComponentPolicy">
+        <include refid="updatingComponentPolicy"/>
+        <include refid="judgeById"/>
+    </update>
+
+    <delete id="deleteComponentPolicy">
+        <include refid="deletingComponentPolicy"/>
+        <include refid="judgeById"/>
+    </delete>
+
+    <!--内部实现映射-->
+
+    <select id="findComponentPolicies" resultMap="componentPolicyResult">
+        <include refid="selectComponentPolicies"/>
+        <where>resource_policy_id = #{id}</where>
+    </select>
+
+
+    <!--内部实现SQL片段: 许多片段将会被其他类直接复用-->
+
+    <sql id="selectKey">
+        SELECT LAST_INSERT_ID() AS id;
+    </sql>
+
+    <sql id="selectPolicy">
+        SELECT *
+        FROM resource_policies
+    </sql>
+
+    <sql id="selectPolicies">
+        <include refid="selectPolicy"/>
+    </sql>
+
+    <sql id="countPolicies">
+        SELECT COUNT(0) FROM resource_policies;
+    </sql>
+
+    <sql id="deletingPolicy">
+        DELETE FROM resource_policies
+    </sql>
+
+    <sql id="selectComponentPolicies">
+        SELECT *
+        FROM component_policies
+    </sql>
+
+    <sql id="judgeByResourceType">
+        <where>resource_type = #{resourceType}</where>
+    </sql>
+
+    <sql id="judgeById">
+        <where>id = #{id}</where>
+    </sql>
+
+    <sql id="insertPolicy">
+        INSERT INTO resource_policies (label, priority, enabled, resource_type, criteria, metrics, configs,
+                                       alarms, notifications, actions, properties, created_at, updated_at)
+        VALUES (#{label},
+                #{priority, typeHandler=net.happyonroad.util.PriorityHandler},
+                #{enabled}, #{resourceType}, #{criteria},
+                #{metrics, typeHandler=dnt.monitor.server.util.MetricPoliciesHandler},
+                #{configs, typeHandler=dnt.monitor.server.util.ConfigPoliciesHandler},
+                #{alarms, typeHandler=dnt.monitor.server.util.AlarmPoliciesHandler},
+                #{notifications, typeHandler=dnt.monitor.server.util.NotificationPoliciesHandler},
+                #{actions, typeHandler=dnt.monitor.server.util.ActionPoliciesHandler},
+                #{properties, typeHandler=net.happyonroad.util.PropertiesHandler}, #{createdAt}, #{updatedAt});
+    </sql>
+
+    <sql id="updatingPolicy">
+        UPDATE resource_policies
+        <set>
+            label = #{label},
+            priority = #{priority, typeHandler=net.happyonroad.util.PriorityHandler},
+            enabled = #{enabled},
+            resource_type = #{resourceType},
+            criteria = #{criteria},
+            metrics = #{metrics, typeHandler=dnt.monitor.server.util.MetricPoliciesHandler},
+            configs = #{configs, typeHandler=dnt.monitor.server.util.ConfigPoliciesHandler},
+            alarms = #{alarms, typeHandler=dnt.monitor.server.util.AlarmPoliciesHandler},
+            notifications = #{notifications, typeHandler=dnt.monitor.server.util.NotificationPoliciesHandler},
+            actions = #{actions, typeHandler=dnt.monitor.server.util.ActionPoliciesHandler},
+            properties = #{properties, typeHandler=net.happyonroad.util.PropertiesHandler},
+            updated_at = #{updatedAt}
+        </set>
+    </sql>
+
+    <sql id="insertComponentPolicy">
+        INSERT INTO component_policies (id, resource_policy_id, field_name, criteria, frequency, state, keyed,
+                                        metrics, configs, properties, created_at, updated_at)
+        VALUES (#{id}, #{resourcePolicyId}, #{fieldName}, #{criteria}, #{frequency}, #{state}, #{keyed},
+                #{metrics, typeHandler=dnt.monitor.server.util.MetricPoliciesHandler},
+                #{configs, typeHandler=dnt.monitor.server.util.ConfigPoliciesHandler},
+                #{properties, typeHandler=net.happyonroad.util.PropertiesHandler},
+                #{createdAt}, #{updatedAt});
+    </sql>
+
+    <sql id="updatingComponentPolicy">
+        UPDATE component_policies
+        <set>
+            field_name = #{fieldName},
+            criteria   = #{criteria},
+            frequency = #{frequency, typeHandler=net.happyonroad.util.TimeIntervalHandler},
+            state = #{state},
+            keyed = #{keyed},
+            metrics = #{metrics, typeHandler=dnt.monitor.server.util.MetricPoliciesHandler},
+            configs = #{configs, typeHandler=dnt.monitor.server.util.ConfigPoliciesHandler},
+            properties = #{properties, typeHandler=net.happyonroad.util.PropertiesHandler},
+            updated_at = #{updatedAt}
+        </set>
+    </sql>
+
+    <sql id="deletingComponentPolicy">
+        DELETE FROM component_policies
+    </sql>
+    <!--映射结果-->
+
+    <resultMap id="policyResult" type="ResourcePolicy" autoMapping="true">
+        <id property="id" column="id"/>
+        <result property="priority" column="priority"
+                typeHandler="net.happyonroad.util.PriorityHandler"/>
+        <result property="metrics" column="metrics"
+                typeHandler="dnt.monitor.server.util.MetricPoliciesHandler"/>
+        <result property="configs" column="configs"
+                typeHandler="dnt.monitor.server.util.ConfigPoliciesHandler"/>
+        <result property="alarms" column="alarms"
+                typeHandler="dnt.monitor.server.util.AlarmPoliciesHandler"/>
+        <result property="notifications" column="notifications"
+                typeHandler="dnt.monitor.server.util.NotificationPoliciesHandler"/>
+        <result property="actions" column="actions"
+                typeHandler="dnt.monitor.server.util.ActionPoliciesHandler"/>
+        <result property="properties" column="properties"
+                typeHandler="net.happyonroad.util.PropertiesHandler"/>
+        <collection property="components" column="id" select="findComponentPolicies"/>
+    </resultMap>
+
+    <resultMap id="componentPolicyResult" type="ComponentPolicy" autoMapping="true">
+        <id property="id" column="id"/>
+        <result property="frequency" column="frequency"
+                typeHandler="net.happyonroad.util.TimeIntervalHandler"/>
+        <result property="metrics" column="metrics"
+                typeHandler="dnt.monitor.server.util.MetricPoliciesHandler"/>
+        <result property="configs" column="configs"
+                typeHandler="dnt.monitor.server.util.ConfigPoliciesHandler"/>
+        <result property="properties" column="properties"
+                typeHandler="net.happyonroad.util.PropertiesHandler"/>
+    </resultMap>
+
+</mapper>

@@ -105,10 +105,22 @@ class CreateNodeAfterResourceCreated extends Bean
         //TODO enhance dynamic mapping or meta info
         if(StringUtils.equalsIgnoreCase(resource.getType(), "/device/host/linux")) {
             return "linux";
+        }else if(StringUtils.equalsIgnoreCase(resource.getType(), "/device/host/osx")){
+            return "osx";
         }else if(StringUtils.equalsIgnoreCase(resource.getType(), "/device/host/windows")){
             return "windows";
         }else if(StringUtils.equalsIgnoreCase(resource.getType(), "/device/switch")){
             return "switch3";
+        }else if(StringUtils.equalsIgnoreCase(resource.getType(), "/app/jvm/monitor/server")){
+            return "monitor_server";
+        }else if(StringUtils.equalsIgnoreCase(resource.getType(), "/app/jvm/monitor/engine")){
+            return "monitor_engine";
+        }else if(StringUtils.equalsIgnoreCase(resource.getType(), "/app/db/mysql")){
+            return "mysql";
+        }else if(StringUtils.equalsIgnoreCase(resource.getType(), "/app/nginx")){
+            return "nginx";
+        }else if(StringUtils.equalsIgnoreCase(resource.getType(), "/app/redis")){
+            return "redis";
         }
         return "device";
     }

@@ -10,7 +10,7 @@
         <version>1.3.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>dnt.monitor.resource</groupId>
+    <groupId>dnt.monitor.model</groupId>
     <artifactId>device</artifactId>
     <name>IP based Device</name>
     <description>
@@ -20,8 +20,8 @@
 
     <modules>
         <module>device_model</module>
-        <module>engine_device</module>
-        <module>server_device</module>
+        <module>device_in_engine</module>
+        <module>device_in_server</module>
     </modules>
     
 </project>

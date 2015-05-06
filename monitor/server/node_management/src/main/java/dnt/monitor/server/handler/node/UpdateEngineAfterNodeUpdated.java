@@ -4,15 +4,19 @@
 package dnt.monitor.server.handler.node;
 
 import dnt.monitor.exception.EngineException;
-import dnt.monitor.model.ManagedNode;
-import dnt.monitor.model.MonitorEngine;
+import dnt.monitor.exception.ResourceException;
+import dnt.monitor.model.*;
 import dnt.monitor.server.exception.NodeException;
-import dnt.monitor.server.service.NodeService;
-import dnt.monitor.service.ConfigurationService;
+import dnt.monitor.server.exception.OfflineException;
+import dnt.monitor.server.service.EngineService;
 import dnt.monitor.server.service.EngineServiceLocator;
+import dnt.monitor.server.service.NodeService;
 import dnt.monitor.server.service.ServiceLocator;
+import dnt.monitor.service.ConfigurationService;
 import net.happyonroad.event.ObjectUpdatedEvent;
 import net.happyonroad.spring.Bean;
+import net.happyonroad.util.MiscUtils;
+import net.happyonroad.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContextException;
 import org.springframework.context.ApplicationListener;
@@ -37,21 +41,15 @@ class UpdateEngineAfterNodeUpdated extends Bean
     @Override
     public void onApplicationEvent(ObjectUpdatedEvent<ManagedNode> event) {
         ManagedNode node = event.getSource();
-        try {
-            // 如果是根节点被修改，则需要将查出所有的scope node，并同步给对应的监控引擎（已经被批准）
-            if (node.isRoot()) {
-                syncScopeNodes(node);
-            } else if( node.isInfrastructure() ) {
-                syncSystemNodes(node);
-            } else {
-                syncNodeToEngine(node);
-            }
-        } catch (NodeException e) {
-            throw new ApplicationContextException("Can't sync node to engine", e);
+        // 如果是根节点， infrastructure 被修改，则需要将同步给所有被批准的engine
+        if (node.isRoot() ||  node.isInfrastructure() ) {
+            syncNodeToAllEngine(node);
+        } else {
+            syncNodeToEngine(node, event.getLegacySource());
         }
     }
 
-    void syncNodeToEngine(ManagedNode node) throws NodeException {
+    void syncNodeToEngine(ManagedNode node, ManagedNode legacy) {
         MonitorEngine engine;
         try {
             engine = nodeService.findEngineByNode(node);
@@ -65,37 +63,51 @@ class UpdateEngineAfterNodeUpdated extends Bean
             logger.debug("The engine is rejected, do not sync any node to it");
             return;
         }
+        Resource resource = null;
         // get Engine NBI for resource service by factory bean
         ConfigurationService configurationService = engineServiceLocator.locate(engine, ConfigurationService.class);
         try {
-            //无论是ip range，还是具体节点，都分配过去，由引擎处理
-            configurationService.updateNode(node);
-        } catch (EngineException e) {
-            logger.warn("Can't sync {} to {}", node, engine);
-        }
-
-    }
-
-    void syncSystemNodes(ManagedNode parent) throws NodeException {
-        List<ManagedNode> systemNodes = nodeService.findSubNodes(parent, 1, false);
-        for (ManagedNode systemNode : systemNodes) {
-            // 将Parent的属性合并到scope node上
-            systemNode.merge(parent);
-            syncNodeToEngine(systemNode);
-        }
-    }
-
-    void syncScopeNodes(ManagedNode root) throws NodeException {
-        List<ManagedNode> scopeNodes = nodeService.findSubNodes(root, 1, false);
-        for (ManagedNode scopeNode : scopeNodes) {
-            scopeNode.merge(root);
-            // system node
-            if( scopeNode.isInfrastructure() )
-            {
-                syncSystemNodes(scopeNode);
+            //分配节点时，不将resource发送过去
+            if (node instanceof ResourceNode) {
+                resource = ((ResourceNode) node).getResource();
+                ((ResourceNode) node).setResource(null);
+            }
+            if(!StringUtils.equals(node.getPath(), legacy.getPath())){
+                // move node
+                configurationService.moveNode(legacy.getPath(), node);
             }else{
-                // 将root的属性合并到scope node上
-                syncNodeToEngine(scopeNode);
+                //无论是ip range，还是具体节点，都分配过去，由引擎处理
+                configurationService.updateNode(node);
+            }
+        } catch (OfflineException e) {
+            logger.warn("Sync {} to {} later", node, engine);
+        } catch (EngineException e) {
+            logger.warn("Can't sync {} to {}, because of {}", node, engine, MiscUtils.describeException(e));
+        }  finally {
+            if( node instanceof ResourceNode &&  resource != null ){
+                ((ResourceNode) node).setResource(resource);
+            }
+        }
+
+    }
+
+    void syncNodeToAllEngine(ManagedNode node) {
+        EngineService engineService;
+        try {
+            engineService = (EngineService) serviceLocator.locate(MonitorEngine.class);
+        } catch (ResourceException e) {
+            throw new ApplicationContextException("Can't locate EngineService", e);
+        }
+        List<MonitorEngine> approvedEngines = engineService.findAllByStatus(ApproveStatus.Approved);
+        for (MonitorEngine engine : approvedEngines) {
+            // get Engine NBI for resource service by factory bean
+            ConfigurationService configurationService = engineServiceLocator.locate(engine, ConfigurationService.class);
+            try {
+                configurationService.updateNode(node);
+            } catch (OfflineException e) {
+                logger.warn("Sync {} to {} later", node, engine);
+            } catch (EngineException e) {
+                logger.warn("Can't sync {} to {}, because of {}", node, engine, MiscUtils.describeException(e));
             }
         }
     }

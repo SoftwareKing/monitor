@@ -20,7 +20,7 @@
     <dependencies>
         <dependency>
             <groupId>dnt.monitor.engine</groupId>
-            <artifactId>resourcing</artifactId>
+            <artifactId>infrastructure</artifactId>
         </dependency>
     </dependencies>
 

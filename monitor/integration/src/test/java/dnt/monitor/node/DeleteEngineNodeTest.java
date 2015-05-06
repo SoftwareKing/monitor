@@ -6,15 +6,13 @@ package dnt.monitor.node;
 import dnt.monitor.engine.EngineTest;
 import dnt.monitor.model.MonitorEngine;
 import dnt.monitor.model.Resource;
-import org.apache.commons.lang.exception.ExceptionUtils;
+import net.happyonroad.util.MiscUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.client.RestClientException;
-
-import static org.junit.Assert.fail;
 
 /**
  * <h1>测试添加group之后，各种管理员删除引擎方式</h1>
@@ -55,7 +53,7 @@ public class DeleteEngineNodeTest extends EngineTest {
                     delete("/api/nodes{0}", request, created.getSystemPath());
                 } catch (RestClientException e) {
                     System.err.println("Failed to cleanup the engine " +
-                            created.getEngineId() + ", because " + ExceptionUtils.getRootCauseMessage(e));
+                            created.getEngineId() + ", because " + MiscUtils.describeException(e));
                 }
             }
         });
@@ -96,7 +94,7 @@ public class DeleteEngineNodeTest extends EngineTest {
                     //fail("It should refuse to delete engine with other resource(host) in its monitor scope");
                     needClean = false;
                 } catch (RestClientException e) {
-                    System.out.println("Got expected exception " + ExceptionUtils.getRootCauseMessage(e));
+                    System.out.println("Got expected exception " + MiscUtils.describeException(e));
                     needClean = true;
                 }
             }

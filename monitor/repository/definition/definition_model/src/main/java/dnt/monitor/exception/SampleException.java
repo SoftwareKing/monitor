@@ -1,13 +1,13 @@
 package dnt.monitor.exception;
 
-import dnt.monitor.exception.EngineException;
-
 /**
  * <h1>采集异常</h1>
  *
  * @author Jay Xiong
  */
 public class SampleException extends EngineException {
+    private static final long serialVersionUID = -2845975857628694942L;
+
     public SampleException(String message) {
         super(message);
     }

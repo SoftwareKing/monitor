@@ -6,17 +6,26 @@ package dnt.monitor.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import dnt.monitor.annotation.Category;
 import dnt.monitor.annotation.Config;
+import dnt.monitor.annotation.Indicator;
+import dnt.monitor.annotation.Keyed;
+import dnt.monitor.annotation.jmx.ObjectAttr;
+import dnt.monitor.annotation.jmx.ObjectName;
+import dnt.monitor.model.engine.ExecutorEntry;
+import dnt.monitor.model.engine.MonitoringStats;
+
+import java.util.Map;
 
 /**
- * Monitor Engine
+ * <h1>Monitor Engine</h1>
+ * 执行无代理监控的统一监控引擎
  */
-@Category("monitor_engine")
-public class MonitorEngine extends Application {
+@Category("engine")
+public class MonitorEngine extends MonitorApplication {
     private static final long serialVersionUID = -7931606698205633725L;
 
     public MonitorEngine() {
         // 这个很怪异
-        this.setType("/application/monitor_engine");
+        this.setType("/app/jvm/monitor/engine");
     }
 
     @Config
@@ -27,6 +36,20 @@ public class MonitorEngine extends Application {
     private String apiToken;
 
     private ApproveStatus approveStatus = ApproveStatus.Requested;
+
+    @Keyed
+    @ObjectName("dnt.monitor.engine:type=store,name=*")
+    @ObjectAttr("Size")
+    @Indicator
+    private Map<String, Long> storeSizes;
+
+    @Keyed
+    //监控控制器
+    private MonitoringStats monitoringStats;
+
+    @Keyed
+    //监控任务列表
+    private ExecutorEntry[] executors;
 
     @Config
     @Override
@@ -69,20 +92,21 @@ public class MonitorEngine extends Application {
     /**
      * <h2>判断是否是缺省引擎</h2>
      * 当下的判断依据是 properties 里面 default = true
+     *
      * @return 是否是缺省引擎
      */
     @JsonIgnore
     public boolean isDefault() {
-        return getName().equals("default");
+        return "default".equals(getName());
     }
 
     @JsonIgnore
-    public String getScopePath(){
+    public String getScopePath() {
         return ManagedNode.ROOT_PATH + getName();
     }
 
     @JsonIgnore
-    public String getSystemPath(){
+    public String getSystemPath() {
         return ManagedNode.INFRASTRUCTURE_PATH + "/" + getName();
     }
 
@@ -99,5 +123,40 @@ public class MonitorEngine extends Application {
     @JsonIgnore
     public boolean isApproved() {
         return getApproveStatus() == ApproveStatus.Approved;
+    }
+
+    public Map<String, Long> getStoreSizes() {
+        return storeSizes;
+    }
+
+    public void setStoreSizes(Map<String, Long> storeSizes) {
+        this.storeSizes = storeSizes;
+    }
+
+    public MonitoringStats getMonitoringStats() {
+        return monitoringStats;
+    }
+
+    public void setMonitoringStats(MonitoringStats monitoringStats) {
+        this.monitoringStats = monitoringStats;
+    }
+
+    public ExecutorEntry[] getExecutors() {
+        return executors;
+    }
+
+    public void setExecutors(ExecutorEntry[] executors) {
+        this.executors = executors;
+    }
+
+    public static boolean isApproving(MonitorEngine oldEngine, MonitorEngine newEngine) {
+        return (oldEngine.isRequesting()) && (newEngine.isApproved());
+
+    }
+
+    public static boolean isRejecting(MonitorEngine oldEngine, MonitorEngine newEngine) {
+        return (oldEngine.isRequesting())
+                && (newEngine.isRejected());
+
     }
 }

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE model>
+<model name="dnt.monitor.model.Device">
+    <category value="device">
+        <crendential>snmp</crendential>
+    </category>
+    <property name="label">
+        <config/>
+    </property>
+    <property name="description">
+        <indicator/>
+    </property>
+    <property name="objectID">
+        <indicator/>
+    </property>
+    <property name="upTime">
+        <indicator/>
+    </property>
+    <property name="contact">
+        <indicator/>
+    </property>
+    <property name="location">
+        <indicator/>
+    </property>
+    <component name="interfaces" keyed="true"/>
+    <entry name="addresses" keyed="true"/>
+    <entry name="routeEntries" keyed="true"/>
+    <entry name="arpEntries" keyed="false"/>
+    <entry name="tcpEntries" keyed="false"/>
+    <entry name="udpEntries" keyed="false"/>
+</model>

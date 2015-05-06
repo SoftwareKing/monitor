@@ -1,0 +1,1 @@
+cat %PATH%\\my.ini

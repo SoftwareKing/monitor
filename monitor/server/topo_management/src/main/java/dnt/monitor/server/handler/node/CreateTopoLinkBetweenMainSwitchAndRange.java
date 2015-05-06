@@ -7,8 +7,8 @@ import dnt.monitor.server.model.TopoNode;
 import dnt.monitor.server.service.TopoService;
 import net.happyonroad.event.ObjectCreatedEvent;
 import net.happyonroad.spring.Bean;
+import net.happyonroad.util.MiscUtils;
 import net.happyonroad.util.StringUtils;
-import org.apache.commons.lang.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
@@ -42,7 +42,7 @@ public class CreateTopoLinkBetweenMainSwitchAndRange extends Bean
             topoService.createLink(rangeTopoNode, switchNode, "UpLink", "UpLink");
         } catch (TopoException e) {
             logger.warn("Can't auto crate topo link between subnet and its up-link switch: {}",
-                        ExceptionUtils.getRootCauseMessage(e));
+                        MiscUtils.describeException(e));
         }
     }
 }

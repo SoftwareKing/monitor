@@ -4,12 +4,13 @@
 package dnt.monitor.server.handler.engine;
 
 import dnt.monitor.exception.EngineException;
-import dnt.monitor.server.exception.OfflineException;
 import dnt.monitor.model.ManagedNode;
 import dnt.monitor.model.MonitorEngine;
+import dnt.monitor.model.ResourceNode;
+import dnt.monitor.server.exception.OfflineException;
+import dnt.monitor.server.service.EngineServiceLocator;
 import dnt.monitor.server.service.NodeService;
 import dnt.monitor.service.ConfigurationService;
-import dnt.monitor.server.service.EngineServiceLocator;
 import net.happyonroad.event.ObjectSavedEvent;
 import net.happyonroad.event.ObjectUpdatedEvent;
 import net.happyonroad.spring.Bean;
@@ -20,8 +21,7 @@ import org.springframework.stereotype.Component;
 /**
  * <h1>将System, Scope Node同步到新建的引擎中</h1>
  * <p/>
- * 当引擎被批准后，需要将system, engine, scope node 分配过去
- * root node不需要同步过去，root node的信息被合并在system/scope node上
+ * 当引擎被批准后，需要将root, infrastructure, system, engine, scope node 分配过去
  */
 @Component
 class AssignRelatedNodes2EngineAfterCreated extends Bean
@@ -32,7 +32,7 @@ class AssignRelatedNodes2EngineAfterCreated extends Bean
     EngineServiceLocator engineServiceLocator;
 
     public AssignRelatedNodes2EngineAfterCreated() {
-        setOrder(15);//after scope node created
+        setOrder(50);
     }
 
     @Override
@@ -46,22 +46,27 @@ class AssignRelatedNodes2EngineAfterCreated extends Bean
         ManagedNode scopeNode = nodeService.findByPath(engine.getScopePath());
         ManagedNode systemNode = nodeService.findByPath(engine.getSystemPath());
         ManagedNode engineNode = nodeService.findByPath(engine.getSystemPath() + "/engine");
-
-        scopeNode.merge(rootNode);
-        infNode.merge(rootNode);
-        systemNode.merge(infNode);
-
+        assignNode(engine, configurationService, rootNode);
+        assignNode(engine, configurationService, infNode);
         assignNode(engine, configurationService, systemNode);
-        assignNode(engine, configurationService, engineNode);
+        assignEngineNode(engine, configurationService, (ResourceNode) engineNode);
         assignNode(engine, configurationService, scopeNode);
+        try {
+            //如果监控服务器归属于当前引擎，也分配下去
+            ManagedNode serverNode = nodeService.findByPath(engine.getSystemPath() + "/server");
+            //Server节点，唯一一个会将资源(server)下发给引擎的对象
+            assignNode(engine, configurationService, serverNode);
+        } catch (IllegalArgumentException e) {
+            //skip it, because the server is not monitored by this engine
+        }
+
     }
 
     private boolean isApproved(ObjectSavedEvent<MonitorEngine> event) {
         if( event instanceof ObjectUpdatedEvent)
         {
             ObjectUpdatedEvent<MonitorEngine> updatedEvent = (ObjectUpdatedEvent<MonitorEngine>) event;
-            return (updatedEvent.getLegacySource().isRequesting())
-                    && (updatedEvent.getSource().isApproved());
+            return MonitorEngine.isApproving(updatedEvent.getLegacySource(), updatedEvent.getSource());
         }
         else
             return event.getSource().isApproved();
@@ -69,6 +74,18 @@ class AssignRelatedNodes2EngineAfterCreated extends Bean
 
     protected void assignNode(MonitorEngine engine, ConfigurationService configurationService, ManagedNode node) {
         try {
+            //监控引擎，监控服务器，这2个节点分配下去时，带上资源对象
+            configurationService.assignNode(node);
+        } catch (OfflineException e) {
+            logger.debug("{} has been assigned to an offline {}", node, engine);
+        } catch (EngineException e) {
+            logger.warn("Can't assign {} to {}", node, engine);
+        }
+    }
+
+    protected void assignEngineNode(MonitorEngine engine, ConfigurationService configurationService, ResourceNode node) {
+        try {
+            //监控引擎，监控服务器，这2个节点分配下去时，带上资源对象
             configurationService.assignNode(node);
         } catch (OfflineException e) {
             logger.debug("{} has been assigned to an offline {}", node, engine);

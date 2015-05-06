@@ -21,6 +21,7 @@
             n.priority        AS node_priority,
             n.location        AS node_location,
             n.organization    AS node_organization,
+            n.frequency       AS node_frequency,
             n.schedule        AS node_schedule,
             n.maintain_window AS node_maintain_window,
             n.credentials     AS node_credentials,
@@ -56,6 +57,7 @@
             mn.priority        AS node_priority,
             mn.location        AS node_location,
             mn.organization    AS node_organization,
+            mn.frequency       AS node_frequency,
             mn.schedule        AS node_schedule,
             mn.maintain_window AS node_maintain_window,
             mn.credentials     AS node_credentials,
@@ -173,6 +175,10 @@
 
     <select id="selectManagedNode" resultMap="dnt.monitor.server.repository.NodeRepository.nodeResult">
         SELECT * FROM managed_nodes WHERE path = #{path}
+    </select>
+
+    <select id="countMaps" resultType="int">
+        SELECT count(0) FROM topo_maps;
     </select>
 
     <insert id="createMap" useGeneratedKeys="true" keyColumn="id" keyProperty="id">

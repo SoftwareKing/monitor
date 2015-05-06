@@ -16,15 +16,6 @@ import java.lang.annotation.*;
 @Target({ElementType.METHOD, ElementType.FIELD})
 @Inherited
 public @interface Indicator {
-    /**
-     * <h2>关键指标</h2>
-     *
-     * 关键指标意味着默认采集
-     *
-     * @return 是否关键，默认为true
-     */
-    boolean key() default true;
-
     //单位
     String unit() default "";
 }

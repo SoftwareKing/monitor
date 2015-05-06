@@ -56,7 +56,7 @@ class RevokeNodeFromEngineBeforeDestroy extends Bean
             return; // other handle has proceed this type
         }
         try {
-            configurationService.revokeNode(node);
+            configurationService.revokeNode(node.getPath());
         } catch (EngineException e) {
             logger.warn("Can't revoke {} from {}, because of {}", node, engine, e.getMessage());
             //TODO 实际代码应该是将该node设置为未同步状态，而后有其他的代码/任务负责定期将该range信息同步给相应的引擎
