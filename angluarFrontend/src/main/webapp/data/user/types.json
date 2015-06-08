@@ -1,8 +1,0 @@
-[
-    {"id":"hosts","name":"主机","pid":"","children":
-        [
-            {"id":"linux","name":"Linux","pid":"hosts"},
-            {"id":"windows","name":"Windows","pid":"hosts"}
-        ]
-    }
-]

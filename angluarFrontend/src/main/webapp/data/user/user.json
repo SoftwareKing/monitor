@@ -1,7 +1,0 @@
-{
-    "count": 1,
-    "data":[
-    {"orgId":2,"userId":20324,"userName":"testhang","userNumber":"1822","userRealName":"曹杰","userMobile":"18221376741","userEmail":"18221376741","updated":"2013-15-15","flag":true},
-    {"orgId":1,"userId":2366,"userName":"曹杰","userNumber":"1391","userRealName":"曹杰","userMobile":"18221376741","userEmail":"18221376741","updated":"2013-15-15","flag":true},
-    {"orgId":1,"userId":10,"userName":"admin","userNumber":"1393","userRealName":"曹杰","userMobile":"18221376741","userEmail":"18221376741","updated":"2013-15-15","flag":true}
-]}
